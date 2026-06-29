@@ -1,0 +1,48 @@
+@import "tailwindcss";
+
+:root {
+  --background: #f8fafb;
+  --foreground: #0f2942;
+  --ocean-50: #f0f7fa;
+  --ocean-100: #d9ecf2;
+  --ocean-200: #b3d9e5;
+  --ocean-300: #7dbfd4;
+  --ocean-400: #4a9fb8;
+  --ocean-500: #2d8099;
+  --ocean-600: #1a667d;
+  --ocean-700: #155266;
+  --ocean-800: #0f3d4d;
+  --ocean-900: #0a2a35;
+  --ocean-950: #061a22;
+  --sand-100: #faf6f0;
+  --sand-200: #f0e8d8;
+  --coral-400: #f4845f;
+  --coral-500: #e86a3f;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-ocean-50: var(--ocean-50);
+  --color-ocean-100: var(--ocean-100);
+  --color-ocean-200: var(--ocean-200);
+  --color-ocean-300: var(--ocean-300);
+  --color-ocean-400: var(--ocean-400);
+  --color-ocean-500: var(--ocean-500);
+  --color-ocean-600: var(--ocean-600);
+  --color-ocean-700: var(--ocean-700);
+  --color-ocean-800: var(--ocean-800);
+  --color-ocean-900: var(--ocean-900);
+  --color-ocean-950: var(--ocean-950);
+  --color-sand-100: var(--sand-100);
+  --color-sand-200: var(--sand-200);
+  --color-coral-400: var(--coral-400);
+  --color-coral-500: var(--coral-500);
+  --font-sans: var(--font-geist-sans);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), system-ui, sans-serif;
+}
