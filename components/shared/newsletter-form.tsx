@@ -6,7 +6,7 @@ import { subscribeNewsletter } from "@/actions/reviews";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
-export function NewsletterForm() {
+export function NewsletterForm({ dark = false }: { dark?: boolean }) {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -31,10 +31,10 @@ export function NewsletterForm() {
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         required
-        className="bg-white"
+        className={dark ? "bg-ink/50 border-sand/20 text-sand" : "bg-surface"}
         aria-label="Email address"
       />
-      <Button type="submit" variant="secondary" disabled={loading}>
+      <Button type="submit" variant={dark ? "accent" : "secondary"} disabled={loading}>
         Subscribe
       </Button>
     </form>

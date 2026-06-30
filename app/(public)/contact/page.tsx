@@ -85,7 +85,7 @@ export default function ContactPage() {
           <div>
             <h2 className="font-semibold text-ocean-900">Contact</h2>
             <p className="mt-2 text-gray-600">
-              hello@wanderlust.com<br />
+              hello@ueb3tours.com<br />
               +1 (555) 123-4567
             </p>
           </div>

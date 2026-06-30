@@ -1,12 +1,15 @@
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { getTourBySlug } from "@/lib/tours";
+import { getVisaForCountry } from "@/lib/visa";
+import { WhatsAppInquiryButton } from "@/components/shared/whatsapp-inquiry";
 import { getTourUnitPrice } from "@/lib/booking";
 import { Gallery } from "@/components/shared/gallery";
 import { BookingWidget } from "@/components/shared/booking-widget";
 import { Rating } from "@/components/shared/rating";
 import { Badge } from "@/components/ui/badge";
-import { MapPin, Clock, Users, Check, X } from "lucide-react";
+import { MapPin, Clock, Users, Check, X, FileText } from "lucide-react";
 import type { ItineraryDay } from "@/types";
 
 type Props = { params: Promise<{ slug: string }> };
@@ -36,6 +39,7 @@ export default async function TourDetailPage({ params }: Props) {
 
   const unitPrice = getTourUnitPrice(tour);
   const itinerary = tour.itinerary as ItineraryDay[];
+  const visaInfo = await getVisaForCountry(tour.visaCountry ?? tour.country);
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -103,6 +107,21 @@ export default async function TourDetailPage({ params }: Props) {
               </p>
             </section>
 
+            {visaInfo && (
+              <Link
+                href={`/visa/${visaInfo.countrySlug}`}
+                className="flex items-center gap-3 rounded-[var(--radius-lg)] border border-primary/20 bg-primary/5 p-4 transition-colors hover:bg-primary/10"
+              >
+                <FileText className="h-5 w-5 text-primary" strokeWidth={1.5} />
+                <div>
+                  <p className="font-medium text-ink">
+                    Need a {visaInfo.country} visa?
+                  </p>
+                  <p className="text-sm text-muted">We handle it — view requirements &amp; apply →</p>
+                </div>
+              </Link>
+            )}
+
             <section>
               <h2 className="text-xl font-semibold text-ocean-900">Itinerary</h2>
               <div className="mt-4 space-y-4">
@@ -169,14 +188,26 @@ export default async function TourDetailPage({ params }: Props) {
             )}
           </div>
 
-          <div>
+          <div className="space-y-4">
             <BookingWidget
               tourId={tour.id}
               tourSlug={tour.slug}
+              tourTitle={tour.title}
               unitPrice={unitPrice}
               maxGroupSize={tour.maxGroupSize}
               availableDates={tour.availableDates}
             />
+            <WhatsAppInquiryButton
+              tourTitle={tour.title}
+              tourSlug={tour.slug}
+              className="w-full"
+            />
+            <Link
+              href="/plan-trip"
+              className="block text-center text-sm text-primary hover:underline"
+            >
+              Need a custom itinerary? Get a quote →
+            </Link>
           </div>
         </div>
       </div>

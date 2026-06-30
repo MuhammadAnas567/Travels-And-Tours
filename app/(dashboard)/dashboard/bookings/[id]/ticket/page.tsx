@@ -1,4 +1,4 @@
-import { auth } from "@/lib/auth";
+import { getSession } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 import { redirect, notFound } from "next/navigation";
 import { formatPrice, formatDate } from "@/lib/utils";
@@ -10,7 +10,7 @@ export default async function TicketPage({
 }: {
   params: Promise<{ id: string }>;
 }) {
-  const session = await auth();
+  const session = await getSession();
   if (!session?.user) redirect("/login");
 
   const { id } = await params;
@@ -35,7 +35,7 @@ export default async function TicketPage({
 
       <div className="rounded-xl border-2 border-ocean-200 bg-white p-8">
         <div className="border-b border-ocean-100 pb-6 text-center">
-          <h1 className="text-2xl font-bold text-ocean-800">Wanderlust Tours</h1>
+          <h1 className="text-2xl font-bold text-ocean-800">UEB3 Tours</h1>
           <p className="mt-1 text-sm text-gray-500">Electronic Travel Ticket</p>
         </div>
 
@@ -84,7 +84,7 @@ export default async function TicketPage({
         </div>
 
         <p className="mt-8 text-center text-xs text-gray-400">
-          Present this e-ticket at check-in. For support, contact hello@wanderlust.com
+          Present this e-ticket at check-in. For support, contact hello@ueb3tours.com
         </p>
       </div>
     </div>

@@ -19,6 +19,7 @@ import type { TourDate } from "@prisma/client";
 type BookingWidgetProps = {
   tourId: string;
   tourSlug: string;
+  tourTitle?: string;
   unitPrice: number;
   maxGroupSize: number;
   availableDates: TourDate[];

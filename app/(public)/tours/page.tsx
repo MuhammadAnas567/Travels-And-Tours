@@ -19,6 +19,7 @@ type SearchParams = Promise<{
   country?: string;
   minPrice?: string;
   maxPrice?: string;
+  audience?: string;
   sort?: string;
   page?: string;
   date?: string;
@@ -36,6 +37,7 @@ export default async function ToursPage({
     q: params.q,
     category: params.category as TourCategory | undefined,
     country: params.country,
+    audience: params.audience as "OUTBOUND" | "INBOUND" | undefined,
     minPrice: params.minPrice ? Number(params.minPrice) : undefined,
     maxPrice: params.maxPrice ? Number(params.maxPrice) : undefined,
     sort: (params.sort as "price_asc") ?? "popular",

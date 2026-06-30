@@ -4,22 +4,28 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ocean-500 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
   {
     variants: {
       variant: {
-        default: "bg-ocean-600 text-white hover:bg-ocean-700",
-        secondary: "bg-sand-100 text-ocean-900 hover:bg-sand-200",
-        outline: "border border-ocean-200 bg-white hover:bg-ocean-50",
-        ghost: "hover:bg-ocean-50 hover:text-ocean-900",
-        destructive: "bg-red-600 text-white hover:bg-red-700",
-        link: "text-ocean-600 underline-offset-4 hover:underline",
+        default:
+          "bg-primary text-white hover:bg-primary-600 rounded-[var(--radius-md)] shadow-sm",
+        accent:
+          "bg-accent text-ink hover:bg-accent-600 rounded-[var(--radius-pill)] shadow-sm font-semibold",
+        secondary:
+          "bg-sand text-ink border border-line hover:bg-sand-200 rounded-[var(--radius-md)]",
+        outline:
+          "border border-line bg-surface text-ink hover:bg-sand rounded-[var(--radius-md)]",
+        ghost: "hover:bg-sand text-ink rounded-[var(--radius-md)]",
+        destructive:
+          "bg-danger text-white hover:opacity-90 rounded-[var(--radius-md)]",
+        link: "text-primary underline-offset-4 hover:underline",
       },
       size: {
-        default: "h-10 px-4 py-2",
-        sm: "h-9 rounded-md px-3",
-        lg: "h-12 rounded-lg px-8 text-base",
-        icon: "h-10 w-10",
+        default: "h-12 px-5 py-2",
+        sm: "h-9 px-3 rounded-[var(--radius-sm)]",
+        lg: "h-14 px-8 text-base rounded-[var(--radius-md)]",
+        icon: "h-12 w-12 rounded-[var(--radius-md)]",
       },
     },
     defaultVariants: {

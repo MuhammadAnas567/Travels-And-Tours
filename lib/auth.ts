@@ -3,9 +3,57 @@ import { PrismaAdapter } from "@auth/prisma-adapter";
 import Google from "next-auth/providers/google";
 import Credentials from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
+import { getToken } from "@auth/core/jwt";
+import { cookies } from "next/headers";
 import { prisma } from "@/lib/db";
-import type { UserRole } from "@prisma/client";
+import { authConfig } from "@/lib/auth.config";
 import type { Provider } from "next-auth/providers";
+
+const SESSION_COOKIE_PREFIXES = [
+  "authjs.session-token",
+  "__Secure-authjs.session-token",
+] as const;
+
+async function clearInvalidSessionCookie() {
+  const cookieStore = await cookies();
+  const secret = process.env.AUTH_SECRET ?? process.env.NEXTAUTH_SECRET;
+  if (!secret) return;
+
+  const allCookies = cookieStore.getAll();
+  const hasSessionCookie = allCookies.some((cookie) =>
+    SESSION_COOKIE_PREFIXES.some(
+      (prefix) =>
+        cookie.name === prefix || cookie.name.startsWith(`${prefix}.`)
+    )
+  );
+
+  if (!hasSessionCookie) return;
+
+  const cookieHeader = allCookies.map((c) => `${c.name}=${c.value}`).join("; ");
+
+  try {
+    const token = await getToken({
+      req: { headers: { cookie: cookieHeader } },
+      secret,
+      secureCookie: process.env.NODE_ENV === "production",
+    });
+
+    if (token) return;
+  } catch {
+    // stale or tampered session cookie
+  }
+
+  for (const cookie of allCookies) {
+    if (
+      SESSION_COOKIE_PREFIXES.some(
+        (prefix) =>
+          cookie.name === prefix || cookie.name.startsWith(`${prefix}.`)
+      )
+    ) {
+      cookieStore.delete(cookie.name);
+    }
+  }
+}
 
 const providers: Provider[] = [
   Credentials({
@@ -48,35 +96,18 @@ if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
 }
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
+  ...authConfig,
   adapter: PrismaAdapter(prisma),
-  session: { strategy: "jwt" },
-  pages: {
-    signIn: "/login",
-  },
   providers,
-  callbacks: {
-    async jwt({ token, user, trigger, session }) {
-      if (user) {
-        token.id = user.id;
-        token.role = (user as { role?: UserRole }).role ?? "USER";
-      }
-      if (trigger === "update" && session?.name) {
-        token.name = session.name;
-      }
-      return token;
-    },
-    async session({ session, token }) {
-      if (session.user) {
-        session.user.id = token.id as string;
-        session.user.role = (token.role as UserRole) ?? "USER";
-      }
-      return session;
-    },
-  },
 });
 
+export async function getSession() {
+  await clearInvalidSessionCookie();
+  return auth();
+}
+
 export async function requireAuth() {
-  const session = await auth();
+  const session = await getSession();
   if (!session?.user) {
     throw new Error("Unauthorized");
   }

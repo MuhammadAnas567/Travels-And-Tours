@@ -261,6 +261,9 @@ async function main() {
     await ensureTour(tour);
   }
 
+  const { seedExtensions } = await import("./seed-extensions");
+  await seedExtensions();
+
   console.log("Seed completed!");
   console.log("Admin: admin@traveltours.com / admin123");
   console.log("User:  user@example.com / user123");

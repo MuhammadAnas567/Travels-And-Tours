@@ -1,0 +1,34 @@
+services:
+  mongo:
+    image: mongo:7
+    restart: unless-stopped
+    ports:
+      - "27018:27018"
+    command: ["mongod", "--replSet", "rs0", "--port", "27018", "--bind_ip_all"]
+    volumes:
+      - mongo_data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--port", "27018", "--eval", "db.adminCommand('ping')"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  mongo-init:
+    image: mongo:7
+    depends_on:
+      mongo:
+        condition: service_healthy
+    restart: "no"
+    entrypoint:
+      - bash
+      - -c
+      - |
+        mongosh --host mongo:27018 --eval "
+          try { rs.status() }
+          catch(e) {
+            rs.initiate({ _id: 'rs0', members: [{ _id: 0, host: 'localhost:27018' }] })
+          }
+        "
+
+volumes:
+  mongo_data:

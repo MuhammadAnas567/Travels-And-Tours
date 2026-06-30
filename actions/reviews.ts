@@ -1,6 +1,6 @@
 "use server";
 
-import { auth } from "@/lib/auth";
+import { getSession } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 import { reviewSchema } from "@/lib/validations";
 import { revalidatePath } from "next/cache";
@@ -10,7 +10,7 @@ export async function submitReview(data: {
   rating: number;
   comment: string;
 }) {
-  const session = await auth();
+  const session = await getSession();
   if (!session?.user?.id) return { error: "Please sign in" };
 
   const parsed = reviewSchema.safeParse(data);

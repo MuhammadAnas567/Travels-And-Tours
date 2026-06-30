@@ -1,4 +1,4 @@
-# Wanderlust Tours — Travel & Tours Booking Platform
+# UEB3 Tours — Travel & Tours Booking Platform
 
 A production-ready full-stack travel booking platform built with **Next.js 16 (App Router)**, **TypeScript**, **Prisma**, **MongoDB**, **NextAuth.js**, and **Stripe**.
 

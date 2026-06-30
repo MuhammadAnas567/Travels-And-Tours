@@ -1,34 +1,73 @@
 @import "tailwindcss";
 
+/* ─── Design Tokens (Part B) ─── */
 :root {
-  --background: #f8fafb;
-  --foreground: #0f2942;
-  --ocean-50: #f0f7fa;
-  --ocean-100: #d9ecf2;
-  --ocean-200: #b3d9e5;
-  --ocean-300: #7dbfd4;
-  --ocean-400: #4a9fb8;
-  --ocean-500: #2d8099;
-  --ocean-600: #1a667d;
-  --ocean-700: #155266;
-  --ocean-800: #0f3d4d;
-  --ocean-900: #0a2a35;
-  --ocean-950: #061a22;
-  --sand-100: #faf6f0;
-  --sand-200: #f0e8d8;
-  --coral-400: #f4845f;
-  --coral-500: #e86a3f;
+  --color-ink: #14201c;
+  --color-primary: #0e5c4a;
+  --color-primary-600: #0a4a3c;
+  --color-primary-300: #3e8a77;
+  --color-accent: #d9a441;
+  --color-accent-600: #be8a2e;
+  --color-sand: #f6f1e7;
+  --color-surface: #ffffff;
+  --color-muted: #6b7b73;
+  --color-line: #e6dfd2;
+  --color-success: #2e7d55;
+  --color-danger: #b3402f;
+
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 22px;
+  --radius-pill: 999px;
+
+  --shadow-sm: 0 1px 2px rgba(20, 32, 28, 0.06);
+  --shadow-md: 0 8px 24px -8px rgba(20, 32, 28, 0.18);
+  --shadow-lg: 0 24px 60px -20px rgba(20, 32, 28, 0.28);
+
+  --background: var(--color-sand);
+  --foreground: var(--color-ink);
+
+  /* Legacy aliases → map to new tokens for gradual migration */
+  --ocean-50: #eef5f2;
+  --ocean-100: #d9ebe4;
+  --ocean-600: var(--color-primary);
+  --ocean-700: var(--color-primary-600);
+  --ocean-800: var(--color-primary-600);
+  --ocean-900: var(--color-ink);
+  --ocean-950: #0c1612;
+  --sand-100: var(--color-sand);
+  --sand-200: #ebe4d6;
+  --coral-400: var(--color-accent);
+  --coral-500: var(--color-accent-600);
+}
+
+.dark {
+  --color-ink: #e8ede9;
+  --color-sand: #0c1612;
+  --color-surface: #14201c;
+  --color-muted: #8a9a92;
+  --color-line: #243530;
+  --background: #0c1612;
+  --foreground: #e8ede9;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-ink: var(--color-ink);
+  --color-primary: var(--color-primary);
+  --color-primary-600: var(--color-primary-600);
+  --color-primary-300: var(--color-primary-300);
+  --color-accent: var(--color-accent);
+  --color-accent-600: var(--color-accent-600);
+  --color-sand: var(--color-sand);
+  --color-surface: var(--color-surface);
+  --color-muted: var(--color-muted);
+  --color-line: var(--color-line);
+  --color-success: var(--color-success);
+  --color-danger: var(--color-danger);
   --color-ocean-50: var(--ocean-50);
   --color-ocean-100: var(--ocean-100);
-  --color-ocean-200: var(--ocean-200);
-  --color-ocean-300: var(--ocean-300);
-  --color-ocean-400: var(--ocean-400);
-  --color-ocean-500: var(--ocean-500);
   --color-ocean-600: var(--ocean-600);
   --color-ocean-700: var(--ocean-700);
   --color-ocean-800: var(--ocean-800);
@@ -38,11 +77,105 @@
   --color-sand-200: var(--sand-200);
   --color-coral-400: var(--coral-400);
   --color-coral-500: var(--coral-500);
-  --font-sans: var(--font-geist-sans);
+  --font-sans: var(--font-body);
+  --font-serif: var(--font-display);
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius-md);
+  --radius-lg: var(--radius-lg);
+  --radius-pill: var(--radius-pill);
+  --shadow-sm: var(--shadow-sm);
+  --shadow-md: var(--shadow-md);
+  --shadow-lg: var(--shadow-lg);
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-sans), system-ui, sans-serif;
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  body {
+    background: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-body), system-ui, sans-serif;
+    font-size: 1.0625rem;
+    line-height: 1.65;
+  }
+
+  h1,
+  h2,
+  h3,
+  .font-display {
+    font-family: var(--font-display), Georgia, serif;
+    letter-spacing: -0.02em;
+  }
+}
+
+@layer utilities {
+  .text-hero {
+    font-size: clamp(2.75rem, 6vw, 5rem);
+    line-height: 1.05;
+    font-weight: 500;
+  }
+
+  .text-h2 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    line-height: 1.15;
+  }
+
+  .text-caption {
+    font-size: 0.8125rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+  }
+
+  .image-overlay {
+    background: linear-gradient(
+      180deg,
+      transparent 0%,
+      rgba(20, 32, 28, 0.55) 100%
+    );
+  }
+
+  .shimmer {
+    background: linear-gradient(
+      90deg,
+      var(--color-sand) 0%,
+      #ebe4d6 50%,
+      var(--color-sand) 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+  }
+
+  @keyframes shimmer {
+    0% {
+      background-position: 200% 0;
+    }
+    100% {
+      background-position: -200% 0;
+    }
+  }
+
+  @keyframes kenburns {
+    from {
+      transform: scale(1);
+    }
+    to {
+      transform: scale(1.08);
+    }
+  }
 }

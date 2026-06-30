@@ -1,35 +1,63 @@
 import type { Metadata } from "next";
-import { Geist } from "next/font/google";
+import { Fraunces, DM_Sans, Noto_Nastaliq_Urdu } from "next/font/google";
 import { Toaster } from "sonner";
 import { Providers } from "@/components/providers";
+import { WhatsAppButton } from "@/components/shared/whatsapp-button";
+import { getPreferredLocale } from "@/lib/locale";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const displayFont = Fraunces({
+  variable: "--font-display",
   subsets: ["latin"],
+  display: "swap",
+});
+
+const bodyFont = DM_Sans({
+  variable: "--font-body",
+  subsets: ["latin"],
+  display: "swap",
+});
+
+const urduFont = Noto_Nastaliq_Urdu({
+  variable: "--font-urdu",
+  subsets: ["arabic"],
+  weight: "400",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
   title: {
-    default: "Wanderlust Tours — Discover Your Next Adventure",
-    template: "%s | Wanderlust Tours",
+    default: "UEB3 Tours — Pakistan's Premier Travel Partner",
+    template: "%s | UEB3 Tours",
   },
   description:
-    "Browse curated tour packages, book unforgettable travel experiences, and explore the world's most beautiful destinations.",
+    "Outbound tours for Pakistanis and inbound adventures across Hunza, Skardu & beyond. Visa assistance, local payments, trusted bookings.",
   metadataBase: new URL(
     process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000"
   ),
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const locale = await getPreferredLocale();
+  const isUrdu = locale === "ur";
+
   return (
-    <html lang="en" className={`${geistSans.variable} h-full`}>
-      <body className="min-h-full flex flex-col antialiased">
+    <html
+      lang={locale}
+      dir={isUrdu ? "rtl" : "ltr"}
+      className={`${displayFont.variable} ${bodyFont.variable} ${urduFont.variable} h-full`}
+    >
+      <body
+        className={`min-h-full flex flex-col antialiased bg-sand text-ink ${
+          isUrdu ? "font-[family-name:var(--font-urdu)]" : ""
+        }`}
+      >
         <Providers>{children}</Providers>
+        <WhatsAppButton />
         <Toaster position="top-right" richColors />
       </body>
     </html>

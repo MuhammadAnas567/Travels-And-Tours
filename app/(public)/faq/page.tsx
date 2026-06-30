@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "FAQ",
-  description: "Frequently asked questions about booking tours with Wanderlust Tours.",
+  description: "Frequently asked questions about booking tours with UEB3 Tours.",
 };
 
 const faqs = [

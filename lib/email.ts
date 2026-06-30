@@ -6,6 +6,25 @@ function getResend() {
   return new Resend(key);
 }
 
+export async function sendEmail({
+  to,
+  subject,
+  html,
+}: {
+  to: string;
+  subject: string;
+  html: string;
+}) {
+  const resend = getResend();
+  if (!resend) {
+    console.warn("RESEND_API_KEY not set, skipping email");
+    return;
+  }
+
+  const from = process.env.RESEND_FROM_EMAIL ?? "onboarding@resend.dev";
+  await resend.emails.send({ from, to, subject, html });
+}
+
 export async function sendBookingConfirmationEmail({
   to,
   bookingId,

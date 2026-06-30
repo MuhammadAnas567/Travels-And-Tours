@@ -26,30 +26,79 @@ enum TourCategory {
   WILDLIFE
   LUXURY
   BUDGET
+  UMRAH
+  HERITAGE
+}
+
+enum TourAudience {
+  OUTBOUND
+  INBOUND
+  BOTH
 }
 
 enum BookingStatus {
   PENDING
+  PENDING_VERIFICATION
   CONFIRMED
   CANCELLED
   COMPLETED
+  DEPOSIT_PAID
+}
+
+enum PaymentMethod {
+  STRIPE
+  BANK_TRANSFER
+  EASYPAISA
+  JAZZCASH
+}
+
+enum VisaInquiryStatus {
+  NEW
+  IN_REVIEW
+  DOCS_NEEDED
+  SUBMITTED
+  APPROVED
+  REJECTED
+}
+
+enum QuoteStatus {
+  NEW
+  QUOTED
+  CONVERTED
+  CLOSED
+}
+
+enum CouponType {
+  PERCENT
+  FIXED
+}
+
+enum Currency {
+  PKR
+  USD
+  EUR
+  GBP
 }
 
 model User {
-  id             String    @id @default(auto()) @map("_id") @db.ObjectId
-  name           String?
-  email          String    @unique
-  emailVerified  DateTime?
-  hashedPassword String?
-  image          String?
-  role           UserRole  @default(USER)
-  createdAt      DateTime  @default(now())
-  updatedAt      DateTime  @updatedAt
+  id               String    @id @default(auto()) @map("_id") @db.ObjectId
+  name             String?
+  email            String    @unique
+  emailVerified    DateTime?
+  hashedPassword   String?
+  image            String?
+  role             UserRole  @default(USER)
+  preferredCurrency Currency @default(USD)
+  preferredLocale  String    @default("en")
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
 
-  accounts Account[]
-  sessions Session[]
-  bookings Booking[]
-  reviews  Review[]
+  accounts      Account[]
+  sessions      Session[]
+  bookings      Booking[]
+  reviews       Review[]
+  visaInquiries VisaInquiry[]
+  quoteRequests QuoteRequest[]
 }
 
 model Account {
@@ -98,25 +147,31 @@ model PasswordResetToken {
 }
 
 model Tour {
-  id            String       @id @default(auto()) @map("_id") @db.ObjectId
-  slug          String       @unique
-  title         String
-  description   String
-  location      String
-  country       String
-  category      TourCategory
-  durationDays  Int
-  price         Float
-  discountPrice Float?
-  images        String[]
-  itinerary     Json
-  included      String[]
-  excluded      String[]
-  maxGroupSize  Int
-  status        TourStatus   @default(DRAFT)
-  avgRating     Float        @default(0)
-  createdAt     DateTime     @default(now())
-  updatedAt     DateTime     @updatedAt
+  id             String       @id @default(auto()) @map("_id") @db.ObjectId
+  slug           String       @unique
+  title          String
+  description    String
+  location       String
+  country        String
+  category       TourCategory
+  audience       TourAudience @default(BOTH)
+  durationDays   Int
+  price          Float
+  discountPrice  Float?
+  baseCurrency   Currency     @default(USD)
+  images         String[]
+  itinerary      Json
+  included       String[]
+  excluded       String[]
+  maxGroupSize   Int
+  status         TourStatus   @default(DRAFT)
+  avgRating      Float        @default(0)
+  isFeatured     Boolean      @default(false)
+  allowDeposit   Boolean      @default(false)
+  depositPercent Int          @default(30)
+  visaCountry    String?
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
 
   availableDates TourDate[]
   bookings       Booking[]
@@ -136,20 +191,29 @@ model TourDate {
 }
 
 model Booking {
-  id              String        @id @default(auto()) @map("_id") @db.ObjectId
-  userId          String        @db.ObjectId
-  tourId          String        @db.ObjectId
-  tourDateId      String        @db.ObjectId
-  adults          Int
-  children        Int           @default(0)
-  totalPrice      Float
-  status          BookingStatus @default(PENDING)
-  paymentIntentId String?
-  stripeSessionId String?
-  travelerInfo    Json
-  specialRequests String?
-  createdAt       DateTime      @default(now())
-  updatedAt       DateTime      @updatedAt
+  id                String        @id @default(auto()) @map("_id") @db.ObjectId
+  userId            String        @db.ObjectId
+  tourId            String        @db.ObjectId
+  tourDateId        String        @db.ObjectId
+  adults            Int
+  children          Int           @default(0)
+  totalPrice        Float
+  currency          Currency      @default(USD)
+  status            BookingStatus @default(PENDING)
+  paymentMethod     PaymentMethod @default(STRIPE)
+  paymentProofUrl   String?
+  paymentIntentId   String?
+  stripeSessionId   String?
+  couponCode        String?
+  depositAmount     Float?
+  balanceDue        Float?
+  balanceDueDate    DateTime?
+  verifiedAt        DateTime?
+  verifiedBy        String?
+  travelerInfo      Json
+  specialRequests   String?
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
 
   user     User     @relation(fields: [userId], references: [id])
   tour     Tour     @relation(fields: [tourId], references: [id])
@@ -169,4 +233,119 @@ model Review {
   tour Tour @relation(fields: [tourId], references: [id])
 
   @@unique([userId, tourId])
+}
+
+model VisaInfo {
+  id                String   @id @default(auto()) @map("_id") @db.ObjectId
+  country           String   @unique
+  countrySlug       String   @unique
+  flagEmoji         String?
+  visaType          String
+  requirements      String
+  documentChecklist String[]
+  processingTime    String
+  govFee            Float
+  serviceFee        Float
+  successNotes      String?
+  isActive          Boolean  @default(true)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  inquiries VisaInquiry[]
+}
+
+model VisaInquiry {
+  id          String            @id @default(auto()) @map("_id") @db.ObjectId
+  userId      String            @db.ObjectId
+  visaInfoId  String            @db.ObjectId
+  country     String
+  travelDate  DateTime?
+  notes       String?
+  status      VisaInquiryStatus @default(NEW)
+  adminNotes  String?
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+
+  user     User     @relation(fields: [userId], references: [id])
+  visaInfo VisaInfo @relation(fields: [visaInfoId], references: [id])
+}
+
+model QuoteRequest {
+  id              String      @id @default(auto()) @map("_id") @db.ObjectId
+  userId          String?     @db.ObjectId
+  name            String
+  email           String
+  phone           String?
+  destinations    String[]
+  startDate       DateTime?
+  endDate         DateTime?
+  adults          Int         @default(2)
+  children        Int         @default(0)
+  budget          Float?
+  budgetCurrency  Currency    @default(USD)
+  preferences     String?
+  status          QuoteStatus @default(NEW)
+  adminQuotePrice Float?
+  adminNotes      String?
+  convertedBookingId String?
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+
+  user User? @relation(fields: [userId], references: [id])
+}
+
+model Coupon {
+  id              String     @id @default(auto()) @map("_id") @db.ObjectId
+  code            String     @unique
+  type            CouponType
+  value           Float
+  minSpend        Float?
+  usageLimit      Int?
+  usageCount      Int        @default(0)
+  perUserLimit    Int        @default(1)
+  validFrom       DateTime
+  validTo         DateTime
+  applicableTours String[]
+  isActive        Boolean    @default(true)
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+}
+
+model BlogPost {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  slug        String   @unique
+  title       String
+  excerpt     String
+  content     String
+  coverImage  String?
+  category    String
+  tags        String[]
+  published   Boolean  @default(false)
+  publishedAt DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model SiteSettings {
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  key             String   @unique
+  value           Json
+  updatedAt       DateTime @updatedAt
+}
+
+model AuditLog {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  adminId   String
+  action    String
+  entity    String
+  entityId  String?
+  details   Json?
+  createdAt DateTime @default(now())
+}
+
+model FxRate {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  base      Currency @default(USD)
+  rates     Json
+  fetchedAt DateTime @default(now())
 }

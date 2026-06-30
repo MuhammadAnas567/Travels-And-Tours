@@ -5,7 +5,7 @@ import { prisma } from "@/lib/db";
 import { getStripe } from "@/lib/stripe";
 import { tourSchema } from "@/lib/validations";
 import { revalidatePath } from "next/cache";
-import type { TourCategory, TourStatus } from "@prisma/client";
+import type { TourCategory, TourStatus, BookingStatus } from "@prisma/client";
 
 export async function createTour(formData: FormData) {
   await requireAdmin();
@@ -80,7 +80,7 @@ export async function deleteTour(id: string) {
 
 export async function updateBookingStatus(
   bookingId: string,
-  status: "PENDING" | "CONFIRMED" | "CANCELLED" | "COMPLETED"
+  status: BookingStatus
 ) {
   await requireAdmin();
   await prisma.booking.update({ where: { id: bookingId }, data: { status } });

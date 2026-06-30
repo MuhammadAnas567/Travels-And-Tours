@@ -1,15 +1,29 @@
 import Link from "next/link";
-import { Compass, Share2, Globe, Mail } from "lucide-react";
+import { Logo } from "@/components/shared/logo";
+import { Mail, Shield, CreditCard } from "lucide-react";
+import { siteConfig } from "@/lib/site-config";
+import { NewsletterForm } from "@/components/shared/newsletter-form";
+import { Container } from "@/components/ui/section";
+import { Badge } from "@/components/ui/badge";
 
 const footerLinks = {
-  explore: [
-    { href: "/tours", label: "All Tours" },
-    { href: "/tours?category=ADVENTURE", label: "Adventure" },
-    { href: "/tours?category=BEACH", label: "Beach" },
-    { href: "/tours?category=CULTURAL", label: "Cultural" },
+  outbound: [
+    { href: "/tours?audience=OUTBOUND", label: "Travel Abroad" },
+    { href: "/visa", label: "Visa Assistance" },
+    { href: "/tours?country=Turkey", label: "Turkey" },
+    { href: "/tours?country=UAE", label: "Dubai & UAE" },
+    { href: "/tours?category=UMRAH", label: "Umrah" },
+  ],
+  inbound: [
+    { href: "/tours?audience=INBOUND", label: "Visit Pakistan" },
+    { href: "/tours?country=Pakistan", label: "Hunza & Skardu" },
+    { href: "/tours?category=HERITAGE", label: "Heritage Tours" },
+    { href: "/blog", label: "Travel Guides" },
   ],
   company: [
     { href: "/about", label: "About Us" },
+    { href: "/plan-trip", label: "Custom Quote" },
+    { href: "/deals", label: "Deals" },
     { href: "/contact", label: "Contact" },
     { href: "/faq", label: "FAQ" },
     { href: "/terms", label: "Terms" },
@@ -19,40 +33,39 @@ const footerLinks = {
 
 export function Footer() {
   return (
-    <footer className="border-t border-ocean-100 bg-ocean-950 text-ocean-100">
-      <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-        <div className="grid gap-8 md:grid-cols-4">
-          <div className="md:col-span-1">
-            <Link href="/" className="flex items-center gap-2 font-semibold text-white">
-              <Compass className="h-6 w-6 text-coral-400" aria-hidden />
-              Wanderlust Tours
-            </Link>
-            <p className="mt-4 text-sm text-ocean-300">
-              Curated travel experiences to the world&apos;s most breathtaking destinations.
+    <footer className="border-t border-line bg-ink text-sand">
+      <Container className="py-16">
+        <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-5">
+          <div className="lg:col-span-2">
+            <Logo imageClassName="brightness-0 invert" />
+            <p className="mt-4 max-w-sm text-sm text-sand/70 leading-relaxed">
+              {siteConfig.tagline}
             </p>
-            <div className="mt-4 flex gap-3">
-              <a href="#" aria-label="Social media" className="text-ocean-400 hover:text-white">
-                <Share2 className="h-5 w-5" />
-              </a>
-              <a href="#" aria-label="Website" className="text-ocean-400 hover:text-white">
-                <Globe className="h-5 w-5" />
-              </a>
-              <a href="mailto:hello@wanderlust.com" aria-label="Email" className="text-ocean-400 hover:text-white">
-                <Mail className="h-5 w-5" />
-              </a>
+            <div className="mt-4 flex flex-wrap gap-2">
+              {siteConfig.trust.dtsLicense && (
+                <Badge variant="accent" className="gap-1 bg-accent/20 text-accent">
+                  <Shield className="h-3 w-3" /> DTS {siteConfig.trust.dtsLicense}
+                </Badge>
+              )}
+              {siteConfig.trust.ptdcLicense && (
+                <Badge variant="secondary" className="bg-sand/10 text-sand">
+                  PTDC {siteConfig.trust.ptdcLicense}
+                </Badge>
+              )}
+            </div>
+            <div className="mt-4 flex items-center gap-2 text-sm text-sand/60">
+              <CreditCard className="h-4 w-4" />
+              Stripe · Bank Transfer · EasyPaisa · JazzCash
             </div>
           </div>
 
           <div>
-            <h3 className="font-semibold text-white">Explore</h3>
+            <h3 className="text-caption text-sand/50">Travel Abroad</h3>
             <ul className="mt-4 space-y-2">
-              {footerLinks.explore.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-sm text-ocean-300 hover:text-white"
-                  >
-                    {link.label}
+              {footerLinks.outbound.map((l) => (
+                <li key={l.href}>
+                  <Link href={l.href} className="text-sm text-sand/70 hover:text-accent">
+                    {l.label}
                   </Link>
                 </li>
               ))}
@@ -60,15 +73,12 @@ export function Footer() {
           </div>
 
           <div>
-            <h3 className="font-semibold text-white">Company</h3>
+            <h3 className="text-caption text-sand/50">Visit Pakistan</h3>
             <ul className="mt-4 space-y-2">
-              {footerLinks.company.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-sm text-ocean-300 hover:text-white"
-                  >
-                    {link.label}
+              {footerLinks.inbound.map((l) => (
+                <li key={l.href}>
+                  <Link href={l.href} className="text-sm text-sand/70 hover:text-accent">
+                    {l.label}
                   </Link>
                 </li>
               ))}
@@ -76,24 +86,35 @@ export function Footer() {
           </div>
 
           <div>
-            <h3 className="font-semibold text-white">Contact</h3>
-            <ul className="mt-4 space-y-2 text-sm text-ocean-300">
-              <li>123 Travel Street</li>
-              <li>New York, NY 10001</li>
-              <li>
-                <a href="mailto:hello@wanderlust.com" className="hover:text-white">
-                  hello@wanderlust.com
-                </a>
-              </li>
-              <li>+1 (555) 123-4567</li>
+            <h3 className="text-caption text-sand/50">Company</h3>
+            <ul className="mt-4 space-y-2">
+              {footerLinks.company.map((l) => (
+                <li key={l.href}>
+                  <Link href={l.href} className="text-sm text-sand/70 hover:text-accent">
+                    {l.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
+            <div className="mt-6 space-y-1 text-sm text-sand/60">
+              <p>{siteConfig.office.address}</p>
+              <a href={`mailto:${siteConfig.office.email}`} className="flex items-center gap-1 hover:text-accent">
+                <Mail className="h-3.5 w-3.5" /> {siteConfig.office.email}
+              </a>
+              <p>{siteConfig.office.phone}</p>
+            </div>
           </div>
         </div>
 
-        <div className="mt-10 border-t border-ocean-800 pt-6 text-center text-sm text-ocean-400">
-          © {new Date().getFullYear()} Wanderlust Tours. All rights reserved.
+        <div className="mt-12 border-t border-sand/10 pt-8">
+          <p className="text-center text-sm text-sand/50">
+            © {new Date().getFullYear()} {siteConfig.name}. All rights reserved.
+          </p>
+          <div className="mx-auto mt-4 max-w-md">
+            <NewsletterForm dark />
+          </div>
         </div>
-      </div>
+      </Container>
     </footer>
   );
 }

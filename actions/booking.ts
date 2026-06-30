@@ -1,6 +1,6 @@
 "use server";
 
-import { auth } from "@/lib/auth";
+import { getSession } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 import { getStripe } from "@/lib/stripe";
 import {
@@ -49,7 +49,7 @@ export async function createBookingAndCheckout(data: {
   travelerInfo: TravelerInfo;
   specialRequests?: string;
 }) {
-  const session = await auth();
+  const session = await getSession();
   if (!session?.user?.id) return { error: "Please sign in to book" };
 
   const step1 = bookingStep1Schema.safeParse({
@@ -136,7 +136,7 @@ export async function createBookingAndCheckout(data: {
 }
 
 export async function cancelBooking(bookingId: string) {
-  const session = await auth();
+  const session = await getSession();
   if (!session?.user?.id) return { error: "Unauthorized" };
 
   const booking = await prisma.booking.findFirst({
@@ -171,6 +171,110 @@ export async function cancelBooking(bookingId: string) {
     await tx.booking.update({
       where: { id: bookingId },
       data: { status: "CANCELLED" },
+    });
+  });
+
+  return { success: true };
+}
+
+export async function createBookingWithLocalPayment(data: {
+  tourId: string;
+  tourDateId: string;
+  adults: number;
+  children: number;
+  travelerInfo: TravelerInfo;
+  specialRequests?: string;
+  paymentMethod: "BANK_TRANSFER" | "EASYPAISA" | "JAZZCASH";
+}) {
+  const session = await getSession();
+  if (!session?.user?.id) return { error: "Please sign in to book" };
+
+  const seatsNeeded = data.adults + data.children;
+
+  const result = await prisma.$transaction(async (tx) => {
+    const tour = await tx.tour.findUnique({ where: { id: data.tourId } });
+    const tourDate = await tx.tourDate.findUnique({ where: { id: data.tourDateId } });
+
+    if (!tour || tour.status !== "ACTIVE") throw new Error("Tour not available");
+    if (!tourDate || tourDate.tourId !== data.tourId) throw new Error("Invalid date");
+
+    const seatsLeft = tourDate.seatsTotal - tourDate.seatsBooked;
+    if (seatsNeeded > seatsLeft) throw new Error(`Only ${seatsLeft} seats available`);
+
+    const unitPrice = getTourUnitPrice(tour);
+    const totalPrice = calculateBookingTotal(unitPrice, data.adults, data.children);
+
+    const booking = await tx.booking.create({
+      data: {
+        userId: session.user!.id,
+        tourId: data.tourId,
+        tourDateId: data.tourDateId,
+        adults: data.adults,
+        children: data.children,
+        totalPrice,
+        status: "PENDING_VERIFICATION",
+        paymentMethod: data.paymentMethod,
+        travelerInfo: data.travelerInfo,
+        specialRequests: data.specialRequests,
+      },
+    });
+
+    return { booking, totalPrice };
+  });
+
+  return {
+    bookingId: result.booking.id,
+    totalPrice: result.totalPrice,
+    redirectUrl: `/booking/pending/${result.booking.id}`,
+  };
+}
+
+export async function uploadPaymentProof(bookingId: string, proofUrl: string) {
+  const session = await getSession();
+  if (!session?.user?.id) return { error: "Unauthorized" };
+
+  const booking = await prisma.booking.findFirst({
+    where: { id: bookingId, userId: session.user.id, status: "PENDING_VERIFICATION" },
+  });
+  if (!booking) return { error: "Booking not found" };
+
+  await prisma.booking.update({
+    where: { id: bookingId },
+    data: { paymentProofUrl: proofUrl },
+  });
+
+  return { success: true };
+}
+
+export async function verifyBookingPayment(bookingId: string) {
+  const session = await getSession();
+  if (session?.user?.role !== "ADMIN") return { error: "Unauthorized" };
+
+  await prisma.$transaction(async (tx) => {
+    const booking = await tx.booking.findUnique({
+      where: { id: bookingId },
+      include: { tourDate: true },
+    });
+    if (!booking || booking.status !== "PENDING_VERIFICATION") {
+      throw new Error("Invalid booking");
+    }
+
+    const seatsNeeded = booking.adults + booking.children;
+    const seatsLeft = booking.tourDate.seatsTotal - booking.tourDate.seatsBooked;
+    if (seatsNeeded > seatsLeft) throw new Error("Not enough seats");
+
+    await tx.tourDate.update({
+      where: { id: booking.tourDateId },
+      data: { seatsBooked: { increment: seatsNeeded } },
+    });
+
+    await tx.booking.update({
+      where: { id: bookingId },
+      data: {
+        status: "CONFIRMED",
+        verifiedAt: new Date(),
+        verifiedBy: session.user!.id,
+      },
     });
   });
 

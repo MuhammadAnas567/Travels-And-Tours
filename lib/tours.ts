@@ -5,6 +5,7 @@ export type TourFilters = {
   q?: string;
   category?: TourCategory;
   country?: string;
+  audience?: "OUTBOUND" | "INBOUND";
   minPrice?: number;
   maxPrice?: number;
   minDuration?: number;
@@ -21,6 +22,7 @@ export async function getTours(filters: TourFilters = {}) {
     q,
     category,
     country,
+    audience,
     minPrice,
     maxPrice,
     minDuration,
@@ -32,16 +34,56 @@ export async function getTours(filters: TourFilters = {}) {
     limit = 12,
   } = filters;
 
-  const where: Prisma.TourWhereInput = {
-    status: "ACTIVE",
-    ...(q && {
+  const andFilters: Prisma.TourWhereInput[] = [];
+
+  if (q) {
+    andFilters.push({
       OR: [
         { title: { contains: q, mode: "insensitive" } },
         { location: { contains: q, mode: "insensitive" } },
         { country: { contains: q, mode: "insensitive" } },
         { description: { contains: q, mode: "insensitive" } },
       ],
-    }),
+    });
+  }
+
+  if (audience) {
+    // Uses country until Prisma client is regenerated (restart dev server + npx prisma generate)
+    if (audience === "INBOUND") {
+      andFilters.push({
+        country: { equals: "Pakistan", mode: "insensitive" },
+      });
+    } else {
+      andFilters.push({
+        NOT: { country: { equals: "Pakistan", mode: "insensitive" } },
+      });
+    }
+  }
+
+  if (minPrice || maxPrice) {
+    andFilters.push({
+      OR: [
+        {
+          discountPrice: {
+            ...(minPrice && { gte: minPrice }),
+            ...(maxPrice && { lte: maxPrice }),
+            not: null,
+          },
+        },
+        {
+          discountPrice: null,
+          price: {
+            ...(minPrice && { gte: minPrice }),
+            ...(maxPrice && { lte: maxPrice }),
+          },
+        },
+      ],
+    });
+  }
+
+  const where: Prisma.TourWhereInput = {
+    status: "ACTIVE",
+    ...(andFilters.length > 0 && { AND: andFilters }),
     ...(category && { category }),
     ...(country && { country: { equals: country, mode: "insensitive" } }),
     ...(minDuration && { durationDays: { gte: minDuration } }),
@@ -55,25 +97,6 @@ export async function getTours(filters: TourFilters = {}) {
       },
     }),
   };
-
-  if (minPrice || maxPrice) {
-    where.OR = [
-      {
-        discountPrice: {
-          ...(minPrice && { gte: minPrice }),
-          ...(maxPrice && { lte: maxPrice }),
-          not: null,
-        },
-      },
-      {
-        discountPrice: null,
-        price: {
-          ...(minPrice && { gte: minPrice }),
-          ...(maxPrice && { lte: maxPrice }),
-        },
-      },
-    ];
-  }
 
   const orderBy: Prisma.TourOrderByWithRelationInput =
     sort === "price_asc"

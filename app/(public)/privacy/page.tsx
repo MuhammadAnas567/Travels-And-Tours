@@ -16,7 +16,7 @@ export default function PrivacyPage() {
         <h2 className="text-xl font-semibold text-ocean-800">How We Use Data</h2>
         <p>Your data is used to process bookings, send confirmations, and improve our services. We do not sell your data to third parties.</p>
         <h2 className="text-xl font-semibold text-ocean-800">Contact</h2>
-        <p>For privacy inquiries, contact hello@wanderlust.com.</p>
+        <p>For privacy inquiries, contact hello@ueb3tours.com.</p>
       </div>
     </div>
   );

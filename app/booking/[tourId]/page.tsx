@@ -1,6 +1,6 @@
 import { notFound, redirect } from "next/navigation";
 import { prisma } from "@/lib/db";
-import { auth } from "@/lib/auth";
+import { getSession } from "@/lib/auth";
 import { BookingFlow } from "@/components/shared/booking-flow";
 
 type Props = {
@@ -13,7 +13,7 @@ type Props = {
 };
 
 export default async function BookingPage({ params, searchParams }: Props) {
-  const session = await auth();
+  const session = await getSession();
   if (!session?.user) {
     redirect("/login?callbackUrl=/booking");
   }

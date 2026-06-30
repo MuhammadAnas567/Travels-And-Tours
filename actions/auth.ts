@@ -66,8 +66,8 @@ export async function loginUser(formData: FormData) {
 }
 
 export async function updateProfile(formData: FormData) {
-  const { auth } = await import("@/lib/auth");
-  const session = await auth();
+  const { getSession } = await import("@/lib/auth");
+  const session = await getSession();
   if (!session?.user?.id) return { error: "Unauthorized" };
 
   const name = formData.get("name") as string;

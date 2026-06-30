@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { auth } from "@/lib/auth";
+import { getSession } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 import { redirect } from "next/navigation";
 import { formatPrice, formatDate } from "@/lib/utils";
@@ -9,13 +9,15 @@ import { Calendar, MapPin, Ticket } from "lucide-react";
 
 const statusVariant = {
   PENDING: "warning",
+  PENDING_VERIFICATION: "warning",
+  DEPOSIT_PAID: "secondary",
   CONFIRMED: "success",
   CANCELLED: "destructive",
   COMPLETED: "secondary",
 } as const;
 
 export default async function DashboardPage() {
-  const session = await auth();
+  const session = await getSession();
   if (!session?.user) redirect("/login");
 
   const bookings = await prisma.booking.findMany({
