@@ -11,7 +11,7 @@ const buttonVariants = cva(
         default:
           "bg-primary text-white hover:bg-primary-600 rounded-[var(--radius-md)] shadow-sm",
         accent:
-          "bg-accent text-ink hover:bg-accent-600 rounded-[var(--radius-pill)] shadow-sm font-semibold",
+          "bg-gold text-midnight hover:bg-gold-light rounded-[var(--radius-pill)] shadow-md font-semibold tracking-wide",
         secondary:
           "bg-sand text-ink border border-line hover:bg-sand-200 rounded-[var(--radius-md)]",
         outline:

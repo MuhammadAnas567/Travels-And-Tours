@@ -39,62 +39,64 @@ export function TourCard({ tour, currency = "USD", rates }: TourCardProps) {
       : originalPrice;
 
   return (
-    <article className="group overflow-hidden rounded-[var(--radius-lg)] border border-line bg-surface shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-lg motion-reduce:transition-none">
+    <article className="group card-luxury overflow-hidden motion-reduce:transform-none">
       <Link href={`/tours/${tour.slug}`} className="block">
-        <div className="relative aspect-[3/4] overflow-hidden sm:aspect-[4/3]">
+        <div className="relative aspect-[4/3] overflow-hidden">
           <Image
             src={tour.images[0] ?? "/placeholder-tour.jpg"}
             alt={tour.title}
             fill
-            className="object-cover transition-transform duration-300 group-hover:scale-[1.04] motion-reduce:transform-none"
+            className="object-cover transition-transform duration-700 ease-out group-hover:scale-110 motion-reduce:transform-none"
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
-          <div className="absolute inset-0 image-overlay opacity-60" />
-          <div className="absolute bottom-0 left-0 right-0 p-4">
-            <p className="font-display text-lg text-sand">{tour.location}</p>
-            <p className="flex items-center gap-1 text-sm text-sand/80">
+          <div className="absolute inset-0 image-overlay opacity-70" />
+          <div className="absolute top-0 left-0 right-0 flex items-start justify-between p-4">
+            {tour.isFeatured ? (
+              <Badge className="bg-gold/90 text-midnight border-0 font-semibold text-[0.6875rem] tracking-wide uppercase">
+                Featured
+              </Badge>
+            ) : <span />}
+            {tour.discountPrice && (
+              <Badge className="bg-danger/90 text-pearl border-0 font-semibold text-[0.6875rem] tracking-wide uppercase">
+                On Sale
+              </Badge>
+            )}
+          </div>
+          <div className="absolute bottom-0 left-0 right-0 p-5">
+            <p className="font-display text-2xl text-pearl leading-tight">{tour.location}</p>
+            <p className="mt-0.5 flex items-center gap-1.5 text-sm text-cream/75">
               <MapPin className="h-3.5 w-3.5" strokeWidth={1.5} aria-hidden />
               {tour.country}
             </p>
           </div>
-          {tour.isFeatured && (
-            <Badge variant="accent" className="absolute left-3 top-3">
-              Featured
-            </Badge>
-          )}
-          {tour.discountPrice && (
-            <Badge variant="warning" className="absolute right-3 top-3">
-              Sale
-            </Badge>
-          )}
         </div>
-        <div className="p-5">
-          <div className="mb-2 flex items-center gap-2">
-            <Badge variant="secondary" className="text-xs capitalize">
+        <div className="p-6">
+          <div className="mb-3 flex items-center gap-2">
+            <Badge variant="secondary" className="text-[0.6875rem] capitalize tracking-wide font-medium bg-cream text-muted border-line">
               {tour.category.toLowerCase()}
             </Badge>
             {tour.avgRating > 0 && (
-              <span className="flex items-center gap-1 text-sm text-muted">
-                <Star className="h-3.5 w-3.5 fill-accent text-accent" aria-hidden />
+              <span className="flex items-center gap-1 text-sm font-medium text-muted">
+                <Star className="h-3.5 w-3.5 fill-gold text-gold" aria-hidden />
                 {tour.avgRating.toFixed(1)}
               </span>
             )}
           </div>
-          <h3 className="line-clamp-2 font-display text-lg font-medium text-ink group-hover:text-primary">
+          <h3 className="line-clamp-2 font-display text-xl text-ink group-hover:text-ocean transition-colors">
             {tour.title}
           </h3>
-          <div className="mt-2 flex items-center gap-3 text-sm text-muted">
-            <span className="flex items-center gap-1">
+          <div className="mt-2.5 flex items-center gap-4 text-sm text-muted">
+            <span className="flex items-center gap-1.5">
               <Clock className="h-3.5 w-3.5" strokeWidth={1.5} aria-hidden />
               {tour.durationDays} days
             </span>
-            <span>Max {tour.maxGroupSize}</span>
+            <span>Up to {tour.maxGroupSize} guests</span>
           </div>
-          <div className="mt-4 flex items-end justify-between">
+          <div className="mt-5 flex items-end justify-between border-t border-line pt-4">
             <div>
-              <span className="text-caption">From</span>
+              <span className="text-[0.6875rem] font-semibold uppercase tracking-widest text-muted">From</span>
               <div className="flex items-baseline gap-2">
-                <span className="text-xl font-semibold text-primary">
+                <span className="text-2xl font-semibold text-ocean">
                   {formatCurrency(displayPrice, currency)}
                 </span>
                 {displayOriginal && (
@@ -104,7 +106,9 @@ export function TourCard({ tour, currency = "USD", rates }: TourCardProps) {
                 )}
               </div>
             </div>
-            <ArrowRight className="h-5 w-5 text-primary opacity-0 transition-all group-hover:opacity-100 group-hover:translate-x-1" />
+            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-ocean/10 text-ocean transition-all group-hover:bg-ocean group-hover:text-pearl">
+              <ArrowRight className="h-4 w-4" />
+            </div>
           </div>
         </div>
       </Link>

@@ -1,6 +1,19 @@
 import { prisma } from "@/lib/db";
 import type { Prisma, TourCategory } from "@prisma/client";
 
+const INTERNATIONAL_ONLY: Prisma.TourWhereInput = {
+  NOT: { country: { equals: "Pakistan", mode: "insensitive" } },
+};
+
+function isDbConnectionError(error: unknown): boolean {
+  return (
+    typeof error === "object" &&
+    error !== null &&
+    "name" in error &&
+    (error as { name: string }).name.includes("Prisma")
+  );
+}
+
 export type TourFilters = {
   q?: string;
   category?: TourCategory;
@@ -22,7 +35,7 @@ export async function getTours(filters: TourFilters = {}) {
     q,
     category,
     country,
-    audience,
+    audience: _audience,
     minPrice,
     maxPrice,
     minDuration,
@@ -45,19 +58,6 @@ export async function getTours(filters: TourFilters = {}) {
         { description: { contains: q, mode: "insensitive" } },
       ],
     });
-  }
-
-  if (audience) {
-    // Uses country until Prisma client is regenerated (restart dev server + npx prisma generate)
-    if (audience === "INBOUND") {
-      andFilters.push({
-        country: { equals: "Pakistan", mode: "insensitive" },
-      });
-    } else {
-      andFilters.push({
-        NOT: { country: { equals: "Pakistan", mode: "insensitive" } },
-      });
-    }
   }
 
   if (minPrice || maxPrice) {
@@ -83,6 +83,7 @@ export async function getTours(filters: TourFilters = {}) {
 
   const where: Prisma.TourWhereInput = {
     status: "ACTIVE",
+    ...INTERNATIONAL_ONLY,
     ...(andFilters.length > 0 && { AND: andFilters }),
     ...(category && { category }),
     ...(country && { country: { equals: country, mode: "insensitive" } }),
@@ -141,27 +142,37 @@ export async function getTourBySlug(slug: string) {
 }
 
 export async function getFeaturedTours(limit = 6) {
-  return prisma.tour.findMany({
-    where: { status: "ACTIVE" },
-    orderBy: { avgRating: "desc" },
-    take: limit,
-  });
+  try {
+    return await prisma.tour.findMany({
+      where: { status: "ACTIVE", ...INTERNATIONAL_ONLY },
+      orderBy: { avgRating: "desc" },
+      take: limit,
+    });
+  } catch (error) {
+    if (isDbConnectionError(error)) return [];
+    throw error;
+  }
 }
 
 export async function getPopularDestinations() {
-  const tours = await prisma.tour.groupBy({
-    by: ["country", "location"],
-    where: { status: "ACTIVE" },
-    _count: { id: true },
-    orderBy: { _count: { id: "desc" } },
-    take: 6,
-  });
-  return tours;
+  try {
+    const tours = await prisma.tour.groupBy({
+      by: ["country", "location"],
+      where: { status: "ACTIVE", ...INTERNATIONAL_ONLY },
+      _count: { id: true },
+      orderBy: { _count: { id: "desc" } },
+      take: 6,
+    });
+    return tours;
+  } catch (error) {
+    if (isDbConnectionError(error)) return [];
+    throw error;
+  }
 }
 
 export async function getTourCountries() {
   const results = await prisma.tour.findMany({
-    where: { status: "ACTIVE" },
+    where: { status: "ACTIVE", ...INTERNATIONAL_ONLY },
     select: { country: true },
     distinct: ["country"],
     orderBy: { country: "asc" },

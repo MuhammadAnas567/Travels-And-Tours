@@ -4,7 +4,7 @@ type SectionProps = {
   children: React.ReactNode;
   className?: string;
   id?: string;
-  background?: "default" | "sand" | "surface" | "ink";
+  background?: "default" | "sand" | "surface" | "ink" | "midnight";
 };
 
 export function Section({
@@ -18,6 +18,7 @@ export function Section({
     sand: "bg-sand",
     surface: "bg-surface",
     ink: "bg-ink text-sand",
+    midnight: "bg-midnight text-cream",
   };
 
   return (

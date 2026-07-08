@@ -153,7 +153,7 @@ const tours = [
     durationDays: 6,
     price: 2799,
     images: [
-      "https://images.unsplash.com/photo-1504829857797-ddb29c74727e?w=800",
+      "https://images.unsplash.com/photo-1531168556467-80aace7d69bd?w=800",
       "https://images.unsplash.com/photo-1531168556467-80aace7d69bd?w=800",
     ],
     maxGroupSize: 12,

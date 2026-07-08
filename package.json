@@ -3,10 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "predev": "powershell -ExecutionPolicy Bypass -File ./scripts/ensure-mongo.ps1",
+    "predev": "node ./scripts/ensure-mongo.mjs",
     "dev": "next dev",
     "dev:mongo": "node ./scripts/mongo-memory.mjs",
-    "db:mongo": "powershell -ExecutionPolicy Bypass -File ./scripts/ensure-mongo.ps1",
+    "db:mongo": "node ./scripts/mongo-memory.mjs",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",

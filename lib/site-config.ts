@@ -1,11 +1,11 @@
 export const siteConfig = {
   name: "UEB3 Tours",
-  tagline: "Travel abroad with confidence. Welcome the world to Pakistan.",
+  tagline: "Curated international journeys for the discerning traveller.",
   whatsapp: {
     number: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "",
     defaultMessage:
       process.env.NEXT_PUBLIC_WHATSAPP_MESSAGE ??
-      "Hi! I'm interested in UEB3 Tours travel packages.",
+      "Hi! I'm interested in UEB3 Tours international packages.",
     apiEnabled: !!process.env.WHATSAPP_API_TOKEN,
   },
   bankTransfer: {
@@ -25,7 +25,7 @@ export const siteConfig = {
   },
   trust: {
     dtsLicense: process.env.TRUST_DTS_LICENSE ?? "DTS-XXXX",
-    iataNumber: process.env.TRUST_IATA_NUMBER ?? "",
+    iataNumber: process.env.TRUST_IATA_NUMBER ?? "IATA-XXXX",
     ptdcLicense: process.env.TRUST_PTDC_LICENSE ?? "",
   },
   office: {
