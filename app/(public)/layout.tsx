@@ -1,5 +1,5 @@
-import { Navbar } from "@/components/shared/navbar";
-import { Footer } from "@/components/shared/footer";
+import { Header } from "@/components/layout/header";
+import { Footer } from "@/components/layout/footer";
 
 export default function PublicLayout({
   children,
@@ -8,7 +8,7 @@ export default function PublicLayout({
 }) {
   return (
     <>
-      <Navbar />
+      <Header />
       <main className="flex-1">{children}</main>
       <Footer />
     </>

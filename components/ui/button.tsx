@@ -9,7 +9,7 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          "bg-primary text-white hover:bg-primary-600 rounded-[var(--radius-md)] shadow-sm",
+          "bg-primary-500 text-white hover:bg-primary-700 rounded-xl shadow-sm font-semibold",
         accent:
           "bg-gold text-midnight hover:bg-gold-light rounded-[var(--radius-pill)] shadow-md font-semibold tracking-wide",
         secondary:

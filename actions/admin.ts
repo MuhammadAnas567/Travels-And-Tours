@@ -98,9 +98,17 @@ export async function refundBooking(bookingId: string) {
 
   if (!booking?.paymentIntentId) return { error: "No payment to refund" };
 
-  await getStripe().refunds.create({
-    payment_intent: booking.paymentIntentId,
-  });
+  const stripe = getStripe();
+  if (!stripe) return { error: "Stripe is not configured" };
+
+  try {
+    await stripe.refunds.create({
+      payment_intent: booking.paymentIntentId,
+    });
+  } catch (err) {
+    console.error("[refund]", err);
+    return { error: "Stripe refund failed" };
+  }
 
   await prisma.$transaction(async (tx) => {
     if (booking.status === "CONFIRMED") {

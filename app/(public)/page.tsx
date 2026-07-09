@@ -1,245 +1,219 @@
 import Image from "next/image";
 import Link from "next/link";
-import { SearchBar } from "@/components/shared/search-bar";
-import { TourCard } from "@/components/shared/tour-card";
+import { SearchWidget } from "@/components/search/search-widget";
+import { DestinationCard } from "@/components/cards/destination-card";
+import { HotelCard } from "@/components/cards/hotel-card";
+import { getTrendingDestinations, getPopularHotels, getDealOfWeek } from "@/lib/data/home";
+import {
+  Shield, Headphones, BadgePercent, Lock, Star, ChevronRight,
+  Palmtree, Building2, Mountain, Compass,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Container, Section, SectionHeader } from "@/components/ui/section";
-import { getFeaturedTours, getPopularDestinations } from "@/lib/tours";
-import { getPreferredCurrency } from "@/lib/locale";
-import { getFxRates } from "@/lib/currency";
-import { siteConfig } from "@/lib/site-config";
-import { MapPin, Star, ArrowRight, Globe2, Shield, Sparkles, Compass } from "lucide-react";
-import { NewsletterForm } from "@/components/shared/newsletter-form";
 
-const DEST_IMAGES: Record<string, string> = {
-  Switzerland: "https://images.unsplash.com/photo-1531366936337-7c912a4589a7?w=600",
-  Maldives: "https://images.unsplash.com/photo-1514282401047-d79a71a590e8?w=600",
-  Japan: "https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=600",
-  Kenya: "https://images.unsplash.com/photo-1516426122078-c23e76319801?w=600",
-  France: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=600",
-  Indonesia: "https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=600",
-};
+const trustFeatures = [
+  { icon: Shield, title: "Book with confidence", text: "Free cancellation on most hotels" },
+  { icon: BadgePercent, title: "Best price guarantee", text: "Find a lower price? We'll match it" },
+  { icon: Headphones, title: "24/7 support", text: "Real humans, anytime you need help" },
+  { icon: Lock, title: "Secure payments", text: "Your data is encrypted and protected" },
+];
+
+const categories = [
+  { label: "Beach", icon: Palmtree, href: "/hotels?tag=beach", image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400" },
+  { label: "City", icon: Building2, href: "/hotels?city=Paris", image: "https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?w=400" },
+  { label: "Mountains", icon: Mountain, href: "/hotels?city=Interlaken", image: "https://images.unsplash.com/photo-1531366936337-7c912a4589a7?w=400" },
+  { label: "Adventure", icon: Compass, href: "/packages?category=adventure", image: "https://images.unsplash.com/photo-1516426122078-c23e76319801?w=400" },
+];
+
+const testimonials = [
+  { name: "Sarah M.", location: "London", text: "Booked flights and hotel in Tokyo in minutes. Seamless experience from start to finish.", rating: 5 },
+  { name: "Ahmed K.", location: "Dubai", text: "The Maldives package was incredible value. UEB3 made our honeymoon unforgettable.", rating: 5 },
+  { name: "Emily R.", location: "New York", text: "Best travel site I've used. Filters are spot-on and prices beat every competitor.", rating: 5 },
+];
 
 export default async function HomePage() {
-  const [featuredTours, destinations, currency, rates] = await Promise.all([
-    getFeaturedTours(6),
-    getPopularDestinations(),
-    getPreferredCurrency(),
-    getFxRates(),
+  const [destinations, hotels, deal] = await Promise.all([
+    getTrendingDestinations(8),
+    getPopularHotels(6),
+    getDealOfWeek(),
   ]);
-
-  const testimonials = [
-    {
-      name: "James Richardson",
-      location: "London, UK",
-      text: "The Swiss Alps tour exceeded every expectation. Flawless logistics, breathtaking scenery, and guides who truly cared.",
-      rating: 5,
-    },
-    {
-      name: "Aisha Malik",
-      location: "Dubai, UAE",
-      text: "Maldives luxury escape was pure magic. UEB3 handled every detail — from seaplane transfers to private dining.",
-      rating: 5,
-    },
-    {
-      name: "David Chen",
-      location: "Singapore",
-      text: "Kenya safari was the trip of a lifetime. We saw the Big Five on day one. Absolutely world-class organisation.",
-      rating: 5,
-    },
-  ];
 
   return (
     <>
       {/* Hero */}
-      <section className="relative flex min-h-[92vh] items-center overflow-hidden bg-midnight">
-        <Image
-          src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=1920&q=80"
-          alt="International travel destinations"
-          fill
-          className="object-cover opacity-50 motion-safe:animate-[kenburns_25s_ease-in-out_infinite_alternate]"
-          priority
-          sizes="100vw"
-        />
-        <div className="absolute inset-0 image-overlay-hero" />
-        <div className="absolute inset-0 bg-gradient-to-t from-midnight via-transparent to-midnight/40" />
-
-        <Container className="relative py-28 md:py-36">
-          <div className="max-w-4xl animate-fade-up">
-            <p className="text-caption text-gold">World-Class International Travel</p>
-            <h1 className="mt-4 font-display text-hero text-pearl">
-              Discover the world&apos;s
-              <br />
-              <span className="gold-gradient-text">finest destinations</span>
+      <section className="relative -mt-16 pt-16">
+        <div className="relative min-h-[580px] md:min-h-[640px] flex items-end">
+          <Image
+            src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=1920&q=80"
+            alt="Explore the world"
+            fill
+            className="object-cover"
+            priority
+            sizes="100vw"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-primary-900/40 via-primary-900/20 to-primary-900/70" />
+          <div className="relative w-full mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pb-32 md:pb-40 pt-32">
+            <h1 className="text-hero text-white max-w-2xl">
+              Explore the world with confidence
             </h1>
-            <p className="mt-6 max-w-xl text-lg text-cream/75 leading-relaxed">
-              Hand-crafted journeys across 50+ countries — luxury resorts, wild safaris,
-              cultural immersions, and adventures that redefine travel.
+            <p className="mt-4 max-w-lg text-lg text-white/80">
+              Flights, hotels, packages, and more — all in one place. Real prices, real availability.
             </p>
-            <div className="mt-10 max-w-2xl">
-              <SearchBar dark />
-            </div>
-            <div className="mt-8 flex flex-wrap gap-6 text-sm text-cream/50">
-              <span className="flex items-center gap-2">
-                <Globe2 className="h-4 w-4 text-gold" /> 50+ Countries
-              </span>
-              <span className="flex items-center gap-2">
-                <Shield className="h-4 w-4 text-gold" /> Licensed & Insured
-              </span>
-              <span className="flex items-center gap-2">
-                <Sparkles className="h-4 w-4 text-gold" /> Premium Experiences
-              </span>
-            </div>
           </div>
-        </Container>
+        </div>
+
+        {/* Floating search widget */}
+        <div className="relative mx-auto max-w-5xl px-4 sm:px-6 -mt-24 md:-mt-28 z-10">
+          <SearchWidget />
+        </div>
       </section>
 
-      {/* Category strip */}
-      <Section background="surface" className="!py-10 border-b border-line">
-        <Container>
-          <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
-            {[
-              { href: "/tours?category=LUXURY", label: "Luxury", icon: Sparkles, img: "https://images.unsplash.com/photo-1573843981267-be1999ff37cd?w=400" },
-              { href: "/tours?category=ADVENTURE", label: "Adventure", icon: Compass, img: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400" },
-              { href: "/tours?category=WILDLIFE", label: "Safari", icon: Globe2, img: "https://images.unsplash.com/photo-1547970810-dc1eac37d174?w=400" },
-              { href: "/tours?category=BEACH", label: "Beach", icon: MapPin, img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400" },
-            ].map((cat) => (
-              <Link
-                key={cat.href}
-                href={cat.href}
-                className="group relative overflow-hidden rounded-[var(--radius-lg)] aspect-[4/3]"
-              >
-                <Image src={cat.img} alt={cat.label} fill className="object-cover transition-transform duration-500 group-hover:scale-110" sizes="25vw" />
-                <div className="absolute inset-0 bg-midnight/40 group-hover:bg-midnight/30 transition-colors" />
-                <div className="absolute inset-0 flex flex-col items-center justify-center text-pearl">
-                  <cat.icon className="h-6 w-6 mb-2 text-gold" strokeWidth={1.5} />
-                  <span className="font-display text-xl">{cat.label}</span>
+      {/* Trending destinations */}
+      <section className="py-16 md:py-20">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="flex items-end justify-between mb-8">
+            <div>
+              <h2 className="text-h2 font-heading font-bold text-ink-900">Trending destinations</h2>
+              <p className="mt-1 text-ink-500">Where travellers are booking right now</p>
+            </div>
+            <Link href="/hotels" className="hidden sm:flex items-center gap-1 text-sm font-semibold text-primary-500 hover:text-primary-700">
+              View all <ChevronRight className="h-4 w-4" />
+            </Link>
+          </div>
+          <div className="flex gap-5 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide">
+            {destinations.length > 0 ? (
+              destinations.map((d) => (
+                <div key={String(d._id)} className="snap-start">
+                  <DestinationCard
+                    name={d.name}
+                    country={d.country}
+                    image={d.image}
+                    priceFrom={d.priceFrom}
+                  />
                 </div>
-              </Link>
-            ))}
+              ))
+            ) : (
+              <p className="text-ink-500 py-8">Run <code className="bg-primary-100 px-2 py-0.5 rounded">npm run seed</code> to load destinations.</p>
+            )}
           </div>
-        </Container>
-      </Section>
+        </div>
+      </section>
 
-      {/* Featured tours */}
-      <Section>
-        <Container>
-          <SectionHeader
-            eyebrow="Curated Collection"
-            title="Signature departures"
-            description="Expertly designed itineraries to the world's most extraordinary places."
-          />
-          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-            {featuredTours.map((tour) => (
-              <TourCard key={tour.id} tour={tour} currency={currency} rates={rates} />
-            ))}
-          </div>
-          <div className="mt-12 text-center">
-            <Button variant="accent" size="lg" asChild>
-              <Link href="/tours">
-                Explore all destinations <ArrowRight className="h-4 w-4" />
-              </Link>
+      {/* Deal of the week */}
+      {deal && (
+        <section className="bg-accent-100 border-y border-accent-500/20">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-10 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+            <div>
+              <p className="text-xs font-bold uppercase tracking-widest text-accent-600">Deal of the week</p>
+              <h2 className="mt-1 font-heading text-2xl font-bold text-ink-900">{deal.name}</h2>
+              <p className="text-ink-500">{deal.city}, {deal.country} — from <strong className="text-ink-900">${deal.pricePerNight}/night</strong></p>
+            </div>
+            <Button asChild className="bg-accent-600 hover:bg-accent-500 text-ink-900 font-bold rounded-xl h-12 px-8">
+              <Link href={`/hotels/${deal.slug}`}>Book now</Link>
             </Button>
           </div>
-        </Container>
-      </Section>
+        </section>
+      )}
 
-      {/* Why us */}
-      <Section background="midnight" className="!bg-midnight text-cream">
-        <Container>
-          <SectionHeader
-            eyebrow="Why UEB3"
-            title="Travel without compromise"
-            align="center"
-            className="[&_h2]:text-cream [&_p]:text-cream/60"
-          />
-          <div className="grid gap-6 md:grid-cols-3">
-            {[
-              { icon: Shield, title: "Fully licensed", text: `IATA ${siteConfig.trust.iataNumber} · DTS ${siteConfig.trust.dtsLicense}` },
-              { icon: Globe2, title: "Global expertise", text: "Local guides, international standards, 24/7 support on every journey" },
-              { icon: Sparkles, title: "Tailored experiences", text: "From private villas in Maldives to exclusive safari camps in Kenya" },
-            ].map((item) => (
-              <div key={item.title} className="rounded-[var(--radius-lg)] border border-cream/10 bg-cream/5 p-8 text-center backdrop-blur-sm">
-                <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-gold/15">
-                  <item.icon className="h-6 w-6 text-gold" strokeWidth={1.5} />
+      {/* Why book with us */}
+      <section className="py-16 md:py-20 bg-surface">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <h2 className="text-h2 font-heading font-bold text-ink-900 text-center">Why book with UEB3</h2>
+          <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {trustFeatures.map((f) => (
+              <div key={f.title} className="rounded-2xl border border-line bg-surface-alt p-6 text-center card-hover">
+                <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-xl bg-primary-100 text-primary-500">
+                  <f.icon className="h-6 w-6" />
                 </div>
-                <h3 className="mt-5 font-display text-xl text-cream">{item.title}</h3>
-                <p className="mt-2 text-sm text-cream/55 leading-relaxed">{item.text}</p>
+                <h3 className="mt-4 font-heading font-bold text-ink-900">{f.title}</h3>
+                <p className="mt-1 text-sm text-ink-500">{f.text}</p>
               </div>
             ))}
           </div>
-        </Container>
-      </Section>
+        </div>
+      </section>
 
-      {/* Destinations grid */}
-      <Section background="sand">
-        <Container>
-          <SectionHeader
-            eyebrow="Explore"
-            title="Popular destinations"
-            description="Where our travellers are heading next."
-          />
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {destinations.map((dest) => (
-              <Link
-                key={`${dest.country}-${dest.location}`}
-                href={`/tours?country=${encodeURIComponent(dest.country)}`}
-                className="group relative overflow-hidden rounded-[var(--radius-lg)] aspect-[16/10]"
-              >
-                <Image
-                  src={DEST_IMAGES[dest.country] ?? "https://images.unsplash.com/photo-1488085061387-422e29b40080?w=600"}
-                  alt={dest.location}
-                  fill
-                  className="object-cover transition-transform duration-500 group-hover:scale-105"
-                  sizes="33vw"
+      {/* Popular hotels */}
+      <section className="py-16 md:py-20">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <h2 className="text-h2 font-heading font-bold text-ink-900">Popular hotels</h2>
+          <p className="mt-1 text-ink-500 mb-8">Top-rated stays loved by our travellers</p>
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {hotels.length > 0 ? (
+              hotels.map((h) => (
+                <HotelCard
+                  key={String(h._id)}
+                  slug={h.slug}
+                  name={h.name}
+                  city={h.city}
+                  country={h.country}
+                  image={h.images[0]}
+                  starRating={h.starRating}
+                  avgRating={h.avgRating}
+                  reviewCount={h.reviewCount}
+                  pricePerNight={h.pricePerNight}
+                  amenities={h.amenities}
                 />
-                <div className="absolute inset-0 image-overlay" />
-                <div className="absolute bottom-0 left-0 right-0 p-5">
-                  <h3 className="font-display text-2xl text-pearl">{dest.location}</h3>
-                  <p className="text-sm text-cream/70">{dest.country} · {dest._count.id} packages</p>
+              ))
+            ) : (
+              <p className="col-span-3 text-ink-500">No hotels yet — run <code className="bg-primary-100 px-2 py-0.5 rounded">npm run seed</code></p>
+            )}
+          </div>
+        </div>
+      </section>
+
+      {/* Explore by category */}
+      <section className="py-16 md:py-20 bg-surface-alt">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <h2 className="text-h2 font-heading font-bold text-ink-900">Explore by category</h2>
+          <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4">
+            {categories.map((cat) => (
+              <Link key={cat.label} href={cat.href} className="group relative overflow-hidden rounded-2xl aspect-square card-hover shadow-card">
+                <Image src={cat.image} alt={cat.label} fill className="object-cover group-hover:scale-105 transition-transform duration-500" sizes="25vw" />
+                <div className="absolute inset-0 bg-ink-900/40 group-hover:bg-ink-900/30 transition-colors" />
+                <div className="absolute inset-0 flex flex-col items-center justify-center text-white">
+                  <cat.icon className="h-8 w-8 mb-2" />
+                  <span className="font-heading text-xl font-bold">{cat.label}</span>
                 </div>
               </Link>
             ))}
           </div>
-        </Container>
-      </Section>
+        </div>
+      </section>
 
       {/* Testimonials */}
-      <Section background="surface">
-        <Container>
-          <SectionHeader title="Traveller stories" align="center" />
-          <div className="grid gap-6 md:grid-cols-3">
+      <section className="py-16 md:py-20">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <h2 className="text-h2 font-heading font-bold text-ink-900 text-center">What travellers say</h2>
+          <div className="mt-10 grid gap-6 md:grid-cols-3">
             {testimonials.map((t) => (
-              <blockquote key={t.name} className="card-luxury p-7">
+              <blockquote key={t.name} className="rounded-2xl border border-line bg-surface p-6 shadow-card">
                 <div className="flex gap-1">
                   {Array.from({ length: t.rating }, (_, i) => (
-                    <Star key={i} className="h-4 w-4 fill-gold text-gold" aria-hidden />
+                    <Star key={i} className="h-4 w-4 fill-accent-500 text-accent-500" />
                   ))}
                 </div>
-                <p className="mt-4 text-muted leading-relaxed">&ldquo;{t.text}&rdquo;</p>
-                <footer className="mt-5 border-t border-line pt-4">
-                  <cite className="not-italic">
-                    <span className="font-semibold text-ink">{t.name}</span>
-                    <span className="block text-sm text-muted">{t.location}</span>
-                  </cite>
+                <p className="mt-3 text-ink-700 leading-relaxed">&ldquo;{t.text}&rdquo;</p>
+                <footer className="mt-4 border-t border-line pt-4">
+                  <cite className="not-italic font-semibold text-ink-900">{t.name}</cite>
+                  <span className="block text-sm text-ink-500">{t.location}</span>
                 </footer>
               </blockquote>
             ))}
           </div>
-        </Container>
-      </Section>
+        </div>
+      </section>
 
-      {/* CTA */}
-      <Section background="midnight" className="!bg-midnight">
-        <Container className="text-center">
-          <p className="text-caption text-gold">Stay inspired</p>
-          <h2 className="mt-2 font-display text-h2 text-cream">Your next adventure awaits</h2>
-          <p className="mx-auto mt-3 max-w-md text-cream/55">
-            Exclusive deals, destination guides, and travel inspiration — delivered to your inbox.
-          </p>
-          <NewsletterForm dark />
-        </Container>
-      </Section>
+      {/* App CTA */}
+      <section className="bg-primary-900 py-16">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="font-heading text-2xl md:text-3xl font-bold text-white">Take UEB3 Travel everywhere</h2>
+          <p className="mt-2 text-white/60 max-w-md mx-auto">Get exclusive app-only deals and manage your trips on the go.</p>
+          <div className="mt-6 flex justify-center gap-3">
+            <Button className="bg-white text-primary-900 hover:bg-white/90 rounded-xl h-11 px-6 font-semibold">App Store</Button>
+            <Button className="bg-white text-primary-900 hover:bg-white/90 rounded-xl h-11 px-6 font-semibold">Google Play</Button>
+          </div>
+        </div>
+      </section>
     </>
   );
 }

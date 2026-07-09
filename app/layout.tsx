@@ -1,47 +1,44 @@
 import type { Metadata } from "next";
-import { Playfair_Display, Plus_Jakarta_Sans } from "next/font/google";
+import { Plus_Jakarta_Sans, Inter } from "next/font/google";
 import { Toaster } from "sonner";
 import { Providers } from "@/components/providers";
-import { WhatsAppButton } from "@/components/shared/whatsapp-button";
 import "./globals.css";
 
-const displayFont = Playfair_Display({
+const displayFont = Plus_Jakarta_Sans({
   variable: "--font-display",
   subsets: ["latin"],
+  weight: ["600", "700"],
   display: "swap",
 });
 
-const bodyFont = Plus_Jakarta_Sans({
+const bodyFont = Inter({
   variable: "--font-body",
   subsets: ["latin"],
+  weight: ["400", "500", "600"],
   display: "swap",
 });
 
 export const metadata: Metadata = {
   title: {
-    default: "UEB3 Tours — Curated International Travel Experiences",
-    template: "%s | UEB3 Tours",
+    default: "UEB3 Travel — Flights, Hotels & Packages Worldwide",
+    template: "%s | UEB3 Travel",
   },
   description:
-    "Discover hand-crafted international tour packages — from Swiss Alps to Maldives, Kenya safaris to Tokyo. Premium travel, expert guides, seamless bookings.",
+    "Book flights, hotels, and vacation packages worldwide. Best prices, free cancellation, and 24/7 support.",
   metadataBase: new URL(
     process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000"
   ),
 };
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      className={`${displayFont.variable} ${bodyFont.variable} h-full`}
-    >
-      <body className="min-h-full flex flex-col antialiased bg-cream text-ink">
+    <html lang="en" className={`${displayFont.variable} ${bodyFont.variable} h-full`}>
+      <body className="min-h-full flex flex-col antialiased bg-surface-alt text-ink-700 font-sans">
         <Providers>{children}</Providers>
-        <WhatsAppButton />
         <Toaster position="top-right" richColors />
       </body>
     </html>

@@ -9,7 +9,7 @@ A production-ready full-stack travel booking platform built with **Next.js 16 (A
 - Tour listing with server-side pagination, filters (URL-synced), and sorting
 - Tour detail pages with gallery, itinerary, reviews, and booking widget
 - Multi-step booking flow with server-side price calculation
-- Stripe Checkout + webhook confirmation with e-ticket emails
+- Stripe Payment Element (PaymentIntent) + webhook confirmation with e-ticket emails
 - User dashboard (bookings, profile, printable e-tickets, cancellation)
 - Auth: email/password + Google OAuth
 - Static pages: About, Contact, FAQ, Terms, Privacy
@@ -27,7 +27,7 @@ A production-ready full-stack travel booking platform built with **Next.js 16 (A
 - **Framework:** Next.js 16 (App Router, Server Components, Server Actions)
 - **Database:** MongoDB + Prisma ORM
 - **Auth:** NextAuth.js v5 (Auth.js)
-- **Payments:** Stripe Checkout + Webhooks
+- **Payments:** Stripe PaymentIntent + Payment Element + Webhooks
 - **Email:** Resend
 - **Styling:** Tailwind CSS v4 + custom UI components
 - **Forms:** React Hook Form + Zod validation
@@ -80,21 +80,31 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000)
 
-### 5. Stripe webhooks (local development)
+### 5. Stripe payments (test mode)
 
-Install the [Stripe CLI](https://stripe.com/docs/stripe-cli) and forward events:
+1. Get **test** keys from [Stripe Dashboard → API keys](https://dashboard.stripe.com/test/apikeys):
+   - `STRIPE_SECRET_KEY` (`sk_test_...`)
+   - `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` (`pk_test_...`)
+
+2. Install the [Stripe CLI](https://stripe.com/docs/stripe-cli) and forward webhooks:
 
 ```bash
 stripe listen --forward-to localhost:3000/api/webhooks/stripe
 ```
 
-Copy the webhook signing secret (`whsec_...`) to `STRIPE_WEBHOOK_SECRET` in `.env.local`.
+3. Copy the CLI signing secret (`whsec_...`) into `STRIPE_WEBHOOK_SECRET` in `.env.local`, then restart `npm run dev`.
 
-Trigger a test event:
+4. Book a tour while signed in. On the **Payment** step the Stripe Payment Element mounts in-page (no redirect). Use test card `4242 4242 4242 4242`, any future expiry, any CVC.
+
+5. The webhook (`payment_intent.succeeded`) is the **source of truth**: it confirms the booking, generates `bookingReference` (e.g. `UEB3-A1B2C3`), and sends the confirmation email. Success page reads the finalized booking from MongoDB.
+
+6. Optional CLI trigger (PaymentIntent path):
 
 ```bash
-stripe trigger checkout.session.completed
+stripe trigger payment_intent.succeeded
 ```
+
+> If Stripe keys are missing, the app still runs — create-intent returns `503` with a clear message. Admin refunds also no-op safely when Stripe is unset.
 
 ## Default Login Credentials
 

@@ -204,6 +204,7 @@ model Booking {
   paymentProofUrl   String?
   paymentIntentId   String?
   stripeSessionId   String?
+  bookingReference  String?       @unique
   couponCode        String?
   depositAmount     Float?
   balanceDue        Float?

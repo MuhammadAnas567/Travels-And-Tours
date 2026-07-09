@@ -99,9 +99,16 @@ export async function createBookingAndCheckout(data: {
     return { booking, totalPrice };
   });
 
+  // Legacy Checkout Session path (kept for compatibility).
+  // Preferred flow: POST /api/payments/create-intent + Payment Element.
+  const stripe = getStripe();
+  if (!stripe) {
+    return { error: "Payments are not configured. Set STRIPE_SECRET_KEY." };
+  }
+
   const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";
 
-  const checkoutSession = await getStripe().checkout.sessions.create({
+  const checkoutSession = await stripe.checkout.sessions.create({
     mode: "payment",
     customer_email: data.travelerInfo.email,
     line_items: [

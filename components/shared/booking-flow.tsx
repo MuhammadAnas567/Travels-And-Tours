@@ -1,16 +1,16 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { createBookingAndCheckout, calculatePrice } from "@/actions/booking";
+import { calculatePrice } from "@/actions/booking";
+import { StripePaymentElement } from "@/components/shared/stripe-payment-element";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { formatPrice } from "@/lib/utils";
-import { useEffect } from "react";
 
 export function BookingFlow({
   tour,
@@ -27,6 +27,8 @@ export function BookingFlow({
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
   const [pricing, setPricing] = useState<{ total: number; unitPrice: number } | null>(null);
+  const [clientSecret, setClientSecret] = useState<string | null>(null);
+  const [bookingId, setBookingId] = useState<string | null>(null);
   const [traveler, setTraveler] = useState({
     name: "",
     email: "",
@@ -55,63 +57,91 @@ export function BookingFlow({
     return Object.keys(newErrors).length === 0;
   }
 
-  async function handleConfirm() {
+  async function createPaymentIntent() {
     setLoading(true);
-    const result = await createBookingAndCheckout({
-      tourId: tour.id,
-      tourDateId,
-      adults,
-      children,
-      travelerInfo: {
-        name: traveler.name,
-        email: traveler.email,
-        phone: traveler.phone,
-      },
-      specialRequests: traveler.specialRequests || undefined,
-    });
-    setLoading(false);
+    try {
+      const res = await fetch("/api/payments/create-intent", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          tourId: tour.id,
+          tourDateId,
+          adults,
+          children,
+          travelerInfo: {
+            name: traveler.name,
+            email: traveler.email,
+            phone: traveler.phone,
+          },
+          specialRequests: traveler.specialRequests || undefined,
+        }),
+      });
 
-    if (result.error) {
-      toast.error(result.error);
-      return;
-    }
-    if (result.url) {
-      window.location.href = result.url;
+      const data = await res.json();
+      if (!res.ok) {
+        toast.error(data.error ?? "Could not start payment");
+        setLoading(false);
+        return;
+      }
+
+      setClientSecret(data.clientSecret);
+      setBookingId(data.bookingId);
+      if (typeof data.amount === "number") {
+        setPricing((prev) =>
+          prev ? { ...prev, total: data.amount } : { total: data.amount, unitPrice: data.amount }
+        );
+      }
+      setStep(3);
+    } catch {
+      toast.error("Payment setup failed. Please try again.");
+    } finally {
+      setLoading(false);
     }
   }
 
   return (
     <div className="mx-auto max-w-2xl px-4 py-10">
-      <h1 className="text-2xl font-bold text-ocean-900">Book: {tour.title}</h1>
+      <h1 className="text-2xl font-bold text-ink-900">Book: {tour.title}</h1>
 
       <div className="mt-4 flex gap-2" aria-hidden>
         {[1, 2, 3].map((s) => (
           <div
             key={s}
-            className={`h-2 flex-1 rounded-full ${s <= step ? "bg-ocean-600" : "bg-ocean-100"}`}
+            className={`h-2 flex-1 rounded-full ${s <= step ? "bg-primary-500" : "bg-primary-100"}`}
           />
         ))}
       </div>
+      <p className="mt-2 text-xs font-medium uppercase tracking-wide text-ink-500">
+        {step === 1 && "Trip details"}
+        {step === 2 && "Traveler information"}
+        {step === 3 && "Secure payment"}
+      </p>
 
       {step === 1 && (
         <Card className="mt-6">
-          <CardHeader><CardTitle>Trip Details</CardTitle></CardHeader>
+          <CardHeader>
+            <CardTitle>Trip Details</CardTitle>
+          </CardHeader>
           <CardContent className="space-y-3">
             <p>Adults: {adults}</p>
             <p>Children: {children}</p>
             {pricing && (
-              <p className="text-lg font-semibold text-ocean-700">
+              <p className="text-lg font-semibold text-primary-700">
                 Total: {formatPrice(pricing.total)}
               </p>
             )}
-            <Button onClick={() => setStep(2)} className="w-full">Continue</Button>
+            <Button onClick={() => setStep(2)} className="w-full bg-primary-500 hover:bg-primary-700">
+              Continue
+            </Button>
           </CardContent>
         </Card>
       )}
 
       {step === 2 && (
         <Card className="mt-6">
-          <CardHeader><CardTitle>Traveler Information</CardTitle></CardHeader>
+          <CardHeader>
+            <CardTitle>Traveler Information</CardTitle>
+          </CardHeader>
           <CardContent className="space-y-4">
             <div>
               <Label htmlFor="name">Full name</Label>
@@ -153,40 +183,57 @@ export function BookingFlow({
                 className="mt-1"
               />
             </div>
+            {pricing && (
+              <p className="text-sm text-ink-500">
+                Amount due: <strong className="text-ink-900">{formatPrice(pricing.total)}</strong>
+              </p>
+            )}
             <div className="flex gap-3">
-              <Button type="button" variant="outline" onClick={() => setStep(1)}>Back</Button>
+              <Button type="button" variant="outline" onClick={() => setStep(1)}>
+                Back
+              </Button>
               <Button
-                className="flex-1"
-                onClick={() => validateStep2() && setStep(3)}
+                className="flex-1 bg-primary-500 hover:bg-primary-700"
+                disabled={loading}
+                onClick={() => {
+                  if (validateStep2()) void createPaymentIntent();
+                }}
               >
-                Review
+                {loading ? "Preparing payment…" : "Continue to payment"}
               </Button>
             </div>
           </CardContent>
         </Card>
       )}
 
-      {step === 3 && (
+      {step === 3 && clientSecret && bookingId && (
         <Card className="mt-6">
-          <CardHeader><CardTitle>Review & Pay</CardTitle></CardHeader>
+          <CardHeader>
+            <CardTitle>Secure payment</CardTitle>
+          </CardHeader>
           <CardContent className="space-y-4">
-            <div className="rounded-lg bg-ocean-50 p-4 text-sm space-y-1">
-              <p><strong>Traveler:</strong> {traveler.name}</p>
-              <p><strong>Email:</strong> {traveler.email}</p>
-              <p><strong>Phone:</strong> {traveler.phone}</p>
+            <div className="rounded-xl bg-primary-100/60 p-4 text-sm space-y-1">
+              <p>
+                <strong>Traveler:</strong> {traveler.name}
+              </p>
+              <p>
+                <strong>Email:</strong> {traveler.email}
+              </p>
+              {pricing && (
+                <p className="pt-1 text-xl font-bold text-ink-900">
+                  {formatPrice(pricing.total)}
+                </p>
+              )}
             </div>
-            {pricing && (
-              <p className="text-2xl font-bold text-ocean-700">{formatPrice(pricing.total)}</p>
-            )}
-            <p className="text-sm text-gray-500">
-              You will be redirected to Stripe for secure payment.
-            </p>
-            <div className="flex gap-3">
-              <Button type="button" variant="outline" onClick={() => setStep(2)}>Back</Button>
-              <Button className="flex-1" onClick={handleConfirm} disabled={loading}>
-                {loading ? "Processing..." : "Confirm & Pay"}
-              </Button>
-            </div>
+            <StripePaymentElement
+              clientSecret={clientSecret}
+              bookingId={bookingId}
+              onBack={() => {
+                setStep(2);
+                setClientSecret(null);
+                setBookingId(null);
+              }}
+            />
           </CardContent>
         </Card>
       )}
