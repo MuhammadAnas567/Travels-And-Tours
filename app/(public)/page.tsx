@@ -10,6 +10,8 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
+export const dynamic = "force-dynamic";
+
 const trustFeatures = [
   { icon: Shield, title: "Book with confidence", text: "Free cancellation on most hotels" },
   { icon: BadgePercent, title: "Best price guarantee", text: "Find a lower price? We'll match it" },

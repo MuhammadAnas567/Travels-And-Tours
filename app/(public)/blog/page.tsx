@@ -4,17 +4,24 @@ import { prisma } from "@/lib/db";
 import { Container, Section, SectionHeader } from "@/components/ui/section";
 import { Badge } from "@/components/ui/badge";
 
+export const dynamic = "force-dynamic";
+
 export const metadata = {
   title: "Travel Guides",
   description: "Visa guides, destination tips, and travel advice for Pakistanis and international visitors.",
 };
 
 export default async function BlogIndexPage() {
-  const posts = await prisma.blogPost.findMany({
-    where: { published: true },
-    orderBy: { publishedAt: "desc" },
-    take: 12,
-  });
+  let posts: Awaited<ReturnType<typeof prisma.blogPost.findMany>> = [];
+  try {
+    posts = await prisma.blogPost.findMany({
+      where: { published: true },
+      orderBy: { publishedAt: "desc" },
+      take: 12,
+    });
+  } catch (error) {
+    console.error("[blog] DB unavailable:", error);
+  }
 
   return (
     <Section>

@@ -4,6 +4,8 @@ import { Container, Section, SectionHeader } from "@/components/ui/section";
 import { Badge } from "@/components/ui/badge";
 import { formatCurrency } from "@/lib/currency";
 
+export const dynamic = "force-dynamic";
+
 export const metadata = {
   title: "Deals & Offers",
   description: "Seasonal deals and exclusive coupon offers on tour packages.",
@@ -11,14 +13,19 @@ export const metadata = {
 
 export default async function DealsPage() {
   const now = new Date();
-  const coupons = await prisma.coupon.findMany({
-    where: {
-      isActive: true,
-      validFrom: { lte: now },
-      validTo: { gte: now },
-    },
-    orderBy: { validTo: "asc" },
-  });
+  let coupons: Awaited<ReturnType<typeof prisma.coupon.findMany>> = [];
+  try {
+    coupons = await prisma.coupon.findMany({
+      where: {
+        isActive: true,
+        validFrom: { lte: now },
+        validTo: { gte: now },
+      },
+      orderBy: { validTo: "asc" },
+    });
+  } catch (error) {
+    console.error("[deals] DB unavailable:", error);
+  }
 
   return (
     <Section>

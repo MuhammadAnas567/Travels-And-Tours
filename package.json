@@ -8,6 +8,7 @@
     "dev:mongo": "node ./scripts/mongo-memory.mjs",
     "db:mongo": "node ./scripts/mongo-memory.mjs",
     "build": "next build",
+    "vercel-build": "prisma generate && next build",
     "start": "next start",
     "lint": "eslint",
     "db:generate": "prisma generate",
@@ -16,7 +17,7 @@
     "db:seed": "prisma db seed",
     "db:studio": "prisma studio",
     "seed": "npx tsx scripts/seed.ts",
-    "postinstall": "prisma generate"
+    "postinstall": "node ./scripts/prisma-generate.mjs"
   },
   "prisma": {
     "seed": "npx tsx prisma/seed.ts"
