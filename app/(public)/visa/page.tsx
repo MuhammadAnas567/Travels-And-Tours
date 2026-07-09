@@ -5,6 +5,8 @@ import { Container, Section, SectionHeader } from "@/components/ui/section";
 import { Badge } from "@/components/ui/badge";
 import { formatCurrency } from "@/lib/currency";
 
+export const dynamic = "force-dynamic";
+
 export const metadata = {
   title: "Visa Assistance",
   description:

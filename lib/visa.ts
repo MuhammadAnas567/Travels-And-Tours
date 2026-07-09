@@ -6,10 +6,15 @@ function hasVisaModel(): boolean {
 
 export async function getActiveVisaCountries() {
   if (!hasVisaModel()) return [];
-  return prisma.visaInfo.findMany({
-    where: { isActive: true },
-    orderBy: { country: "asc" },
-  });
+  try {
+    return await prisma.visaInfo.findMany({
+      where: { isActive: true },
+      orderBy: { country: "asc" },
+    });
+  } catch (error) {
+    console.error("[visa] DB unavailable:", error);
+    return [];
+  }
 }
 
 export async function getVisaBySlug(slug: string) {
