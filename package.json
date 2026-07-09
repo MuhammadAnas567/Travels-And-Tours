@@ -17,6 +17,7 @@
     "db:seed": "prisma db seed",
     "db:studio": "prisma studio",
     "seed": "npx tsx scripts/seed.ts",
+    "seed:atlas": "node scripts/seed-atlas.mjs",
     "postinstall": "node ./scripts/prisma-generate.mjs"
   },
   "prisma": {
