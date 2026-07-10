@@ -27,7 +27,7 @@ export default function ProfilePage() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold text-ocean-900">Profile Settings</h1>
+      <h1 className="text-2xl font-bold text-ink-900">Profile Settings</h1>
       <Card className="mt-6 max-w-lg">
         <CardHeader>
           <CardTitle>Personal Information</CardTitle>

@@ -38,8 +38,8 @@ export default function ContactPage() {
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-16 sm:px-6 lg:px-8">
-      <h1 className="text-3xl font-bold text-ocean-900">Contact Us</h1>
-      <p className="mt-2 text-gray-600">
+      <h1 className="text-3xl font-bold text-ink-900">Contact Us</h1>
+      <p className="mt-2 text-ink-700">
         Have a question? We&apos;d love to hear from you.
       </p>
 
@@ -75,23 +75,23 @@ export default function ContactPage() {
 
         <div className="space-y-6">
           <div>
-            <h2 className="font-semibold text-ocean-900">Office</h2>
-            <p className="mt-2 text-gray-600">
+            <h2 className="font-semibold text-ink-900">Office</h2>
+            <p className="mt-2 text-ink-700">
               123 Travel Street<br />
               New York, NY 10001<br />
               United States
             </p>
           </div>
           <div>
-            <h2 className="font-semibold text-ocean-900">Contact</h2>
-            <p className="mt-2 text-gray-600">
+            <h2 className="font-semibold text-ink-900">Contact</h2>
+            <p className="mt-2 text-ink-700">
               hello@ueb3tours.com<br />
               +1 (555) 123-4567
             </p>
           </div>
           <div>
-            <h2 className="font-semibold text-ocean-900">Hours</h2>
-            <p className="mt-2 text-gray-600">
+            <h2 className="font-semibold text-ink-900">Hours</h2>
+            <p className="mt-2 text-ink-700">
               Mon–Fri: 9am – 6pm EST<br />
               Sat: 10am – 4pm EST
             </p>

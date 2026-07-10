@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { Plane, Hotel, Package, Car, ArrowLeftRight, Calendar, Users, MapPin, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { SearchRouteLine } from "@/components/search/search-route-line";
 import { cn } from "@/lib/utils";
 
 type Tab = "flights" | "hotels" | "packages" | "cars";
@@ -18,15 +19,17 @@ const tabs: { id: Tab; label: string; icon: typeof Plane }[] = [
 
 export function SearchWidget({ className }: { className?: string }) {
   const router = useRouter();
-  const [tab, setTab] = useState<Tab>("hotels");
+  const [tab, setTab] = useState<Tab>("flights");
   const [from, setFrom] = useState("");
   const [to, setTo] = useState("");
   const [checkIn, setCheckIn] = useState("");
   const [checkOut, setCheckOut] = useState("");
   const [guests, setGuests] = useState("2");
+  const [loading, setLoading] = useState(false);
 
   function handleSearch(e: React.FormEvent) {
     e.preventDefault();
+    setLoading(true);
     const params = new URLSearchParams();
 
     if (tab === "flights") {
@@ -52,17 +55,22 @@ export function SearchWidget({ className }: { className?: string }) {
   }
 
   function swapLocations() {
-    const tmp = from;
     setFrom(to);
-    setTo(tmp);
+    setTo(from);
   }
 
+  const showRoute = tab === "flights" || tab === "cars";
   const toLabel =
     tab === "hotels" ? "Destination" : tab === "packages" ? "Where to?" : tab === "cars" ? "Drop-off" : "To";
   const dateLabel = tab === "cars" ? "Pick-up date" : tab === "flights" ? "Depart" : "Check-in";
 
   return (
-    <div className={cn("rounded-2xl bg-surface shadow-float overflow-hidden", className)}>
+    <div
+      className={cn(
+        "rounded-[var(--radius-lg)] bg-surface shadow-float overflow-hidden border border-line/80",
+        className
+      )}
+    >
       <div className="flex border-b border-line overflow-x-auto" role="tablist" aria-label="Search type">
         {tabs.map((t) => (
           <button
@@ -78,13 +86,15 @@ export function SearchWidget({ className }: { className?: string }) {
                 : "border-transparent text-ink-500 hover:text-ink-700 hover:bg-surface-alt"
             )}
           >
-            <t.icon className="h-4 w-4" aria-hidden />
+            <t.icon className="h-4 w-4" strokeWidth={1.75} aria-hidden />
             {t.label}
           </button>
         ))}
       </div>
 
       <form onSubmit={handleSearch} className="p-5 md:p-6">
+        {showRoute && <SearchRouteLine from={from} to={to} />}
+
         <div className="grid gap-4 md:grid-cols-12 md:items-end">
           {(tab === "flights" || tab === "cars") && (
             <div className="md:col-span-3">
@@ -97,7 +107,7 @@ export function SearchWidget({ className }: { className?: string }) {
                 placeholder={tab === "flights" ? "City or airport" : "Airport or city"}
                 value={from}
                 onChange={(e) => setFrom(e.target.value)}
-                className="rounded-xl border-line h-12"
+                className="h-12"
               />
             </div>
           )}
@@ -107,7 +117,7 @@ export function SearchWidget({ className }: { className?: string }) {
               <button
                 type="button"
                 onClick={swapLocations}
-                className="p-2 rounded-full hover:bg-primary-100 text-primary-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500"
+                className="p-2.5 rounded-[var(--radius-full)] hover:bg-primary-100 text-primary-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500"
                 aria-label="Swap origin and destination"
               >
                 <ArrowLeftRight className="h-5 w-5" />
@@ -125,7 +135,7 @@ export function SearchWidget({ className }: { className?: string }) {
               placeholder={tab === "hotels" ? "City, hotel, or landmark" : "City or airport"}
               value={to}
               onChange={(e) => setTo(e.target.value)}
-              className="rounded-xl border-line h-12"
+              className="h-12"
             />
           </div>
 
@@ -139,7 +149,7 @@ export function SearchWidget({ className }: { className?: string }) {
               type="date"
               value={checkIn}
               onChange={(e) => setCheckIn(e.target.value)}
-              className="rounded-xl border-line h-12"
+              className="h-12"
             />
           </div>
 
@@ -153,7 +163,7 @@ export function SearchWidget({ className }: { className?: string }) {
                 type="date"
                 value={checkOut}
                 onChange={(e) => setCheckOut(e.target.value)}
-                className="rounded-xl border-line h-12"
+                className="h-12"
               />
             </div>
           )}
@@ -170,13 +180,13 @@ export function SearchWidget({ className }: { className?: string }) {
                 max={12}
                 value={guests}
                 onChange={(e) => setGuests(e.target.value)}
-                className="rounded-xl border-line h-12"
+                className="h-12"
               />
             </div>
           )}
 
-          <div className={cn("md:col-span-2", tab === "flights" && "md:col-span-2")}>
-            <Button type="submit" className="w-full h-12 rounded-xl bg-primary-500 hover:bg-primary-700 text-white font-semibold text-base">
+          <div className="md:col-span-2">
+            <Button type="submit" loading={loading} className="w-full h-12 text-base">
               <Search className="h-5 w-5" aria-hidden />
               {tab === "flights"
                 ? "Find flights"

@@ -57,18 +57,18 @@ export default async function AdminOverviewPage() {
     <div className="flex flex-col gap-8 lg:flex-row">
       <AdminSidebar />
       <div className="flex-1">
-        <h1 className="text-2xl font-bold text-ocean-900">Admin Dashboard</h1>
+        <h1 className="text-2xl font-bold text-ink-900">Admin Dashboard</h1>
 
         <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {stats.map((stat) => (
             <Card key={stat.label}>
               <CardContent className="flex items-center gap-4 p-6">
-                <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-ocean-100">
-                  <stat.icon className="h-6 w-6 text-ocean-600" aria-hidden />
+                <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-primary-100">
+                  <stat.icon className="h-6 w-6 text-primary-500" aria-hidden />
                 </div>
                 <div>
-                  <p className="text-sm text-gray-500">{stat.label}</p>
-                  <p className="text-2xl font-bold text-ocean-800">{stat.value}</p>
+                  <p className="text-sm text-ink-500">{stat.label}</p>
+                  <p className="text-2xl font-bold text-primary-700">{stat.value}</p>
                 </div>
               </CardContent>
             </Card>
@@ -83,7 +83,7 @@ export default async function AdminOverviewPage() {
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-ocean-100 text-left text-gray-500">
+                  <tr className="border-b border-line text-left text-ink-500">
                     <th className="pb-3 pr-4">Tour</th>
                     <th className="pb-3 pr-4">Customer</th>
                     <th className="pb-3 pr-4">Amount</th>
@@ -92,7 +92,7 @@ export default async function AdminOverviewPage() {
                 </thead>
                 <tbody>
                   {recentBookings.map((b) => (
-                    <tr key={b.id} className="border-b border-ocean-50">
+                    <tr key={b.id} className="border-b border-line">
                       <td className="py-3 pr-4">{b.tour.title}</td>
                       <td className="py-3 pr-4">
                         {b.user.name ?? b.user.email}
@@ -108,7 +108,7 @@ export default async function AdminOverviewPage() {
             </div>
             <Link
               href="/admin/bookings"
-              className="mt-4 inline-block text-sm text-ocean-600 hover:underline"
+              className="mt-4 inline-block text-sm text-primary-500 hover:underline"
             >
               View all bookings →
             </Link>

@@ -151,7 +151,7 @@ export function BookingFlow({
                 onChange={(e) => setTraveler({ ...traveler, name: e.target.value })}
                 className="mt-1"
               />
-              {errors.name && <p className="mt-1 text-sm text-red-600">{errors.name}</p>}
+              {errors.name && <p className="mt-1 text-sm text-error">{errors.name}</p>}
             </div>
             <div>
               <Label htmlFor="email">Email</Label>
@@ -162,7 +162,7 @@ export function BookingFlow({
                 onChange={(e) => setTraveler({ ...traveler, email: e.target.value })}
                 className="mt-1"
               />
-              {errors.email && <p className="mt-1 text-sm text-red-600">{errors.email}</p>}
+              {errors.email && <p className="mt-1 text-sm text-error">{errors.email}</p>}
             </div>
             <div>
               <Label htmlFor="phone">Phone</Label>
@@ -172,7 +172,7 @@ export function BookingFlow({
                 onChange={(e) => setTraveler({ ...traveler, phone: e.target.value })}
                 className="mt-1"
               />
-              {errors.phone && <p className="mt-1 text-sm text-red-600">{errors.phone}</p>}
+              {errors.phone && <p className="mt-1 text-sm text-error">{errors.phone}</p>}
             </div>
             <div>
               <Label htmlFor="specialRequests">Special requests (optional)</Label>

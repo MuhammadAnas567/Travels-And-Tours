@@ -57,7 +57,7 @@ function PaymentForm({
         }}
       />
       {message && (
-        <p className="rounded-xl bg-red-50 px-3 py-2 text-sm text-red-700" role="alert">
+        <p className="rounded-[var(--radius-sm)] bg-error/10 px-3 py-2 text-sm text-error" role="alert">
           {message}
         </p>
       )}

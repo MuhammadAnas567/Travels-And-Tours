@@ -29,27 +29,30 @@ export function HotelCard({
   amenities = [],
 }: HotelCardProps) {
   return (
-    <article className="group relative overflow-hidden rounded-2xl bg-surface border border-line shadow-card card-hover">
+    <article className="group relative overflow-hidden rounded-[var(--radius-md)] bg-surface border border-line shadow-card card-hover">
       <Link
         href="/login?callbackUrl=/dashboard/wishlist"
-        className="absolute top-3 right-3 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-white/90 text-ink-700 shadow-card hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500"
+        className="absolute top-3 right-3 z-10 flex h-10 w-10 items-center justify-center rounded-[var(--radius-full)] bg-surface/95 text-ink-700 shadow-[var(--shadow-sm)] hover:bg-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500"
         aria-label={`Save ${name} to wishlist`}
       >
-        <Heart className="h-4 w-4" />
+        <Heart className="h-4 w-4" strokeWidth={1.75} />
       </Link>
-      <Link href={`/hotels/${slug}`} className="block">
-        <div className="relative aspect-[16/10] overflow-hidden">
+      <Link
+        href={`/hotels/${slug}`}
+        className="block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary-500"
+      >
+        <div className="relative aspect-[4/3] overflow-hidden">
           <Image
             src={image || PLACEHOLDER_TOUR_IMAGE}
             alt={`${name} in ${city}, ${country}`}
             fill
             placeholder="blur"
             blurDataURL={IMAGE_BLUR_DATA_URL}
-            className="object-cover transition-transform duration-500 group-hover:scale-105"
+            className="img-cover"
             sizes="(max-width:768px) 100vw, 33vw"
           />
           {avgRating >= 4.5 && (
-            <span className="absolute top-3 left-3 rounded-lg bg-primary-500 px-2 py-1 text-xs font-bold text-white">
+            <span className="absolute top-3 left-3 rounded-[var(--radius-sm)] bg-primary-500 px-2.5 py-1 text-xs font-bold text-white">
               Best seller
             </span>
           )}
@@ -73,7 +76,7 @@ export function HotelCard({
           )}
           <div className="mt-4 flex items-end justify-between">
             <div className="flex items-center gap-2">
-              <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary-100 text-sm font-bold text-primary-700">
+              <span className="flex h-8 w-8 items-center justify-center rounded-[var(--radius-sm)] bg-primary-100 text-sm font-bold text-primary-700">
                 {avgRating.toFixed(1)}
               </span>
               <span className="text-xs text-ink-500">{reviewCount} reviews</span>

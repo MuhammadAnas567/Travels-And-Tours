@@ -31,21 +31,19 @@ export function AdminSidebar() {
       <nav className="space-y-1" aria-label="Admin navigation">
         {links.map(({ href, label, icon: Icon }) => {
           const active =
-            href === "/admin"
-              ? pathname === "/admin"
-              : pathname.startsWith(href);
+            href === "/admin" ? pathname === "/admin" : pathname.startsWith(href);
           return (
             <Link
               key={href}
               href={href}
               className={cn(
-                "flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors",
+                "flex items-center gap-3 rounded-[var(--radius-sm)] px-3 py-2.5 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500",
                 active
-                  ? "bg-ocean-100 text-ocean-800"
-                  : "text-gray-600 hover:bg-ocean-50 hover:text-ocean-800"
+                  ? "bg-primary-100 text-primary-700"
+                  : "text-ink-500 hover:bg-surface-alt hover:text-ink-900"
               )}
             >
-              <Icon className="h-4 w-4" aria-hidden />
+              <Icon className="h-4 w-4" strokeWidth={1.75} aria-hidden />
               {label}
             </Link>
           );

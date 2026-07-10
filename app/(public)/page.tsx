@@ -74,18 +74,18 @@ export default async function HomePage() {
 
       <HomeHero />
 
-      {/* Signature: Destination Journey Rail */}
+      {/* Destinations — quiet editorial rail */}
       <section className="py-16 md:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mb-10 max-w-2xl">
             <p className="text-xs font-bold uppercase tracking-widest text-primary-500">
-              Destination journey
+              Popular routes
             </p>
             <h2 className="mt-2 text-h2 font-heading font-bold text-ink-900">
-              Trace a route. Pick a stop. Book the stay.
+              Follow the path. Land on a stay.
             </h2>
             <p className="mt-2 text-ink-500">
-              Our signature way to browse — follow the path across trending cities, then open hotels for the stop you want.
+              Browse trending cities as a journey — then open hotels for the stop you want.
             </p>
           </div>
           <DestinationJourney destinations={journeyStops} />

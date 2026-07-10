@@ -33,38 +33,39 @@ export function HomeHero() {
         <div className="absolute inset-0 bg-gradient-to-b from-primary-900/55 via-primary-900/30 to-primary-900/85" />
 
         <div className="relative w-full mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-24 pb-40 md:pb-48">
+          {/* initial={false}: never hide brand/hero copy behind opacity:0 (SSR + screenshots) */}
           <motion.p
             className="font-heading text-sm font-semibold tracking-[0.2em] uppercase text-accent-500"
-            initial={reduceMotion ? false : { opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+            initial={false}
+            animate={reduceMotion ? undefined : { y: [8, 0] }}
+            transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
           >
             UEB3 Travel
           </motion.p>
           <motion.h1
             className="mt-3 text-hero text-white max-w-2xl drop-shadow-sm"
-            initial={reduceMotion ? false : { opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: reduceMotion ? 0 : 0.08, ease: [0.22, 1, 0.36, 1] }}
+            initial={false}
+            animate={reduceMotion ? undefined : { y: [12, 0] }}
+            transition={{ duration: 0.5, delay: 0.05, ease: [0.22, 1, 0.36, 1] }}
           >
             Book the trip. Keep the price honest.
           </motion.h1>
           <motion.p
             className="mt-4 max-w-lg text-lg text-white/90"
-            initial={reduceMotion ? false : { opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.55, delay: reduceMotion ? 0 : 0.16, ease: [0.22, 1, 0.36, 1] }}
+            initial={false}
+            animate={reduceMotion ? undefined : { y: [10, 0] }}
+            transition={{ duration: 0.5, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
           >
-            Compare flights, hotels, and packages in one search — with free cancellation on most stays.
+            Compare flights, hotels, and packages in one search — watch the route draw when you set origin and destination.
           </motion.p>
         </div>
       </div>
 
       <motion.div
         className="relative mx-auto max-w-5xl px-4 sm:px-6 -mt-28 md:-mt-32 z-10"
-        initial={reduceMotion ? false : { opacity: 0, y: 28 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.65, delay: reduceMotion ? 0 : 0.22, ease: [0.22, 1, 0.36, 1] }}
+        initial={false}
+        animate={reduceMotion ? undefined : { y: [16, 0] }}
+        transition={{ duration: 0.55, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}
       >
         <SearchWidget />
         <ul className="mt-4 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm text-ink-500">
