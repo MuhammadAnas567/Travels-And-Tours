@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { IMAGE_BLUR_DATA_URL, PLACEHOLDER_TOUR_IMAGE } from "@/lib/images";
 
 type DestinationCardProps = {
   name: string;
@@ -16,9 +17,11 @@ export function DestinationCard({ name, country, image, priceFrom, href }: Desti
     <Link href={link} className="group relative shrink-0 w-64 overflow-hidden rounded-2xl card-hover shadow-card">
       <div className="relative aspect-[3/4]">
         <Image
-          src={image}
+          src={image || PLACEHOLDER_TOUR_IMAGE}
           alt={`${name}, ${country}`}
           fill
+          placeholder="blur"
+          blurDataURL={IMAGE_BLUR_DATA_URL}
           className="object-cover transition-transform duration-500 group-hover:scale-105"
           sizes="256px"
         />

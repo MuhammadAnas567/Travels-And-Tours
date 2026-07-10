@@ -12,11 +12,21 @@ const cached = global.mongooseCache ?? { conn: null, promise: null };
 global.mongooseCache = cached;
 
 export function getMongoUri() {
-  return (
-    process.env.MONGODB_URI ??
-    process.env.DATABASE_URL ??
-    "mongodb://127.0.0.1:27018/travels-tours?replicaSet=rs0"
-  );
+  const dedicated = process.env.MONGODB_URI;
+  const shared = process.env.DATABASE_URL;
+  const fallback = "mongodb://127.0.0.1:27018/travels-tours?replicaSet=rs0";
+
+  // Local `predev` starts Mongo on 127.0.0.1 — prefer that so seed + Next share data.
+  // Production/Vercel should set MONGODB_URI (or DATABASE_URL) to Atlas.
+  if (
+    process.env.NODE_ENV !== "production" &&
+    shared &&
+    (shared.includes("127.0.0.1") || shared.includes("localhost"))
+  ) {
+    return shared;
+  }
+
+  return dedicated ?? shared ?? fallback;
 }
 
 export async function connectDB() {

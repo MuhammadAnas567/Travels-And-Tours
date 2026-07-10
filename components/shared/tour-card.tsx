@@ -3,6 +3,7 @@ import Image from "next/image";
 import { MapPin, Clock, Star, ArrowRight } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { formatCurrency, convertPrice } from "@/lib/currency";
+import { IMAGE_BLUR_DATA_URL, PLACEHOLDER_TOUR_IMAGE } from "@/lib/images";
 import type { Currency, Tour } from "@prisma/client";
 
 type TourCardProps = {
@@ -43,9 +44,11 @@ export function TourCard({ tour, currency = "USD", rates }: TourCardProps) {
       <Link href={`/tours/${tour.slug}`} className="block">
         <div className="relative aspect-[4/3] overflow-hidden">
           <Image
-            src={tour.images[0] ?? "/placeholder-tour.jpg"}
+            src={tour.images[0] ?? PLACEHOLDER_TOUR_IMAGE}
             alt={tour.title}
             fill
+            placeholder="blur"
+            blurDataURL={IMAGE_BLUR_DATA_URL}
             className="object-cover transition-transform duration-700 ease-out group-hover:scale-110 motion-reduce:transform-none"
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />

@@ -24,7 +24,7 @@ const tours = [
     discountPrice: 1599,
     images: [
       "https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=800",
-      "https://images.unsplash.com/photo-1555404738-9f40f7a2bc48?w=800",
+      "https://images.unsplash.com/photo-1514282401047-d79a71a590e8?w=800",
     ],
     maxGroupSize: 12,
   },
@@ -106,7 +106,7 @@ const tours = [
     discountPrice: 1399,
     images: [
       "https://images.unsplash.com/photo-1518509562904-e7ef99cdcc86?w=800",
-      "https://images.unsplash.com/photo-1559120680-6a0b0a0b0b0b?w=800",
+      "https://images.unsplash.com/photo-1547970810-dc1eac37d174?w=800",
     ],
     maxGroupSize: 16,
   },
@@ -153,8 +153,8 @@ const tours = [
     durationDays: 6,
     price: 2799,
     images: [
-      "https://images.unsplash.com/photo-1531168556467-80aace7d69bd?w=800",
-      "https://images.unsplash.com/photo-1531168556467-80aace7d69bd?w=800",
+      "https://images.unsplash.com/photo-1504829857797-ddff29c27927?w=800",
+      "https://images.unsplash.com/photo-1531366936337-7c912a4589a7?w=800",
     ],
     maxGroupSize: 12,
   },
@@ -170,7 +170,7 @@ const tours = [
     price: 1599,
     images: [
       "https://images.unsplash.com/photo-1489749798305-4fea3ae63d43?w=800",
-      "https://images.unsplash.com/photo-1569383746721-7f7b28ac04a8?w=800",
+      "https://images.unsplash.com/photo-1516426122078-c23e76319801?w=800",
     ],
     maxGroupSize: 15,
   },

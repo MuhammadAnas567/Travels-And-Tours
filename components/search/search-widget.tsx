@@ -57,22 +57,28 @@ export function SearchWidget({ className }: { className?: string }) {
     setTo(tmp);
   }
 
+  const toLabel =
+    tab === "hotels" ? "Destination" : tab === "packages" ? "Where to?" : tab === "cars" ? "Drop-off" : "To";
+  const dateLabel = tab === "cars" ? "Pick-up date" : tab === "flights" ? "Depart" : "Check-in";
+
   return (
     <div className={cn("rounded-2xl bg-surface shadow-float overflow-hidden", className)}>
-      <div className="flex border-b border-line overflow-x-auto">
+      <div className="flex border-b border-line overflow-x-auto" role="tablist" aria-label="Search type">
         {tabs.map((t) => (
           <button
             key={t.id}
             type="button"
+            role="tab"
+            aria-selected={tab === t.id}
             onClick={() => setTab(t.id)}
             className={cn(
-              "flex items-center gap-2 px-5 py-4 text-sm font-semibold whitespace-nowrap transition-colors border-b-2 -mb-px",
+              "flex items-center gap-2 px-5 py-4 text-sm font-semibold whitespace-nowrap transition-colors border-b-2 -mb-px focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary-500",
               tab === t.id
                 ? "border-primary-500 text-primary-500 bg-primary-100/50"
                 : "border-transparent text-ink-500 hover:text-ink-700 hover:bg-surface-alt"
             )}
           >
-            <t.icon className="h-4 w-4" />
+            <t.icon className="h-4 w-4" aria-hidden />
             {t.label}
           </button>
         ))}
@@ -82,11 +88,12 @@ export function SearchWidget({ className }: { className?: string }) {
         <div className="grid gap-4 md:grid-cols-12 md:items-end">
           {(tab === "flights" || tab === "cars") && (
             <div className="md:col-span-3">
-              <label className="mb-1.5 flex items-center gap-1 text-xs font-semibold uppercase tracking-wide text-ink-500">
-                <MapPin className="h-3.5 w-3.5" />
+              <label htmlFor="search-from" className="mb-1.5 flex items-center gap-1 text-xs font-semibold uppercase tracking-wide text-ink-700">
+                <MapPin className="h-3.5 w-3.5" aria-hidden />
                 {tab === "cars" ? "Pick-up location" : "From"}
               </label>
               <Input
+                id="search-from"
                 placeholder={tab === "flights" ? "City or airport" : "Airport or city"}
                 value={from}
                 onChange={(e) => setFrom(e.target.value)}
@@ -97,18 +104,24 @@ export function SearchWidget({ className }: { className?: string }) {
 
           {tab === "flights" && (
             <div className="flex md:col-span-1 justify-center pb-2">
-              <button type="button" onClick={swapLocations} className="p-2 rounded-full hover:bg-primary-100 text-primary-500" aria-label="Swap">
+              <button
+                type="button"
+                onClick={swapLocations}
+                className="p-2 rounded-full hover:bg-primary-100 text-primary-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500"
+                aria-label="Swap origin and destination"
+              >
                 <ArrowLeftRight className="h-5 w-5" />
               </button>
             </div>
           )}
 
           <div className={cn("md:col-span-3", tab === "hotels" && "md:col-span-4", tab === "packages" && "md:col-span-5")}>
-            <label className="mb-1.5 flex items-center gap-1 text-xs font-semibold uppercase tracking-wide text-ink-500">
-              <MapPin className="h-3.5 w-3.5" />
-              {tab === "hotels" ? "Destination" : tab === "packages" ? "Where to?" : tab === "cars" ? "Drop-off" : "To"}
+            <label htmlFor="search-to" className="mb-1.5 flex items-center gap-1 text-xs font-semibold uppercase tracking-wide text-ink-700">
+              <MapPin className="h-3.5 w-3.5" aria-hidden />
+              {toLabel}
             </label>
             <Input
+              id="search-to"
               placeholder={tab === "hotels" ? "City, hotel, or landmark" : "City or airport"}
               value={to}
               onChange={(e) => setTo(e.target.value)}
@@ -117,11 +130,12 @@ export function SearchWidget({ className }: { className?: string }) {
           </div>
 
           <div className="md:col-span-2">
-            <label className="mb-1.5 flex items-center gap-1 text-xs font-semibold uppercase tracking-wide text-ink-500">
-              <Calendar className="h-3.5 w-3.5" />
-              {tab === "cars" ? "Pick-up date" : tab === "flights" ? "Depart" : "Check-in"}
+            <label htmlFor="search-checkin" className="mb-1.5 flex items-center gap-1 text-xs font-semibold uppercase tracking-wide text-ink-700">
+              <Calendar className="h-3.5 w-3.5" aria-hidden />
+              {dateLabel}
             </label>
             <Input
+              id="search-checkin"
               type="date"
               value={checkIn}
               onChange={(e) => setCheckIn(e.target.value)}
@@ -131,10 +145,11 @@ export function SearchWidget({ className }: { className?: string }) {
 
           {(tab === "hotels" || tab === "packages") && (
             <div className="md:col-span-2">
-              <label className="mb-1.5 flex items-center gap-1 text-xs font-semibold uppercase tracking-wide text-ink-500">
-                <Calendar className="h-3.5 w-3.5" /> Check-out
+              <label htmlFor="search-checkout" className="mb-1.5 flex items-center gap-1 text-xs font-semibold uppercase tracking-wide text-ink-700">
+                <Calendar className="h-3.5 w-3.5" aria-hidden /> Check-out
               </label>
               <Input
+                id="search-checkout"
                 type="date"
                 value={checkOut}
                 onChange={(e) => setCheckOut(e.target.value)}
@@ -145,10 +160,11 @@ export function SearchWidget({ className }: { className?: string }) {
 
           {(tab === "hotels" || tab === "packages") && (
             <div className="md:col-span-2">
-              <label className="mb-1.5 flex items-center gap-1 text-xs font-semibold uppercase tracking-wide text-ink-500">
-                <Users className="h-3.5 w-3.5" /> Guests
+              <label htmlFor="search-guests" className="mb-1.5 flex items-center gap-1 text-xs font-semibold uppercase tracking-wide text-ink-700">
+                <Users className="h-3.5 w-3.5" aria-hidden /> Guests
               </label>
               <Input
+                id="search-guests"
                 type="number"
                 min={1}
                 max={12}
@@ -161,8 +177,14 @@ export function SearchWidget({ className }: { className?: string }) {
 
           <div className={cn("md:col-span-2", tab === "flights" && "md:col-span-2")}>
             <Button type="submit" className="w-full h-12 rounded-xl bg-primary-500 hover:bg-primary-700 text-white font-semibold text-base">
-              <Search className="h-5 w-5" />
-              Search
+              <Search className="h-5 w-5" aria-hidden />
+              {tab === "flights"
+                ? "Find flights"
+                : tab === "hotels"
+                  ? "Find stays"
+                  : tab === "packages"
+                    ? "Find packages"
+                    : "Find cars"}
             </Button>
           </div>
         </div>

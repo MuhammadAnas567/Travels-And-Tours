@@ -18,24 +18,36 @@ export function NewsletterForm({ dark = false }: { dark?: boolean }) {
     if (result.error) {
       toast.error(result.error);
     } else {
-      toast.success("Subscribed successfully!");
+      toast.success("You’re on the list — watch for the next fare drop.");
       setEmail("");
     }
   }
 
   return (
-    <form onSubmit={handleSubmit} className="mt-6 flex gap-2">
+    <form onSubmit={handleSubmit} className="mt-4 flex flex-col sm:flex-row gap-2">
       <Input
         type="email"
-        placeholder="your@email.com"
+        placeholder="you@email.com"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         required
-        className={dark ? "bg-ink/50 border-sand/20 text-sand" : "bg-surface"}
-        aria-label="Email address"
+        className={
+          dark
+            ? "bg-white/10 border-white/20 text-white placeholder:text-white/40 h-11 rounded-xl"
+            : "bg-surface h-11 rounded-xl"
+        }
+        aria-label="Email address for deal alerts"
       />
-      <Button type="submit" variant={dark ? "accent" : "secondary"} disabled={loading}>
-        Subscribe
+      <Button
+        type="submit"
+        disabled={loading}
+        className={
+          dark
+            ? "h-11 rounded-xl bg-accent-500 hover:bg-accent-600 text-ink-900 font-semibold shrink-0"
+            : "h-11 rounded-xl shrink-0"
+        }
+      >
+        {loading ? "Saving…" : "Get deals"}
       </Button>
     </form>
   );

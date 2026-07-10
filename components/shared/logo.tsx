@@ -18,16 +18,14 @@ export function Logo({
   const content = (
     <>
       <Image
-        src="/ueb3-logo.png"
-        alt="UEB3 Tours"
-        width={140}
+        src="/ueb3-logo.svg"
+        alt="UEB3 Travel"
+        width={180}
         height={40}
         className={cn("h-8 w-auto object-contain sm:h-9", imageClassName)}
         priority
       />
-      {showText && (
-        <span className="sr-only">UEB3 Tours</span>
-      )}
+      {showText && <span className="sr-only">UEB3 Travel</span>}
     </>
   );
 
