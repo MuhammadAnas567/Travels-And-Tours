@@ -32,12 +32,12 @@ export function Header() {
   const [currency, setCurrency] = useState("USD");
   const [lang, setLang] = useState("EN");
 
-  const solid = !isHome || scrolled;
+  const elevated = !isHome || scrolled;
   const user = session?.user;
   const isAdmin = user?.role === "ADMIN";
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
+    const onScroll = () => setScrolled(window.scrollY > 48);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -54,34 +54,35 @@ export function Header() {
     };
   }, [mobileOpen]);
 
+  const linkIdle = "text-[#F6F3EC]/80 hover:text-[#F6F3EC]";
+  const linkActive = "text-[#C49A5C]";
+
   return (
     <header
       className={cn(
-        "sticky top-0 z-50 transition-all duration-300",
-        solid
-          ? "bg-white/95 shadow-card border-b border-line backdrop-blur-md"
-          : "bg-gradient-to-b from-primary-900/70 via-primary-900/35 to-transparent"
+        "sticky top-0 z-50 w-full border-b transition-shadow duration-[var(--duration-base)] ease-[var(--ease-brand)]",
+        "bg-[#1A1611] text-[#F6F3EC] border-[#2A241C]",
+        elevated ? "shadow-md" : "shadow-none"
       )}
     >
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto flex h-14 min-[480px]:h-[4.5rem] w-full max-w-[1280px] items-center justify-between gap-2 px-3 min-[480px]:px-4 sm:px-6 lg:px-8">
         <Link
           href="/"
-          className="flex items-center gap-2 shrink-0 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-500 focus-visible:ring-offset-2"
+          className="flex min-w-0 items-center gap-2 min-[480px]:gap-3 shrink rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B48A50] focus-visible:ring-offset-2 focus-visible:ring-offset-[#1A1611]"
         >
-          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary-500 text-white font-bold text-lg">
+          <div className="flex h-8 w-8 min-[480px]:h-9 min-[480px]:w-9 shrink-0 items-center justify-center rounded-sm border border-[#B48A50]/50 bg-[#B48A50]/15 font-display text-base min-[480px]:text-lg font-semibold text-[#C49A5C]">
             U
           </div>
-          <span
-            className={cn(
-              "font-heading text-xl font-bold tracking-tight",
-              solid ? "text-ink-900" : "text-white drop-shadow-sm"
-            )}
-          >
-            UEB3 Travel
+          <span className="font-display text-base min-[480px]:text-xl font-semibold tracking-tight text-[#F6F3EC] truncate">
+            UEB3<span className="hidden min-[380px]:inline"> Travel</span>
           </span>
         </Link>
 
-        <nav className="hidden lg:flex items-center gap-0.5" aria-label="Main">
+        {/* Desktop nav — xl only so mid widths don't overflow */}
+        <nav
+          className="hidden xl:flex items-center gap-0.5 shrink min-w-0"
+          aria-label="Main"
+        >
           {navItems.map((item) => {
             const active = isActivePath(pathname, item.href);
             return (
@@ -90,144 +91,100 @@ export function Header() {
                 href={item.href}
                 aria-current={active ? "page" : undefined}
                 className={cn(
-                  "flex items-center gap-1.5 rounded-xl px-3 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2",
-                  solid
-                    ? active
-                      ? "bg-primary-100 text-primary-500"
-                      : "text-ink-700 hover:bg-primary-100 hover:text-primary-500"
-                    : active
-                      ? "bg-white/20 text-white"
-                      : "text-white/95 hover:bg-white/15 hover:text-white"
+                  "group relative flex items-center gap-1.5 px-2.5 py-2 text-[0.6875rem] font-semibold uppercase tracking-[0.12em] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B48A50] focus-visible:ring-offset-2 focus-visible:ring-offset-[#1A1611] rounded-sm whitespace-nowrap",
+                  active ? linkActive : linkIdle
                 )}
               >
-                <item.icon className="h-4 w-4" strokeWidth={1.75} aria-hidden />
+                <item.icon className="h-4 w-4 shrink-0" strokeWidth={1.5} aria-hidden />
                 {item.label}
+                <span
+                  className={cn(
+                    "absolute bottom-1 left-3 right-3 h-px bg-[#B48A50] transition-transform duration-[var(--duration-base)] ease-[var(--ease-brand)] origin-left",
+                    active ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
+                  )}
+                />
               </Link>
             );
           })}
         </nav>
 
-        <div className="hidden md:flex items-center gap-1">
-          <Button
-            type="button"
-            variant="ghost"
-            size="sm"
-            aria-label={`Currency ${currency}. Click to toggle.`}
-            onClick={() => setCurrency((c) => (c === "USD" ? "EUR" : c === "EUR" ? "GBP" : "USD"))}
-            className={cn(
-              solid
-                ? "text-ink-700 hover:bg-primary-100"
-                : "text-white hover:bg-white/15 hover:text-white"
-            )}
-          >
-            <Globe className="h-4 w-4" aria-hidden /> {currency}
-          </Button>
-          <Button
-            type="button"
-            variant="ghost"
-            size="sm"
-            aria-label={`Language ${lang}. Click to toggle.`}
-            onClick={() => setLang((l) => (l === "EN" ? "FR" : l === "FR" ? "ES" : "EN"))}
-            className={cn(
-              solid
-                ? "text-ink-700 hover:bg-primary-100"
-                : "text-white hover:bg-white/15 hover:text-white"
-            )}
-          >
-            <Languages className="h-4 w-4" aria-hidden /> {lang}
-          </Button>
+        <div className="flex items-center gap-0.5 shrink-0">
+          <div className="hidden xl:flex items-center gap-1">
+            <Button
+              type="button"
+              variant="ghost"
+              size="sm"
+              aria-label={`Currency ${currency}. Click to toggle.`}
+              onClick={() => setCurrency((c) => (c === "USD" ? "EUR" : c === "EUR" ? "GBP" : "USD"))}
+              className="text-[#F6F3EC]/75 hover:bg-white/10 hover:text-[#F6F3EC]"
+            >
+              <Globe className="h-4 w-4" aria-hidden /> {currency}
+            </Button>
+            <Button
+              type="button"
+              variant="ghost"
+              size="sm"
+              aria-label={`Language ${lang}. Click to toggle.`}
+              onClick={() => setLang((l) => (l === "EN" ? "FR" : l === "FR" ? "ES" : "EN"))}
+              className="text-[#F6F3EC]/75 hover:bg-white/10 hover:text-[#F6F3EC]"
+            >
+              <Languages className="h-4 w-4" aria-hidden /> {lang}
+            </Button>
 
-          {status === "authenticated" && user ? (
-            <>
-              {isAdmin && (
+            {status === "authenticated" && user ? (
+              <>
+                {isAdmin && (
+                  <Button variant="ghost" size="sm" asChild className="text-[#F6F3EC]/75 hover:bg-white/10 hover:text-[#F6F3EC]">
+                    <Link href="/admin">Admin</Link>
+                  </Button>
+                )}
+                <Button variant="ghost" size="sm" asChild className="text-[#F6F3EC]/75 hover:bg-white/10 hover:text-[#F6F3EC]">
+                  <Link href="/dashboard">
+                    <LayoutDashboard className="h-4 w-4" aria-hidden /> Dashboard
+                  </Link>
+                </Button>
                 <Button
+                  type="button"
                   variant="ghost"
                   size="sm"
-                  asChild
-                  className={cn(
-                    solid
-                      ? "text-ink-700 hover:bg-primary-100"
-                      : "text-white hover:bg-white/15 hover:text-white"
-                  )}
+                  onClick={() => signOut({ callbackUrl: "/" })}
+                  className="text-[#F6F3EC]/75 hover:bg-white/10 hover:text-[#F6F3EC]"
                 >
-                  <Link href="/admin">Admin</Link>
+                  <LogOut className="h-4 w-4" aria-hidden /> Sign out
                 </Button>
-              )}
-              <Button
-                variant="ghost"
-                size="sm"
-                asChild
-                className={cn(
-                  solid
-                    ? "text-ink-700 hover:bg-primary-100"
-                    : "text-white hover:bg-white/15 hover:text-white"
-                )}
-              >
-                <Link href="/dashboard">
-                  <LayoutDashboard className="h-4 w-4" aria-hidden /> Dashboard
-                </Link>
-              </Button>
-              <Button
-                type="button"
-                variant="ghost"
-                size="sm"
-                onClick={() => signOut({ callbackUrl: "/" })}
-                className={cn(
-                  solid
-                    ? "text-ink-700 hover:bg-primary-100"
-                    : "text-white hover:bg-white/15 hover:text-white"
-                )}
-              >
-                <LogOut className="h-4 w-4" aria-hidden /> Sign out
-              </Button>
-            </>
-          ) : (
-            <>
-              <Button
-                variant="ghost"
-                size="sm"
-                asChild
-                className={cn(
-                  solid
-                    ? "text-ink-700 hover:bg-primary-100"
-                    : "text-white hover:bg-white/15 hover:text-white"
-                )}
-              >
-                <Link href="/login">
-                  <User className="h-4 w-4" aria-hidden /> Sign in
-                </Link>
-              </Button>
-              <Button
-                variant="default"
-                size="sm"
-                asChild
-                className="bg-primary-500 hover:bg-primary-700 text-white"
-              >
-                <Link href="/register">Register</Link>
-              </Button>
-            </>
-          )}
-        </div>
+              </>
+            ) : (
+              <>
+                <Button variant="ghost" size="sm" asChild className="text-[#F6F3EC]/75 hover:bg-white/10 hover:text-[#F6F3EC]">
+                  <Link href="/login">
+                    <User className="h-4 w-4" aria-hidden /> Sign in
+                  </Link>
+                </Button>
+                <Button variant="primary" size="sm" asChild>
+                  <Link href="/register">Register</Link>
+                </Button>
+              </>
+            )}
+          </div>
 
-        <button
-          type="button"
-          className={cn(
-            "lg:hidden p-2 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500",
-            solid ? "text-ink-900" : "text-white"
-          )}
-          onClick={() => setMobileOpen(!mobileOpen)}
-          aria-label={mobileOpen ? "Close menu" : "Open menu"}
-          aria-expanded={mobileOpen}
-          aria-controls="mobile-nav"
-        >
-          {mobileOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-        </button>
+          {/* Mobile / tablet menu control */}
+          <button
+            type="button"
+            className="xl:hidden flex items-center justify-center p-2.5 min-h-11 min-w-11 rounded-sm text-[#F6F3EC] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B48A50]"
+            onClick={() => setMobileOpen(!mobileOpen)}
+            aria-label={mobileOpen ? "Close menu" : "Open menu"}
+            aria-expanded={mobileOpen}
+            aria-controls="mobile-nav"
+          >
+            {mobileOpen ? <X className="h-6 w-6" strokeWidth={1.5} /> : <Menu className="h-6 w-6" strokeWidth={1.5} />}
+          </button>
+        </div>
       </div>
 
       {mobileOpen && (
         <div
           id="mobile-nav"
-          className="lg:hidden absolute inset-x-0 top-16 z-50 border-t border-line bg-white px-4 py-4 shadow-float max-h-[calc(100vh-4rem)] overflow-y-auto"
+          className="xl:hidden absolute inset-x-0 top-14 min-[480px]:top-[4.5rem] z-50 border-t border-[#2A241C] bg-[#1A1611] px-4 py-5 shadow-float max-h-[calc(100dvh-3.5rem)] overflow-y-auto"
         >
           <nav className="flex flex-col gap-1" aria-label="Mobile">
             {navItems.map((item) => {
@@ -238,46 +195,58 @@ export function Header() {
                   href={item.href}
                   aria-current={active ? "page" : undefined}
                   className={cn(
-                    "flex items-center gap-2 rounded-xl px-3 py-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500",
+                    "flex min-h-11 items-center gap-2 rounded-sm px-3 py-3 text-sm font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B48A50]",
                     active
-                      ? "bg-primary-100 text-primary-500 font-semibold"
-                      : "text-ink-700 hover:bg-primary-100"
+                      ? "bg-[#B48A50]/15 text-[#C49A5C]"
+                      : "text-[#F6F3EC]/85 hover:bg-white/5 hover:text-[#F6F3EC]"
                   )}
                   onClick={() => setMobileOpen(false)}
                 >
-                  <item.icon className="h-4 w-4" aria-hidden /> {item.label}
+                  <item.icon className="h-4 w-4" strokeWidth={1.5} aria-hidden /> {item.label}
                 </Link>
               );
             })}
             <Link
               href="/cars"
-              className="flex items-center gap-2 rounded-xl px-3 py-3 text-ink-700 hover:bg-primary-100"
+              className="flex min-h-11 items-center gap-2 rounded-sm px-3 py-3 text-[#F6F3EC]/85 hover:bg-white/5"
               onClick={() => setMobileOpen(false)}
             >
               Car hire
             </Link>
-            <hr className="my-2 border-line" />
+            <hr className="my-3 border-[#2A241C]" />
+            <div className="flex flex-wrap gap-2 px-1 pb-2">
+              <Button
+                type="button"
+                variant="ghost"
+                size="sm"
+                onClick={() => setCurrency((c) => (c === "USD" ? "EUR" : c === "EUR" ? "GBP" : "USD"))}
+                className="text-[#F6F3EC]/75 hover:bg-white/10"
+              >
+                <Globe className="h-4 w-4" aria-hidden /> {currency}
+              </Button>
+              <Button
+                type="button"
+                variant="ghost"
+                size="sm"
+                onClick={() => setLang((l) => (l === "EN" ? "FR" : l === "FR" ? "ES" : "EN"))}
+                className="text-[#F6F3EC]/75 hover:bg-white/10"
+              >
+                <Languages className="h-4 w-4" aria-hidden /> {lang}
+              </Button>
+            </div>
             {status === "authenticated" && user ? (
               <>
-                <Link
-                  href="/dashboard"
-                  className="px-3 py-2 text-primary-500 font-medium"
-                  onClick={() => setMobileOpen(false)}
-                >
+                <Link href="/dashboard" className="px-3 py-3 text-[#C49A5C] font-medium" onClick={() => setMobileOpen(false)}>
                   Dashboard
                 </Link>
                 {isAdmin && (
-                  <Link
-                    href="/admin"
-                    className="px-3 py-2 font-medium text-ink-900"
-                    onClick={() => setMobileOpen(false)}
-                  >
+                  <Link href="/admin" className="px-3 py-3 text-[#F6F3EC] font-medium" onClick={() => setMobileOpen(false)}>
                     Admin
                   </Link>
                 )}
                 <button
                   type="button"
-                  className="px-3 py-2 text-left font-medium text-ink-900"
+                  className="px-3 py-3 text-left font-medium text-[#F6F3EC]"
                   onClick={() => {
                     setMobileOpen(false);
                     signOut({ callbackUrl: "/" });
@@ -288,18 +257,10 @@ export function Header() {
               </>
             ) : (
               <>
-                <Link
-                  href="/login"
-                  className="px-3 py-2 text-primary-500 font-medium"
-                  onClick={() => setMobileOpen(false)}
-                >
+                <Link href="/login" className="px-3 py-3 text-[#C49A5C] font-medium" onClick={() => setMobileOpen(false)}>
                   Sign in
                 </Link>
-                <Link
-                  href="/register"
-                  className="px-3 py-2 font-medium text-ink-900"
-                  onClick={() => setMobileOpen(false)}
-                >
+                <Link href="/register" className="px-3 py-3 font-medium text-[#F6F3EC]" onClick={() => setMobileOpen(false)}>
                   Register
                 </Link>
               </>

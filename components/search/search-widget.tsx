@@ -1,14 +1,25 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Plane, Hotel, Package, Car, ArrowLeftRight, Calendar, Users, MapPin, Search } from "lucide-react";
+import {
+  Plane,
+  Hotel,
+  Package,
+  Car,
+  ArrowLeftRight,
+  Calendar,
+  Users,
+  MapPin,
+  Search,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { SearchRouteLine } from "@/components/search/search-route-line";
 import { cn } from "@/lib/utils";
 
 type Tab = "flights" | "hotels" | "packages" | "cars";
+type TripType = "roundtrip" | "oneway" | "multicity";
 
 const tabs: { id: Tab; label: string; icon: typeof Plane }[] = [
   { id: "flights", label: "Flights", icon: Plane },
@@ -17,18 +28,54 @@ const tabs: { id: Tab; label: string; icon: typeof Plane }[] = [
   { id: "cars", label: "Cars", icon: Car },
 ];
 
+const RECENT = ["KHI → DXB", "LHE → IST", "ISB → LHR"];
+
 export function SearchWidget({ className }: { className?: string }) {
   const router = useRouter();
+  const fromRef = useRef<HTMLInputElement>(null);
+  const toRef = useRef<HTMLInputElement>(null);
+
   const [tab, setTab] = useState<Tab>("flights");
+  const [tripType, setTripType] = useState<TripType>("roundtrip");
   const [from, setFrom] = useState("");
   const [to, setTo] = useState("");
   const [checkIn, setCheckIn] = useState("");
   const [checkOut, setCheckOut] = useState("");
-  const [guests, setGuests] = useState("2");
+  const [adults, setAdults] = useState(2);
+  const [children, setChildren] = useState(0);
+  const [cabin, setCabin] = useState("Economy");
+  const [travellersOpen, setTravellersOpen] = useState(false);
+  const [swapSpin, setSwapSpin] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState<{ from?: string; to?: string; form?: string }>({});
+
+  const travellersSummary = useMemo(() => {
+    const parts = [`${adults} adult${adults === 1 ? "" : "s"}`];
+    if (children > 0) parts.push(`${children} child${children === 1 ? "" : "ren"}`);
+    parts.push(cabin);
+    return parts.join(" · ");
+  }, [adults, children, cabin]);
+
+  function validate() {
+    const next: typeof errors = {};
+    if (tab === "flights" || tab === "cars") {
+      if (!from.trim()) next.from = "Enter an origin";
+      if (!to.trim()) next.to = "Enter a destination";
+      if (from.trim() && to.trim() && from.trim().toLowerCase() === to.trim().toLowerCase()) {
+        next.form = "Origin and destination can't match.";
+      }
+    } else if (!to.trim() && !from.trim()) {
+      next.to = "Enter a destination";
+    }
+    setErrors(next);
+    if (next.from) fromRef.current?.focus();
+    else if (next.to) toRef.current?.focus();
+    return Object.keys(next).length === 0;
+  }
 
   function handleSearch(e: React.FormEvent) {
     e.preventDefault();
+    if (!validate()) return;
     setLoading(true);
     const params = new URLSearchParams();
 
@@ -36,13 +83,16 @@ export function SearchWidget({ className }: { className?: string }) {
       if (from) params.set("from", from);
       if (to) params.set("to", to);
       if (checkIn) params.set("date", checkIn);
+      if (tripType === "roundtrip" && checkOut) params.set("return", checkOut);
+      params.set("adults", String(adults));
+      params.set("cabin", cabin);
       router.push(`/flights?${params.toString()}`);
     } else if (tab === "hotels") {
       if (to) params.set("city", to);
       if (from) params.set("q", from);
       if (checkIn) params.set("checkIn", checkIn);
       if (checkOut) params.set("checkOut", checkOut);
-      if (guests) params.set("guests", guests);
+      params.set("guests", String(adults + children));
       router.push(`/hotels?${params.toString()}`);
     } else if (tab === "packages") {
       if (to) params.set("destination", to);
@@ -55,8 +105,10 @@ export function SearchWidget({ className }: { className?: string }) {
   }
 
   function swapLocations() {
+    setSwapSpin(true);
     setFrom(to);
     setTo(from);
+    window.setTimeout(() => setSwapSpin(false), 450);
   }
 
   const showRoute = tab === "flights" || tab === "cars";
@@ -67,138 +119,270 @@ export function SearchWidget({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        "rounded-[var(--radius-lg)] bg-surface shadow-float overflow-hidden border border-line/80",
+        "rounded-md bg-paper shadow-lg overflow-hidden border border-line w-full max-w-full",
         className
       )}
     >
-      <div className="flex border-b border-line overflow-x-auto" role="tablist" aria-label="Search type">
+      <div className="flex border-b border-line overflow-x-auto scrollbar-hide bg-paper-raised" role="tablist" aria-label="Search type">
         {tabs.map((t) => (
           <button
             key={t.id}
             type="button"
             role="tab"
             aria-selected={tab === t.id}
-            onClick={() => setTab(t.id)}
+            onClick={() => {
+              setTab(t.id);
+              setErrors({});
+            }}
             className={cn(
-              "flex items-center gap-2 px-5 py-4 text-sm font-semibold whitespace-nowrap transition-colors border-b-2 -mb-px focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary-500",
+              "flex min-h-11 shrink-0 items-center gap-2 px-4 sm:px-5 py-3 text-[0.6875rem] font-semibold uppercase tracking-[0.12em] whitespace-nowrap transition-colors border-b-2 -mb-px focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-brass-500",
               tab === t.id
-                ? "border-primary-500 text-primary-500 bg-primary-100/50"
-                : "border-transparent text-ink-500 hover:text-ink-700 hover:bg-surface-alt"
+                ? "border-brass-500 text-pine-500 bg-brass-50"
+                : "border-transparent text-ink-500 hover:text-ink-700 hover:bg-sand"
             )}
           >
-            <t.icon className="h-4 w-4" strokeWidth={1.75} aria-hidden />
+            <t.icon className="h-5 w-5" strokeWidth={1.5} aria-hidden />
             {t.label}
           </button>
         ))}
       </div>
 
-      <form onSubmit={handleSearch} className="p-5 md:p-6">
-        {showRoute && <SearchRouteLine from={from} to={to} />}
+      <form onSubmit={handleSearch} className="p-4 sm:p-5 md:p-6" noValidate>
+        {tab === "flights" ? (
+          <div
+            className="mb-4 inline-flex rounded-sm border border-line bg-sand p-1"
+            role="group"
+            aria-label="Trip type"
+          >
+            {(
+              [
+                ["roundtrip", "Round trip"],
+                ["oneway", "One way"],
+                ["multicity", "Multi-city"],
+              ] as const
+            ).map(([id, label]) => (
+              <button
+                key={id}
+                type="button"
+                onClick={() => setTripType(id)}
+                className={cn(
+                  "min-h-11 rounded-sm px-4 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brass-500",
+                  tripType === id ? "bg-paper text-ink shadow-sm" : "text-ink-500 hover:text-ink-700"
+                )}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
+        ) : null}
+
+        {showRoute ? <SearchRouteLine from={from} to={to} /> : null}
+
+        {errors.form ? (
+          <p className="mb-3 text-sm text-error" role="alert">
+            {errors.form}
+          </p>
+        ) : null}
 
         <div className="grid gap-4 md:grid-cols-12 md:items-end">
           {(tab === "flights" || tab === "cars") && (
-            <div className="md:col-span-3">
-              <label htmlFor="search-from" className="mb-1.5 flex items-center gap-1 text-xs font-semibold uppercase tracking-wide text-ink-700">
-                <MapPin className="h-3.5 w-3.5" aria-hidden />
-                {tab === "cars" ? "Pick-up location" : "From"}
-              </label>
+            <div className="md:col-span-3 relative">
               <Input
+                ref={fromRef}
                 id="search-from"
-                placeholder={tab === "flights" ? "City or airport" : "Airport or city"}
+                label={tab === "cars" ? "Pick-up location" : "From"}
+                placeholder={tab === "flights" ? "City or airport (e.g. KHI)" : "Airport or city"}
                 value={from}
-                onChange={(e) => setFrom(e.target.value)}
+                onChange={(e) => {
+                  setFrom(e.target.value);
+                  setErrors((prev) => ({ ...prev, from: undefined, form: undefined }));
+                }}
+                error={errors.from}
+                prefixIcon={<MapPin strokeWidth={1.5} />}
                 className="h-12"
               />
             </div>
           )}
 
           {tab === "flights" && (
-            <div className="flex md:col-span-1 justify-center pb-2">
+            <div className="flex md:col-span-1 justify-center pb-1">
               <button
                 type="button"
                 onClick={swapLocations}
-                className="p-2.5 rounded-[var(--radius-full)] hover:bg-primary-100 text-primary-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500"
+                className="flex h-11 w-11 items-center justify-center rounded-sm border border-line bg-paper text-pine-500 hover:bg-pine-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brass-500"
                 aria-label="Swap origin and destination"
               >
-                <ArrowLeftRight className="h-5 w-5" />
+                <ArrowLeftRight
+                  className={cn("h-5 w-5 transition-transform duration-[var(--duration-slow)] ease-[var(--ease-brand)]", swapSpin && "rotate-180")}
+                  strokeWidth={1.5}
+                />
               </button>
             </div>
           )}
 
           <div className={cn("md:col-span-3", tab === "hotels" && "md:col-span-4", tab === "packages" && "md:col-span-5")}>
-            <label htmlFor="search-to" className="mb-1.5 flex items-center gap-1 text-xs font-semibold uppercase tracking-wide text-ink-700">
-              <MapPin className="h-3.5 w-3.5" aria-hidden />
-              {toLabel}
-            </label>
             <Input
+              ref={toRef}
               id="search-to"
-              placeholder={tab === "hotels" ? "City, hotel, or landmark" : "City or airport"}
+              label={toLabel}
+              placeholder={tab === "hotels" ? "City, hotel, or landmark" : "City or airport (e.g. DXB)"}
               value={to}
-              onChange={(e) => setTo(e.target.value)}
+              onChange={(e) => {
+                setTo(e.target.value);
+                setErrors((prev) => ({ ...prev, to: undefined, form: undefined }));
+              }}
+              error={errors.to}
+              prefixIcon={<MapPin strokeWidth={1.5} />}
               className="h-12"
             />
           </div>
 
           <div className="md:col-span-2">
-            <label htmlFor="search-checkin" className="mb-1.5 flex items-center gap-1 text-xs font-semibold uppercase tracking-wide text-ink-700">
-              <Calendar className="h-3.5 w-3.5" aria-hidden />
-              {dateLabel}
-            </label>
             <Input
               id="search-checkin"
               type="date"
+              label={dateLabel}
               value={checkIn}
               onChange={(e) => setCheckIn(e.target.value)}
+              prefixIcon={<Calendar strokeWidth={1.5} />}
               className="h-12"
             />
           </div>
 
-          {(tab === "hotels" || tab === "packages") && (
+          {(tab === "hotels" || tab === "packages" || (tab === "flights" && tripType === "roundtrip")) && (
             <div className="md:col-span-2">
-              <label htmlFor="search-checkout" className="mb-1.5 flex items-center gap-1 text-xs font-semibold uppercase tracking-wide text-ink-700">
-                <Calendar className="h-3.5 w-3.5" aria-hidden /> Check-out
-              </label>
               <Input
                 id="search-checkout"
                 type="date"
+                label={tab === "flights" ? "Return" : "Check-out"}
                 value={checkOut}
                 onChange={(e) => setCheckOut(e.target.value)}
+                prefixIcon={<Calendar strokeWidth={1.5} />}
                 className="h-12"
               />
             </div>
           )}
 
-          {(tab === "hotels" || tab === "packages") && (
-            <div className="md:col-span-2">
-              <label htmlFor="search-guests" className="mb-1.5 flex items-center gap-1 text-xs font-semibold uppercase tracking-wide text-ink-700">
-                <Users className="h-3.5 w-3.5" aria-hidden /> Guests
-              </label>
-              <Input
-                id="search-guests"
-                type="number"
-                min={1}
-                max={12}
-                value={guests}
-                onChange={(e) => setGuests(e.target.value)}
-                className="h-12"
-              />
+          {(tab === "flights" || tab === "hotels" || tab === "packages") && (
+            <div className="md:col-span-2 relative">
+              <button
+                type="button"
+                onClick={() => setTravellersOpen((o) => !o)}
+                className="flex h-12 w-full items-center gap-2 rounded-sm border border-line bg-paper px-3 text-left text-sm hover:border-taupe-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brass-500"
+                aria-expanded={travellersOpen}
+              >
+                <Users className="h-5 w-5 text-ink-500" strokeWidth={1.5} aria-hidden />
+                <span className="truncate text-ink">{travellersSummary}</span>
+              </button>
+              {travellersOpen ? (
+                <div className="absolute z-20 mt-2 w-72 rounded-md border border-line bg-paper p-4 shadow-lg">
+                  <Stepper label="Adults" value={adults} min={1} max={9} onChange={setAdults} />
+                  <Stepper label="Children" value={children} min={0} max={8} onChange={setChildren} />
+                  {tab === "flights" ? (
+                    <div className="mt-3">
+                      <p className="text-[0.6875rem] font-semibold uppercase tracking-[0.15em] text-ink-500">Cabin</p>
+                      <div className="mt-2 flex flex-wrap gap-2">
+                        {["Economy", "Business", "First"].map((c) => (
+                          <button
+                            key={c}
+                            type="button"
+                            onClick={() => setCabin(c)}
+                            className={cn(
+                              "min-h-11 rounded-sm px-3 text-sm font-medium border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brass-500",
+                              cabin === c ? "border-brass-500 bg-brass-50 text-pine-700" : "border-line text-ink-700"
+                            )}
+                          >
+                            {c}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  ) : null}
+                  <Button type="button" variant="secondary" className="mt-4 w-full" onClick={() => setTravellersOpen(false)}>
+                    Done
+                  </Button>
+                </div>
+              ) : null}
             </div>
           )}
 
           <div className="md:col-span-2">
-            <Button type="submit" loading={loading} className="w-full h-12 text-base">
-              <Search className="h-5 w-5" aria-hidden />
-              {tab === "flights"
-                ? "Find flights"
-                : tab === "hotels"
-                  ? "Find stays"
-                  : tab === "packages"
-                    ? "Find packages"
-                    : "Find cars"}
+            <Button type="submit" loading={loading} size="lg" className="w-full h-12 md:h-14">
+              <Search className="h-5 w-5" strokeWidth={1.5} aria-hidden />
+              {loading
+                ? "Searching…"
+                : tab === "flights"
+                  ? "Search flights"
+                  : tab === "hotels"
+                    ? "Search stays"
+                    : tab === "packages"
+                      ? "Search packages"
+                      : "Search cars"}
             </Button>
           </div>
         </div>
+
+        {tab === "flights" ? (
+          <div className="mt-4 flex flex-wrap gap-2">
+            <span className="text-[0.6875rem] font-semibold uppercase tracking-[0.15em] text-ink-500 self-center">Recent</span>
+            {RECENT.map((chip) => (
+              <button
+                key={chip}
+                type="button"
+                onClick={() => {
+                  const [a, b] = chip.split("→").map((s) => s.trim());
+                  setFrom(a);
+                  setTo(b);
+                }}
+                className="min-h-11 rounded-sm border border-line px-3 text-sm text-ink-700 hover:bg-brass-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brass-500"
+              >
+                {chip}
+              </button>
+            ))}
+          </div>
+        ) : null}
       </form>
+    </div>
+  );
+}
+
+function Stepper({
+  label,
+  value,
+  min,
+  max,
+  onChange,
+}: {
+  label: string;
+  value: number;
+  min: number;
+  max: number;
+  onChange: (n: number) => void;
+}) {
+  return (
+    <div className="flex items-center justify-between py-2">
+      <span className="text-sm font-medium text-ink-900">{label}</span>
+      <div className="flex items-center gap-2">
+        <button
+          type="button"
+          disabled={value <= min}
+          onClick={() => onChange(Math.max(min, value - 1))}
+          className="flex h-11 w-11 items-center justify-center rounded-sm border border-line disabled:opacity-40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brass-500"
+          aria-label={`Decrease ${label}`}
+        >
+          −
+        </button>
+        <span className="w-6 text-center tabular-nums text-ink">{value}</span>
+        <button
+          type="button"
+          disabled={value >= max}
+          onClick={() => onChange(Math.min(max, value + 1))}
+          className="flex h-11 w-11 items-center justify-center rounded-sm border border-line disabled:opacity-40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brass-500"
+          aria-label={`Increase ${label}`}
+        >
+          +
+        </button>
+      </div>
     </div>
   );
 }

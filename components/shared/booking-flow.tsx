@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
@@ -199,7 +199,7 @@ export function BookingFlow({
                   if (validateStep2()) void createPaymentIntent();
                 }}
               >
-                {loading ? "Preparing payment…" : "Continue to payment"}
+                {loading ? "Preparing paymentâ€¦" : "Continue to payment"}
               </Button>
             </div>
           </CardContent>
@@ -212,7 +212,7 @@ export function BookingFlow({
             <CardTitle>Secure payment</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="rounded-xl bg-primary-100/60 p-4 text-sm space-y-1">
+            <div className="rounded-md bg-primary-100/60 p-4 text-sm space-y-1">
               <p>
                 <strong>Traveler:</strong> {traveler.name}
               </p>

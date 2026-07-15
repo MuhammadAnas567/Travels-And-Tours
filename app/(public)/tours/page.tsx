@@ -1,6 +1,5 @@
 import { Suspense } from "react";
 import type { Metadata } from "next";
-import Image from "next/image";
 import type { TourCategory } from "@prisma/client";
 import { getTours, getTourCountries } from "@/lib/tours";
 import { TourCard } from "@/components/shared/tour-card";
@@ -8,13 +7,15 @@ import { FilterSidebar } from "@/components/shared/filter-sidebar";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/section";
+import { CatalogHero, EmptyCatalog } from "@/components/layout/catalog-hero";
 import { getPreferredCurrency } from "@/lib/locale";
 import { getFxRates } from "@/lib/currency";
 import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "International Tour Packages",
-  description: "Browse curated international tour packages — luxury, adventure, safari, beach and cultural experiences worldwide.",
+  description:
+    "Browse curated international tour packages — luxury, adventure, safari, beach and cultural experiences worldwide.",
 };
 
 type SearchParams = Promise<{
@@ -53,44 +54,34 @@ export default async function ToursPage({
     getFxRates(),
   ]);
 
+  const description = `${total} curated experience${total !== 1 ? "s" : ""} across the globe${
+    params.q ? ` matching “${params.q}”` : ""
+  }`;
+
   return (
     <>
-      {/* Hero banner */}
-      <div className="relative bg-midnight py-20 md:py-28 overflow-hidden">
-        <Image
-          src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=1920&q=80"
-          alt="International destinations"
-          fill
-          className="object-cover opacity-30"
-          priority
-          sizes="100vw"
-        />
-        <div className="absolute inset-0 image-overlay-hero" />
-        <Container className="relative">
-          <p className="text-caption text-gold">Worldwide Collection</p>
-          <h1 className="mt-2 font-display text-h2 text-pearl">International Tour Packages</h1>
-          <p className="mt-3 max-w-lg text-cream/65">
-            {total} curated experience{total !== 1 ? "s" : ""} across the globe
-            {params.q && ` matching "${params.q}"`}
-          </p>
-        </Container>
-      </div>
+      <CatalogHero
+        eyebrow="Worldwide Collection"
+        title="International Tour Packages"
+        description={description}
+      />
 
-      <Container className="py-12">
+      <Container className="py-12 md:py-16">
         <div className="grid gap-8 lg:grid-cols-4">
-          <Suspense fallback={<Skeleton className="h-96 w-full rounded-[var(--radius-lg)]" />}>
+          <Suspense fallback={<Skeleton className="h-96 w-full rounded-md" />}>
             <FilterSidebar countries={countries} />
           </Suspense>
 
           <div className="lg:col-span-3">
             {tours.length === 0 ? (
-              <div className="card-luxury p-16 text-center">
-                <p className="font-display text-2xl text-ink">No tours match your filters</p>
-                <p className="mt-2 text-muted">Try adjusting your search or browse all destinations.</p>
-                <Button variant="accent" asChild className="mt-6">
+              <EmptyCatalog
+                title="No tours match your filters"
+                description="Try adjusting your search or browse all destinations."
+              >
+                <Button variant="accent" asChild>
                   <Link href="/tours">View all tours</Link>
                 </Button>
-              </div>
+              </EmptyCatalog>
             ) : (
               <div className="grid gap-7 sm:grid-cols-2 xl:grid-cols-2">
                 {tours.map((tour) => (

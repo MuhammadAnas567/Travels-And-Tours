@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import Link from "next/link";
@@ -31,13 +31,13 @@ export default function ForgotPasswordPage() {
               <Label htmlFor="email">Email</Label>
               <Input id="email" name="email" type="email" required className="mt-1" />
             </div>
-            {message && <p className="text-sm text-ocean-700">{message}</p>}
+            {message && <p className="text-sm text-ink-700">{message}</p>}
             <Button type="submit" className="w-full" disabled={loading}>
               {loading ? "Sending..." : "Send reset link"}
             </Button>
           </form>
           <p className="mt-4 text-center text-sm">
-            <Link href="/login" className="text-ocean-600 hover:underline">
+            <Link href="/login" className="text-pine-500 hover:underline">
               Back to sign in
             </Link>
           </p>

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import Link from "next/link";
@@ -34,12 +34,12 @@ export default function RegisterPage() {
             <div>
               <Label htmlFor="name">Full name</Label>
               <Input id="name" name="name" required className="mt-1" />
-              {errors.name && <p className="mt-1 text-sm text-red-600">{errors.name[0]}</p>}
+              {errors.name && <p className="mt-1 text-sm text-error">{errors.name[0]}</p>}
             </div>
             <div>
               <Label htmlFor="email">Email</Label>
               <Input id="email" name="email" type="email" required className="mt-1" />
-              {errors.email && <p className="mt-1 text-sm text-red-600">{errors.email[0]}</p>}
+              {errors.email && <p className="mt-1 text-sm text-error">{errors.email[0]}</p>}
             </div>
             <div>
               <Label htmlFor="password">Password</Label>
@@ -49,7 +49,7 @@ export default function RegisterPage() {
               <Label htmlFor="confirmPassword">Confirm password</Label>
               <Input id="confirmPassword" name="confirmPassword" type="password" required className="mt-1" />
               {errors.confirmPassword && (
-                <p className="mt-1 text-sm text-red-600">{errors.confirmPassword[0]}</p>
+                <p className="mt-1 text-sm text-error">{errors.confirmPassword[0]}</p>
               )}
             </div>
             <Button type="submit" className="w-full" disabled={loading}>
@@ -59,10 +59,10 @@ export default function RegisterPage() {
 
           <div className="relative my-6">
             <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-ocean-100" />
+              <div className="w-full border-t border-line" />
             </div>
             <div className="relative flex justify-center text-sm">
-              <span className="bg-white px-2 text-gray-500">or</span>
+              <span className="bg-white px-2 text-ink-500">or</span>
             </div>
           </div>
 
@@ -74,9 +74,9 @@ export default function RegisterPage() {
             Continue with Google
           </Button>
 
-          <p className="mt-4 text-center text-sm text-gray-600">
+          <p className="mt-4 text-center text-sm text-ink-500">
             Already have an account?{" "}
-            <Link href="/login" className="text-ocean-600 hover:underline">
+            <Link href="/login" className="text-pine-500 hover:underline">
               Sign in
             </Link>
           </p>

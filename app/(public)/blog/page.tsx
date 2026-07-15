@@ -1,8 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
 import { prisma } from "@/lib/db";
-import { Container, Section, SectionHeader } from "@/components/ui/section";
 import { Badge } from "@/components/ui/badge";
+import { CatalogHero, EmptyCatalog } from "@/components/layout/catalog-hero";
 
 export const dynamic = "force-dynamic";
 
@@ -23,46 +23,92 @@ export default async function BlogIndexPage() {
     console.error("[blog] DB unavailable:", error);
   }
 
+  const [featured, ...rest] = posts;
+
   return (
-    <Section>
-      <Container>
-        <SectionHeader
-          eyebrow="Travel Guides"
-          title="Stories & practical advice"
-          description="Visa tips, destination guides, and insider knowledge for smarter travel."
-        />
-        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-          {posts.map((post) => (
-            <Link
-              key={post.id}
-              href={`/blog/${post.slug}`}
-              className="group overflow-hidden rounded-[var(--radius-lg)] border border-line bg-surface shadow-sm transition-shadow hover:shadow-lg"
-            >
-              {post.coverImage && (
-                <div className="relative aspect-[16/10] overflow-hidden">
-                  <Image
-                    src={post.coverImage}
-                    alt=""
-                    fill
-                    className="object-cover transition-transform duration-300 group-hover:scale-105"
-                    sizes="(max-width:768px) 100vw, 33vw"
-                  />
+    <div className="bg-sand min-h-[60vh]">
+      <CatalogHero
+        eyebrow="Travel guides"
+        title="Stories & practical advice"
+        description="Visa tips, destination guides, and insider knowledge for smarter travel."
+      />
+
+      <div className="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8 py-12 pb-20">
+        {posts.length > 0 ? (
+          <div className="space-y-10">
+            {featured && (
+              <Link
+                href={`/blog/${featured.slug}`}
+                className="group grid gap-6 overflow-hidden rounded-md border border-line bg-paper shadow-sm transition-[box-shadow,transform] duration-[var(--duration-fast)] ease-[var(--ease-brand)] hover:shadow-md hover:-translate-y-0.5 md:grid-cols-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brass-500"
+              >
+                {featured.coverImage ? (
+                  <div className="relative aspect-16/10 md:aspect-auto md:min-h-[280px] overflow-hidden">
+                    <Image
+                      src={featured.coverImage}
+                      alt=""
+                      fill
+                      className="img-editorial object-cover transition-transform duration-[var(--duration-base)] ease-[var(--ease-brand)] group-hover:scale-[1.03]"
+                      sizes="(max-width:768px) 100vw, 50vw"
+                    />
+                  </div>
+                ) : (
+                  <div className="min-h-[200px] bg-pine-100 md:min-h-[280px]" />
+                )}
+                <div className="flex flex-col justify-center p-6 md:p-8">
+                  <Badge variant="secondary">{featured.category}</Badge>
+                  <h2 className="mt-3 font-display text-2xl md:text-3xl font-semibold text-ink group-hover:text-pine-500 transition-colors">
+                    {featured.title}
+                  </h2>
+                  <p className="mt-3 max-w-prose text-sm text-ink-500 leading-relaxed line-clamp-3">
+                    {featured.excerpt}
+                  </p>
+                  <span className="mt-5 text-sm font-semibold text-pine-500 link-underline self-start">
+                    Read guide
+                  </span>
                 </div>
-              )}
-              <div className="p-5">
-                <Badge variant="secondary">{post.category}</Badge>
-                <h2 className="mt-2 font-display text-xl text-ink group-hover:text-primary">
-                  {post.title}
-                </h2>
-                <p className="mt-2 line-clamp-2 text-sm text-muted">{post.excerpt}</p>
+              </Link>
+            )}
+
+            {rest.length > 0 && (
+              <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                {rest.map((post) => (
+                  <Link
+                    key={post.id}
+                    href={`/blog/${post.slug}`}
+                    className="group overflow-hidden rounded-md border border-line bg-paper shadow-sm transition-[box-shadow,transform] duration-[var(--duration-fast)] ease-[var(--ease-brand)] hover:shadow-md hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brass-500"
+                  >
+                    {post.coverImage && (
+                      <div className="relative aspect-16/10 overflow-hidden">
+                        <Image
+                          src={post.coverImage}
+                          alt=""
+                          fill
+                          className="img-editorial object-cover transition-transform duration-[var(--duration-base)] ease-[var(--ease-brand)] group-hover:scale-[1.03]"
+                          sizes="(max-width:768px) 100vw, 33vw"
+                        />
+                      </div>
+                    )}
+                    <div className="p-5">
+                      <Badge variant="secondary">{post.category}</Badge>
+                      <h2 className="mt-2 font-display text-xl font-semibold text-ink group-hover:text-pine-500 transition-colors">
+                        {post.title}
+                      </h2>
+                      <p className="mt-2 line-clamp-2 text-sm text-ink-500 leading-relaxed">
+                        {post.excerpt}
+                      </p>
+                    </div>
+                  </Link>
+                ))}
               </div>
-            </Link>
-          ))}
-        </div>
-        {posts.length === 0 && (
-          <p className="text-center text-muted">Guides coming soon.</p>
+            )}
+          </div>
+        ) : (
+          <EmptyCatalog
+            title="Guides coming soon"
+            description="Visa tips, destination guides, and travel advice will appear here."
+          />
         )}
-      </Container>
-    </Section>
+      </div>
+    </div>
   );
 }

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { CatalogHero } from "@/components/layout/catalog-hero";
 
 export const metadata: Metadata = {
   title: "FAQ",
@@ -30,20 +31,27 @@ const faqs = [
 
 export default function FAQPage() {
   return (
-    <div className="mx-auto max-w-3xl px-4 py-16 sm:px-6 lg:px-8">
-      <h1 className="text-3xl font-bold text-ink-900">Frequently Asked Questions</h1>
-      <div className="mt-8 space-y-4">
-        {faqs.map((faq) => (
-          <details
-            key={faq.q}
-            className="group rounded-xl border border-line bg-white p-5"
-          >
-            <summary className="cursor-pointer font-medium text-ink-900 marker:content-none">
-              {faq.q}
-            </summary>
-            <p className="mt-3 text-ink-700">{faq.a}</p>
-          </details>
-        ))}
+    <div className="bg-sand min-h-[60vh]">
+      <CatalogHero
+        eyebrow="Help"
+        title="Frequently asked questions"
+        description="Answers about booking, cancellations, tickets, and reviews."
+      />
+
+      <div className="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8 py-12 pb-20">
+        <div className="mx-auto max-w-3xl space-y-3">
+          {faqs.map((faq) => (
+            <details
+              key={faq.q}
+              className="group rounded-md border border-line bg-paper p-5 open:shadow-sm"
+            >
+              <summary className="cursor-pointer list-none font-display text-base font-semibold text-ink marker:content-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brass-500 rounded-sm [&::-webkit-details-marker]:hidden">
+                {faq.q}
+              </summary>
+              <p className="mt-3 max-w-prose text-sm text-ink-500 leading-relaxed">{faq.a}</p>
+            </details>
+          ))}
+        </div>
       </div>
     </div>
   );

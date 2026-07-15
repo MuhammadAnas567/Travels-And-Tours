@@ -4,7 +4,7 @@ type SectionProps = {
   children: React.ReactNode;
   className?: string;
   id?: string;
-  background?: "default" | "sand" | "surface" | "ink" | "midnight";
+  background?: "default" | "sand" | "paper" | "surface" | "ink" | "pine" | "midnight";
 };
 
 export function Section({
@@ -14,15 +14,17 @@ export function Section({
   background = "default",
 }: SectionProps) {
   const bgMap = {
-    default: "bg-background",
+    default: "bg-sand",
     sand: "bg-sand",
-    surface: "bg-surface",
+    paper: "bg-paper",
+    surface: "bg-paper",
     ink: "bg-ink text-sand",
-    midnight: "bg-midnight text-cream",
+    pine: "bg-pine-500 text-paper",
+    midnight: "bg-ink text-paper",
   };
 
   return (
-    <section id={id} className={cn("py-16 md:py-24", bgMap[background], className)}>
+    <section id={id} className={cn("section-pad", bgMap[background], className)}>
       {children}
     </section>
   );
@@ -44,15 +46,15 @@ export function SectionHeader({
   return (
     <div
       className={cn(
-        "mb-10 max-w-2xl",
+        "mb-12 max-w-2xl",
         align === "center" && "mx-auto text-center",
         className
       )}
     >
-      {eyebrow && <p className="text-caption mb-2">{eyebrow}</p>}
-      <h2 className="text-h2 font-display font-medium text-ink">{title}</h2>
+      {eyebrow && <p className="eyebrow mb-3">{eyebrow}</p>}
+      <h2 className="text-h2 text-ink">{title}</h2>
       {description && (
-        <p className="mt-3 text-muted leading-relaxed">{description}</p>
+        <p className="mt-4 text-ink-500 leading-relaxed max-w-[65ch]">{description}</p>
       )}
     </div>
   );
@@ -66,8 +68,18 @@ export function Container({
   className?: string;
 }) {
   return (
-    <div className={cn("mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8", className)}>
+    <div className={cn("mx-auto w-full max-w-[1280px] px-4 sm:px-6 lg:px-8", className)}>
       {children}
     </div>
   );
+}
+
+export function Eyebrow({
+  children,
+  className,
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
+  return <p className={cn("eyebrow", className)}>{children}</p>;
 }

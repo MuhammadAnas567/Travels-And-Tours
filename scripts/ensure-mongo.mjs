@@ -7,6 +7,7 @@ const port = 27018;
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const projectRoot = join(__dirname, "..");
 const memoryScript = join(__dirname, "mongo-memory.mjs");
+const seedIfEmptyScript = join(__dirname, "seed-if-empty.mjs");
 
 function isPortOpen() {
   return new Promise((resolve) => {
@@ -38,22 +39,33 @@ function startMongoDetached() {
   child.unref();
 }
 
-if (await isPortOpen()) {
-  console.log(`MongoDB already running on port ${port}`);
-  process.exit(0);
+function runSeedIfEmpty() {
+  return new Promise((resolve) => {
+    const child = spawn(process.execPath, [seedIfEmptyScript], {
+      cwd: projectRoot,
+      stdio: "inherit",
+      windowsHide: true,
+    });
+    child.on("exit", () => resolve());
+    child.on("error", () => resolve());
+  });
 }
 
-console.log("Starting in-memory MongoDB...");
-startMongoDetached();
+if (!(await isPortOpen())) {
+  console.log("Starting persistent MongoDB (data in .mongo-data)...");
+  startMongoDetached();
 
-if (await waitForPort(120)) {
+  if (!(await waitForPort(120))) {
+    console.warn("");
+    console.warn("WARNING: MongoDB did not start in time.");
+    console.warn("Open a separate terminal and run: npm run db:mongo");
+    console.warn("");
+    process.exit(0);
+  }
   console.log(`MongoDB ready on port ${port}`);
-  process.exit(0);
+} else {
+  console.log(`MongoDB already running on port ${port}`);
 }
 
-console.warn("");
-console.warn("WARNING: MongoDB did not start in time.");
-console.warn("Open a separate terminal and run: npm run db:mongo");
-console.warn("Then run: npm run db:seed  (only if tours are missing)");
-console.warn("");
+await runSeedIfEmpty();
 process.exit(0);

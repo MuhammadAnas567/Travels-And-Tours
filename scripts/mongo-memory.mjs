@@ -1,6 +1,6 @@
 import { MongoMemoryReplSet } from "mongodb-memory-server";
 import { MongoClient } from "mongodb";
-import { writeFileSync, readFileSync, existsSync } from "node:fs";
+import { writeFileSync, readFileSync, existsSync, mkdirSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import net from "node:net";
@@ -8,10 +8,11 @@ import net from "node:net";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const projectRoot = join(__dirname, "..");
 const port = 27018;
+const dbPath = join(projectRoot, ".mongo-data");
 
 const connectionCandidates = [
-  `mongodb://127.0.0.1:${port}/travels-tours?replicaSet=testset`,
   `mongodb://127.0.0.1:${port}/travels-tours?replicaSet=rs0`,
+  `mongodb://127.0.0.1:${port}/travels-tours?replicaSet=testset`,
   `mongodb://127.0.0.1:${port}/travels-tours?directConnection=true`,
 ];
 
@@ -49,7 +50,7 @@ async function detectWorkingUrl() {
       await client.db("travels-tours").command({ ping: 1 });
       return url;
     } catch {
-      // try next candidate
+      // try next
     } finally {
       await client.close().catch(() => {});
     }
@@ -57,11 +58,13 @@ async function detectWorkingUrl() {
   return null;
 }
 
+mkdirSync(dbPath, { recursive: true });
+
 if (await isPortOpen()) {
   const existingUrl = await detectWorkingUrl();
   if (existingUrl) {
     updateEnvFiles(existingUrl);
-    console.log(`MongoDB already running: ${existingUrl}`);
+    console.log(`MongoDB already running (persistent): ${existingUrl}`);
     process.exit(0);
   }
 
@@ -71,27 +74,40 @@ if (await isPortOpen()) {
   process.exit(1);
 }
 
-console.log("Starting in-memory MongoDB replica set (no local install needed)...");
+console.log(`Starting persistent MongoDB at ${dbPath} ...`);
 
 const replSet = await MongoMemoryReplSet.create({
   replSet: { name: "rs0", count: 1, storageEngine: "wiredTiger" },
-  instanceOpts: [{ port }],
+  instanceOpts: [
+    {
+      port,
+      dbPath,
+      storageEngine: "wiredTiger",
+    },
+  ],
 });
 
 const databaseUrl = replSet.getUri("travels-tours");
 updateEnvFiles(databaseUrl);
 
-console.log(`MongoDB ready: ${databaseUrl}`);
-console.log("Press Ctrl+C to stop.");
+const pidPath = join(projectRoot, ".mongo-data", "mongod.pid");
+writeFileSync(pidPath, String(process.pid));
 
-process.on("SIGINT", async () => {
-  await replSet.stop();
+console.log(`MongoDB ready (data persists in .mongo-data): ${databaseUrl}`);
+console.log("Press Ctrl+C to stop (data is kept).");
+
+async function shutdown() {
+  try {
+    await replSet.stop({ doCleanup: false });
+  } catch {
+    // ignore
+  }
   process.exit(0);
-});
+}
 
-process.on("SIGTERM", async () => {
-  await replSet.stop();
-  process.exit(0);
-});
+process.on("SIGINT", shutdown);
+process.on("SIGTERM", shutdown);
+process.on("SIGHUP", shutdown);
 
-await new Promise(() => {});
+// Keep process alive without unsettled top-level await warnings
+setInterval(() => {}, 1 << 30);

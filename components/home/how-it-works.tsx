@@ -2,42 +2,38 @@ import { Search, Scale, CreditCard, Plane } from "lucide-react";
 
 const steps = [
   {
-    n: "01",
     icon: Search,
     title: "Search",
-    text: "Tell us where you’re going — flights, hotels, or a full package.",
+    text: "Name a city or route — flights, hotels, or a composed package.",
   },
   {
-    n: "02",
     icon: Scale,
     title: "Compare",
-    text: "Filter by price, stops, and cancellation so the shortlist is yours.",
+    text: "Filter by price, stops, and cancellation until the shortlist is yours.",
   },
   {
-    n: "03",
     icon: CreditCard,
     title: "Book",
-    text: "Pay securely. Most hotel stays include free cancellation windows.",
+    text: "Pay securely. Most stays include a free-cancellation window.",
   },
   {
-    n: "04",
     icon: Plane,
     title: "Travel",
-    text: "Manage the trip from your dashboard — support is on call 24/7.",
+    text: "Manage the trip from your dashboard — support stays on call.",
   },
 ];
 
 export function HowItWorks() {
   return (
-    <ol className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-      {steps.map((step) => (
-        <li key={step.n} className="relative">
-          <p className="font-heading text-4xl font-bold text-primary-300">{step.n}</p>
-          <div className="mt-2 flex h-11 w-11 items-center justify-center rounded-xl bg-primary-500 text-white">
-            <step.icon className="h-5 w-5" aria-hidden />
+    <ol className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
+      {steps.map((step, i) => (
+        <li key={step.title} className="relative border-t border-line pt-6">
+          <p className="eyebrow text-brass-500">Step {String(i + 1).padStart(2, "0")}</p>
+          <div className="mt-4 flex h-11 w-11 items-center justify-center rounded-sm border border-pine-200 bg-pine-50 text-pine-500">
+            <step.icon className="h-5 w-5" strokeWidth={1.5} aria-hidden />
           </div>
-          <h3 className="mt-4 font-heading text-lg font-bold text-ink-900">{step.title}</h3>
-          <p className="mt-1 text-sm text-ink-500 leading-relaxed">{step.text}</p>
+          <h3 className="mt-5 font-display text-xl font-semibold text-ink">{step.title}</h3>
+          <p className="mt-2 text-sm text-ink-500 leading-relaxed max-w-[28ch]">{step.text}</p>
         </li>
       ))}
     </ol>

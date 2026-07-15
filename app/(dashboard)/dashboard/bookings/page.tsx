@@ -28,14 +28,19 @@ export default async function BookingsPage() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold text-ink-900">My Bookings</h1>
-      <p className="mt-1 text-ink-700">{bookings.length} total bookings</p>
+      <h1 className="font-heading text-2xl font-semibold tracking-tight text-ink-900">
+        My Bookings
+      </h1>
+      <p className="mt-1 text-ink-500">{bookings.length} total bookings</p>
 
       <div className="mt-6 space-y-4">
         {bookings.length === 0 ? (
           <p className="text-ink-500">
             No bookings yet.{" "}
-            <Link href="/tours" className="text-primary-500 hover:underline">
+            <Link
+              href="/tours"
+              className="font-medium text-pine-600 hover:underline"
+            >
               Browse tours
             </Link>
           </p>
@@ -51,7 +56,7 @@ export default async function BookingsPage() {
             return (
               <div
                 key={booking.id}
-                className="rounded-xl border border-line bg-white p-5"
+                className="rounded-md border border-line bg-sand/40 p-5"
               >
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                   <div>
@@ -61,7 +66,7 @@ export default async function BookingsPage() {
                     <p className="mt-1 text-sm text-ink-500">
                       {booking.tour.location}, {booking.tour.country}
                     </p>
-                    <p className="mt-2 text-sm">
+                    <p className="mt-2 text-sm tabular-nums text-ink-700">
                       {formatDate(booking.tourDate.startDate)} —{" "}
                       {formatDate(booking.tourDate.endDate)}
                     </p>
@@ -75,16 +80,20 @@ export default async function BookingsPage() {
                     <Badge variant={statusVariant[booking.status]}>
                       {booking.status.toLowerCase()}
                     </Badge>
-                    <span className="text-lg font-bold text-primary-700">
+                    <span className="text-lg font-semibold tabular-nums text-pine-700">
                       {formatPrice(Number(booking.totalPrice))}
                     </span>
                     <div className="flex gap-2">
                       {booking.status === "CONFIRMED" && (
                         <Link
                           href={`/dashboard/bookings/${booking.id}/ticket`}
-                          className="flex items-center gap-1 text-sm text-primary-500 hover:underline"
+                          className="flex min-h-11 items-center gap-1 text-sm font-medium text-pine-600 hover:text-pine-700 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brass-500 focus-visible:ring-offset-2"
                         >
-                          <Ticket className="h-4 w-4" aria-hidden />
+                          <Ticket
+                            className="size-5"
+                            strokeWidth={1.5}
+                            aria-hidden
+                          />
                           E-ticket
                         </Link>
                       )}

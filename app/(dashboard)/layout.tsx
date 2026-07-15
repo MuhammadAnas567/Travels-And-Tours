@@ -15,10 +15,12 @@ export default async function DashboardLayout({
   return (
     <>
       <Navbar />
-      <main className="flex-1">
-        <div className="mx-auto flex max-w-7xl flex-col gap-8 px-4 py-10 lg:flex-row sm:px-6 lg:px-8">
+      <main className="flex-1 bg-sand">
+        <div className="mx-auto flex max-w-[1280px] flex-col gap-6 px-3 py-8 sm:gap-8 sm:px-4 sm:py-14 lg:flex-row lg:gap-10 lg:px-6 lg:py-16 xl:px-8">
           <DashboardSidebar />
-          <div className="flex-1">{children}</div>
+          <div className="min-w-0 flex-1 overflow-x-auto rounded-md border border-line bg-paper p-4 shadow-sm sm:p-6 md:p-8">
+            {children}
+          </div>
         </div>
       </main>
       <Footer />

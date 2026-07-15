@@ -1,30 +1,57 @@
 import type { Metadata } from "next";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 export const metadata: Metadata = {
   title: "About Us",
-  description: "Learn about UEB3 Tours and our mission to create unforgettable travel experiences.",
+  description:
+    "UEB3 Travel plans private journeys and curated escapes — clear fares, local partners, and humans on support.",
 };
 
 export default function AboutPage() {
   return (
-    <div className="mx-auto max-w-3xl px-4 py-16 sm:px-6 lg:px-8">
-      <h1 className="text-3xl font-bold text-ink-900">About UEB3 Tours</h1>
-      <div className="prose prose-ocean mt-6 max-w-none text-ink-700">
-        <p>
-          Founded in 2010, UEB3 Tours has been connecting travelers with
-          extraordinary experiences across 50+ countries. We believe travel
-          transforms lives, broadens perspectives, and creates lasting memories.
-        </p>
-        <p className="mt-4">
-          Our team of travel experts carefully curates each tour package, partnering
-          with local guides and sustainable operators to ensure authentic, responsible
-          tourism. From adventure seekers to honeymooners, we have something for
-          every type of traveler.
-        </p>
-        <h2 className="mt-8 text-xl font-semibold text-primary-700">Our Mission</h2>
-        <p>
-          To make world-class travel accessible, safe, and unforgettable for everyone.
-        </p>
+    <div className="bg-sand">
+      <section className="relative overflow-hidden border-b border-line bg-ink">
+        <div className="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8 py-24 md:py-32">
+          <p className="eyebrow text-brass-400">Since 2010</p>
+          <h1 className="mt-4 font-display text-hero text-paper max-w-[16ch]">
+            We compose journeys, not packages.
+          </h1>
+          <p className="mt-6 max-w-xl text-lg text-paper/65 leading-relaxed">
+            UEB3 Travel pairs clear pricing with itineraries shaped by people who still know the hotels, the guides, and the quiet hours of each city.
+          </p>
+        </div>
+      </section>
+
+      <div className="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8 section-pad">
+        <div className="grid gap-16 lg:grid-cols-[1fr_0.85fr]">
+          <div>
+            <p className="eyebrow">Story</p>
+            <h2 className="mt-3 text-h2 text-ink">Built for travellers who notice the details</h2>
+            <div className="mt-6 space-y-5 text-ink-700 leading-relaxed max-w-[65ch]">
+              <p>
+                Founded in 2010, UEB3 has helped travellers cross 50+ countries — from Amalfi dawn walks to safari camps on the Maasai Mara. We favour partners who keep places intact and travellers well looked after.
+              </p>
+              <p>
+                Every route is checked for timing, transfer quality, and cancellation honesty. Adventure, honeymoon, or a quiet week by the sea — the brief stays specific.
+              </p>
+            </div>
+          </div>
+          <aside className="rounded-md border border-line bg-paper p-8 h-fit">
+            <p className="eyebrow">Mission</p>
+            <p className="mt-4 font-display text-2xl font-semibold text-ink leading-snug">
+              Make world-class travel clear, safe, and worth remembering.
+            </p>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Button asChild>
+                <Link href="/plan-trip">Plan a custom trip</Link>
+              </Button>
+              <Button asChild variant="outline">
+                <Link href="/contact">Talk to us</Link>
+              </Button>
+            </div>
+          </aside>
+        </div>
       </div>
     </div>
   );

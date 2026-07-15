@@ -3,6 +3,7 @@ import Link from "next/link";
 import { HotelCard } from "@/components/cards/hotel-card";
 import { listHotels } from "@/lib/data/catalog";
 import { SearchWidget } from "@/components/search/search-widget";
+import { CatalogHero, EmptyCatalog } from "@/components/layout/catalog-hero";
 
 export const dynamic = "force-dynamic";
 
@@ -30,23 +31,22 @@ export default async function HotelsPage({ searchParams }: Props) {
       : "Hotels worldwide";
 
   return (
-    <div className="bg-surface-alt min-h-[60vh]">
-      <div className="bg-primary-900 text-white">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-10">
-          <h1 className="font-heading text-3xl md:text-4xl font-bold">{heading}</h1>
-          <p className="mt-2 text-white/70">
-            {hotels.length > 0
-              ? `${hotels.length} stays match your search`
-              : "Adjust your filters or browse all destinations"}
-          </p>
-        </div>
-      </div>
+    <div className="bg-sand min-h-[60vh]">
+      <CatalogHero
+        eyebrow="Stays"
+        title={heading}
+        description={
+          hotels.length > 0
+            ? `${hotels.length} stays match your search`
+            : "Adjust your filters or browse all destinations"
+        }
+      />
 
       <div className="mx-auto max-w-5xl px-4 sm:px-6 -mt-6 relative z-10 mb-10">
         <SearchWidget />
       </div>
 
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pb-16">
+      <div className="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8 pb-20">
         {hotels.length > 0 ? (
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {hotels.map((h) => (
@@ -66,15 +66,17 @@ export default async function HotelsPage({ searchParams }: Props) {
             ))}
           </div>
         ) : (
-          <div className="rounded-2xl border border-line bg-surface p-10 text-center">
-            <p className="text-ink-700 font-medium">No hotels match these filters</p>
-            <p className="mt-2 text-sm text-ink-500">
-              Try a different city, or clear filters to see all stays.
-            </p>
-            <Link href="/hotels" className="mt-4 inline-block text-sm font-semibold text-primary-500 hover:text-primary-700">
+          <EmptyCatalog
+            title="No hotels match these filters"
+            description="Try a different city, or clear filters to see all stays."
+          >
+            <Link
+              href="/hotels"
+              className="text-sm font-semibold text-pine-500 link-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brass-500 rounded-sm"
+            >
               View all hotels
             </Link>
-          </div>
+          </EmptyCatalog>
         )}
       </div>
     </div>

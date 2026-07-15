@@ -1,5 +1,5 @@
-import { Container, Section, SectionHeader } from "@/components/ui/section";
 import { PlanTripForm } from "@/components/shared/plan-trip-form";
+import { CatalogHero } from "@/components/layout/catalog-hero";
 
 export const metadata = {
   title: "Build Your Trip",
@@ -8,20 +8,18 @@ export const metadata = {
 
 export default function PlanTripPage() {
   return (
-    <Section>
-      <Container>
-        <div className="mx-auto max-w-2xl">
-          <SectionHeader
-            eyebrow="Custom Travel"
-            title="Build your perfect trip"
-            description="Tell us where you want to go, and our experts will craft a personalised quote within 24 hours."
-            align="center"
-          />
-          <div className="rounded-[var(--radius-lg)] border border-line bg-surface p-8 shadow-md">
-            <PlanTripForm />
-          </div>
+    <div className="bg-sand min-h-[60vh]">
+      <CatalogHero
+        eyebrow="Custom travel"
+        title="Build your perfect trip"
+        description="Tell us where you want to go, and our experts will craft a personalised quote within 24 hours."
+      />
+
+      <div className="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8 py-12 pb-20">
+        <div className="mx-auto max-w-2xl rounded-md border border-line bg-paper p-8 md:p-10 shadow-sm">
+          <PlanTripForm />
         </div>
-      </Container>
-    </Section>
+      </div>
+    </div>
   );
 }

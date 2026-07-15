@@ -1,4 +1,4 @@
-import Link from "next/link";
+﻿import Link from "next/link";
 import { getSession, signOut } from "@/lib/auth";
 import { getPreferredCurrency } from "@/lib/locale";
 import { Button } from "@/components/ui/button";
@@ -23,23 +23,25 @@ export async function Navbar() {
   ]);
 
   return (
-    <header className="sticky top-0 z-50 glass-nav">
-      <div className="mx-auto flex h-[4.25rem] max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
-        <Logo />
+    <header className="sticky top-0 z-50 w-full border-b border-line bg-paper">
+      <div className="mx-auto flex h-14 min-[480px]:h-[4.5rem] w-full max-w-[1280px] items-center justify-between gap-2 px-3 min-[480px]:px-4 sm:px-6 lg:px-8">
+        <div className="min-w-0 shrink">
+          <Logo />
+        </div>
 
-        <nav className="hidden items-center gap-0.5 lg:flex" aria-label="Main">
+        <nav className="hidden xl:flex items-center gap-0.5" aria-label="Main">
           {navLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
-              className="rounded-[var(--radius-md)] px-3.5 py-2 text-[0.8125rem] font-medium tracking-wide text-muted transition-colors hover:bg-pearl hover:text-midnight"
+              className="rounded-sm px-3 py-2 text-[0.6875rem] font-semibold uppercase tracking-[0.12em] text-ink-500 transition-colors hover:bg-sand hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brass-500 whitespace-nowrap"
             >
               {link.label}
             </Link>
           ))}
         </nav>
 
-        <div className="hidden items-center gap-2 md:flex">
+        <div className="hidden xl:flex items-center gap-2">
           <CurrencySwitcher value={currency} />
           {session?.user ? (
             <>

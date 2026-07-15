@@ -29,21 +29,26 @@ export default async function VisaIndexPage() {
             <Link
               key={visa.id}
               href={`/visa/${visa.countrySlug}`}
-              className="group rounded-[var(--radius-lg)] border border-line bg-surface p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
+              className="group rounded-md border border-line bg-paper p-6 shadow-sm card-hover"
             >
               <div className="flex items-start justify-between">
-                <span className="text-3xl">{visa.flagEmoji ?? "🌍"}</span>
+                <span
+                  className="flex h-11 min-w-11 items-center justify-center rounded-sm border border-line bg-sand px-2 font-display text-sm font-semibold tracking-wide text-pine-500"
+                  aria-hidden
+                >
+                  {(visa.countrySlug ?? visa.country).slice(0, 2).toUpperCase()}
+                </span>
                 <Badge variant="secondary">{visa.visaType}</Badge>
               </div>
-              <h3 className="mt-4 font-display text-xl font-medium text-ink group-hover:text-primary">
+              <h3 className="mt-4 font-display text-xl font-semibold text-ink group-hover:text-pine-500">
                 {visa.country}
               </h3>
-              <p className="mt-2 line-clamp-2 text-sm text-muted">
+              <p className="mt-2 line-clamp-2 text-sm text-ink-500">
                 {visa.processingTime} · Service from{" "}
                 {formatCurrency(visa.serviceFee, "PKR")}
               </p>
-              <span className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-primary">
-                View requirements <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+              <span className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-pine-500">
+                View requirements <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" strokeWidth={1.5} />
               </span>
             </Link>
           ))}

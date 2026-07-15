@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import Link from "next/link";
@@ -44,7 +44,7 @@ export default function LoginForm() {
               <Label htmlFor="password">Password</Label>
               <Input id="password" name="password" type="password" required className="mt-1" />
             </div>
-            {error && <p className="text-sm text-red-600">{error}</p>}
+            {error && <p className="text-sm text-error">{error}</p>}
             <Button type="submit" className="w-full" disabled={loading}>
               {loading ? "Signing in..." : "Sign in"}
             </Button>
@@ -52,10 +52,10 @@ export default function LoginForm() {
 
           <div className="relative my-6">
             <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-ocean-100" />
+              <div className="w-full border-t border-line" />
             </div>
             <div className="relative flex justify-center text-sm">
-              <span className="bg-white px-2 text-gray-500">or</span>
+              <span className="bg-white px-2 text-ink-500">or</span>
             </div>
           </div>
 
@@ -67,14 +67,14 @@ export default function LoginForm() {
             Continue with Google
           </Button>
 
-          <p className="mt-4 text-center text-sm text-gray-600">
-            <Link href="/forgot-password" className="text-ocean-600 hover:underline">
+          <p className="mt-4 text-center text-sm text-ink-500">
+            <Link href="/forgot-password" className="text-pine-500 hover:underline">
               Forgot password?
             </Link>
           </p>
-          <p className="mt-2 text-center text-sm text-gray-600">
+          <p className="mt-2 text-center text-sm text-ink-500">
             Don&apos;t have an account?{" "}
-            <Link href="/register" className="text-ocean-600 hover:underline">
+            <Link href="/register" className="text-pine-500 hover:underline">
               Sign up
             </Link>
           </p>

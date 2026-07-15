@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import Image from "next/image";
@@ -11,12 +11,12 @@ export function Gallery({ images, title }: { images: string[]; title: string }) 
 
   return (
     <div className="space-y-3">
-      <div className="relative aspect-[16/9] overflow-hidden rounded-xl">
+      <div className="relative aspect-[16/9] overflow-hidden rounded-md border border-line">
         <Image
           src={images[active]}
           alt={`${title} - image ${active + 1}`}
           fill
-          className="object-cover"
+          className="object-cover img-editorial"
           priority
           sizes="(max-width: 1200px) 100vw, 70vw"
         />
@@ -25,17 +25,19 @@ export function Gallery({ images, title }: { images: string[]; title: string }) 
         <div className="flex gap-2 overflow-x-auto pb-1">
           {images.map((img, i) => (
             <button
-              key={img}
               type="button"
+              key={img}
               onClick={() => setActive(i)}
               className={cn(
-                "relative h-16 w-24 shrink-0 overflow-hidden rounded-lg border-2 transition-colors",
-                active === i ? "border-ocean-600" : "border-transparent opacity-70 hover:opacity-100"
+                "relative h-16 w-24 shrink-0 overflow-hidden rounded-md border-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brass-500 focus-visible:ring-offset-2",
+                active === i
+                  ? "border-brass-500"
+                  : "border-line opacity-70 hover:opacity-100 hover:border-pine-300"
               )}
               aria-label={`View image ${i + 1}`}
               aria-current={active === i}
             >
-              <Image src={img} alt="" fill className="object-cover" sizes="96px" />
+              <Image src={img} alt="" fill className="object-cover img-editorial" sizes="96px" />
             </button>
           ))}
         </div>

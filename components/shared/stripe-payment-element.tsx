@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import {
@@ -70,11 +70,11 @@ function PaymentForm({
           className="flex-1 bg-primary-500 hover:bg-primary-700"
           disabled={!stripe || !elements || loading}
         >
-          {loading ? "Processing…" : "Pay securely"}
+          {loading ? "Processingâ€¦" : "Pay securely"}
         </Button>
       </div>
       <p className="text-center text-xs text-ink-500">
-        Secured by Stripe · Cards, wallets &amp; 3D Secure supported
+        Secured by Stripe Â· Cards, wallets &amp; 3D Secure supported
       </p>
     </form>
   );
@@ -91,10 +91,10 @@ export function StripePaymentElement({
 }) {
   if (!stripePromise) {
     return (
-      <div className="rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">
+      <div className="rounded-md border border-gold-200 bg-gold-50 p-4 text-sm text-warning">
         Stripe publishable key is missing. Set{" "}
-        <code className="rounded bg-amber-100 px-1">NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY</code>{" "}
-        in <code className="rounded bg-amber-100 px-1">.env.local</code>.
+        <code className="rounded bg-gold-100 px-1">NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY</code>{" "}
+        in <code className="rounded bg-gold-100 px-1">.env.local</code>.
       </div>
     );
   }

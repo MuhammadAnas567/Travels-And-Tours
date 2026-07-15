@@ -5,32 +5,35 @@ import { Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-semibold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 active:scale-[0.98]",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-semibold tracking-wide transition-all duration-[var(--duration-base)] ease-[var(--ease-brand)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brass-500 focus-visible:ring-offset-2 focus-visible:ring-offset-sand disabled:pointer-events-none disabled:opacity-50",
   {
     variants: {
       variant: {
+        primary:
+          "bg-brass-500 text-ink-900 hover:bg-brass-600 rounded-sm shadow-sm hover:shadow-md hover:-translate-y-px",
         default:
-          "bg-primary-500 text-white hover:bg-primary-700 rounded-[var(--radius-sm)] shadow-[var(--shadow-sm)] hover:shadow-[var(--shadow-md)] hover:-translate-y-px",
+          "bg-brass-500 text-ink-900 hover:bg-brass-600 rounded-sm shadow-sm hover:shadow-md hover:-translate-y-px",
         accent:
-          "bg-accent-500 text-ink-900 hover:bg-accent-600 rounded-[var(--radius-full)] shadow-[var(--shadow-sm)] hover:shadow-[var(--shadow-md)]",
+          "bg-brass-500 text-ink-900 hover:bg-brass-600 rounded-sm shadow-sm hover:shadow-md",
         secondary:
-          "bg-surface-alt text-ink-900 border border-line hover:bg-primary-100 rounded-[var(--radius-sm)]",
+          "border border-pine-500 bg-transparent text-pine-500 hover:bg-pine-500 hover:text-paper rounded-sm",
         outline:
-          "border border-line bg-surface text-ink-900 hover:bg-surface-alt hover:border-primary-300 rounded-[var(--radius-sm)]",
-        ghost: "hover:bg-primary-100 text-ink-700 rounded-[var(--radius-sm)]",
-        destructive:
-          "bg-error text-white hover:opacity-90 rounded-[var(--radius-sm)]",
-        link: "text-primary-500 underline-offset-4 hover:underline font-medium",
+          "border border-line bg-paper text-ink-900 hover:border-brass-400 hover:bg-brass-50 rounded-sm",
+        ghost: "hover:bg-taupe-100 text-ink-700 rounded-sm",
+        danger: "bg-error text-white hover:opacity-90 rounded-sm",
+        destructive: "bg-error text-white hover:opacity-90 rounded-sm",
+        link: "text-pine-500 underline-offset-4 hover:underline font-medium",
       },
       size: {
-        default: "h-12 px-5 py-2",
-        sm: "h-9 px-3 text-xs",
-        lg: "h-14 px-8 text-base",
-        icon: "h-12 w-12",
+        sm: "h-9 min-h-9 px-3 text-xs",
+        default: "h-11 min-h-11 px-5 py-2",
+        md: "h-11 min-h-11 px-5 py-2",
+        lg: "h-14 min-h-14 px-8 text-base",
+        icon: "h-11 w-11 min-h-11 min-w-11",
       },
     },
     defaultVariants: {
-      variant: "default",
+      variant: "primary",
       size: "default",
     },
   }
@@ -48,7 +51,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     const Comp = asChild ? Slot : "button";
     return (
       <Comp
-        className={cn(buttonVariants({ variant, size, className }))}
+        className={cn(buttonVariants({ variant, size, className }), loading && "relative")}
         ref={ref}
         disabled={disabled || loading}
         aria-busy={loading || undefined}
@@ -56,8 +59,13 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       >
         {loading ? (
           <>
-            <Loader2 className="h-4 w-4 animate-spin" aria-hidden />
-            <span className="opacity-80">{children}</span>
+            <span className="invisible inline-flex items-center gap-2" aria-hidden>
+              {children}
+            </span>
+            <span className="absolute inset-0 flex items-center justify-center gap-2">
+              <Loader2 className="h-4 w-4 animate-spin" aria-hidden />
+              <span className="sr-only">Loading</span>
+            </span>
           </>
         ) : (
           children

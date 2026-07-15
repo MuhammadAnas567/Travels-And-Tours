@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -17,7 +17,10 @@ export function DashboardSidebar() {
 
   return (
     <aside className="w-full shrink-0 lg:w-56">
-      <nav className="space-y-1" aria-label="Dashboard navigation">
+      <nav
+        className="flex gap-1 overflow-x-auto scrollbar-hide pb-1 lg:flex-col lg:overflow-visible lg:space-y-1 lg:pb-0"
+        aria-label="Dashboard navigation"
+      >
         {links.map(({ href, label, icon: Icon }) => {
           const active = pathname === href || (href !== "/dashboard" && pathname.startsWith(href));
           return (
@@ -25,14 +28,14 @@ export function DashboardSidebar() {
               key={href}
               href={href}
               className={cn(
-                "flex items-center gap-3 rounded-[var(--radius-sm)] px-3 py-2.5 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500",
+                "flex min-h-11 shrink-0 items-center gap-2 rounded-sm border-b-2 border-transparent px-3 py-2.5 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brass-500 lg:border-b-0 lg:border-l-2 lg:gap-3",
                 active
-                  ? "bg-primary-100 text-primary-700"
-                  : "text-ink-500 hover:bg-surface-alt hover:text-ink-900"
+                  ? "border-brass-500 bg-brass-50 text-pine-700"
+                  : "text-ink-500 hover:bg-sand hover:text-ink"
               )}
             >
-              <Icon className="h-4 w-4" strokeWidth={1.75} aria-hidden />
-              {label}
+              <Icon className="h-4 w-4 shrink-0" strokeWidth={1.5} aria-hidden />
+              <span className="whitespace-nowrap">{label}</span>
             </Link>
           );
         })}

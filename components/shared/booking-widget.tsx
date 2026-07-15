@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import Link from "next/link";
@@ -50,11 +50,11 @@ export function BookingWidget({
   }).toString()}`;
 
   return (
-    <Card className="sticky top-24 shadow-lg">
+    <Card className="sticky top-24 rounded-md border border-line bg-paper shadow-sm">
       <CardHeader>
-        <CardTitle className="text-2xl text-ocean-700">
+        <CardTitle className="text-2xl font-semibold tabular-nums text-pine-500">
           {formatPrice(unitPrice)}
-          <span className="text-sm font-normal text-gray-500"> / person</span>
+          <span className="text-sm font-normal text-ink-500"> / person</span>
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
@@ -109,18 +109,18 @@ export function BookingWidget({
           </div>
         </div>
 
-        <div className="rounded-lg bg-ocean-50 p-3 text-sm">
-          <div className="flex justify-between">
-            <span>Adults × {adults}</span>
+        <div className="rounded-md bg-pine-50 border border-pine-100 p-3 text-sm tabular-nums">
+          <div className="flex justify-between text-ink-500">
+            <span>Adults Ã— {adults}</span>
             <span>{formatPrice(adults * unitPrice)}</span>
           </div>
           {children > 0 && (
-            <div className="flex justify-between">
-              <span>Children × {children}</span>
+            <div className="flex justify-between text-ink-500">
+              <span>Children Ã— {children}</span>
               <span>{formatPrice(children * childPrice)}</span>
             </div>
           )}
-          <div className="mt-2 flex justify-between border-t border-ocean-200 pt-2 font-semibold">
+          <div className="mt-2 flex justify-between border-t border-pine-200 pt-2 font-semibold text-ink">
             <span>Total</span>
             <span>{formatPrice(total)}</span>
           </div>

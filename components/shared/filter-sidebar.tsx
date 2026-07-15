@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback } from "react";
@@ -46,7 +46,7 @@ export function FilterSidebar({ countries }: { countries: string[] }) {
   }
 
   return (
-    <aside className="card-luxury p-6 h-fit sticky top-24" aria-label="Tour filters">
+    <aside className="rounded-md border border-line bg-paper p-6 shadow-sm h-fit sticky top-24" aria-label="Tour filters">
       <div className="flex items-center justify-between mb-6">
         <h2 className="flex items-center gap-2 font-display text-lg text-ink">
           <SlidersHorizontal className="h-4 w-4 text-gold" />
