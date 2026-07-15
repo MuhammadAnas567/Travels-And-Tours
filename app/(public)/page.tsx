@@ -106,7 +106,15 @@ export default async function HomePage() {
               </p>
               <div className="mt-8 flex flex-wrap gap-3">
                 <Button asChild size="lg">
-                  <Link href={`/hotels/${deal.slug}`}>Save this stay</Link>
+                  <Link
+                    href={
+                      String(deal._id).startsWith("fallback")
+                        ? "/hotels"
+                        : `/hotels/${deal.slug}`
+                    }
+                  >
+                    Save this stay
+                  </Link>
                 </Button>
                 <Button
                   asChild
@@ -171,7 +179,7 @@ export default async function HomePage() {
               hotels.map((h) => (
                 <HotelCard
                   key={String(h._id)}
-                  slug={h.slug}
+                  slug={String(h._id).startsWith("fallback") ? "fallback" : h.slug}
                   name={h.name}
                   city={h.city}
                   country={h.country}

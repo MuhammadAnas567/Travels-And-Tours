@@ -38,7 +38,7 @@ export function HotelCard({
         <Heart className="h-4 w-4" strokeWidth={1.5} />
       </Link>
       <Link
-        href={`/hotels/${slug}`}
+        href={slug === "fallback" || !slug ? "/hotels" : `/hotels/${slug}`}
         className="block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-brass-500"
       >
         <div className="relative aspect-[4/3] overflow-hidden">
