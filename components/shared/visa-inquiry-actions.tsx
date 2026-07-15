@@ -43,7 +43,7 @@ export function VisaInquiryActions({
   return (
     <div className="mt-4 flex flex-wrap items-center gap-2">
       <Select value={status} onValueChange={(v) => setStatus(v as VisaInquiryStatus)}>
-        <SelectTrigger className="w-[180px]">
+        <SelectTrigger className="w-full min-w-[10rem] max-w-[12rem] sm:w-[180px]">
           <SelectValue />
         </SelectTrigger>
         <SelectContent>

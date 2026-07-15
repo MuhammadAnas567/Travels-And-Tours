@@ -1,22 +1,21 @@
-# STATUS — Luxury editorial redesign
+# STATUS — Responsive + nav pass (2026-07-15)
 
 ## Done
-- Design tokens (ink/sand/paper/brass/pine) + Fraunces/Hanken + kill switch
-- Public Header/Footer + CatalogHero/EmptyCatalog
-- Home, SearchWidget, HotelCard, TourCard, DestinationCard, Testimonials (no emoji)
-- Catalog pages: flights, hotels, packages, cars, deals, things-to-do, tours, blog, plan-trip, faq
-- Detail: hotels/[slug], tours/[slug], blog/[slug]
-- Legal: terms, privacy; InfoPage shell; gallery; booking-widget; search-bar (no glass)
-- Dual footer merged: `shared/footer` re-exports `layout/footer` (+ siteConfig trust)
-- Admin layout + sidebar; Dashboard layout + sidebar
-- Admin pages (overview, tours, bookings, customers, reviews, quotes, visa)
-- Dashboard pages (overview, bookings, wishlist, profile, ticket)
-- Auth ocean-* → pine/ink; print-button; filter-sidebar; label
+- Unified public nav config (`components/layout/nav-config.ts`)
+- Header: Tours/Deals primary; Destinations, Cars, Visa, Guides, Plan trip, Contact in More + full mobile list
+- Navbar (auth/dashboard): aligned to same link set; `lg` hamburger; body scroll lock
+- Destination cards → responsive grid; things-to-do grid
+- Tours filters collapse on mobile; results first on small screens
+- Flight mobile filter bar safe-area; search travellers popover width
+- Footer support links: Tours, Visa, Guides; tighter mobile padding
+- WhatsApp FAB clears flight filter bar on mobile
 
-## Remaining (light / optional)
-- Booking success/pending pages minor copy polish
-- Auth pages full editorial band (functional, tokens OK)
-- Screenshot matrix at 375/768/1024/1440
+## Half-done / not this pass
+- Currency/lang toggles in Header still UI-only (no i18n persistence)
+- Multi-city search tab still no distinct behavior
+- Admin tables: horizontal scroll only (acceptable)
+- Hotel/tour detail sticky mobile booking CTA
 
-## Untouched intentionally
-- Routing, Prisma queries, Stripe payment intent logic
+## Untouched (N/A or lower priority)
+- Styleguide grid density
+- Dual Navbar vs Header visual chrome (dark vs paper) — intentional by route group

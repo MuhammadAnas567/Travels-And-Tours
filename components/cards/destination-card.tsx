@@ -16,7 +16,7 @@ export function DestinationCard({ name, country, image, priceFrom, href }: Desti
   return (
     <Link
       href={link}
-      className="group relative shrink-0 w-64 overflow-hidden rounded-md border border-line shadow-sm card-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brass-500 focus-visible:ring-offset-2 focus-visible:ring-offset-sand"
+      className="group relative w-full overflow-hidden rounded-md border border-line shadow-sm card-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brass-500 focus-visible:ring-offset-2 focus-visible:ring-offset-sand"
     >
       <div className="relative aspect-[4/3]">
         <Image
@@ -26,7 +26,7 @@ export function DestinationCard({ name, country, image, priceFrom, href }: Desti
           placeholder="blur"
           blurDataURL={IMAGE_BLUR_DATA_URL}
           className="img-cover img-editorial"
-          sizes="256px"
+          sizes="(max-width:640px) 100vw, (max-width:1024px) 50vw, 25vw"
         />
         <div className="absolute inset-0 image-scrim" />
         <div className="absolute bottom-0 left-0 right-0 p-4">

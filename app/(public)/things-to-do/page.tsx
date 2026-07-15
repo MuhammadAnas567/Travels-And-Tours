@@ -22,9 +22,9 @@ export default async function ThingsToDoPage() {
         description="Start with a destination — then book stays, packages, and guided experiences around it."
       />
 
-      <div className="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8 py-12 pb-20">
+      <div className="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8 py-10 sm:py-12 pb-16 sm:pb-20">
         {destinations.length > 0 ? (
-          <div className="flex flex-wrap gap-5 justify-center sm:justify-start">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5">
             {destinations.map((d) => (
               <DestinationCard
                 key={String(d._id)}

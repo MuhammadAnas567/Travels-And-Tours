@@ -66,13 +66,15 @@ export default async function ToursPage({
         description={description}
       />
 
-      <Container className="py-12 md:py-16">
-        <div className="grid gap-8 lg:grid-cols-4">
-          <Suspense fallback={<Skeleton className="h-96 w-full rounded-md" />}>
-            <FilterSidebar countries={countries} />
-          </Suspense>
+      <Container className="py-10 sm:py-12 md:py-16">
+        <div className="grid gap-6 sm:gap-8 lg:grid-cols-4">
+          <div className="order-2 lg:order-1">
+            <Suspense fallback={<Skeleton className="h-96 w-full rounded-md" />}>
+              <FilterSidebar countries={countries} />
+            </Suspense>
+          </div>
 
-          <div className="lg:col-span-3">
+          <div className="order-1 lg:order-2 lg:col-span-3">
             {tours.length === 0 ? (
               <EmptyCatalog
                 title="No tours match your filters"

@@ -14,6 +14,9 @@ const footerLinks = {
   support: [
     { label: "Help Center", href: "/faq" },
     { label: "Contact Us", href: "/contact" },
+    { label: "Tours", href: "/tours" },
+    { label: "Visa support", href: "/visa" },
+    { label: "Travel Guides", href: "/blog" },
     { label: "Cancellation Policy", href: "/terms" },
     { label: "Travel Insurance", href: "/insurance" },
   ],
@@ -39,9 +42,9 @@ const paymentLabels = ["Visa", "Mastercard", "Amex", "PayPal"];
 
 export function Footer() {
   return (
-    <footer className="bg-ink text-paper">
-      <div className="mx-auto max-w-[1280px] px-4 py-20 sm:px-6 lg:px-8">
-        <div className="mb-14 flex flex-col gap-4 border-b border-brass-500/25 pb-10 md:flex-row md:items-end md:justify-between">
+    <footer className="bg-ink text-paper overflow-x-clip">
+      <div className="mx-auto max-w-[1280px] px-4 py-12 sm:py-16 md:py-20 sm:px-6 lg:px-8">
+        <div className="mb-10 sm:mb-14 flex flex-col gap-4 border-b border-brass-500/25 pb-8 sm:pb-10 md:flex-row md:items-end md:justify-between">
           <div>
             <p className="eyebrow text-brass-400">UEB3 Travel</p>
             <h2 className="mt-3 font-display text-3xl md:text-4xl font-semibold text-paper max-w-lg leading-tight">

@@ -5,23 +5,18 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useSession, signOut } from "next-auth/react";
 import {
-  Menu, X, Globe, User, Plane, Hotel, Package, MapPin, Tag,
-  LayoutDashboard, LogOut, Languages,
+  Menu,
+  X,
+  Globe,
+  User,
+  LayoutDashboard,
+  LogOut,
+  Languages,
+  ChevronDown,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-
-const navItems = [
-  { href: "/flights", label: "Flights", icon: Plane },
-  { href: "/hotels", label: "Hotels", icon: Hotel },
-  { href: "/packages", label: "Packages", icon: Package },
-  { href: "/things-to-do", label: "Destinations", icon: MapPin },
-  { href: "/deals", label: "Deals", icon: Tag },
-];
-
-function isActivePath(pathname: string, href: string) {
-  return pathname === href || pathname.startsWith(`${href}/`);
-}
+import { PRIMARY_NAV, MORE_NAV, ALL_NAV, isActivePath } from "@/components/layout/nav-config";
 
 export function Header() {
   const pathname = usePathname();
@@ -29,12 +24,14 @@ export function Header() {
   const isHome = pathname === "/";
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [moreOpen, setMoreOpen] = useState(false);
   const [currency, setCurrency] = useState("USD");
   const [lang, setLang] = useState("EN");
 
   const elevated = !isHome || scrolled;
   const user = session?.user;
   const isAdmin = user?.role === "ADMIN";
+  const moreActive = MORE_NAV.some((item) => isActivePath(pathname, item.href));
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 48);
@@ -45,6 +42,7 @@ export function Header() {
 
   useEffect(() => {
     setMobileOpen(false);
+    setMoreOpen(false);
   }, [pathname]);
 
   useEffect(() => {
@@ -60,7 +58,7 @@ export function Header() {
   return (
     <header
       className={cn(
-        "sticky top-0 z-50 w-full border-b transition-shadow duration-[var(--duration-base)] ease-[var(--ease-brand)]",
+        "relative sticky top-0 z-50 w-full border-b transition-shadow duration-[var(--duration-base)] ease-[var(--ease-brand)]",
         "bg-[#1A1611] text-[#F6F3EC] border-[#2A241C]",
         elevated ? "shadow-md" : "shadow-none"
       )}
@@ -78,45 +76,107 @@ export function Header() {
           </span>
         </Link>
 
-        {/* Desktop nav — xl only so mid widths don't overflow */}
+        {/* Desktop / large tablet — primary links + More */}
         <nav
-          className="hidden xl:flex items-center gap-0.5 shrink min-w-0"
+          className="hidden lg:flex items-center gap-0.5 shrink min-w-0"
           aria-label="Main"
         >
-          {navItems.map((item) => {
+          {PRIMARY_NAV.map((item) => {
             const active = isActivePath(pathname, item.href);
+            const Icon = item.icon;
             return (
               <Link
                 key={item.href}
                 href={item.href}
                 aria-current={active ? "page" : undefined}
                 className={cn(
-                  "group relative flex items-center gap-1.5 px-2.5 py-2 text-[0.6875rem] font-semibold uppercase tracking-[0.12em] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B48A50] focus-visible:ring-offset-2 focus-visible:ring-offset-[#1A1611] rounded-sm whitespace-nowrap",
+                  "group relative flex items-center gap-1.5 px-2 xl:px-2.5 py-2 text-[0.625rem] xl:text-[0.6875rem] font-semibold uppercase tracking-[0.1em] xl:tracking-[0.12em] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B48A50] focus-visible:ring-offset-2 focus-visible:ring-offset-[#1A1611] rounded-sm whitespace-nowrap",
                   active ? linkActive : linkIdle
                 )}
               >
-                <item.icon className="h-4 w-4 shrink-0" strokeWidth={1.5} aria-hidden />
+                {Icon && (
+                  <Icon className="h-4 w-4 shrink-0 hidden xl:block" strokeWidth={1.5} aria-hidden />
+                )}
                 {item.label}
                 <span
                   className={cn(
-                    "absolute bottom-1 left-3 right-3 h-px bg-[#B48A50] transition-transform duration-[var(--duration-base)] ease-[var(--ease-brand)] origin-left",
+                    "absolute bottom-1 left-2 right-2 h-px bg-[#B48A50] transition-transform duration-[var(--duration-base)] ease-[var(--ease-brand)] origin-left",
                     active ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
                   )}
                 />
               </Link>
             );
           })}
+
+          <div className="relative">
+            <button
+              type="button"
+              className={cn(
+                "group relative flex items-center gap-1 px-2 xl:px-2.5 py-2 text-[0.625rem] xl:text-[0.6875rem] font-semibold uppercase tracking-[0.1em] rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B48A50] focus-visible:ring-offset-2 focus-visible:ring-offset-[#1A1611]",
+                moreActive || moreOpen ? linkActive : linkIdle
+              )}
+              aria-expanded={moreOpen}
+              aria-haspopup="menu"
+              onClick={() => setMoreOpen((o) => !o)}
+            >
+              More
+              <ChevronDown
+                className={cn("h-3.5 w-3.5 transition-transform", moreOpen && "rotate-180")}
+                strokeWidth={1.5}
+                aria-hidden
+              />
+            </button>
+            {moreOpen && (
+              <>
+                <button
+                  type="button"
+                  className="fixed inset-0 z-40 cursor-default"
+                  aria-label="Close more menu"
+                  onClick={() => setMoreOpen(false)}
+                />
+                <div
+                  role="menu"
+                  className="absolute right-0 top-full z-50 mt-1 min-w-[12rem] rounded-md border border-[#2A241C] bg-[#1A1611] py-2 shadow-lg"
+                >
+                  {MORE_NAV.map((item) => {
+                    const active = isActivePath(pathname, item.href);
+                    const Icon = item.icon;
+                    return (
+                      <Link
+                        key={item.href}
+                        role="menuitem"
+                        href={item.href}
+                        aria-current={active ? "page" : undefined}
+                        className={cn(
+                          "flex min-h-11 items-center gap-2 px-4 py-2.5 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B48A50] focus-visible:ring-inset",
+                          active
+                            ? "bg-[#B48A50]/15 text-[#C49A5C]"
+                            : "text-[#F6F3EC]/85 hover:bg-white/5 hover:text-[#F6F3EC]"
+                        )}
+                        onClick={() => setMoreOpen(false)}
+                      >
+                        {Icon && <Icon className="h-4 w-4" strokeWidth={1.5} aria-hidden />}
+                        {item.label}
+                      </Link>
+                    );
+                  })}
+                </div>
+              </>
+            )}
+          </div>
         </nav>
 
         <div className="flex items-center gap-0.5 shrink-0">
-          <div className="hidden xl:flex items-center gap-1">
+          <div className="hidden lg:flex items-center gap-1">
             <Button
               type="button"
               variant="ghost"
               size="sm"
               aria-label={`Currency ${currency}. Click to toggle.`}
-              onClick={() => setCurrency((c) => (c === "USD" ? "EUR" : c === "EUR" ? "GBP" : "USD"))}
-              className="text-[#F6F3EC]/75 hover:bg-white/10 hover:text-[#F6F3EC]"
+              onClick={() =>
+                setCurrency((c) => (c === "USD" ? "EUR" : c === "EUR" ? "GBP" : "USD"))
+              }
+              className="text-[#F6F3EC]/75 hover:bg-white/10 hover:text-[#F6F3EC] hidden xl:inline-flex"
             >
               <Globe className="h-4 w-4" aria-hidden /> {currency}
             </Button>
@@ -126,7 +186,7 @@ export function Header() {
               size="sm"
               aria-label={`Language ${lang}. Click to toggle.`}
               onClick={() => setLang((l) => (l === "EN" ? "FR" : l === "FR" ? "ES" : "EN"))}
-              className="text-[#F6F3EC]/75 hover:bg-white/10 hover:text-[#F6F3EC]"
+              className="text-[#F6F3EC]/75 hover:bg-white/10 hover:text-[#F6F3EC] hidden xl:inline-flex"
             >
               <Languages className="h-4 w-4" aria-hidden /> {lang}
             </Button>
@@ -134,13 +194,24 @@ export function Header() {
             {status === "authenticated" && user ? (
               <>
                 {isAdmin && (
-                  <Button variant="ghost" size="sm" asChild className="text-[#F6F3EC]/75 hover:bg-white/10 hover:text-[#F6F3EC]">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    asChild
+                    className="text-[#F6F3EC]/75 hover:bg-white/10 hover:text-[#F6F3EC]"
+                  >
                     <Link href="/admin">Admin</Link>
                   </Button>
                 )}
-                <Button variant="ghost" size="sm" asChild className="text-[#F6F3EC]/75 hover:bg-white/10 hover:text-[#F6F3EC]">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  asChild
+                  className="text-[#F6F3EC]/75 hover:bg-white/10 hover:text-[#F6F3EC]"
+                >
                   <Link href="/dashboard">
-                    <LayoutDashboard className="h-4 w-4" aria-hidden /> Dashboard
+                    <LayoutDashboard className="h-4 w-4" aria-hidden />
+                    <span className="hidden xl:inline">Dashboard</span>
                   </Link>
                 </Button>
                 <Button
@@ -150,14 +221,21 @@ export function Header() {
                   onClick={() => signOut({ callbackUrl: "/" })}
                   className="text-[#F6F3EC]/75 hover:bg-white/10 hover:text-[#F6F3EC]"
                 >
-                  <LogOut className="h-4 w-4" aria-hidden /> Sign out
+                  <LogOut className="h-4 w-4" aria-hidden />
+                  <span className="hidden xl:inline">Sign out</span>
                 </Button>
               </>
             ) : (
               <>
-                <Button variant="ghost" size="sm" asChild className="text-[#F6F3EC]/75 hover:bg-white/10 hover:text-[#F6F3EC]">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  asChild
+                  className="text-[#F6F3EC]/75 hover:bg-white/10 hover:text-[#F6F3EC]"
+                >
                   <Link href="/login">
-                    <User className="h-4 w-4" aria-hidden /> Sign in
+                    <User className="h-4 w-4" aria-hidden />
+                    <span className="hidden xl:inline">Sign in</span>
                   </Link>
                 </Button>
                 <Button variant="primary" size="sm" asChild>
@@ -167,16 +245,19 @@ export function Header() {
             )}
           </div>
 
-          {/* Mobile / tablet menu control */}
           <button
             type="button"
-            className="xl:hidden flex items-center justify-center p-2.5 min-h-11 min-w-11 rounded-sm text-[#F6F3EC] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B48A50]"
+            className="lg:hidden flex items-center justify-center p-2.5 min-h-11 min-w-11 rounded-sm text-[#F6F3EC] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B48A50]"
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label={mobileOpen ? "Close menu" : "Open menu"}
             aria-expanded={mobileOpen}
             aria-controls="mobile-nav"
           >
-            {mobileOpen ? <X className="h-6 w-6" strokeWidth={1.5} /> : <Menu className="h-6 w-6" strokeWidth={1.5} />}
+            {mobileOpen ? (
+              <X className="h-6 w-6" strokeWidth={1.5} />
+            ) : (
+              <Menu className="h-6 w-6" strokeWidth={1.5} />
+            )}
           </button>
         </div>
       </div>
@@ -184,11 +265,12 @@ export function Header() {
       {mobileOpen && (
         <div
           id="mobile-nav"
-          className="xl:hidden absolute inset-x-0 top-14 min-[480px]:top-[4.5rem] z-50 border-t border-[#2A241C] bg-[#1A1611] px-4 py-5 shadow-float max-h-[calc(100dvh-3.5rem)] overflow-y-auto"
+          className="lg:hidden absolute inset-x-0 top-14 min-[480px]:top-[4.5rem] z-50 border-t border-[#2A241C] bg-[#1A1611] px-4 py-5 shadow-float max-h-[calc(100dvh-3.5rem)] min-[480px]:max-h-[calc(100dvh-4.5rem)] overflow-y-auto overscroll-contain pb-[max(1.25rem,env(safe-area-inset-bottom))]"
         >
           <nav className="flex flex-col gap-1" aria-label="Mobile">
-            {navItems.map((item) => {
+            {ALL_NAV.map((item) => {
               const active = isActivePath(pathname, item.href);
+              const Icon = item.icon;
               return (
                 <Link
                   key={item.href}
@@ -202,24 +284,20 @@ export function Header() {
                   )}
                   onClick={() => setMobileOpen(false)}
                 >
-                  <item.icon className="h-4 w-4" strokeWidth={1.5} aria-hidden /> {item.label}
+                  {Icon && <Icon className="h-4 w-4" strokeWidth={1.5} aria-hidden />}
+                  {item.label}
                 </Link>
               );
             })}
-            <Link
-              href="/cars"
-              className="flex min-h-11 items-center gap-2 rounded-sm px-3 py-3 text-[#F6F3EC]/85 hover:bg-white/5"
-              onClick={() => setMobileOpen(false)}
-            >
-              Car hire
-            </Link>
             <hr className="my-3 border-[#2A241C]" />
             <div className="flex flex-wrap gap-2 px-1 pb-2">
               <Button
                 type="button"
                 variant="ghost"
                 size="sm"
-                onClick={() => setCurrency((c) => (c === "USD" ? "EUR" : c === "EUR" ? "GBP" : "USD"))}
+                onClick={() =>
+                  setCurrency((c) => (c === "USD" ? "EUR" : c === "EUR" ? "GBP" : "USD"))
+                }
                 className="text-[#F6F3EC]/75 hover:bg-white/10"
               >
                 <Globe className="h-4 w-4" aria-hidden /> {currency}
@@ -236,17 +314,25 @@ export function Header() {
             </div>
             {status === "authenticated" && user ? (
               <>
-                <Link href="/dashboard" className="px-3 py-3 text-[#C49A5C] font-medium" onClick={() => setMobileOpen(false)}>
+                <Link
+                  href="/dashboard"
+                  className="flex min-h-11 items-center px-3 py-3 text-[#C49A5C] font-medium"
+                  onClick={() => setMobileOpen(false)}
+                >
                   Dashboard
                 </Link>
                 {isAdmin && (
-                  <Link href="/admin" className="px-3 py-3 text-[#F6F3EC] font-medium" onClick={() => setMobileOpen(false)}>
+                  <Link
+                    href="/admin"
+                    className="flex min-h-11 items-center px-3 py-3 text-[#F6F3EC] font-medium"
+                    onClick={() => setMobileOpen(false)}
+                  >
                     Admin
                   </Link>
                 )}
                 <button
                   type="button"
-                  className="px-3 py-3 text-left font-medium text-[#F6F3EC]"
+                  className="flex min-h-11 items-center px-3 py-3 text-left font-medium text-[#F6F3EC]"
                   onClick={() => {
                     setMobileOpen(false);
                     signOut({ callbackUrl: "/" });
@@ -257,10 +343,18 @@ export function Header() {
               </>
             ) : (
               <>
-                <Link href="/login" className="px-3 py-3 text-[#C49A5C] font-medium" onClick={() => setMobileOpen(false)}>
+                <Link
+                  href="/login"
+                  className="flex min-h-11 items-center px-3 py-3 text-[#C49A5C] font-medium"
+                  onClick={() => setMobileOpen(false)}
+                >
                   Sign in
                 </Link>
-                <Link href="/register" className="px-3 py-3 font-medium text-[#F6F3EC]" onClick={() => setMobileOpen(false)}>
+                <Link
+                  href="/register"
+                  className="flex min-h-11 items-center px-3 py-3 font-medium text-[#F6F3EC]"
+                  onClick={() => setMobileOpen(false)}
+                >
                   Register
                 </Link>
               </>

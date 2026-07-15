@@ -98,7 +98,7 @@ export function FlightResults({
   ];
 
   return (
-    <div className="mx-auto max-w-[1280px] px-3 sm:px-4 md:px-6 lg:px-8 pb-20 sm:pb-24 w-full overflow-x-clip">
+    <div className="mx-auto max-w-[1280px] px-3 sm:px-4 md:px-6 lg:px-8 pb-24 sm:pb-24 lg:pb-12 w-full overflow-x-clip">
       <div className="flex flex-col gap-4 sm:gap-6 lg:flex-row">
         {/* Filter rail */}
         <aside
@@ -270,17 +270,17 @@ export function FlightResults({
       </div>
 
       {/* Mobile sticky filter/sort */}
-      <div className="fixed inset-x-0 bottom-0 z-30 border-t border-line bg-surface p-3 lg:hidden">
+      <div className="fixed inset-x-0 bottom-0 z-30 border-t border-line bg-paper p-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] lg:hidden">
         <Button
           type="button"
           variant="secondary"
-          className="w-full"
+          className="w-full min-h-11"
           onClick={() => setFiltersOpen((o) => !o)}
         >
           <SlidersHorizontal className="h-5 w-5" strokeWidth={1.5} />
           Filter · Sort
           {activeFilters > 0 ? (
-            <span className="ml-1 rounded-full bg-navy-500 px-2 py-0.5 text-xs text-white tabular-nums">
+            <span className="ml-1 rounded-full bg-pine-500 px-2 py-0.5 text-xs text-paper tabular-nums">
               {activeFilters}
             </span>
           ) : null}

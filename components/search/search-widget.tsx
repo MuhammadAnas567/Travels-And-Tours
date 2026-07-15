@@ -275,7 +275,7 @@ export function SearchWidget({ className }: { className?: string }) {
                 <span className="truncate text-ink">{travellersSummary}</span>
               </button>
               {travellersOpen ? (
-                <div className="absolute z-20 mt-2 w-72 rounded-md border border-line bg-paper p-4 shadow-lg">
+                <div className="absolute z-20 mt-2 left-0 right-0 sm:left-auto sm:right-0 sm:w-72 w-full max-w-[min(100vw-2rem,18rem)] rounded-md border border-line bg-paper p-4 shadow-lg">
                   <Stepper label="Adults" value={adults} min={1} max={9} onChange={setAdults} />
                   <Stepper label="Children" value={children} min={0} max={8} onChange={setChildren} />
                   {tab === "flights" ? (
