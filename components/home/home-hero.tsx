@@ -30,7 +30,7 @@ export function HomeHero() {
           placeholder="blur"
           blurDataURL={IMAGE_BLUR_DATA_URL}
         />
-        <div className="absolute inset-0 image-overlay-hero" />
+        <div className="absolute inset-0 image-overlay-hero pointer-events-none" aria-hidden />
 
         <div className="relative w-full max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 pt-20 sm:pt-28 pb-36 sm:pb-44 md:pb-52">
           <motion.p

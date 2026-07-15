@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useSession, signOut } from "next-auth/react";
@@ -27,6 +27,7 @@ export function Header() {
   const [moreOpen, setMoreOpen] = useState(false);
   const [currency, setCurrency] = useState("USD");
   const [lang, setLang] = useState("EN");
+  const moreRef = useRef<HTMLDivElement>(null);
 
   const elevated = !isHome || scrolled;
   const user = session?.user;
@@ -52,21 +53,41 @@ export function Header() {
     };
   }, [mobileOpen]);
 
+  // Close "More" on outside click / Escape — no full-screen overlay (that blocked nav links)
+  useEffect(() => {
+    if (!moreOpen) return;
+    const onPointer = (e: MouseEvent | TouchEvent) => {
+      const el = moreRef.current;
+      if (el && !el.contains(e.target as Node)) setMoreOpen(false);
+    };
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setMoreOpen(false);
+    };
+    document.addEventListener("mousedown", onPointer);
+    document.addEventListener("touchstart", onPointer);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("mousedown", onPointer);
+      document.removeEventListener("touchstart", onPointer);
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [moreOpen]);
+
   const linkIdle = "text-[#F6F3EC]/80 hover:text-[#F6F3EC]";
   const linkActive = "text-[#C49A5C]";
 
   return (
     <header
       className={cn(
-        "relative sticky top-0 z-50 w-full border-b transition-shadow duration-[var(--duration-base)] ease-[var(--ease-brand)]",
+        "sticky top-0 z-[100] isolate w-full border-b transition-shadow duration-[var(--duration-base)] ease-[var(--ease-brand)]",
         "bg-[#1A1611] text-[#F6F3EC] border-[#2A241C]",
         elevated ? "shadow-md" : "shadow-none"
       )}
     >
-      <div className="mx-auto flex h-14 min-[480px]:h-[4.5rem] w-full max-w-[1280px] items-center justify-between gap-2 px-3 min-[480px]:px-4 sm:px-6 lg:px-8">
+      <div className="relative z-[101] mx-auto flex h-14 min-[480px]:h-[4.5rem] w-full max-w-[1280px] items-center justify-between gap-2 px-3 min-[480px]:px-4 sm:px-6 lg:px-8">
         <Link
           href="/"
-          className="flex min-w-0 items-center gap-2 min-[480px]:gap-3 shrink rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B48A50] focus-visible:ring-offset-2 focus-visible:ring-offset-[#1A1611]"
+          className="relative z-[102] flex min-w-0 items-center gap-2 min-[480px]:gap-3 shrink rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B48A50] focus-visible:ring-offset-2 focus-visible:ring-offset-[#1A1611]"
         >
           <div className="flex h-8 w-8 min-[480px]:h-9 min-[480px]:w-9 shrink-0 items-center justify-center rounded-sm border border-[#B48A50]/50 bg-[#B48A50]/15 font-display text-base min-[480px]:text-lg font-semibold text-[#C49A5C]">
             U
@@ -78,7 +99,7 @@ export function Header() {
 
         {/* Desktop / large tablet — primary links + More */}
         <nav
-          className="hidden lg:flex items-center gap-0.5 shrink min-w-0"
+          className="relative z-[102] hidden lg:flex items-center gap-0.5 shrink min-w-0"
           aria-label="Main"
         >
           {PRIMARY_NAV.map((item) => {
@@ -88,9 +109,10 @@ export function Header() {
               <Link
                 key={item.href}
                 href={item.href}
+                prefetch
                 aria-current={active ? "page" : undefined}
                 className={cn(
-                  "group relative flex items-center gap-1.5 px-2 xl:px-2.5 py-2 text-[0.625rem] xl:text-[0.6875rem] font-semibold uppercase tracking-[0.1em] xl:tracking-[0.12em] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B48A50] focus-visible:ring-offset-2 focus-visible:ring-offset-[#1A1611] rounded-sm whitespace-nowrap",
+                  "group relative z-[102] flex items-center gap-1.5 px-2 xl:px-2.5 py-2 text-[0.625rem] xl:text-[0.6875rem] font-semibold uppercase tracking-[0.1em] xl:tracking-[0.12em] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B48A50] focus-visible:ring-offset-2 focus-visible:ring-offset-[#1A1611] rounded-sm whitespace-nowrap pointer-events-auto",
                   active ? linkActive : linkIdle
                 )}
               >
@@ -99,8 +121,9 @@ export function Header() {
                 )}
                 {item.label}
                 <span
+                  aria-hidden
                   className={cn(
-                    "absolute bottom-1 left-2 right-2 h-px bg-[#B48A50] transition-transform duration-[var(--duration-base)] ease-[var(--ease-brand)] origin-left",
+                    "pointer-events-none absolute bottom-1 left-2 right-2 h-px bg-[#B48A50] transition-transform duration-[var(--duration-base)] ease-[var(--ease-brand)] origin-left",
                     active ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
                   )}
                 />
@@ -108,7 +131,7 @@ export function Header() {
             );
           })}
 
-          <div className="relative">
+          <div className="relative z-[103]" ref={moreRef}>
             <button
               type="button"
               className={cn(
@@ -126,43 +149,36 @@ export function Header() {
                 aria-hidden
               />
             </button>
-            {moreOpen && (
-              <>
-                <button
-                  type="button"
-                  className="fixed inset-0 z-40 cursor-default"
-                  aria-label="Close more menu"
-                  onClick={() => setMoreOpen(false)}
-                />
-                <div
-                  role="menu"
-                  className="absolute right-0 top-full z-50 mt-1 min-w-[12rem] rounded-md border border-[#2A241C] bg-[#1A1611] py-2 shadow-lg"
-                >
-                  {MORE_NAV.map((item) => {
-                    const active = isActivePath(pathname, item.href);
-                    const Icon = item.icon;
-                    return (
-                      <Link
-                        key={item.href}
-                        role="menuitem"
-                        href={item.href}
-                        aria-current={active ? "page" : undefined}
-                        className={cn(
-                          "flex min-h-11 items-center gap-2 px-4 py-2.5 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B48A50] focus-visible:ring-inset",
-                          active
-                            ? "bg-[#B48A50]/15 text-[#C49A5C]"
-                            : "text-[#F6F3EC]/85 hover:bg-white/5 hover:text-[#F6F3EC]"
-                        )}
-                        onClick={() => setMoreOpen(false)}
-                      >
-                        {Icon && <Icon className="h-4 w-4" strokeWidth={1.5} aria-hidden />}
-                        {item.label}
-                      </Link>
-                    );
-                  })}
-                </div>
-              </>
-            )}
+            {moreOpen ? (
+              <div
+                role="menu"
+                className="absolute right-0 top-full z-[104] mt-1 min-w-[12rem] rounded-md border border-[#2A241C] bg-[#1A1611] py-2 shadow-lg"
+              >
+                {MORE_NAV.map((item) => {
+                  const active = isActivePath(pathname, item.href);
+                  const Icon = item.icon;
+                  return (
+                    <Link
+                      key={item.href}
+                      role="menuitem"
+                      href={item.href}
+                      prefetch
+                      aria-current={active ? "page" : undefined}
+                      className={cn(
+                        "flex min-h-11 items-center gap-2 px-4 py-2.5 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B48A50] focus-visible:ring-inset pointer-events-auto",
+                        active
+                          ? "bg-[#B48A50]/15 text-[#C49A5C]"
+                          : "text-[#F6F3EC]/85 hover:bg-white/5 hover:text-[#F6F3EC]"
+                      )}
+                      onClick={() => setMoreOpen(false)}
+                    >
+                      {Icon && <Icon className="h-4 w-4" strokeWidth={1.5} aria-hidden />}
+                      {item.label}
+                    </Link>
+                  );
+                })}
+              </div>
+            ) : null}
           </div>
         </nav>
 
@@ -227,20 +243,21 @@ export function Header() {
               </>
             ) : (
               <>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  asChild
-                  className="text-[#F6F3EC]/75 hover:bg-white/10 hover:text-[#F6F3EC]"
+                <Link
+                  href="/login"
+                  prefetch
+                  className="inline-flex min-h-9 items-center gap-1.5 rounded-sm px-3 text-sm font-semibold text-[#F6F3EC]/75 hover:bg-white/10 hover:text-[#F6F3EC] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B48A50]"
                 >
-                  <Link href="/login">
-                    <User className="h-4 w-4" aria-hidden />
-                    <span className="hidden xl:inline">Sign in</span>
-                  </Link>
-                </Button>
-                <Button variant="primary" size="sm" asChild>
-                  <Link href="/register">Register</Link>
-                </Button>
+                  <User className="h-4 w-4" aria-hidden />
+                  <span className="hidden xl:inline">Sign in</span>
+                </Link>
+                <Link
+                  href="/register"
+                  prefetch
+                  className="inline-flex min-h-9 items-center rounded-sm bg-[#B48A50] px-3 text-sm font-semibold text-[#1A1611] hover:bg-[#957240] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B48A50]"
+                >
+                  Register
+                </Link>
               </>
             )}
           </div>
