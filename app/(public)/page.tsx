@@ -188,7 +188,7 @@ export default async function HomePage() {
                   avgRating={h.avgRating}
                   reviewCount={h.reviewCount}
                   pricePerNight={h.pricePerNight}
-                  amenities={h.amenities}
+                  amenities={[...h.amenities]}
                 />
               ))
             ) : (
