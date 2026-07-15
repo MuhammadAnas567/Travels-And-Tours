@@ -34,7 +34,6 @@ export default async function FlightsPage({ searchParams }: Props) {
       ? {
           economy: f.priceByClass.economy,
           business: f.priceByClass.business,
-          first: f.priceByClass.first,
         }
       : undefined,
   }));
