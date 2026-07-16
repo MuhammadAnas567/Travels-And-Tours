@@ -1,9 +1,8 @@
-import { Suspense } from "react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { HotelCard } from "@/components/cards/hotel-card";
 import { getCachedHotels } from "@/lib/catalog-cache";
-import { SearchWidget } from "@/components/search/search-widget";
+import { SearchWidgetLazy } from "@/components/search/search-widget-lazy";
 import { CatalogHero, EmptyCatalog } from "@/components/layout/catalog-hero";
 
 export const dynamic = "force-static";
@@ -31,9 +30,7 @@ export default async function HotelsPage() {
       />
 
       <div className="mx-auto max-w-5xl px-4 sm:px-6 -mt-6 relative z-10 mb-10">
-        <Suspense fallback={<div className="h-[220px] rounded-md bg-paper border border-line animate-pulse" />}>
-          <SearchWidget />
-        </Suspense>
+        <SearchWidgetLazy />
       </div>
 
       <div className="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8 pb-20">

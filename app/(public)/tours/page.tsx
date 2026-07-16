@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Container } from "@/components/ui/section";
 import { CatalogHero } from "@/components/layout/catalog-hero";
-import { ToursCatalogue } from "@/components/tours/tours-catalogue";
+import { ToursCatalogueLazy } from "@/components/tours/tours-catalogue-lazy";
 import { getCachedDefaultTours, getCachedTourCountries } from "@/lib/tours-cache";
 
 /** Force CDN cache — client filters must not mark this route dynamic */
@@ -30,7 +30,7 @@ export default async function ToursPage() {
       />
 
       <Container className="py-10 sm:py-12 md:py-16">
-        <ToursCatalogue tours={tours} countries={countries} />
+        <ToursCatalogueLazy tours={tours} countries={countries} />
       </Container>
     </>
   );

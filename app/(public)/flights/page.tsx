@@ -1,7 +1,6 @@
-import { Suspense } from "react";
 import type { Metadata } from "next";
 import { getCachedFlights } from "@/lib/catalog-cache";
-import { SearchWidget } from "@/components/search/search-widget";
+import { SearchWidgetLazy } from "@/components/search/search-widget-lazy";
 import { FlightResults } from "@/components/flights/flight-results";
 import { CatalogHero } from "@/components/layout/catalog-hero";
 
@@ -45,9 +44,7 @@ export default async function FlightsPage() {
       />
 
       <div className="mx-auto max-w-5xl px-4 sm:px-6 -mt-6 relative z-10 mb-10">
-        <Suspense fallback={<div className="h-[220px] rounded-md bg-paper border border-line animate-pulse" />}>
-          <SearchWidget />
-        </Suspense>
+        <SearchWidgetLazy />
       </div>
 
       <FlightResults flights={rows} />
