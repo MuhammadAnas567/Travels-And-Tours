@@ -11,8 +11,9 @@ import { HotelCard } from "@/components/cards/hotel-card";
 import { NewsletterForm } from "@/components/shared/newsletter-form";
 import { getTrendingDestinations, getPopularHotels, getDealOfWeek } from "@/lib/data/home";
 import { IMAGE_BLUR_DATA_URL } from "@/lib/images";
-import { ChevronRight, Heart } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { WishlistButton } from "@/components/cards/wishlist-button";
 
 export const dynamic = "force-static";
 export const revalidate = 120;
@@ -165,13 +166,16 @@ export default async function HomePage() {
                 placeholder="blur"
                 blurDataURL={IMAGE_BLUR_DATA_URL}
               />
-              <Link
-                href="/login?callbackUrl=/dashboard/wishlist"
-                className="absolute top-3 right-3 flex h-11 w-11 items-center justify-center rounded-full bg-paper/95 text-ink shadow-sm hover:bg-paper focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pine-500"
-                aria-label={`Save ${deal.name} to wishlist`}
-              >
-                <Heart className="h-5 w-5" strokeWidth={1.5} />
-              </Link>
+              <WishlistButton
+                id={String(deal._id)}
+                slug={deal.slug}
+                name={deal.name}
+                city={deal.city}
+                country={deal.country}
+                image={deal.images[0] ?? ""}
+                pricePerNight={deal.pricePerNight}
+                className="rounded-full"
+              />
             </div>
           </div>
         </section>

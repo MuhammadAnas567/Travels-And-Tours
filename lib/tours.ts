@@ -204,6 +204,25 @@ export async function getTourBySlug(slug: string) {
 
   const fb = FALLBACK_TOURS.find((t) => t.slug === slug);
   if (!fb) return null;
+
+  const availableDates = [14, 28, 45, 60].map((offset, i) => {
+    const start = new Date();
+    start.setUTCDate(start.getUTCDate() + offset);
+    start.setUTCHours(10, 0, 0, 0);
+    const end = new Date(start);
+    end.setUTCDate(end.getUTCDate() + Math.max(1, fb.durationDays - 1));
+    return {
+      id: `fallback-date-${fb.slug}-${i + 1}`,
+      tourId: fb.id,
+      startDate: start,
+      endDate: end,
+      seatsTotal: fb.maxGroupSize,
+      seatsBooked: Math.min(2, Math.floor(fb.maxGroupSize / 4)),
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
+  });
+
   return {
     ...fb,
     description: `${fb.title} — a curated UEB3 journey with stays, transfers, and local support.`,
@@ -218,7 +237,7 @@ export async function getTourBySlug(slug: string) {
     allowDeposit: false,
     depositPercent: 30,
     visaCountry: fb.country,
-    availableDates: [],
+    availableDates,
     reviews: [],
     status: "ACTIVE" as const,
     createdAt: new Date(),

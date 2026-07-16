@@ -1,9 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Star, MapPin, Wifi, Heart } from "lucide-react";
+import { Star, MapPin, Wifi } from "lucide-react";
 import { IMAGE_BLUR_DATA_URL, PLACEHOLDER_TOUR_IMAGE } from "@/lib/images";
+import { WishlistButton } from "@/components/cards/wishlist-button";
+import { DisplayPrice } from "@/components/shared/display-price";
 
 type HotelCardProps = {
+  id?: string;
   slug: string;
   name: string;
   city: string;
@@ -17,6 +20,7 @@ type HotelCardProps = {
 };
 
 export function HotelCard({
+  id,
   slug,
   name,
   city,
@@ -28,22 +32,27 @@ export function HotelCard({
   pricePerNight,
   amenities = [],
 }: HotelCardProps) {
+  const href = slug === "fallback" || !slug ? "/hotels" : `/hotels/${slug}`;
+  const img = image || PLACEHOLDER_TOUR_IMAGE;
+
   return (
     <article className="group relative overflow-hidden rounded-md bg-paper border border-line shadow-sm card-hover">
+      <WishlistButton
+        id={id || slug}
+        slug={slug}
+        name={name}
+        city={city}
+        country={country}
+        image={img}
+        pricePerNight={pricePerNight}
+      />
       <Link
-        href="/login?callbackUrl=/dashboard/wishlist"
-        className="absolute top-3 right-3 z-10 flex h-11 w-11 items-center justify-center rounded-sm bg-paper/95 text-ink-700 shadow-sm hover:bg-paper focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pine-500"
-        aria-label={`Save ${name} to wishlist`}
-      >
-        <Heart className="h-4 w-4" strokeWidth={1.5} />
-      </Link>
-      <Link
-        href={slug === "fallback" || !slug ? "/hotels" : `/hotels/${slug}`}
+        href={href}
         className="block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-pine-500"
       >
         <div className="relative aspect-[4/3] overflow-hidden">
           <Image
-            src={image || PLACEHOLDER_TOUR_IMAGE}
+            src={img}
             alt={`${name} in ${city}, ${country}`}
             fill
             placeholder="blur"
@@ -84,7 +93,7 @@ export function HotelCard({
             <div className="text-right">
               <p className="text-xs text-ink-500">per night</p>
               <p className="text-xl font-semibold tabular-nums text-ink" data-price>
-                ${pricePerNight}
+                <DisplayPrice amount={pricePerNight} />
               </p>
             </div>
           </div>

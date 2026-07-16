@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { getCachedPackages } from "@/lib/tours-cache";
-import { TourCard } from "@/components/shared/tour-card";
 import { SearchWidgetLazy } from "@/components/search/search-widget-lazy";
-import { CatalogHero, EmptyCatalog } from "@/components/layout/catalog-hero";
+import { CatalogHero } from "@/components/layout/catalog-hero";
+import { PackagesCatalogueLazy } from "@/components/packages/packages-catalogue-lazy";
 
 export const dynamic = "force-static";
 export const revalidate = 120;
@@ -30,31 +29,7 @@ export default async function PackagesPage() {
       </div>
 
       <div className="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8 pb-20">
-        {tours.length > 0 ? (
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {tours.map((tour) => (
-              <TourCard key={tour.id} tour={tour} />
-            ))}
-          </div>
-        ) : (
-          <EmptyCatalog
-            title="No packages match this destination"
-            description="Browse all packages or explore our tour catalogue."
-          >
-            <Link
-              href="/packages"
-              className="text-sm font-semibold text-pine-500 link-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pine-500 rounded-sm"
-            >
-              Clear filters
-            </Link>
-            <Link
-              href="/tours"
-              className="text-sm font-semibold text-pine-500 link-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pine-500 rounded-sm"
-            >
-              View tours
-            </Link>
-          </EmptyCatalog>
-        )}
+        <PackagesCatalogueLazy tours={tours} />
       </div>
     </div>
   );

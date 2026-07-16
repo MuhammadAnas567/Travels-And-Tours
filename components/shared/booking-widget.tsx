@@ -25,14 +25,19 @@ type BookingWidgetProps = {
   availableDates: TourDate[];
 };
 
+function isFallbackTour(tourId: string) {
+  return tourId.startsWith("fallback-");
+}
+
 export function BookingWidget({
   tourId,
   tourSlug,
+  tourTitle,
   unitPrice,
   maxGroupSize,
   availableDates,
 }: BookingWidgetProps) {
-  const [tourDateId, setTourDateId] = useState("");
+  const [tourDateId, setTourDateId] = useState(availableDates[0]?.id ?? "");
   const [adults, setAdults] = useState(2);
   const [children, setChildren] = useState(0);
 
@@ -42,12 +47,34 @@ export function BookingWidget({
   const seatsLeft = selectedDate
     ? selectedDate.seatsTotal - selectedDate.seatsBooked
     : maxGroupSize;
+  const canProceed = !!tourDateId && adults + children <= seatsLeft && adults >= 1;
+  const fallback = isFallbackTour(tourId);
 
   const bookingUrl = `/booking/${tourId}?${new URLSearchParams({
     tourDateId,
     adults: String(adults),
     children: String(children),
   }).toString()}`;
+
+  const inquireParams = new URLSearchParams({
+    subject: `Request to book: ${tourTitle ?? tourSlug}`,
+  });
+  if (selectedDate) {
+    inquireParams.set(
+      "message",
+      [
+        `Tour: ${tourTitle ?? tourSlug}`,
+        `Departure: ${new Date(selectedDate.startDate).toLocaleDateString("en-US", {
+          month: "short",
+          day: "numeric",
+          year: "numeric",
+        })}`,
+        `Travellers: ${adults} adult(s)${children ? `, ${children} child(ren)` : ""}`,
+        `Estimated total: ${formatPrice(total)}`,
+      ].join("\n")
+    );
+  }
+  const inquireUrl = `/contact?${inquireParams.toString()}`;
 
   return (
     <Card className="sticky top-24 rounded-md border border-line bg-paper shadow-sm">
@@ -101,7 +128,7 @@ export function BookingWidget({
               id="children"
               type="number"
               min={0}
-              max={seatsLeft - adults}
+              max={Math.max(0, seatsLeft - adults)}
               value={children}
               onChange={(e) => setChildren(Number(e.target.value))}
               className="mt-1"
@@ -111,12 +138,12 @@ export function BookingWidget({
 
         <div className="rounded-md bg-pine-50 border border-pine-100 p-3 text-sm tabular-nums">
           <div className="flex justify-between text-ink-500">
-            <span>Adults Ã— {adults}</span>
+            <span>Adults × {adults}</span>
             <span>{formatPrice(adults * unitPrice)}</span>
           </div>
           {children > 0 && (
             <div className="flex justify-between text-ink-500">
-              <span>Children Ã— {children}</span>
+              <span>Children × {children}</span>
               <span>{formatPrice(children * childPrice)}</span>
             </div>
           )}
@@ -126,18 +153,20 @@ export function BookingWidget({
           </div>
         </div>
 
-        <Button
-          className="w-full"
-          size="lg"
-          disabled={!tourDateId || adults + children > seatsLeft}
-          asChild={!!tourDateId && adults + children <= seatsLeft}
-        >
-          {tourDateId && adults + children <= seatsLeft ? (
-            <Link href={bookingUrl}>Book Now</Link>
+        <Button className="w-full" size="lg" disabled={!canProceed} asChild={canProceed}>
+          {canProceed ? (
+            <Link href={fallback ? inquireUrl : bookingUrl}>
+              {fallback ? "Request to book" : "Book Now"}
+            </Link>
           ) : (
-            <span>Book Now</span>
+            <span>{fallback ? "Request to book" : "Book Now"}</span>
           )}
         </Button>
+        {fallback ? (
+          <p className="text-center text-xs text-ink-500">
+            Demo catalogue — we confirm dates and payment with you directly.
+          </p>
+        ) : null}
       </CardContent>
     </Card>
   );

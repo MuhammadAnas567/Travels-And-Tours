@@ -3,6 +3,7 @@ import Image from "next/image";
 import { MapPin, Clock, Star, ArrowRight } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { formatCurrency, convertPrice } from "@/lib/currency";
+import { DisplayPrice } from "@/components/shared/display-price";
 import { IMAGE_BLUR_DATA_URL, PLACEHOLDER_TOUR_IMAGE } from "@/lib/images";
 import type { Currency, Tour } from "@prisma/client";
 
@@ -110,13 +111,28 @@ export function TourCard({ tour, currency = "USD", rates }: TourCardProps) {
               </span>
               <div className="flex items-baseline gap-2">
                 <span className="text-2xl font-semibold tabular-nums text-pine-500">
-                  {formatCurrency(displayPrice, currency)}
+                  {rates ? (
+                    formatCurrency(displayPrice, currency)
+                  ) : (
+                    <DisplayPrice
+                      amount={basePrice}
+                      from={tour.baseCurrency ?? "USD"}
+                    />
+                  )}
                 </span>
-                {displayOriginal && (
+                {displayOriginal && rates ? (
                   <span className="text-sm tabular-nums text-ink-500 line-through">
                     {formatCurrency(displayOriginal, currency)}
                   </span>
-                )}
+                ) : null}
+                {originalPrice && !rates ? (
+                  <span className="text-sm tabular-nums text-ink-500 line-through">
+                    <DisplayPrice
+                      amount={originalPrice}
+                      from={tour.baseCurrency ?? "USD"}
+                    />
+                  </span>
+                ) : null}
               </div>
             </div>
             <div className="flex h-11 w-11 items-center justify-center rounded-sm bg-pine-100 text-pine-500 transition-colors group-hover:bg-pine-500 group-hover:text-paper">

@@ -11,12 +11,14 @@ import {
 } from "@/components/ui/select";
 import { CURRENCY_COOKIE } from "@/lib/constants";
 import { SUPPORTED_CURRENCIES } from "@/lib/currency";
+import { notifyCurrencyChange } from "@/components/shared/display-price";
 
 export function CurrencySwitcher({ value }: { value: Currency }) {
   const router = useRouter();
 
   function onChange(currency: string) {
-    document.cookie = `${CURRENCY_COOKIE}=${currency};path=/;max-age=31536000`;
+    document.cookie = `${CURRENCY_COOKIE}=${currency};path=/;max-age=31536000;SameSite=Lax`;
+    notifyCurrencyChange();
     router.refresh();
   }
 

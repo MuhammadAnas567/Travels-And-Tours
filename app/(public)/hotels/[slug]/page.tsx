@@ -6,6 +6,7 @@ import { MapPin, Star, Wifi, ArrowLeft } from "lucide-react";
 import { getHotelBySlug } from "@/lib/data/catalog";
 import { IMAGE_BLUR_DATA_URL, PLACEHOLDER_TOUR_IMAGE } from "@/lib/images";
 import { Button } from "@/components/ui/button";
+import { getWhatsAppUrl } from "@/lib/site-config";
 
 export const dynamic = "force-static";
 export const revalidate = 120;
@@ -35,6 +36,9 @@ export default async function HotelDetailPage({ params }: Props) {
   if (!hotel) notFound();
 
   const hero = hotel.images[0] || PLACEHOLDER_TOUR_IMAGE;
+  const whatsappUrl = getWhatsAppUrl(
+    `Hi! I'd like to request a stay at ${hotel.name} in ${hotel.city}.`
+  );
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -155,12 +159,21 @@ export default async function HotelDetailPage({ params }: Props) {
             <span className="text-sm text-ink-500">{hotel.reviewCount} reviews</span>
           </div>
           <Button asChild className="mt-6 w-full h-12">
-            <Link href={`/contact?subject=${encodeURIComponent(`Book ${hotel.name}`)}`}>
-              Request to book
+            <Link
+              href={`/contact?subject=${encodeURIComponent(`Request stay: ${hotel.name}`)}&message=${encodeURIComponent(`I'd like to request a stay at ${hotel.name} in ${hotel.city}, ${hotel.country}.\nPreferred dates:\nGuests:\n`)}`}
+            >
+              Request stay
             </Link>
           </Button>
+          {whatsappUrl ? (
+            <Button asChild variant="secondary" className="mt-3 w-full h-12">
+              <a href={whatsappUrl} target="_blank" rel="noopener noreferrer">
+                WhatsApp
+              </a>
+            </Button>
+          ) : null}
           <p className="mt-3 text-xs text-ink-500 text-center">
-            Free cancellation on most dates · Secure payment
+            Our planners confirm availability and rates — no fake checkout.
           </p>
         </aside>
       </div>

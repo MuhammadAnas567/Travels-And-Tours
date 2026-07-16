@@ -1,7 +1,7 @@
 import type { Currency } from "@prisma/client";
 import { prisma } from "@/lib/db";
 
-const FALLBACK_RATES: Record<Currency, number> = {
+export const FALLBACK_RATES: Record<Currency, number> = {
   USD: 1,
   PKR: 278,
   EUR: 0.92,

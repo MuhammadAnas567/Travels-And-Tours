@@ -17,6 +17,20 @@ import {
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { PRIMARY_NAV, MORE_NAV, ALL_NAV, isActivePath } from "@/components/layout/nav-config";
+import { CURRENCY_COOKIE } from "@/lib/constants";
+import { SUPPORTED_CURRENCIES } from "@/lib/currency";
+import { notifyCurrencyChange } from "@/components/shared/display-price";
+import type { Currency } from "@prisma/client";
+
+const CURRENCY_CYCLE = SUPPORTED_CURRENCIES;
+
+function readCurrencyCookie(): Currency {
+  if (typeof document === "undefined") return "USD";
+  const match = document.cookie.match(new RegExp(`(?:^|; )${CURRENCY_COOKIE}=([^;]*)`));
+  const value = match?.[1] as Currency | undefined;
+  if (value && CURRENCY_CYCLE.includes(value)) return value;
+  return "USD";
+}
 
 export function Header() {
   const pathname = usePathname();
@@ -25,7 +39,7 @@ export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [moreOpen, setMoreOpen] = useState(false);
-  const [currency, setCurrency] = useState("USD");
+  const [currency, setCurrency] = useState<Currency>("USD");
   const [lang, setLang] = useState("EN");
   const moreRef = useRef<HTMLDivElement>(null);
 
@@ -36,11 +50,23 @@ export function Header() {
   const compact = !isHome || scrolled || mobileOpen;
 
   useEffect(() => {
+    setCurrency(readCurrencyCookie());
+  }, []);
+
+  useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  function cycleCurrency() {
+    const idx = CURRENCY_CYCLE.indexOf(currency);
+    const next = CURRENCY_CYCLE[(idx + 1) % CURRENCY_CYCLE.length] ?? "USD";
+    document.cookie = `${CURRENCY_COOKIE}=${next};path=/;max-age=31536000;SameSite=Lax`;
+    setCurrency(next);
+    notifyCurrencyChange();
+  }
 
   useEffect(() => {
     setMobileOpen(false);
@@ -181,10 +207,8 @@ export function Header() {
               type="button"
               variant="ghost"
               size="sm"
-              aria-label={`Currency ${currency}`}
-              onClick={() =>
-                setCurrency((c) => (c === "USD" ? "EUR" : c === "EUR" ? "GBP" : "USD"))
-              }
+              aria-label={`Currency ${currency}. Click to change.`}
+              onClick={cycleCurrency}
               className="text-ink-500 hover:bg-sand-100 hover:text-ink-900 hidden xl:inline-flex"
             >
               <Globe className="h-4 w-4" aria-hidden /> {currency}
@@ -295,9 +319,7 @@ export function Header() {
                 type="button"
                 variant="ghost"
                 size="sm"
-                onClick={() =>
-                  setCurrency((c) => (c === "USD" ? "EUR" : c === "EUR" ? "GBP" : "USD"))
-                }
+                onClick={cycleCurrency}
                 className="text-ink-600"
               >
                 <Globe className="h-4 w-4" aria-hidden /> {currency}

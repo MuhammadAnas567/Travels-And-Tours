@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { HotelCard } from "@/components/cards/hotel-card";
 import { getCachedHotels } from "@/lib/catalog-cache";
 import { SearchWidgetLazy } from "@/components/search/search-widget-lazy";
-import { CatalogHero, EmptyCatalog } from "@/components/layout/catalog-hero";
+import { CatalogHero } from "@/components/layout/catalog-hero";
+import { HotelsCatalogueLazy } from "@/components/hotels/hotels-catalogue-lazy";
 
 export const dynamic = "force-static";
 export const revalidate = 120;
@@ -34,37 +33,7 @@ export default async function HotelsPage() {
       </div>
 
       <div className="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8 pb-20">
-        {hotels.length > 0 ? (
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {hotels.map((h) => (
-              <HotelCard
-                key={String(h._id)}
-                slug={h.slug}
-                name={h.name}
-                city={h.city}
-                country={h.country}
-                image={h.images[0] ?? ""}
-                starRating={h.starRating}
-                avgRating={h.avgRating}
-                reviewCount={h.reviewCount}
-                pricePerNight={h.pricePerNight}
-                amenities={h.amenities}
-              />
-            ))}
-          </div>
-        ) : (
-          <EmptyCatalog
-            title="No hotels found"
-            description="Try another city or clear your search."
-          >
-            <Link
-              href="/hotels"
-              className="text-sm font-semibold text-pine-500 link-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pine-500 rounded-sm"
-            >
-              Browse all hotels
-            </Link>
-          </EmptyCatalog>
-        )}
+        <HotelsCatalogueLazy hotels={hotels} />
       </div>
     </div>
   );

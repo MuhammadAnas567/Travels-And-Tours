@@ -70,6 +70,7 @@ export async function sendBookingConfirmationEmail({
   });
 }
 
+/** Returns true only when Resend actually accepted the send */
 export async function sendContactEmail({
   name,
   email,
@@ -80,11 +81,11 @@ export async function sendContactEmail({
   email: string;
   subject: string;
   message: string;
-}) {
+}): Promise<boolean> {
   const resend = getResend();
   if (!resend) {
     console.warn("RESEND_API_KEY not set, skipping contact email");
-    return;
+    return false;
   }
 
   const to = process.env.CONTACT_EMAIL ?? process.env.RESEND_FROM_EMAIL ?? "onboarding@resend.dev";
@@ -101,4 +102,5 @@ export async function sendContactEmail({
       <p>${message.replace(/\n/g, "<br>")}</p>
     `,
   });
+  return true;
 }

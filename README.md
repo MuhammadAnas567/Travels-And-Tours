@@ -139,6 +139,9 @@ types/          # Shared TypeScript types
 3. Use MongoDB Atlas (recommended) or a hosted MongoDB instance
 4. Set `NEXT_PUBLIC_APP_URL` to your production URL
 5. Configure Stripe webhook endpoint: `https://yourdomain.com/api/webhooks/stripe`
+6. Seed Atlas so Auth/Stripe/admin work — see [docs/ATLAS_SEED.md](docs/ATLAS_SEED.md) (`npm run seed:atlas`)
+
+Public catalogue pages stay fast with offline fallbacks when Atlas is slow; seed is still required for real checkout and admin.
 
 ## Key Design Decisions
 

@@ -35,6 +35,7 @@ function ContactFallback() {
 function ContactPageInner() {
   const searchParams = useSearchParams();
   const [subject, setSubject] = useState(() => searchParams.get("subject") ?? "");
+  const [message, setMessage] = useState(() => searchParams.get("message") ?? "");
   const [loading, setLoading] = useState(false);
   const [formError, setFormError] = useState<string | null>(null);
   const whatsappUrl = getWhatsAppUrl();
@@ -52,13 +53,26 @@ function ContactPageInner() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
+      const payload = (await res.json().catch(() => ({}))) as {
+        error?: string;
+        delivered?: string;
+      };
       if (!res.ok) {
-        setFormError("Message did not send. Check your connection and try again.");
-        toast.error("Failed to send message");
+        const msg =
+          typeof payload.error === "string"
+            ? payload.error
+            : "Message did not send. Check your connection and try again.";
+        setFormError(msg);
+        toast.error(msg);
       } else {
-        toast.success("Message sent — we will reply within one business day.");
+        toast.success(
+          payload.delivered === "stored"
+            ? "Inquiry saved — our team will follow up shortly."
+            : "Message sent — we will reply within one business day."
+        );
         form.reset();
         setSubject("");
+        setMessage("");
       }
     } catch {
       setFormError("Something went wrong. Try again in a moment.");
@@ -120,6 +134,8 @@ function ContactPageInner() {
                     rows={5}
                     className="mt-1"
                     placeholder="Tell us where you want to go and when"
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
                   />
                 </div>
                 {formError ? (
