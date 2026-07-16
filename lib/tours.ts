@@ -149,7 +149,7 @@ export async function getTours(filters: TourFilters = {}) {
         page,
       })),
       empty,
-      6000
+      2500
     );
 
     if (result.tours.length > 0 || result.total > 0) return result;
@@ -194,7 +194,7 @@ export async function getTourBySlug(slug: string) {
         },
       }),
       null,
-      6000
+      2500
     );
     if (tour) return tour;
   } catch (error) {
@@ -234,7 +234,7 @@ export async function getFeaturedTours(limit = 6) {
         take: limit,
       }),
       [] as Awaited<ReturnType<typeof prisma.tour.findMany>>,
-      6000
+      2500
     );
     if (tours.length > 0) return tours;
   } catch (error) {
@@ -254,7 +254,7 @@ export async function getPopularDestinations() {
         take: 6,
       }),
       [],
-      6000
+      2500
     );
   } catch {
     return [];
@@ -271,7 +271,7 @@ export async function getTourCountries() {
         orderBy: { country: "asc" },
       }),
       [] as { country: string }[],
-      5000
+      2500
     );
     if (results.length > 0) return results.map((r) => r.country);
   } catch (error) {

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { getTours } from "@/lib/tours";
+import { getCachedPackages } from "@/lib/tours-cache";
 import { TourCard } from "@/components/shared/tour-card";
 import { SearchWidget } from "@/components/search/search-widget";
 import { CatalogHero, EmptyCatalog } from "@/components/layout/catalog-hero";
@@ -18,10 +19,9 @@ type Props = {
 
 export default async function PackagesPage({ searchParams }: Props) {
   const params = await searchParams;
-  const { tours } = await getTours({
-    q: params.destination,
-    limit: 24,
-  });
+  const { tours } = params.destination
+    ? await getTours({ q: params.destination, limit: 24 })
+    : await getCachedPackages();
 
   return (
     <div className="bg-sand min-h-[60vh]">

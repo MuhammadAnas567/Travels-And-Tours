@@ -43,7 +43,7 @@ if (process.env.NODE_ENV !== "production") {
 export async function withDbTimeout<T>(
   promise: Promise<T>,
   fallback: T,
-  ms = 6000
+  ms = 2500
 ): Promise<T> {
   let timer: ReturnType<typeof setTimeout> | undefined;
   try {

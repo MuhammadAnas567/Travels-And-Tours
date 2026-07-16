@@ -23,7 +23,7 @@ export default async function DealsPage() {
       orderBy: { validTo: "asc" },
     }),
     [],
-    5000
+    2500
   );
 
   return (

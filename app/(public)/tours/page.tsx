@@ -1,7 +1,8 @@
 import { Suspense } from "react";
 import type { Metadata } from "next";
 import type { TourCategory } from "@prisma/client";
-import { getTours, getTourCountries } from "@/lib/tours";
+import { getTours } from "@/lib/tours";
+import { getCachedDefaultTours, getCachedTourCountries } from "@/lib/tours-cache";
 import { TourCard } from "@/components/shared/tour-card";
 import { FilterSidebar } from "@/components/shared/filter-sidebar";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -47,18 +48,31 @@ export default async function ToursPage({
       ? params.sort
       : "popular";
 
+  const hasFilters = Boolean(
+    params.q ||
+      params.category ||
+      params.country ||
+      params.minPrice ||
+      params.maxPrice ||
+      params.date ||
+      params.sort ||
+      (params.page && params.page !== "1")
+  );
+
   const [{ tours, total, pages }, countries] = await Promise.all([
-    getTours({
-      q: params.q,
-      category: params.category as TourCategory | undefined,
-      country: params.country,
-      minPrice: params.minPrice ? Number(params.minPrice) : undefined,
-      maxPrice: params.maxPrice ? Number(params.maxPrice) : undefined,
-      sort,
-      date: params.date,
-      page,
-    }),
-    getTourCountries(),
+    hasFilters
+      ? getTours({
+          q: params.q,
+          category: params.category as TourCategory | undefined,
+          country: params.country,
+          minPrice: params.minPrice ? Number(params.minPrice) : undefined,
+          maxPrice: params.maxPrice ? Number(params.maxPrice) : undefined,
+          sort,
+          date: params.date,
+          page,
+        })
+      : getCachedDefaultTours(),
+    getCachedTourCountries(),
   ]);
 
   const description = `${total} curated experience${total !== 1 ? "s" : ""} across the globe${
