@@ -11,6 +11,7 @@ import {
   ArrowUpRight,
 } from "lucide-react";
 import { NewsletterForm } from "@/components/shared/newsletter-form";
+import { FooterPrefs } from "@/components/layout/footer-prefs";
 import { siteConfig } from "@/lib/site-config";
 import { IMAGE_BLUR_DATA_URL } from "@/lib/images";
 
@@ -288,19 +289,7 @@ export function Footer() {
               </div>
             </div>
             <div className="flex flex-col gap-3 text-xs text-paper/45 lg:items-end lg:text-right">
-              <div className="flex flex-wrap items-center gap-x-3 gap-y-1 lg:justify-end">
-                <span>Currency: USD</span>
-                <span aria-hidden className="text-paper/25">
-                  ·
-                </span>
-                <span>Language: English</span>
-                <span aria-hidden className="text-paper/25">
-                  ·
-                </span>
-                <Link href="/cars" className="hover:text-pine-200 transition-colors">
-                  Car hire
-                </Link>
-              </div>
+              <FooterPrefs />
               <p>© {new Date().getFullYear()} UEB3 Travel. All rights reserved.</p>
             </div>
           </div>

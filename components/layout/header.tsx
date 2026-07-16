@@ -17,42 +17,28 @@ import {
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { PRIMARY_NAV, MORE_NAV, ALL_NAV, isActivePath } from "@/components/layout/nav-config";
-import { CURRENCY_COOKIE } from "@/lib/constants";
-import { SUPPORTED_CURRENCIES } from "@/lib/currency";
-import { notifyCurrencyChange } from "@/components/shared/display-price";
-import { toast } from "sonner";
-import type { Currency } from "@prisma/client";
-
-const CURRENCY_CYCLE = SUPPORTED_CURRENCIES;
-
-function readCurrencyCookie(): Currency {
-  if (typeof document === "undefined") return "USD";
-  const match = document.cookie.match(new RegExp(`(?:^|; )${CURRENCY_COOKIE}=([^;]*)`));
-  const value = match?.[1] as Currency | undefined;
-  if (value && CURRENCY_CYCLE.includes(value)) return value;
-  return "USD";
-}
+import { usePreferences } from "@/components/providers/preferences-provider";
+import { navKeyForHref } from "@/lib/i18n/dictionaries";
 
 export function Header() {
   const pathname = usePathname();
   const { data: session, status } = useSession();
+  const { currency, localeLabel, cycleCurrency, cycleLocale, t } = usePreferences();
   const isHome = pathname === "/";
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [moreOpen, setMoreOpen] = useState(false);
-  const [currency, setCurrency] = useState<Currency>("USD");
-  const [lang, setLang] = useState("EN");
   const moreRef = useRef<HTMLDivElement>(null);
 
   const user = session?.user;
   const isAdmin = user?.role === "ADMIN";
   const moreActive = MORE_NAV.some((item) => isActivePath(pathname, item.href));
-  // Always readable glass — never white text on light sky
   const compact = !isHome || scrolled || mobileOpen;
 
-  useEffect(() => {
-    setCurrency(readCurrencyCookie());
-  }, []);
+  function labelFor(href: string, fallback: string) {
+    const key = navKeyForHref(href);
+    return key ? t(key) : fallback;
+  }
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -60,15 +46,6 @@ export function Header() {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
-
-  function cycleCurrency() {
-    const idx = CURRENCY_CYCLE.indexOf(currency);
-    const next = CURRENCY_CYCLE[(idx + 1) % CURRENCY_CYCLE.length] ?? "USD";
-    document.cookie = `${CURRENCY_COOKIE}=${next};path=/;max-age=31536000;SameSite=Lax`;
-    setCurrency(next);
-    notifyCurrencyChange();
-    toast.success(`Prices shown in ${next}`);
-  }
 
   useEffect(() => {
     setMobileOpen(false);
@@ -145,7 +122,7 @@ export function Header() {
                 {Icon && (
                   <Icon className="h-4 w-4 shrink-0 hidden xl:block" strokeWidth={1.5} aria-hidden />
                 )}
-                {item.label}
+                {labelFor(item.href, item.label)}
               </Link>
             );
           })}
@@ -163,7 +140,7 @@ export function Header() {
               aria-haspopup="menu"
               onClick={() => setMoreOpen((o) => !o)}
             >
-              More
+              {t("nav.more")}
               <ChevronDown
                 className={cn("h-3.5 w-3.5 transition-transform", moreOpen && "rotate-180")}
                 strokeWidth={1.5}
@@ -173,7 +150,7 @@ export function Header() {
             {moreOpen ? (
               <div
                 role="menu"
-                className="absolute right-0 top-full z-[104] mt-2 min-w-[13rem] rounded-md border border-line bg-paper py-2 shadow-lg"
+                className="absolute end-0 top-full z-[104] mt-2 min-w-[13rem] rounded-md border border-line bg-paper py-2 shadow-lg"
               >
                 {MORE_NAV.map((item) => {
                   const active = isActivePath(pathname, item.href);
@@ -194,7 +171,7 @@ export function Header() {
                       onClick={() => setMoreOpen(false)}
                     >
                       {Icon && <Icon className="h-4 w-4" strokeWidth={1.5} aria-hidden />}
-                      {item.label}
+                      {labelFor(item.href, item.label)}
                     </Link>
                   );
                 })}
@@ -204,14 +181,14 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-1 shrink-0">
-          <div className="hidden lg:flex items-center gap-1">
+          <div className="hidden md:flex items-center gap-1">
             <Button
               type="button"
               variant="ghost"
               size="sm"
               aria-label={`Currency ${currency}. Click to change.`}
               onClick={cycleCurrency}
-              className="text-ink-500 hover:bg-sand-100 hover:text-ink-900 hidden md:inline-flex tabular-nums"
+              className="text-ink-500 hover:bg-sand-100 hover:text-ink-900 tabular-nums font-semibold"
             >
               <Globe className="h-4 w-4" aria-hidden /> {currency}
             </Button>
@@ -219,56 +196,58 @@ export function Header() {
               type="button"
               variant="ghost"
               size="sm"
-              aria-label={`Language ${lang}`}
-              onClick={() => setLang((l) => (l === "EN" ? "UR" : l === "UR" ? "AR" : "EN"))}
-              className="text-ink-500 hover:bg-sand-100 hover:text-ink-900 hidden lg:inline-flex"
+              aria-label={`Language ${localeLabel}. Click to change.`}
+              onClick={cycleLocale}
+              className="text-ink-500 hover:bg-sand-100 hover:text-ink-900 font-semibold"
             >
-              <Languages className="h-4 w-4" aria-hidden /> {lang}
+              <Languages className="h-4 w-4" aria-hidden /> {localeLabel}
             </Button>
 
-            {status === "authenticated" && user ? (
-              <>
-                {isAdmin && (
+            <div className="hidden lg:flex items-center gap-1">
+              {status === "authenticated" && user ? (
+                <>
+                  {isAdmin && (
+                    <Button variant="ghost" size="sm" asChild className="text-ink-700 hover:bg-sand-100">
+                      <Link href="/admin">{t("nav.admin")}</Link>
+                    </Button>
+                  )}
                   <Button variant="ghost" size="sm" asChild className="text-ink-700 hover:bg-sand-100">
-                    <Link href="/admin">Admin</Link>
+                    <Link href="/dashboard">
+                      <LayoutDashboard className="h-4 w-4" aria-hidden />
+                      <span className="hidden xl:inline">{t("nav.dashboard")}</span>
+                    </Link>
                   </Button>
-                )}
-                <Button variant="ghost" size="sm" asChild className="text-ink-700 hover:bg-sand-100">
-                  <Link href="/dashboard">
-                    <LayoutDashboard className="h-4 w-4" aria-hidden />
-                    <span className="hidden xl:inline">Dashboard</span>
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => signOut({ callbackUrl: "/" })}
+                    className="text-ink-700 hover:bg-sand-100"
+                  >
+                    <LogOut className="h-4 w-4" aria-hidden />
+                    <span className="hidden xl:inline">{t("nav.signOut")}</span>
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Link
+                    href="/login"
+                    prefetch
+                    className="inline-flex min-h-11 items-center gap-1.5 rounded-full px-3 text-sm font-semibold text-ink-700 hover:bg-sand-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pine-500"
+                  >
+                    <User className="h-4 w-4" aria-hidden />
+                    <span className="hidden xl:inline">{t("nav.signIn")}</span>
                   </Link>
-                </Button>
-                <Button
-                  type="button"
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => signOut({ callbackUrl: "/" })}
-                  className="text-ink-700 hover:bg-sand-100"
-                >
-                  <LogOut className="h-4 w-4" aria-hidden />
-                  <span className="hidden xl:inline">Sign out</span>
-                </Button>
-              </>
-            ) : (
-              <>
-                <Link
-                  href="/login"
-                  prefetch
-                  className="inline-flex min-h-11 items-center gap-1.5 rounded-full px-3 text-sm font-semibold text-ink-700 hover:bg-sand-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pine-500"
-                >
-                  <User className="h-4 w-4" aria-hidden />
-                  <span className="hidden xl:inline">Sign in</span>
-                </Link>
-                <Link
-                  href="/flights"
-                  prefetch
-                  className="inline-flex min-h-11 items-center rounded-full bg-pine-500 px-5 text-sm font-semibold text-white shadow-sm hover:bg-pine-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pine-500 focus-visible:ring-offset-2"
-                >
-                  Book Now
-                </Link>
-              </>
-            )}
+                  <Link
+                    href="/flights"
+                    prefetch
+                    className="inline-flex min-h-11 items-center rounded-full bg-pine-500 px-5 text-sm font-semibold text-white shadow-sm hover:bg-pine-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pine-500 focus-visible:ring-offset-2"
+                  >
+                    {t("nav.bookNow")}
+                  </Link>
+                </>
+              )}
+            </div>
           </div>
 
           <button
@@ -311,29 +290,17 @@ export function Header() {
                   onClick={() => setMobileOpen(false)}
                 >
                   {Icon && <Icon className="h-4 w-4" strokeWidth={1.5} aria-hidden />}
-                  {item.label}
+                  {labelFor(item.href, item.label)}
                 </Link>
               );
             })}
             <hr className="my-3 border-line" />
             <div className="flex flex-wrap gap-2 px-1 pb-2">
-              <Button
-                type="button"
-                variant="ghost"
-                size="sm"
-                onClick={cycleCurrency}
-                className="text-ink-600"
-              >
+              <Button type="button" variant="ghost" size="sm" onClick={cycleCurrency} className="text-ink-600 tabular-nums">
                 <Globe className="h-4 w-4" aria-hidden /> {currency}
               </Button>
-              <Button
-                type="button"
-                variant="ghost"
-                size="sm"
-                onClick={() => setLang((l) => (l === "EN" ? "UR" : l === "UR" ? "AR" : "EN"))}
-                className="text-ink-600"
-              >
-                <Languages className="h-4 w-4" aria-hidden /> {lang}
+              <Button type="button" variant="ghost" size="sm" onClick={cycleLocale} className="text-ink-600">
+                <Languages className="h-4 w-4" aria-hidden /> {localeLabel}
               </Button>
             </div>
             {status === "authenticated" && user ? (
@@ -343,7 +310,7 @@ export function Header() {
                   className="flex min-h-11 items-center px-3 py-3 text-pine-600 font-semibold"
                   onClick={() => setMobileOpen(false)}
                 >
-                  Dashboard
+                  {t("nav.dashboard")}
                 </Link>
                 {isAdmin && (
                   <Link
@@ -351,7 +318,7 @@ export function Header() {
                     className="flex min-h-11 items-center px-3 py-3 text-ink-800 font-medium"
                     onClick={() => setMobileOpen(false)}
                   >
-                    Admin
+                    {t("nav.admin")}
                   </Link>
                 )}
                 <button
@@ -362,7 +329,7 @@ export function Header() {
                     signOut({ callbackUrl: "/" });
                   }}
                 >
-                  Sign out
+                  {t("nav.signOut")}
                 </button>
               </>
             ) : (
@@ -372,14 +339,14 @@ export function Header() {
                   className="flex min-h-11 items-center px-3 py-3 text-ink-800 font-medium"
                   onClick={() => setMobileOpen(false)}
                 >
-                  Sign in
+                  {t("nav.signIn")}
                 </Link>
                 <Link
                   href="/flights"
                   className="mt-2 flex min-h-11 items-center justify-center rounded-full bg-pine-500 px-3 py-3 font-semibold text-white"
                   onClick={() => setMobileOpen(false)}
                 >
-                  Book Now
+                  {t("nav.bookNow")}
                 </Link>
               </>
             )}

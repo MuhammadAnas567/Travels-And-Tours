@@ -14,6 +14,7 @@ import { IMAGE_BLUR_DATA_URL } from "@/lib/images";
 import { ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { WishlistButton } from "@/components/cards/wishlist-button";
+import { DisplayPrice } from "@/components/shared/display-price";
 
 export const dynamic = "force-static";
 export const revalidate = 120;
@@ -126,7 +127,7 @@ export default async function HomePage() {
               <p className="mt-3 text-paper/75">
                 {deal.city}, {deal.country} — from{" "}
                 <strong className="text-paper tabular-nums" data-price>
-                  ${deal.pricePerNight}
+                  <DisplayPrice amount={deal.pricePerNight} />
                 </strong>{" "}
                 / night
               </p>

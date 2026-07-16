@@ -5,6 +5,7 @@ import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import { useWishlistSaved } from "@/hooks/use-wishlist";
 import { toggleWishlistItem } from "@/lib/wishlist";
+import { usePreferences } from "@/components/providers/preferences-provider";
 
 type Props = {
   id: string;
@@ -28,6 +29,7 @@ export function WishlistButton({
   className,
 }: Props) {
   const saved = useWishlistSaved(id || slug);
+  const { t } = usePreferences();
 
   return (
     <button
@@ -51,7 +53,7 @@ export function WishlistButton({
           image,
           pricePerNight,
         });
-        toast.success(nowSaved ? "Saved to wishlist" : "Removed from wishlist");
+        toast.success(nowSaved ? t("common.wishlistSave") : t("common.wishlistRemove"));
       }}
     >
       <Heart

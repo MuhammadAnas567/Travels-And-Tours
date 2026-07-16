@@ -10,6 +10,8 @@ import { EmptyState } from "@/components/ui/empty-state";
 import { FlightRowSkeleton } from "@/components/ui/skeleton";
 import { IMAGE_BLUR_DATA_URL } from "@/lib/images";
 import { cn } from "@/lib/utils";
+import { DisplayPrice } from "@/components/shared/display-price";
+import { usePreferences } from "@/components/providers/preferences-provider";
 
 export type FlightResult = {
   _id: string;
@@ -76,6 +78,7 @@ function priceOf(f: FlightResult, cabin: CabinKey) {
 
 function FlightResultsInner({ flights }: { flights: FlightResult[] }) {
   const params = useSearchParams();
+  const { t } = usePreferences();
   const [route, setRoute] = useState({ from: "", to: "", cabin: "economy" as CabinKey });
 
   useEffect(() => {
@@ -137,25 +140,24 @@ function FlightResultsInner({ flights }: { flights: FlightResult[] }) {
 
   const activeFilters = maxStops !== null ? 1 : 0;
 
-  const sortTabs: { key: SortKey; label: string; value: string }[] = [
+  const sortTabs: { key: SortKey; label: string; value: string; amount?: number }[] = [
     {
       key: "best",
       label: "Best",
-      value: best ? `$${priceOf(best, cabin)} · ${formatDuration(best.durationMins)}` : "—",
+      value: best ? formatDuration(best.durationMins) : "—",
+      amount: best ? priceOf(best, cabin) : undefined,
     },
     {
       key: "cheapest",
       label: "Cheapest",
-      value: cheapestFlight
-        ? `$${priceOf(cheapestFlight, cabin)} · ${formatDuration(cheapestFlight.durationMins)}`
-        : "—",
+      value: cheapestFlight ? formatDuration(cheapestFlight.durationMins) : "—",
+      amount: cheapestFlight ? priceOf(cheapestFlight, cabin) : undefined,
     },
     {
       key: "fastest",
       label: "Fastest",
-      value: fastestFlight
-        ? `$${priceOf(fastestFlight, cabin)} · ${formatDuration(fastestFlight.durationMins)}`
-        : "—",
+      value: fastestFlight ? formatDuration(fastestFlight.durationMins) : "—",
+      amount: fastestFlight ? priceOf(fastestFlight, cabin) : undefined,
     },
   ];
 
@@ -215,25 +217,33 @@ function FlightResultsInner({ flights }: { flights: FlightResult[] }) {
 
         <div className="min-w-0 flex-1">
           <div className="grid grid-cols-3 gap-1 sm:gap-2 rounded-md border border-line bg-paper p-1">
-            {sortTabs.map((t) => (
+            {sortTabs.map((tabItem) => (
               <button
-                key={t.key}
+                key={tabItem.key}
                 type="button"
-                onClick={() => setSort(t.key)}
+                onClick={() => setSort(tabItem.key)}
                 className={cn(
                   "min-h-11 sm:min-h-14 rounded-sm px-1.5 sm:px-3 py-2 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pine-500",
-                  sort === t.key ? "bg-pine-50 text-pine-700" : "text-ink-700 hover:bg-sand"
+                  sort === tabItem.key ? "bg-pine-50 text-pine-700" : "text-ink-700 hover:bg-sand"
                 )}
               >
-                <span className="block text-xs sm:text-sm font-semibold">{t.label}</span>
-                <span className="block text-[10px] sm:text-xs tabular-nums text-ink-500 truncate">{t.value}</span>
+                <span className="block text-xs sm:text-sm font-semibold">{tabItem.label}</span>
+                <span className="block text-[10px] sm:text-xs tabular-nums text-ink-500 truncate">
+                  {tabItem.amount != null && Number.isFinite(tabItem.amount) ? (
+                    <>
+                      <DisplayPrice amount={tabItem.amount} /> · {tabItem.value}
+                    </>
+                  ) : (
+                    tabItem.value
+                  )}
+                </span>
               </button>
             ))}
           </div>
 
           <p className="mt-3 text-sm text-ink-500" aria-live="polite">
-            {filtered.length} results · {cabin} fares
-            {from || to ? ` · ${from || "Any"} → ${to || "Any"}` : " · all routes"}
+            {filtered.length} {t("common.results")} · {cabin}
+            {from || to ? ` · ${from || "Any"} → ${to || "Any"}` : ""}
           </p>
 
           <div className={cn("mt-4 space-y-3 transition-opacity", dimming && "opacity-50")}>
@@ -302,33 +312,35 @@ function FlightResultsInner({ flights }: { flights: FlightResult[] }) {
                             f.stops === 0 ? "font-medium text-success" : "text-ink-500"
                           )}
                         >
-                          {f.stops === 0 ? "Direct" : `${f.stops} stop${f.stops > 1 ? "s" : ""}`}
-                        </p>
-                      </div>
-                      <div>
-                        <p className="text-lg font-semibold tabular-nums text-ink-900">
-                          {formatTime(f.arriveTime)}
-                        </p>
-                        <p className="text-[13px] text-ink-500">{f.to}</p>
-                      </div>
-                    </div>
-
-                    <div className="text-right sm:text-left">
-                      <p className="text-2xl font-bold tabular-nums text-ink-900">
-                        ${Number.isFinite(fare) ? fare : "—"}
+                        {f.stops === 0
+                          ? t("common.direct")
+                          : `${f.stops} stop${f.stops > 1 ? "s" : ""}`}
                       </p>
-                      <p className="text-xs text-ink-500">{cabin}</p>
                     </div>
+                    <div>
+                      <p className="text-lg font-semibold tabular-nums text-ink-900">
+                        {formatTime(f.arriveTime)}
+                      </p>
+                      <p className="text-[13px] text-ink-500">{f.to}</p>
+                    </div>
+                  </div>
 
-                    <div className="sm:text-right">
-                      <Button asChild className="w-full sm:w-auto">
-                        <Link
-                          href={`/contact?subject=${encodeURIComponent(`Flight ${f.flightNumber} ${f.from}-${f.to} (${cabin})`)}`}
-                        >
-                          Select flight
-                        </Link>
-                      </Button>
-                    </div>
+                  <div className="text-right sm:text-left">
+                    <p className="text-2xl font-bold tabular-nums text-ink-900">
+                      {Number.isFinite(fare) ? <DisplayPrice amount={fare} /> : "—"}
+                    </p>
+                    <p className="text-xs text-ink-500">{cabin}</p>
+                  </div>
+
+                  <div className="sm:text-right">
+                    <Button asChild className="w-full sm:w-auto">
+                      <Link
+                        href={`/contact?subject=${encodeURIComponent(`Flight ${f.flightNumber} ${f.from}-${f.to} (${cabin})`)}`}
+                      >
+                        {t("common.selectFlight")}
+                      </Link>
+                    </Button>
+                  </div>
                   </article>
                 );
               })
@@ -345,7 +357,7 @@ function FlightResultsInner({ flights }: { flights: FlightResult[] }) {
           onClick={() => setFiltersOpen((o) => !o)}
         >
           <SlidersHorizontal className="h-5 w-5" strokeWidth={1.5} />
-          Filters
+          {t("common.filters")}
           {activeFilters > 0 ? (
             <span className="ml-1 rounded-full bg-pine-500 px-2 py-0.5 text-xs text-paper tabular-nums">
               {activeFilters}

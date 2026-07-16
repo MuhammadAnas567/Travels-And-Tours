@@ -112,7 +112,7 @@ export default function LoginForm() {
           user@example.com · <span className="font-medium">user123</span>
         </p>
         <p className="mt-0.5 text-xs text-ink-500">
-          Needs Atlas seed on Vercel — see docs/ATLAS_SEED.md
+          Vercel pe DATABASE_URL = Atlas URI hona zaroori hai
         </p>
       </div>
 

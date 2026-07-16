@@ -6,16 +6,11 @@ import Image from "next/image";
 import { SearchWidget } from "@/components/search/search-widget";
 import { IMAGE_BLUR_DATA_URL } from "@/lib/images";
 import { Shield, BadgePercent, Headphones, Lock } from "lucide-react";
-
-const trustItems = [
-  { icon: Shield, label: "Best price clarity" },
-  { icon: Lock, label: "Secure checkout" },
-  { icon: Headphones, label: "24/7 support" },
-  { icon: BadgePercent, label: "4.8 traveller rating" },
-];
+import { usePreferences } from "@/components/providers/preferences-provider";
 
 export function HomeHero() {
   const reduceMotion = useReducedMotion();
+  const { t } = usePreferences();
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -23,6 +18,13 @@ export function HomeHero() {
   });
   const y = useTransform(scrollYProgress, [0, 1], ["0%", reduceMotion ? "0%" : "18%"]);
   const opacity = useTransform(scrollYProgress, [0, 0.85], [1, reduceMotion ? 1 : 0.35]);
+
+  const trustItems = [
+    { icon: Shield, label: t("trust.price") },
+    { icon: Lock, label: t("trust.secure") },
+    { icon: Headphones, label: t("trust.support") },
+    { icon: BadgePercent, label: t("trust.rating") },
+  ];
 
   return (
     <section
@@ -52,7 +54,7 @@ export function HomeHero() {
             animate={reduceMotion ? undefined : { y: [10, 0], opacity: [0.5, 1] }}
             transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
           >
-            UEB3 Travel · Worldwide
+            {t("hero.eyebrow")}
           </motion.p>
           <motion.h1
             className="mt-4 sm:mt-5 text-hero text-paper max-w-[16ch] drop-shadow-sm"
@@ -60,7 +62,7 @@ export function HomeHero() {
             animate={reduceMotion ? undefined : { y: [18, 0] }}
             transition={{ duration: 0.6, delay: 0.05, ease: [0.22, 1, 0.36, 1] }}
           >
-            Find your next horizon.
+            {t("hero.title")}
           </motion.h1>
           <motion.p
             className="mt-4 sm:mt-5 max-w-lg text-base sm:text-lg text-paper/85 leading-relaxed"
@@ -68,8 +70,7 @@ export function HomeHero() {
             animate={reduceMotion ? undefined : { y: [14, 0] }}
             transition={{ duration: 0.55, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
           >
-            Flights, stays, and packages in one search — cinematic destinations, clear prices,
-            humans on support.
+            {t("hero.sub")}
           </motion.p>
         </div>
       </div>

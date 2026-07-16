@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { formatPrice } from "@/lib/utils";
+import { DisplayPrice } from "@/components/shared/display-price";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -80,7 +81,7 @@ export function BookingWidget({
     <Card className="sticky top-24 rounded-md border border-line bg-paper shadow-sm">
       <CardHeader>
         <CardTitle className="text-2xl font-semibold tabular-nums text-pine-500">
-          {formatPrice(unitPrice)}
+          <DisplayPrice amount={unitPrice} />
           <span className="text-sm font-normal text-ink-500"> / person</span>
         </CardTitle>
       </CardHeader>
@@ -139,17 +140,23 @@ export function BookingWidget({
         <div className="rounded-md bg-pine-50 border border-pine-100 p-3 text-sm tabular-nums">
           <div className="flex justify-between text-ink-500">
             <span>Adults × {adults}</span>
-            <span>{formatPrice(adults * unitPrice)}</span>
+            <span>
+              <DisplayPrice amount={adults * unitPrice} />
+            </span>
           </div>
           {children > 0 && (
             <div className="flex justify-between text-ink-500">
               <span>Children × {children}</span>
-              <span>{formatPrice(children * childPrice)}</span>
+              <span>
+                <DisplayPrice amount={children * childPrice} />
+              </span>
             </div>
           )}
           <div className="mt-2 flex justify-between border-t border-pine-200 pt-2 font-semibold text-ink">
             <span>Total</span>
-            <span>{formatPrice(total)}</span>
+            <span>
+              <DisplayPrice amount={total} />
+            </span>
           </div>
         </div>
 

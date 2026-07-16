@@ -17,15 +17,16 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { SearchRouteLine } from "@/components/search/search-route-line";
 import { cn } from "@/lib/utils";
+import { usePreferences } from "@/components/providers/preferences-provider";
 
 type Tab = "flights" | "hotels" | "packages" | "cars";
 type TripType = "roundtrip" | "oneway";
 
-const tabs: { id: Tab; label: string; icon: typeof Plane }[] = [
-  { id: "flights", label: "Flights", icon: Plane },
-  { id: "hotels", label: "Hotels", icon: Hotel },
-  { id: "packages", label: "Packages", icon: Package },
-  { id: "cars", label: "Cars", icon: Car },
+const tabDefs: { id: Tab; labelKey: string; icon: typeof Plane }[] = [
+  { id: "flights", labelKey: "search.flights", icon: Plane },
+  { id: "hotels", labelKey: "search.hotels", icon: Hotel },
+  { id: "packages", labelKey: "search.packages", icon: Package },
+  { id: "cars", labelKey: "search.cars", icon: Car },
 ];
 
 const RECENT = ["KHI → DXB", "LHE → IST", "ISB → LHR"];
@@ -59,10 +60,20 @@ function SearchWidgetInner({ className }: { className?: string }) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const { t } = usePreferences();
   const fromRef = useRef<HTMLInputElement>(null);
   const toRef = useRef<HTMLInputElement>(null);
 
   const [tab, setTab] = useState<Tab>(() => tabFromPath(pathname));
+  const tabs = tabDefs.map((item) => ({ ...item, label: t(item.labelKey) }));
+  const searchLabel =
+    tab === "flights"
+      ? t("search.searchFlights")
+      : tab === "hotels"
+        ? t("search.searchHotels")
+        : tab === "packages"
+          ? t("search.searchPackages")
+          : t("search.searchCars");
   const [tripType, setTripType] = useState<TripType>("roundtrip");
   const [from, setFrom] = useState("");
   const [to, setTo] = useState("");
@@ -175,8 +186,15 @@ function SearchWidgetInner({ className }: { className?: string }) {
 
   const showRoute = tab === "flights" || tab === "cars";
   const toLabel =
-    tab === "hotels" ? "Destination" : tab === "packages" ? "Where to?" : tab === "cars" ? "Drop-off" : "To";
-  const dateLabel = tab === "cars" ? "Pick-up date" : tab === "flights" ? "Depart" : "Check-in";
+    tab === "hotels"
+      ? "Destination"
+      : tab === "packages"
+        ? "Where to?"
+        : tab === "cars"
+          ? "Drop-off"
+          : t("search.to");
+  const dateLabel =
+    tab === "cars" ? "Pick-up date" : tab === "flights" ? t("search.depart") : "Check-in";
 
   return (
     <div
@@ -186,25 +204,25 @@ function SearchWidgetInner({ className }: { className?: string }) {
       )}
     >
       <div className="flex border-b border-line overflow-x-auto scrollbar-hide bg-paper-raised" role="tablist" aria-label="Search type">
-        {tabs.map((t) => (
+        {tabs.map((item) => (
           <button
-            key={t.id}
+            key={item.id}
             type="button"
             role="tab"
-            aria-selected={tab === t.id}
+            aria-selected={tab === item.id}
             onClick={() => {
-              setTab(t.id);
+              setTab(item.id);
               setErrors({});
             }}
             className={cn(
               "flex min-h-11 shrink-0 items-center gap-2 px-4 sm:px-5 py-3 text-[0.6875rem] font-semibold uppercase tracking-[0.12em] whitespace-nowrap transition-colors border-b-2 -mb-px focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-pine-500",
-              tab === t.id
+              tab === item.id
                 ? "border-pine-500 text-pine-500 bg-pine-50"
                 : "border-transparent text-ink-500 hover:text-ink-700 hover:bg-sand"
             )}
           >
-            <t.icon className="h-5 w-5" strokeWidth={1.5} aria-hidden />
-            {t.label}
+            <item.icon className="h-5 w-5" strokeWidth={1.5} aria-hidden />
+            {item.label}
           </button>
         ))}
       </div>
@@ -218,10 +236,10 @@ function SearchWidgetInner({ className }: { className?: string }) {
           >
             {(
               [
-                ["roundtrip", "Round trip"],
-                ["oneway", "One way"],
+                ["roundtrip", "search.roundtrip"],
+                ["oneway", "search.oneway"],
               ] as const
-            ).map(([id, label]) => (
+            ).map(([id, labelKey]) => (
               <button
                 key={id}
                 type="button"
@@ -231,7 +249,7 @@ function SearchWidgetInner({ className }: { className?: string }) {
                   tripType === id ? "bg-paper text-ink shadow-sm" : "text-ink-500 hover:text-ink-700"
                 )}
               >
-                {label}
+                {t(labelKey)}
               </button>
             ))}
           </div>
@@ -251,7 +269,7 @@ function SearchWidgetInner({ className }: { className?: string }) {
               <Input
                 ref={fromRef}
                 id="search-from"
-                label={tab === "cars" ? "Pick-up location" : "From"}
+                label={tab === "cars" ? "Pick-up location" : t("search.from")}
                 placeholder={tab === "flights" ? "City or airport (e.g. KHI)" : "Airport or city"}
                 value={from}
                 onChange={(e) => {
@@ -370,22 +388,16 @@ function SearchWidgetInner({ className }: { className?: string }) {
           <div className="md:col-span-2">
             <Button type="submit" loading={loading} size="lg" className="w-full h-12 md:h-14">
               <Search className="h-5 w-5" strokeWidth={1.5} aria-hidden />
-              {loading
-                ? "Searching…"
-                : tab === "flights"
-                  ? "Search flights"
-                  : tab === "hotels"
-                    ? "Search stays"
-                    : tab === "packages"
-                      ? "Search packages"
-                      : "Search cars"}
+              {loading ? "…" : searchLabel}
             </Button>
           </div>
         </div>
 
         {tab === "flights" ? (
           <div className="mt-4 flex flex-wrap gap-2">
-            <span className="text-[0.6875rem] font-semibold uppercase tracking-[0.15em] text-ink-500 self-center">Recent</span>
+            <span className="text-[0.6875rem] font-semibold uppercase tracking-[0.15em] text-ink-500 self-center">
+              {t("search.recent")}
+            </span>
             {RECENT.map((chip) => (
               <button
                 key={chip}

@@ -1,9 +1,12 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { Star, MapPin, Wifi } from "lucide-react";
 import { IMAGE_BLUR_DATA_URL, PLACEHOLDER_TOUR_IMAGE } from "@/lib/images";
 import { WishlistButton } from "@/components/cards/wishlist-button";
 import { DisplayPrice } from "@/components/shared/display-price";
+import { usePreferences } from "@/components/providers/preferences-provider";
 
 type HotelCardProps = {
   id?: string;
@@ -32,6 +35,7 @@ export function HotelCard({
   pricePerNight,
   amenities = [],
 }: HotelCardProps) {
+  const { t } = usePreferences();
   const href = slug === "fallback" || !slug ? "/hotels" : `/hotels/${slug}`;
   const img = image || PLACEHOLDER_TOUR_IMAGE;
 
@@ -91,7 +95,7 @@ export function HotelCard({
               <span className="text-xs text-ink-500">{reviewCount} reviews</span>
             </div>
             <div className="text-right">
-              <p className="text-xs text-ink-500">per night</p>
+              <p className="text-xs text-ink-500">{t("common.perNight")}</p>
               <p className="text-xl font-semibold tabular-nums text-ink" data-price>
                 <DisplayPrice amount={pricePerNight} />
               </p>
