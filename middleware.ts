@@ -26,9 +26,10 @@ function clearSessionCookies(
   }
 }
 
-const adminRoutes = ["/admin"];
-const protectedRoutes = ["/dashboard", "/booking"];
-
+/**
+ * Only run auth on protected areas — public pages (/, /tours, /packages, …)
+ * skip NextAuth entirely so Vercel TTFB stays low.
+ */
 export default auth((req) => {
   const { pathname } = req.nextUrl;
   const isLoggedIn = !!req.auth;
@@ -36,12 +37,9 @@ export default auth((req) => {
   const hasSessionCookie = allCookies.some((c) => isSessionCookie(c.name));
   const shouldClearStaleSession = hasSessionCookie && !isLoggedIn;
 
-  const isAdminRoute = adminRoutes.some((r) => pathname.startsWith(r));
-  const isProtectedRoute = protectedRoutes.some((r) => pathname.startsWith(r));
-
   let response: NextResponse;
 
-  if (isAdminRoute) {
+  if (pathname.startsWith("/admin")) {
     if (!isLoggedIn) {
       response = NextResponse.redirect(new URL("/login", req.url));
     } else if (req.auth?.user?.role !== "ADMIN") {
@@ -49,7 +47,10 @@ export default auth((req) => {
     } else {
       response = NextResponse.next();
     }
-  } else if (isProtectedRoute && !isLoggedIn) {
+  } else if (
+    (pathname.startsWith("/dashboard") || pathname.startsWith("/booking")) &&
+    !isLoggedIn
+  ) {
     const loginUrl = new URL("/login", req.url);
     loginUrl.searchParams.set("callbackUrl", pathname);
     response = NextResponse.redirect(loginUrl);
@@ -65,5 +66,5 @@ export default auth((req) => {
 });
 
 export const config = {
-  matcher: ["/((?!api|_next/static|_next/image|favicon.ico|.*\\..*).*)"],
+  matcher: ["/admin/:path*", "/dashboard/:path*", "/booking/:path*"],
 };
