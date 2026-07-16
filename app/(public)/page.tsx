@@ -14,7 +14,8 @@ import { IMAGE_BLUR_DATA_URL } from "@/lib/images";
 import { ChevronRight, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-export const revalidate = 60;
+export const dynamic = "force-static";
+export const revalidate = 120;
 
 export const metadata: Metadata = {
   title: "UEB3 Travel — Flights, Hotels & Journeys Worldwide",

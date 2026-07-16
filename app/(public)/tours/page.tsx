@@ -4,7 +4,8 @@ import { CatalogHero } from "@/components/layout/catalog-hero";
 import { ToursCatalogue } from "@/components/tours/tours-catalogue";
 import { getCachedDefaultTours, getCachedTourCountries } from "@/lib/tours-cache";
 
-/** Fully static shell — no searchParams, so Vercel can cache HTML */
+/** Force CDN cache — client filters must not mark this route dynamic */
+export const dynamic = "force-static";
 export const revalidate = 120;
 
 export const metadata: Metadata = {

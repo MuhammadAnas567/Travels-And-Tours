@@ -4,7 +4,8 @@ import { Badge } from "@/components/ui/badge";
 import { formatCurrency } from "@/lib/currency";
 import { CatalogHero, EmptyCatalog } from "@/components/layout/catalog-hero";
 
-export const revalidate = 60;
+export const dynamic = "force-static";
+export const revalidate = 120;
 
 export const metadata = {
   title: "Deals & Offers",
