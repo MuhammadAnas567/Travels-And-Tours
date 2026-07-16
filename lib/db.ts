@@ -11,13 +11,13 @@ function databaseUrlWithTimeouts() {
   try {
     const url = new URL(raw);
     if (!url.searchParams.has("serverSelectionTimeoutMS")) {
-      url.searchParams.set("serverSelectionTimeoutMS", "5000");
+      url.searchParams.set("serverSelectionTimeoutMS", "2000");
     }
     if (!url.searchParams.has("connectTimeoutMS")) {
-      url.searchParams.set("connectTimeoutMS", "5000");
+      url.searchParams.set("connectTimeoutMS", "2000");
     }
     if (!url.searchParams.has("socketTimeoutMS")) {
-      url.searchParams.set("socketTimeoutMS", "10000");
+      url.searchParams.set("socketTimeoutMS", "5000");
     }
     return url.toString();
   } catch {
@@ -43,7 +43,7 @@ if (process.env.NODE_ENV !== "production") {
 export async function withDbTimeout<T>(
   promise: Promise<T>,
   fallback: T,
-  ms = 2500
+  ms = 800
 ): Promise<T> {
   let timer: ReturnType<typeof setTimeout> | undefined;
   try {

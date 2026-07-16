@@ -149,18 +149,19 @@ export async function getTours(filters: TourFilters = {}) {
         page,
       })),
       empty,
-      2500
+      800
     );
 
-    if (result.tours.length > 0 || result.total > 0) return result;
+    if (result.tours.length > 0) return result;
 
-    // Empty Atlas — show curated fallbacks so live never looks broken
+    // Empty / slow Atlas — curated catalogue so live nav never 500s or hangs
     const fallbacks = filterFallbacks(filters);
     const all = FALLBACK_TOURS.length;
+    const total = q || country || category ? fallbacks.length : all;
     return {
       tours: fallbacks,
-      total: q || country || category ? fallbacks.length : all,
-      pages: Math.max(1, Math.ceil((q || country || category ? fallbacks.length : all) / limit)),
+      total,
+      pages: Math.max(1, Math.ceil(total / limit)),
       page,
     };
   } catch (error) {
@@ -194,7 +195,7 @@ export async function getTourBySlug(slug: string) {
         },
       }),
       null,
-      2500
+      800
     );
     if (tour) return tour;
   } catch (error) {
@@ -234,7 +235,7 @@ export async function getFeaturedTours(limit = 6) {
         take: limit,
       }),
       [] as Awaited<ReturnType<typeof prisma.tour.findMany>>,
-      2500
+      800
     );
     if (tours.length > 0) return tours;
   } catch (error) {
@@ -254,7 +255,7 @@ export async function getPopularDestinations() {
         take: 6,
       }),
       [],
-      2500
+      800
     );
   } catch {
     return [];
@@ -262,6 +263,8 @@ export async function getPopularDestinations() {
 }
 
 export async function getTourCountries() {
+  // Instant on live — avoid a second Atlas round-trip on every /tours click
+  const fallbackCountries = [...new Set(FALLBACK_TOURS.map((t) => t.country))].sort();
   try {
     const results = await withDbTimeout(
       prisma.tour.findMany({
@@ -271,11 +274,11 @@ export async function getTourCountries() {
         orderBy: { country: "asc" },
       }),
       [] as { country: string }[],
-      2500
+      600
     );
     if (results.length > 0) return results.map((r) => r.country);
   } catch (error) {
     console.error("[getTourCountries]", error);
   }
-  return [...new Set(FALLBACK_TOURS.map((t) => t.country))].sort();
+  return fallbackCountries;
 }

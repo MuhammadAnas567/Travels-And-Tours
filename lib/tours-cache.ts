@@ -1,21 +1,28 @@
-import { unstable_cache } from "next/cache";
-import { getTours, getTourCountries } from "@/lib/tours";
+import { FALLBACK_TOURS } from "@/lib/data/tour-fallback";
 
-/** Cached default catalogue — avoids re-hitting Atlas on every navbar click */
-export const getCachedDefaultTours = unstable_cache(
-  async () => getTours({ limit: 12, page: 1, sort: "popular" }),
-  ["tours-default-v1"],
-  { revalidate: 120 }
-);
+function catalogue(limit = 12) {
+  const tours = FALLBACK_TOURS.slice(0, limit);
+  return {
+    tours,
+    total: FALLBACK_TOURS.length,
+    pages: Math.max(1, Math.ceil(FALLBACK_TOURS.length / limit)),
+    page: 1,
+  };
+}
 
-export const getCachedTourCountries = unstable_cache(
-  async () => getTourCountries(),
-  ["tour-countries-v1"],
-  { revalidate: 300 }
-);
+/**
+ * Instant catalogue for navbar / Packages / Tours on Vercel.
+ * Avoids Atlas cold-connect hangs that were causing 30s waits and 500s.
+ * Filtered searches still hit getTours() with a short timeout + same fallbacks.
+ */
+export async function getCachedDefaultTours() {
+  return catalogue(12);
+}
 
-export const getCachedPackages = unstable_cache(
-  async () => getTours({ limit: 24, page: 1, sort: "popular" }),
-  ["packages-default-v1"],
-  { revalidate: 120 }
-);
+export async function getCachedTourCountries() {
+  return [...new Set(FALLBACK_TOURS.map((t) => t.country))].sort();
+}
+
+export async function getCachedPackages() {
+  return catalogue(24);
+}

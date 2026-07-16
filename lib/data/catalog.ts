@@ -2,7 +2,7 @@ import { connectDB } from "@/lib/db/connect";
 import { Hotel, Flight, Destination } from "@/lib/models";
 import { FALLBACK_DESTINATIONS, FALLBACK_HOTELS } from "@/lib/data/home-fallback";
 
-async function withTimeout<T>(promise: Promise<T>, ms = 2500): Promise<T> {
+async function withTimeout<T>(promise: Promise<T>, ms = 800): Promise<T> {
   let timer: ReturnType<typeof setTimeout> | undefined;
   try {
     return await Promise.race([

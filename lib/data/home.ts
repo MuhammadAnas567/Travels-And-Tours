@@ -18,10 +18,10 @@ async function withTimeout<T>(promise: Promise<T>, ms: number): Promise<T> {
 
 export async function getTrendingDestinations(limit = 8) {
   try {
-    await withTimeout(connectDB(), 2500);
+    await withTimeout(connectDB(), 800);
     const rows = await withTimeout(
       Destination.find().sort({ popularity: -1 }).limit(limit).lean().exec(),
-      2500
+      800
     );
     if (rows.length > 0) return rows;
   } catch (err) {
@@ -32,10 +32,10 @@ export async function getTrendingDestinations(limit = 8) {
 
 export async function getPopularHotels(limit = 6) {
   try {
-    await withTimeout(connectDB(), 2500);
+    await withTimeout(connectDB(), 800);
     const rows = await withTimeout(
       Hotel.find().sort({ avgRating: -1, reviewCount: -1 }).limit(limit).lean().exec(),
-      2500
+      800
     );
     if (rows.length > 0) return rows;
   } catch (err) {
@@ -46,10 +46,10 @@ export async function getPopularHotels(limit = 6) {
 
 export async function getDealOfWeek() {
   try {
-    await withTimeout(connectDB(), 2500);
+    await withTimeout(connectDB(), 800);
     const deal = await withTimeout(
       Hotel.findOne().sort({ pricePerNight: 1 }).lean().exec(),
-      2500
+      800
     );
     if (deal) return deal;
   } catch (err) {
