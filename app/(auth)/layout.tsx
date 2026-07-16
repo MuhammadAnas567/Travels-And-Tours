@@ -1,16 +1,7 @@
-﻿import { Navbar } from "@/components/shared/navbar";
-import { Footer } from "@/components/shared/footer";
-
-export default function AuthLayout({
+﻿export default function AuthLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return (
-    <>
-      <Navbar />
-      <main className="flex-1">{children}</main>
-      <Footer />
-    </>
-  );
+  return <main className="min-h-[100dvh]">{children}</main>;
 }

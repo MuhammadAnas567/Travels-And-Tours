@@ -20,15 +20,26 @@ export async function registerUser(formData: FormData) {
 
   const { name, email, password } = parsed.data;
 
-  const existing = await prisma.user.findUnique({ where: { email } });
-  if (existing) {
-    return { error: { email: ["Email already registered"] } };
-  }
+  try {
+    const existing = await prisma.user.findUnique({ where: { email } });
+    if (existing) {
+      return { error: { email: ["Email already registered"] } };
+    }
 
-  const hashedPassword = await bcrypt.hash(password, 12);
-  await prisma.user.create({
-    data: { name, email, hashedPassword },
-  });
+    const hashedPassword = await bcrypt.hash(password, 12);
+    await prisma.user.create({
+      data: { name, email, hashedPassword },
+    });
+  } catch (error) {
+    console.error("[registerUser]", error);
+    return {
+      error: {
+        _form: [
+          "Account service unavailable. On Vercel, set DATABASE_URL (Atlas) and run npm run seed:atlas.",
+        ],
+      },
+    };
+  }
 
   try {
     await signIn("credentials", { email, password, redirectTo: "/dashboard" });
@@ -59,8 +70,15 @@ export async function loginUser(formData: FormData) {
     });
   } catch (error) {
     if (error instanceof AuthError) {
-      return { error: { _form: ["Invalid email or password"] } };
+      return {
+        error: {
+          _form: [
+            "Invalid email or password. Use the demo account after Atlas seed, or check AUTH_SECRET + DATABASE_URL on Vercel.",
+          ],
+        },
+      };
     }
+    // Successful signIn throws a NEXT_REDIRECT — must rethrow
     throw error;
   }
 }

@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import type { Prisma } from "@prisma/client";
 import { contactSchema } from "@/lib/validations";
 import { sendContactEmail } from "@/lib/email";
 import { prisma, withDbTimeout } from "@/lib/db";
@@ -35,11 +36,46 @@ async function persistInquiry(data: {
         },
       }),
       null,
+      2500
+    );
+    if (row) return true;
+  } catch (error) {
+    console.error("[contact] quoteRequest failed:", error);
+  }
+
+  try {
+    const key = "contact_inbox";
+    const existing = await withDbTimeout(
+      prisma.siteSettings.findUnique({ where: { key } }),
+      null,
       2000
     );
-    return !!row;
+    const prev =
+      existing?.value &&
+      typeof existing.value === "object" &&
+      Array.isArray((existing.value as { items?: unknown[] }).items)
+        ? (existing.value as { items: unknown[] }).items
+        : [];
+    const items = [
+      {
+        ...data,
+        at: new Date().toISOString(),
+      },
+      ...prev,
+    ].slice(0, 200) as Prisma.InputJsonArray;
+    const value = { items } as Prisma.InputJsonValue;
+    const saved = await withDbTimeout(
+      prisma.siteSettings.upsert({
+        where: { key },
+        create: { key, value },
+        update: { value },
+      }),
+      null,
+      2000
+    );
+    return !!saved;
   } catch (error) {
-    console.error("[contact] persist failed:", error);
+    console.error("[contact] siteSettings failed:", error);
     return false;
   }
 }
@@ -55,20 +91,27 @@ export async function POST(req: Request) {
 
   if (!parsed.success) {
     return NextResponse.json(
-      { error: parsed.error.flatten().fieldErrors },
+      { error: "Please fill all fields (message at least 10 characters)." },
       { status: 400 }
     );
   }
 
   try {
-    const emailed = await sendContactEmail(parsed.data);
+    let emailed = false;
+    try {
+      emailed = await sendContactEmail(parsed.data);
+    } catch (error) {
+      console.error("[contact] email send failed:", error);
+    }
+
     const stored = emailed ? true : await persistInquiry(parsed.data);
 
     if (!emailed && !stored) {
       return NextResponse.json(
         {
           error:
-            "We could not deliver or save your message. Email hello@ueb3tours.com or try WhatsApp.",
+            "Could not save your message (database offline). Email hello@ueb3tours.com or try WhatsApp.",
+          mailto: `mailto:hello@ueb3tours.com?subject=${encodeURIComponent(parsed.data.subject)}&body=${encodeURIComponent(`From: ${parsed.data.name} <${parsed.data.email}>\n\n${parsed.data.message}`)}`,
         },
         { status: 503 }
       );

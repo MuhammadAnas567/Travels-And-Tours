@@ -56,6 +56,7 @@ function ContactPageInner() {
       const payload = (await res.json().catch(() => ({}))) as {
         error?: string;
         delivered?: string;
+        mailto?: string;
       };
       if (!res.ok) {
         const msg =
@@ -64,6 +65,11 @@ function ContactPageInner() {
             : "Message did not send. Check your connection and try again.";
         setFormError(msg);
         toast.error(msg);
+        if (payload.mailto) {
+          window.setTimeout(() => {
+            window.location.href = payload.mailto!;
+          }, 600);
+        }
       } else {
         toast.success(
           payload.delivered === "stored"

@@ -2,22 +2,29 @@
 
 Public catalogue pages work from rich fallbacks when Mongo is slow or empty. **Auth, Stripe checkout, admin, and newsletter persistence** need a healthy Atlas database.
 
-## Vercel environment
+## Vercel environment (required for live Auth + bookings)
 
-Set these on the Vercel project (Production + Preview):
+Without these, [the live site](https://travels-and-tours-psi.vercel.app/) shows catalogues from fallbacks but **sign-in / signup / Stripe / contact save will fail**.
+
+Set on the Vercel project → Settings → Environment Variables (Production + Preview):
 
 | Variable | Purpose |
 |---|---|
-| `DATABASE_URL` | MongoDB Atlas URI (Prisma). Prefer `mongodb+srv://…` with a database name. |
-| `MONGODB_URI` | Same Atlas URI for Mongoose (hotels / flights / destinations). |
-| `AUTH_SECRET` | `openssl rand -base64 32` |
-| `NEXTAUTH_URL` / `AUTH_URL` | Canonical site URL, e.g. `https://your-app.vercel.app` |
-| `STRIPE_SECRET_KEY` | Stripe **test** key for demos |
-| `STRIPE_WEBHOOK_SECRET` | From Stripe CLI or Dashboard webhook |
+| `DATABASE_URL` | MongoDB Atlas URI (Prisma). Same cluster you seed. |
+| `MONGODB_URI` | Same Atlas URI for Mongoose (hotels / flights). |
+| `AUTH_SECRET` | `node -e "console.log(require('crypto').randomBytes(32).toString('base64'))"` |
+| `AUTH_URL` | `https://travels-and-tours-psi.vercel.app` (your live URL) |
+| `NEXT_PUBLIC_APP_URL` | Same live URL |
+| `STRIPE_SECRET_KEY` | Stripe **test** key |
+| `STRIPE_WEBHOOK_SECRET` | Dashboard webhook signing secret |
 | `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | Matching publishable key |
-| `RESEND_API_KEY` | Optional — contact email delivery |
+| `RESEND_API_KEY` | Optional — contact email |
 | `CONTACT_EMAIL` | Inbox for contact form |
 | `NEXT_PUBLIC_WHATSAPP_NUMBER` | Optional WhatsApp CTA |
+
+**Atlas Network Access:** allow `0.0.0.0/0` so Vercel can connect.
+
+**Demo login after seed:** `user@example.com` / `user123` · Admin: `admin@traveltours.com` / `admin123`
 
 Without Resend, contact still **stores** inquiries as `QuoteRequest` rows when Atlas is reachable. Without Atlas **and** Resend, the form returns an honest error.
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useMemo, useState } from "react";
+import { Suspense, useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
@@ -76,9 +76,23 @@ function priceOf(f: FlightResult, cabin: CabinKey) {
 
 function FlightResultsInner({ flights }: { flights: FlightResult[] }) {
   const params = useSearchParams();
-  const from = normalizeAirport(params.get("from") ?? "");
-  const to = normalizeAirport(params.get("to") ?? "");
-  const cabin = cabinFromParam(params.get("cabin"));
+  const [route, setRoute] = useState({ from: "", to: "", cabin: "economy" as CabinKey });
+
+  useEffect(() => {
+    const q = new URLSearchParams(window.location.search);
+    const fromQ = params.get("from") ?? q.get("from") ?? "";
+    const toQ = params.get("to") ?? q.get("to") ?? "";
+    const cabinQ = params.get("cabin") ?? q.get("cabin");
+    setRoute({
+      from: normalizeAirport(fromQ),
+      to: normalizeAirport(toQ),
+      cabin: cabinFromParam(cabinQ),
+    });
+  }, [params]);
+
+  const from = route.from;
+  const to = route.to;
+  const cabin = route.cabin;
 
   const [sort, setSort] = useState<SortKey>("best");
   const [maxStops, setMaxStops] = useState<number | null>(null);

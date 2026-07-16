@@ -20,6 +20,7 @@ import { PRIMARY_NAV, MORE_NAV, ALL_NAV, isActivePath } from "@/components/layou
 import { CURRENCY_COOKIE } from "@/lib/constants";
 import { SUPPORTED_CURRENCIES } from "@/lib/currency";
 import { notifyCurrencyChange } from "@/components/shared/display-price";
+import { toast } from "sonner";
 import type { Currency } from "@prisma/client";
 
 const CURRENCY_CYCLE = SUPPORTED_CURRENCIES;
@@ -66,6 +67,7 @@ export function Header() {
     document.cookie = `${CURRENCY_COOKIE}=${next};path=/;max-age=31536000;SameSite=Lax`;
     setCurrency(next);
     notifyCurrencyChange();
+    toast.success(`Prices shown in ${next}`);
   }
 
   useEffect(() => {
@@ -209,7 +211,7 @@ export function Header() {
               size="sm"
               aria-label={`Currency ${currency}. Click to change.`}
               onClick={cycleCurrency}
-              className="text-ink-500 hover:bg-sand-100 hover:text-ink-900 hidden xl:inline-flex"
+              className="text-ink-500 hover:bg-sand-100 hover:text-ink-900 hidden md:inline-flex tabular-nums"
             >
               <Globe className="h-4 w-4" aria-hidden /> {currency}
             </Button>
@@ -219,7 +221,7 @@ export function Header() {
               size="sm"
               aria-label={`Language ${lang}`}
               onClick={() => setLang((l) => (l === "EN" ? "UR" : l === "UR" ? "AR" : "EN"))}
-              className="text-ink-500 hover:bg-sand-100 hover:text-ink-900 hidden xl:inline-flex"
+              className="text-ink-500 hover:bg-sand-100 hover:text-ink-900 hidden lg:inline-flex"
             >
               <Languages className="h-4 w-4" aria-hidden /> {lang}
             </Button>

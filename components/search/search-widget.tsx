@@ -77,6 +77,10 @@ function SearchWidgetInner({ className }: { className?: string }) {
   const [errors, setErrors] = useState<{ from?: string; to?: string; form?: string }>({});
 
   useEffect(() => {
+    setLoading(false);
+  }, [pathname, searchParams]);
+
+  useEffect(() => {
     setTab(tabFromPath(pathname));
     const fromQ = searchParams.get("from") ?? "";
     const toQ =
