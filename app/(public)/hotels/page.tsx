@@ -1,45 +1,30 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { HotelCard } from "@/components/cards/hotel-card";
-import { listHotels } from "@/lib/data/catalog";
+import { getCachedHotels } from "@/lib/catalog-cache";
 import { SearchWidget } from "@/components/search/search-widget";
 import { CatalogHero, EmptyCatalog } from "@/components/layout/catalog-hero";
 
-export const revalidate = 60;
+export const revalidate = 120;
 
 export const metadata: Metadata = {
   title: "Hotels",
   description: "Search and book hotels worldwide with free cancellation on most stays.",
 };
 
-type Props = {
-  searchParams: Promise<{ city?: string; q?: string; tag?: string; guests?: string }>;
-};
-
-export default async function HotelsPage({ searchParams }: Props) {
-  const params = await searchParams;
-  const hotels = await listHotels({
-    city: params.city,
-    q: params.q,
-    tag: params.tag,
-  });
-
-  const heading = params.city
-    ? `Hotels in ${params.city}`
-    : params.tag
-      ? `${params.tag} stays`
-      : "Hotels worldwide";
+export default async function HotelsPage() {
+  const hotels = await getCachedHotels();
 
   return (
     <div className="bg-sand min-h-[60vh]">
       <CatalogHero
         variant="hotels"
         eyebrow="Stays"
-        title={heading}
+        title="Hotels worldwide"
         description={
           hotels.length > 0
-            ? `${hotels.length} stays match your search`
-            : "Adjust your filters or browse all destinations"
+            ? `${hotels.length} stays ready to book`
+            : "Browse destinations and find your next stay"
         }
       />
 
@@ -57,7 +42,7 @@ export default async function HotelsPage({ searchParams }: Props) {
                 name={h.name}
                 city={h.city}
                 country={h.country}
-                image={h.images[0]}
+                image={h.images[0] ?? ""}
                 starRating={h.starRating}
                 avgRating={h.avgRating}
                 reviewCount={h.reviewCount}
@@ -68,14 +53,14 @@ export default async function HotelsPage({ searchParams }: Props) {
           </div>
         ) : (
           <EmptyCatalog
-            title="No hotels match these filters"
-            description="Try a different city, or clear filters to see all stays."
+            title="No hotels found"
+            description="Try another city or clear your search."
           >
             <Link
               href="/hotels"
               className="text-sm font-semibold text-pine-500 link-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pine-500 rounded-sm"
             >
-              View all hotels
+              Browse all hotels
             </Link>
           </EmptyCatalog>
         )}

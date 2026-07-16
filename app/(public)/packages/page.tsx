@@ -1,27 +1,19 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { getTours } from "@/lib/tours";
 import { getCachedPackages } from "@/lib/tours-cache";
 import { TourCard } from "@/components/shared/tour-card";
 import { SearchWidget } from "@/components/search/search-widget";
 import { CatalogHero, EmptyCatalog } from "@/components/layout/catalog-hero";
 
-export const revalidate = 60;
+export const revalidate = 120;
 
 export const metadata: Metadata = {
   title: "Vacation Packages",
   description: "Curated flight + hotel packages and guided tours worldwide.",
 };
 
-type Props = {
-  searchParams: Promise<{ destination?: string; category?: string }>;
-};
-
-export default async function PackagesPage({ searchParams }: Props) {
-  const params = await searchParams;
-  const { tours } = params.destination
-    ? await getTours({ q: params.destination, limit: 24 })
-    : await getCachedPackages();
+export default async function PackagesPage() {
+  const { tours } = await getCachedPackages();
 
   return (
     <div className="bg-sand min-h-[60vh]">
