@@ -43,7 +43,7 @@ export default function ProfilePage() {
                 name="name"
                 defaultValue={session?.user?.name ?? ""}
                 required
-                className="mt-1 rounded-sm border-line focus-visible:ring-brass-500"
+                className="mt-1 rounded-sm border-line focus-visible:ring-pine-500"
               />
             </div>
             <div>
@@ -54,7 +54,7 @@ export default function ProfilePage() {
                 type="email"
                 defaultValue={session?.user?.email ?? ""}
                 required
-                className="mt-1 rounded-sm border-line focus-visible:ring-brass-500"
+                className="mt-1 rounded-sm border-line focus-visible:ring-pine-500"
               />
             </div>
             <Button type="submit" disabled={loading}>

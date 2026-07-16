@@ -8,7 +8,11 @@ import net from "node:net";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const projectRoot = join(__dirname, "..");
 const port = 27018;
-const dbPath = join(projectRoot, ".mongo-data");
+// Prefer .mongo-data-v2 when present (older .mongo-data can crash mongod with exit 14)
+const dbPath = join(
+  projectRoot,
+  existsSync(join(projectRoot, ".mongo-data-v2")) ? ".mongo-data-v2" : ".mongo-data"
+);
 
 const connectionCandidates = [
   `mongodb://127.0.0.1:${port}/travels-tours?replicaSet=rs0`,

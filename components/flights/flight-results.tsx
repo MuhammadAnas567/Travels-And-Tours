@@ -67,8 +67,14 @@ export function FlightResults({
     return list;
   }, [flights, sort, maxStops]);
 
-  const cheapest = flights.reduce((m, f) => Math.min(m, priceOf(f)), Number.POSITIVE_INFINITY);
-  const fastest = flights.reduce((m, f) => Math.min(m, f.durationMins), Number.POSITIVE_INFINITY);
+  const cheapestFlight = useMemo(() => {
+    if (!flights.length) return null;
+    return flights.reduce((a, b) => (priceOf(a) <= priceOf(b) ? a : b));
+  }, [flights]);
+  const fastestFlight = useMemo(() => {
+    if (!flights.length) return null;
+    return flights.reduce((a, b) => (a.durationMins <= b.durationMins ? a : b));
+  }, [flights]);
   const best = filtered[0];
 
   function applyFilter(next: number | null) {
@@ -88,12 +94,16 @@ export function FlightResults({
     {
       key: "cheapest",
       label: "Cheapest",
-      value: Number.isFinite(cheapest) ? `$${cheapest} · ${formatDuration(fastest)}` : "—",
+      value: cheapestFlight
+        ? `$${priceOf(cheapestFlight)} · ${formatDuration(cheapestFlight.durationMins)}`
+        : "—",
     },
     {
       key: "fastest",
       label: "Fastest",
-      value: Number.isFinite(fastest) ? `$${cheapest} · ${formatDuration(fastest)}` : "—",
+      value: fastestFlight
+        ? `$${priceOf(fastestFlight)} · ${formatDuration(fastestFlight.durationMins)}`
+        : "—",
     },
   ];
 
@@ -161,8 +171,8 @@ export function FlightResults({
                 type="button"
                 onClick={() => setSort(t.key)}
                 className={cn(
-                  "min-h-11 sm:min-h-14 rounded-sm px-1.5 sm:px-3 py-2 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brass-500",
-                  sort === t.key ? "bg-brass-50 text-pine-700" : "text-ink-700 hover:bg-sand"
+                  "min-h-11 sm:min-h-14 rounded-sm px-1.5 sm:px-3 py-2 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pine-500",
+                  sort === t.key ? "bg-pine-50 text-pine-700" : "text-ink-700 hover:bg-sand"
                 )}
               >
                 <span className="block text-xs sm:text-sm font-semibold">{t.label}</span>
@@ -183,11 +193,9 @@ export function FlightResults({
               <EmptyState
                 icon="plane"
                 title="No flights match these filters"
-                description="Widen stops or try nearby dates — ±3 days often unlocks better fares."
+                description="Widen stops or clear filters to see more routes on this search."
                 actionLabel="Clear filters"
                 onAction={() => applyFilter(null)}
-                secondaryLabel="Search ±3 days"
-                secondaryHref="/flights"
               />
             ) : (
               filtered.map((f) => (
@@ -278,7 +286,7 @@ export function FlightResults({
           onClick={() => setFiltersOpen((o) => !o)}
         >
           <SlidersHorizontal className="h-5 w-5" strokeWidth={1.5} />
-          Filter · Sort
+          Filters
           {activeFilters > 0 ? (
             <span className="ml-1 rounded-full bg-pine-500 px-2 py-0.5 text-xs text-paper tabular-nums">
               {activeFilters}

@@ -33,6 +33,7 @@ export default function FAQPage() {
   return (
     <div className="bg-sand min-h-[60vh]">
       <CatalogHero
+        variant="default"
         eyebrow="Help"
         title="Frequently asked questions"
         description="Answers about booking, cancellations, tickets, and reviews."
@@ -45,7 +46,7 @@ export default function FAQPage() {
               key={faq.q}
               className="group rounded-md border border-line bg-paper p-5 open:shadow-sm"
             >
-              <summary className="cursor-pointer list-none font-display text-base font-semibold text-ink marker:content-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brass-500 rounded-sm [&::-webkit-details-marker]:hidden">
+              <summary className="cursor-pointer list-none font-display text-base font-semibold text-ink marker:content-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pine-500 rounded-sm [&::-webkit-details-marker]:hidden">
                 {faq.q}
               </summary>
               <p className="mt-3 max-w-prose text-sm text-ink-500 leading-relaxed">{faq.a}</p>

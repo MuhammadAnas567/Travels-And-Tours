@@ -41,6 +41,7 @@ export default async function FlightsPage({ searchParams }: Props) {
   return (
     <div className="bg-sand min-h-[60vh]">
       <CatalogHero
+        variant="flights"
         eyebrow="Flights"
         title="Compare routes and cabin fares"
         description={

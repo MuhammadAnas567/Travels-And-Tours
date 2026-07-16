@@ -258,8 +258,8 @@ export default function StyleguidePage() {
             <div className="bg-pine-50 h-16 w-32 border border-line flex items-center justify-center text-xs text-ink-700">
               bg-pine-50
             </div>
-            <div className="bg-brass-500 h-16 w-32 border border-line flex items-center justify-center text-xs text-ink">
-              bg-brass-500
+            <div className="bg-pine-500 h-16 w-32 border border-line flex items-center justify-center text-xs text-white">
+              bg-pine-500
             </div>
           </div>
         </section>

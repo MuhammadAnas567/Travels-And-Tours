@@ -87,7 +87,7 @@ export default async function BookingsPage() {
                       {booking.status === "CONFIRMED" && (
                         <Link
                           href={`/dashboard/bookings/${booking.id}/ticket`}
-                          className="flex min-h-11 items-center gap-1 text-sm font-medium text-pine-600 hover:text-pine-700 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brass-500 focus-visible:ring-offset-2"
+                          className="flex min-h-11 items-center gap-1 text-sm font-medium text-pine-600 hover:text-pine-700 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pine-500 focus-visible:ring-offset-2"
                         >
                           <Ticket
                             className="size-5"

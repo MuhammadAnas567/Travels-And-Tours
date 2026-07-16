@@ -51,9 +51,9 @@ export function DestinationJourney({ destinations }: Props) {
                 aria-selected={selected}
                 onClick={() => setActive(i)}
                 className={cn(
-                  "relative snap-start shrink-0 flex flex-col items-start gap-1 rounded-sm border px-3 py-3 min-w-[7.5rem] text-left transition-all duration-[var(--duration-base)] ease-[var(--ease-brand)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brass-500 focus-visible:ring-offset-2",
+                  "relative snap-start shrink-0 flex flex-col items-start gap-1 rounded-sm border px-3 py-3 min-w-[7.5rem] text-left transition-all duration-[var(--duration-base)] ease-[var(--ease-brand)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pine-500 focus-visible:ring-offset-2",
                   selected
-                    ? "border-brass-500 bg-brass-50 shadow-sm"
+                    ? "border-pine-500 bg-pine-50 shadow-sm"
                     : "border-line bg-paper hover:border-taupe-400"
                 )}
               >
@@ -94,7 +94,7 @@ export function DestinationJourney({ destinations }: Props) {
             </p>
             <Link
               href={`/hotels?city=${encodeURIComponent(current.name)}`}
-              className="mt-8 inline-flex min-h-11 items-center gap-2 rounded-sm bg-brass-500 px-6 py-3 text-sm font-semibold text-ink hover:bg-brass-600 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brass-500 focus-visible:ring-offset-2"
+              className="mt-8 inline-flex min-h-11 items-center gap-2 rounded-full bg-pine-500 px-6 py-3 text-sm font-semibold text-white hover:bg-pine-600 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pine-500 focus-visible:ring-offset-2"
             >
               Browse stays in {current.name}
               <ArrowRight className="h-4 w-4" strokeWidth={1.5} aria-hidden />

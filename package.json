@@ -3,8 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "predev": "node ./scripts/ensure-mongo.mjs",
-    "dev": "next dev",
+    "predev": "node ./scripts/ensure-single-dev.mjs && node ./scripts/ensure-mongo.mjs",
+    "dev": "next dev --port 3000",
+    "dev:clean": "node ./scripts/ensure-single-dev.mjs",
     "dev:mongo": "node ./scripts/mongo-memory.mjs",
     "db:mongo": "node ./scripts/mongo-memory.mjs",
     "db:seed-if-empty": "node ./scripts/seed-if-empty.mjs",

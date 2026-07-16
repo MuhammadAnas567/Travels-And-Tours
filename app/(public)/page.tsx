@@ -5,6 +5,8 @@ import { HomeHero } from "@/components/home/home-hero";
 import { DestinationJourney } from "@/components/home/destination-journey";
 import { HowItWorks } from "@/components/home/how-it-works";
 import { TestimonialsCarousel } from "@/components/home/testimonials-carousel";
+import { TrustBar, ServicesGrid, WhyChooseUs } from "@/components/home/home-sections";
+import { FeaturedPackages, BlogPreview } from "@/components/home/home-editorial";
 import { HotelCard } from "@/components/cards/hotel-card";
 import { NewsletterForm } from "@/components/shared/newsletter-form";
 import { getTrendingDestinations, getPopularHotels, getDealOfWeek } from "@/lib/data/home";
@@ -15,27 +17,21 @@ import { Button } from "@/components/ui/button";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "UEB3 Travel — Private Journeys & Curated Escapes",
+  title: "UEB3 Travel — Flights, Hotels & Journeys Worldwide",
   description:
-    "Plan flights, stays, and tailor-made journeys with an editorial eye — honest fares, refined itineraries, and humans on support.",
+    "Book flights, hotels, tour packages, and visas with clear prices and 24/7 support. A modern travel platform for explorers.",
   openGraph: {
-    title: "UEB3 Travel — Arrive somewhere worth remembering",
-    description:
-      "Flights, hotels, and composed packages in one search. Clear prices. Real destinations.",
+    title: "UEB3 Travel — Find your next horizon",
+    description: "Flights, stays, and packages in one cinematic search experience.",
     type: "website",
     images: [
       {
-        url: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&q=80",
+        url: "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=1200&q=80",
         width: 1200,
         height: 630,
-        alt: "Alpine ridge at blue hour",
+        alt: "Desert road at golden hour",
       },
     ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "UEB3 Travel",
-    description: "Private journeys and curated escapes worldwide.",
   },
 };
 
@@ -59,8 +55,7 @@ export default async function HomePage() {
     "@type": "TravelAgency",
     name: "UEB3 Travel",
     url: process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000",
-    description:
-      "Book flights, hotels, and vacation packages worldwide with clear pricing and 24/7 support.",
+    description: "Book flights, hotels, and vacation packages worldwide.",
     areaServed: "Worldwide",
     priceRange: "$$",
   };
@@ -73,31 +68,60 @@ export default async function HomePage() {
       />
 
       <HomeHero />
+      <TrustBar />
 
       <section className="section-pad">
         <div className="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8">
-          <div className="mb-12 max-w-2xl">
-            <p className="eyebrow">Popular routes</p>
-            <h2 className="mt-3 text-h2 text-ink">
-              Follow the path. Land on a stay.
-            </h2>
-            <p className="mt-4 text-ink-500 leading-relaxed">
-              Browse trending cities as a journey — then open hotels for the stop you want.
+          <div className="mb-10 max-w-2xl">
+            <p className="eyebrow">Destinations</p>
+            <h2 className="mt-3 text-h2 text-ink">Featured destinations</h2>
+            <p className="mt-3 text-ink-500 leading-relaxed">
+              Scroll the route — tap a city to open stays and ideas for that stop.
             </p>
           </div>
           <DestinationJourney destinations={journeyStops} />
         </div>
       </section>
 
-      {deal && (
-        <section className="relative overflow-hidden border-y border-brass-500/20 bg-pine-500">
-          <div className="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8 py-16 md:py-20 grid gap-10 md:grid-cols-[1.15fr_0.85fr] md:items-center">
+      <section className="section-pad bg-paper">
+        <div className="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8">
+          <div className="mb-10 max-w-xl">
+            <p className="eyebrow">Services</p>
+            <h2 className="mt-3 text-h2 text-ink">Everything for the trip</h2>
+            <p className="mt-3 text-ink-500">One platform for flights, stays, visas, and more.</p>
+          </div>
+          <ServicesGrid />
+        </div>
+      </section>
+
+      <section className="section-pad">
+        <div className="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8">
+          <div className="mb-10 flex items-end justify-between gap-4">
             <div>
-              <p className="eyebrow text-brass-300">Deal of the week</p>
+              <p className="eyebrow">Packages</p>
+              <h2 className="mt-3 text-h2 text-ink">Popular tour packages</h2>
+              <p className="mt-2 text-ink-500">Hand-composed itineraries with clear pricing.</p>
+            </div>
+            <Link
+              href="/packages"
+              className="hidden sm:inline-flex items-center gap-1 text-sm font-semibold text-pine-500 link-underline"
+            >
+              View all <ChevronRight className="h-4 w-4" strokeWidth={1.5} />
+            </Link>
+          </div>
+          <FeaturedPackages />
+        </div>
+      </section>
+
+      {deal && (
+        <section className="relative overflow-hidden bg-pine-500">
+          <div className="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8 py-16 md:py-20 grid gap-10 md:grid-cols-[1.1fr_0.9fr] md:items-center">
+            <div>
+              <p className="eyebrow text-pine-100">Deal of the week</p>
               <h2 className="mt-4 font-display text-3xl md:text-4xl font-semibold text-paper">
                 {deal.name}
               </h2>
-              <p className="mt-3 text-paper/70">
+              <p className="mt-3 text-paper/75">
                 {deal.city}, {deal.country} — from{" "}
                 <strong className="text-paper tabular-nums" data-price>
                   ${deal.pricePerNight}
@@ -105,7 +129,11 @@ export default async function HomePage() {
                 / night
               </p>
               <div className="mt-8 flex flex-wrap gap-3">
-                <Button asChild size="lg">
+                <Button
+                  asChild
+                  size="lg"
+                  className="bg-paper text-pine-700 hover:bg-pine-50"
+                >
                   <Link
                     href={
                       String(deal._id).startsWith("fallback")
@@ -113,32 +141,32 @@ export default async function HomePage() {
                         : `/hotels/${deal.slug}`
                     }
                   >
-                    Save this stay
+                    Book this stay
                   </Link>
                 </Button>
                 <Button
                   asChild
                   variant="outline"
                   size="lg"
-                  className="border-paper/25 bg-transparent text-paper hover:bg-paper/10 hover:border-brass-400"
+                  className="border-paper/30 bg-transparent text-paper hover:bg-paper/10"
                 >
                   <Link href="/deals">See all deals</Link>
                 </Button>
               </div>
             </div>
-            <div className="relative aspect-[16/10] overflow-hidden rounded-md shadow-float group">
+            <div className="relative aspect-[16/10] overflow-hidden rounded-lg shadow-float group">
               <Image
                 src={deal.images[0]}
                 alt={deal.name}
                 fill
-                className="object-cover img-editorial img-cover"
+                className="object-cover img-cover"
                 sizes="(max-width:768px) 100vw, 40vw"
                 placeholder="blur"
                 blurDataURL={IMAGE_BLUR_DATA_URL}
               />
               <Link
-                href={`/login?callbackUrl=/dashboard/wishlist`}
-                className="absolute top-3 right-3 flex h-11 w-11 items-center justify-center rounded-sm bg-paper/95 text-ink shadow-sm hover:bg-paper focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brass-500"
+                href="/login?callbackUrl=/dashboard/wishlist"
+                className="absolute top-3 right-3 flex h-11 w-11 items-center justify-center rounded-full bg-paper/95 text-ink shadow-sm hover:bg-paper focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pine-500"
                 aria-label={`Save ${deal.name} to wishlist`}
               >
                 <Heart className="h-5 w-5" strokeWidth={1.5} />
@@ -150,10 +178,10 @@ export default async function HomePage() {
 
       <section className="section-pad bg-paper">
         <div className="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8">
-          <div className="mb-12 max-w-xl">
+          <div className="mb-10 max-w-xl">
             <p className="eyebrow">How it works</p>
-            <h2 className="mt-3 text-h2 text-ink">From search to wheels up</h2>
-            <p className="mt-4 text-ink-500">Four steps. No mystery fees in the middle.</p>
+            <h2 className="mt-3 text-h2 text-ink">From search to takeoff</h2>
+            <p className="mt-3 text-ink-500">Four clear steps — no mystery fees in the middle.</p>
           </div>
           <HowItWorks />
         </div>
@@ -164,12 +192,12 @@ export default async function HomePage() {
           <div className="mb-10 flex items-end justify-between gap-4">
             <div>
               <p className="eyebrow">Stays</p>
-              <h2 className="mt-3 text-h2 text-ink">Featured stays</h2>
-              <p className="mt-2 text-ink-500">Hotels travellers book again</p>
+              <h2 className="mt-3 text-h2 text-ink">Featured hotels</h2>
+              <p className="mt-2 text-ink-500">Places travellers book again</p>
             </div>
             <Link
               href="/hotels"
-              className="hidden sm:inline-flex items-center gap-1 text-sm font-semibold text-pine-500 link-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brass-500 rounded-sm"
+              className="hidden sm:inline-flex items-center gap-1 text-sm font-semibold text-pine-500 link-underline"
             >
               View all hotels <ChevronRight className="h-4 w-4" strokeWidth={1.5} />
             </Link>
@@ -192,20 +220,27 @@ export default async function HomePage() {
                 />
               ))
             ) : (
-              <p className="col-span-full text-ink-500">
-                No hotels match right now — try clearing filters.
-              </p>
+              <p className="col-span-full text-ink-500">No hotels loaded — run seed if empty.</p>
             )}
           </div>
         </div>
       </section>
 
-      <section className="section-pad bg-sand-200/40">
+      <section className="section-pad bg-sand-100">
         <div className="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8">
-          <div className="mb-12 max-w-xl">
-            <p className="eyebrow">Travellers</p>
+          <div className="mb-10 max-w-xl">
+            <p className="eyebrow">Why UEB3</p>
+            <h2 className="mt-3 text-h2 text-ink">Built for real travellers</h2>
+          </div>
+          <WhyChooseUs />
+        </div>
+      </section>
+
+      <section className="section-pad bg-paper">
+        <div className="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8">
+          <div className="mb-10 max-w-xl">
+            <p className="eyebrow">Stories</p>
             <h2 className="mt-3 text-h2 text-ink">What travellers say</h2>
-            <p className="mt-3 text-ink-500">Real trips. Short quotes. No filler.</p>
           </div>
           <TestimonialsCarousel />
         </div>
@@ -213,14 +248,33 @@ export default async function HomePage() {
 
       <section className="section-pad">
         <div className="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8">
-          <div className="rounded-md bg-ink px-6 py-14 sm:px-14 md:flex md:items-center md:justify-between md:gap-12 md:text-left text-center">
+          <div className="mb-10 flex items-end justify-between gap-4">
+            <div>
+              <p className="eyebrow">Journal</p>
+              <h2 className="mt-3 text-h2 text-ink">Travel notes</h2>
+              <p className="mt-2 text-ink-500">Guides and tips from the road.</p>
+            </div>
+            <Link
+              href="/blog"
+              className="hidden sm:inline-flex items-center gap-1 text-sm font-semibold text-pine-500 link-underline"
+            >
+              All posts <ChevronRight className="h-4 w-4" strokeWidth={1.5} />
+            </Link>
+          </div>
+          <BlogPreview />
+        </div>
+      </section>
+
+      <section className="section-pad">
+        <div className="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8">
+          <div className="rounded-lg bg-pine-900 px-6 py-14 sm:px-14 md:flex md:items-center md:justify-between md:gap-12 md:text-left text-center">
             <div className="max-w-md md:mx-0 mx-auto">
-              <p className="eyebrow text-brass-400">Dispatch</p>
+              <p className="eyebrow text-pine-400">Newsletter</p>
               <h2 className="mt-3 font-display text-2xl md:text-3xl font-semibold text-paper">
                 Fare drops before they sell out
               </h2>
-              <p className="mt-3 text-paper/55">
-                One email a week — destination deals, not spam. Unsubscribe anytime.
+              <p className="mt-3 text-paper/60">
+                One email a week — destination deals, not spam.
               </p>
             </div>
             <div className="mt-8 md:mt-0 max-w-md w-full md:mx-0 mx-auto">

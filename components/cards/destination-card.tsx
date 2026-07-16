@@ -16,7 +16,7 @@ export function DestinationCard({ name, country, image, priceFrom, href }: Desti
   return (
     <Link
       href={link}
-      className="group relative w-full overflow-hidden rounded-md border border-line shadow-sm card-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brass-500 focus-visible:ring-offset-2 focus-visible:ring-offset-sand"
+      className="group relative w-full overflow-hidden rounded-md border border-line shadow-sm card-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pine-500 focus-visible:ring-offset-2 focus-visible:ring-offset-sand"
     >
       <div className="relative aspect-[4/3]">
         <Image
@@ -32,7 +32,7 @@ export function DestinationCard({ name, country, image, priceFrom, href }: Desti
         <div className="absolute bottom-0 left-0 right-0 p-4">
           <h3 className="font-display text-lg font-semibold text-paper">{name}</h3>
           <p className="text-sm text-paper/75">{country}</p>
-          <p className="mt-1 text-sm font-semibold tabular-nums text-brass-400">
+          <p className="mt-1 text-sm font-semibold tabular-nums text-pine-400">
             From ${priceFrom}
           </p>
         </div>

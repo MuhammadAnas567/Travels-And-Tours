@@ -73,7 +73,7 @@ export default async function BlogPostPage({ params }: Props) {
               <p className="font-display text-xl font-semibold text-ink">Ready to book?</p>
               <Link
                 href="/tours"
-                className="mt-3 inline-flex min-h-11 items-center text-sm font-semibold text-pine-500 hover:text-pine-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brass-500 rounded-sm"
+                className="mt-3 inline-flex min-h-11 items-center text-sm font-semibold text-pine-500 hover:text-pine-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pine-500 rounded-sm"
               >
                 Explore matching tours →
               </Link>

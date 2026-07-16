@@ -9,6 +9,7 @@ export default function TermsPage() {
   return (
     <div className="bg-sand">
       <CatalogHero
+        variant="default"
         eyebrow="Legal"
         title="Terms of Service"
         description="Last updated June 2026. By using UEB3 Travel, you agree to these terms."

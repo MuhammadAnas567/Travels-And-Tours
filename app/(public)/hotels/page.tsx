@@ -33,6 +33,7 @@ export default async function HotelsPage({ searchParams }: Props) {
   return (
     <div className="bg-sand min-h-[60vh]">
       <CatalogHero
+        variant="hotels"
         eyebrow="Stays"
         title={heading}
         description={
@@ -72,7 +73,7 @@ export default async function HotelsPage({ searchParams }: Props) {
           >
             <Link
               href="/hotels"
-              className="text-sm font-semibold text-pine-500 link-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brass-500 rounded-sm"
+              className="text-sm font-semibold text-pine-500 link-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pine-500 rounded-sm"
             >
               View all hotels
             </Link>

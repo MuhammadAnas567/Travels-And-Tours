@@ -28,6 +28,7 @@ export default async function BlogIndexPage() {
   return (
     <div className="bg-sand min-h-[60vh]">
       <CatalogHero
+        variant="blog"
         eyebrow="Travel guides"
         title="Stories & practical advice"
         description="Visa tips, destination guides, and insider knowledge for smarter travel."
@@ -39,7 +40,7 @@ export default async function BlogIndexPage() {
             {featured && (
               <Link
                 href={`/blog/${featured.slug}`}
-                className="group grid gap-6 overflow-hidden rounded-md border border-line bg-paper shadow-sm transition-[box-shadow,transform] duration-[var(--duration-fast)] ease-[var(--ease-brand)] hover:shadow-md hover:-translate-y-0.5 md:grid-cols-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brass-500"
+                className="group grid gap-6 overflow-hidden rounded-md border border-line bg-paper shadow-sm transition-[box-shadow,transform] duration-[var(--duration-fast)] ease-[var(--ease-brand)] hover:shadow-md hover:-translate-y-0.5 md:grid-cols-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pine-500"
               >
                 {featured.coverImage ? (
                   <div className="relative aspect-16/10 md:aspect-auto md:min-h-[280px] overflow-hidden">
@@ -75,7 +76,7 @@ export default async function BlogIndexPage() {
                   <Link
                     key={post.id}
                     href={`/blog/${post.slug}`}
-                    className="group overflow-hidden rounded-md border border-line bg-paper shadow-sm transition-[box-shadow,transform] duration-[var(--duration-fast)] ease-[var(--ease-brand)] hover:shadow-md hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brass-500"
+                    className="group overflow-hidden rounded-md border border-line bg-paper shadow-sm transition-[box-shadow,transform] duration-[var(--duration-fast)] ease-[var(--ease-brand)] hover:shadow-md hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pine-500"
                   >
                     {post.coverImage && (
                       <div className="relative aspect-16/10 overflow-hidden">

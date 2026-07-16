@@ -29,7 +29,7 @@ export default async function TicketPage({
       <div className="mb-4 flex justify-between print:hidden">
         <a
           href="/dashboard/bookings"
-          className="text-sm font-medium text-pine-600 hover:text-pine-700 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brass-500 focus-visible:ring-offset-2"
+          className="text-sm font-medium text-pine-600 hover:text-pine-700 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pine-500 focus-visible:ring-offset-2"
         >
           ← Back to bookings
         </a>

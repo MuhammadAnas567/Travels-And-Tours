@@ -61,6 +61,7 @@ export default async function ToursPage({
   return (
     <>
       <CatalogHero
+        variant="tours"
         eyebrow="Worldwide Collection"
         title="International Tour Packages"
         description={description}

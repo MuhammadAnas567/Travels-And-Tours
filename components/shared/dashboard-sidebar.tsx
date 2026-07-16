@@ -28,9 +28,9 @@ export function DashboardSidebar() {
               key={href}
               href={href}
               className={cn(
-                "flex min-h-11 shrink-0 items-center gap-2 rounded-sm border-b-2 border-transparent px-3 py-2.5 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brass-500 lg:border-b-0 lg:border-l-2 lg:gap-3",
+                "flex min-h-11 shrink-0 items-center gap-2 rounded-sm border-b-2 border-transparent px-3 py-2.5 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pine-500 lg:border-b-0 lg:border-l-2 lg:gap-3",
                 active
-                  ? "border-brass-500 bg-brass-50 text-pine-700"
+                  ? "border-pine-500 bg-pine-50 text-pine-700"
                   : "text-ink-500 hover:bg-sand hover:text-ink"
               )}
             >

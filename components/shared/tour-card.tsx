@@ -43,7 +43,7 @@ export function TourCard({ tour, currency = "USD", rates }: TourCardProps) {
     <article className="group overflow-hidden rounded-md border border-line bg-paper shadow-sm card-hover">
       <Link
         href={`/tours/${tour.slug}`}
-        className="block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-brass-500"
+        className="block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-pine-500"
       >
         <div className="relative aspect-[4/3] overflow-hidden">
           <Image
@@ -58,7 +58,7 @@ export function TourCard({ tour, currency = "USD", rates }: TourCardProps) {
           <div className="absolute inset-0 image-scrim" />
           <div className="absolute top-0 left-0 right-0 flex items-start justify-between p-4">
             {tour.isFeatured ? (
-              <span className="rounded-sm bg-brass-500 px-2.5 py-1 text-[0.6875rem] font-semibold uppercase tracking-[0.08em] text-ink">
+              <span className="rounded-sm bg-pine-500 px-2.5 py-1 text-[0.6875rem] font-semibold uppercase tracking-[0.08em] text-white">
                 Featured
               </span>
             ) : (
@@ -88,7 +88,7 @@ export function TourCard({ tour, currency = "USD", rates }: TourCardProps) {
             </Badge>
             {tour.avgRating > 0 && (
               <span className="flex items-center gap-1 text-sm font-medium tabular-nums text-ink-500">
-                <Star className="h-3.5 w-3.5 fill-brass-500 text-brass-500" aria-hidden />
+                <Star className="h-3.5 w-3.5 fill-pine-500 text-pine-500" aria-hidden />
                 {tour.avgRating.toFixed(1)}
               </span>
             )}

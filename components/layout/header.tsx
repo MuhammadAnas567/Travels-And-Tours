@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
@@ -29,13 +29,14 @@ export function Header() {
   const [lang, setLang] = useState("EN");
   const moreRef = useRef<HTMLDivElement>(null);
 
-  const elevated = !isHome || scrolled;
   const user = session?.user;
   const isAdmin = user?.role === "ADMIN";
   const moreActive = MORE_NAV.some((item) => isActivePath(pathname, item.href));
+  // Always readable glass — never white text on light sky
+  const compact = !isHome || scrolled || mobileOpen;
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 48);
+    const onScroll = () => setScrolled(window.scrollY > 24);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -53,7 +54,6 @@ export function Header() {
     };
   }, [mobileOpen]);
 
-  // Close "More" on outside click / Escape — no full-screen overlay (that blocked nav links)
   useEffect(() => {
     if (!moreOpen) return;
     const onPointer = (e: MouseEvent | TouchEvent) => {
@@ -73,31 +73,27 @@ export function Header() {
     };
   }, [moreOpen]);
 
-  const linkIdle = "text-[#F6F3EC]/80 hover:text-[#F6F3EC]";
-  const linkActive = "text-[#C49A5C]";
-
   return (
     <header
       className={cn(
-        "sticky top-0 z-[100] isolate w-full border-b transition-shadow duration-[var(--duration-base)] ease-[var(--ease-brand)]",
-        "bg-[#1A1611] text-[#F6F3EC] border-[#2A241C]",
-        elevated ? "shadow-md" : "shadow-none"
+        "sticky top-0 z-[100] isolate w-full transition-all duration-[var(--duration-base)] ease-[var(--ease-brand)]",
+        "border-b border-white/50 bg-paper/85 text-ink-900 backdrop-blur-xl",
+        compact ? "shadow-md" : "shadow-sm"
       )}
     >
-      <div className="relative z-[101] mx-auto flex h-14 min-[480px]:h-[4.5rem] w-full max-w-[1280px] items-center justify-between gap-2 px-3 min-[480px]:px-4 sm:px-6 lg:px-8">
+      <div className="relative z-[101] mx-auto flex h-14 min-[480px]:h-16 w-full max-w-[1280px] items-center justify-between gap-2 px-3 min-[480px]:px-4 sm:px-6 lg:px-8">
         <Link
           href="/"
-          className="relative z-[102] flex min-w-0 items-center gap-2 min-[480px]:gap-3 shrink rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B48A50] focus-visible:ring-offset-2 focus-visible:ring-offset-[#1A1611]"
+          className="relative z-[102] flex min-w-0 items-center gap-2.5 shrink rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pine-500 focus-visible:ring-offset-2 focus-visible:ring-offset-paper"
         >
-          <div className="flex h-8 w-8 min-[480px]:h-9 min-[480px]:w-9 shrink-0 items-center justify-center rounded-sm border border-[#B48A50]/50 bg-[#B48A50]/15 font-display text-base min-[480px]:text-lg font-semibold text-[#C49A5C]">
+          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-pine-500 font-display text-base font-bold text-white shadow-sm">
             U
           </div>
-          <span className="font-display text-base min-[480px]:text-xl font-semibold tracking-tight text-[#F6F3EC] truncate">
+          <span className="font-display text-lg min-[480px]:text-xl font-semibold tracking-tight text-ink-900 truncate">
             UEB3<span className="hidden min-[380px]:inline"> Travel</span>
           </span>
         </Link>
 
-        {/* Desktop / large tablet — primary links + More */}
         <nav
           className="relative z-[102] hidden lg:flex items-center gap-0.5 shrink min-w-0"
           aria-label="Main"
@@ -112,21 +108,16 @@ export function Header() {
                 prefetch
                 aria-current={active ? "page" : undefined}
                 className={cn(
-                  "group relative z-[102] flex items-center gap-1.5 px-2 xl:px-2.5 py-2 text-[0.625rem] xl:text-[0.6875rem] font-semibold uppercase tracking-[0.1em] xl:tracking-[0.12em] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B48A50] focus-visible:ring-offset-2 focus-visible:ring-offset-[#1A1611] rounded-sm whitespace-nowrap pointer-events-auto",
-                  active ? linkActive : linkIdle
+                  "group relative z-[102] flex items-center gap-1.5 rounded-full px-3 py-2 text-[0.7rem] font-semibold uppercase tracking-[0.08em] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pine-500 focus-visible:ring-offset-2 whitespace-nowrap pointer-events-auto",
+                  active
+                    ? "bg-pine-50 text-pine-600"
+                    : "text-ink-700 hover:bg-sand-100 hover:text-pine-600"
                 )}
               >
                 {Icon && (
                   <Icon className="h-4 w-4 shrink-0 hidden xl:block" strokeWidth={1.5} aria-hidden />
                 )}
                 {item.label}
-                <span
-                  aria-hidden
-                  className={cn(
-                    "pointer-events-none absolute bottom-1 left-2 right-2 h-px bg-[#B48A50] transition-transform duration-[var(--duration-base)] ease-[var(--ease-brand)] origin-left",
-                    active ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
-                  )}
-                />
               </Link>
             );
           })}
@@ -135,8 +126,10 @@ export function Header() {
             <button
               type="button"
               className={cn(
-                "group relative flex items-center gap-1 px-2 xl:px-2.5 py-2 text-[0.625rem] xl:text-[0.6875rem] font-semibold uppercase tracking-[0.1em] rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B48A50] focus-visible:ring-offset-2 focus-visible:ring-offset-[#1A1611]",
-                moreActive || moreOpen ? linkActive : linkIdle
+                "group relative flex items-center gap-1 rounded-full px-3 py-2 text-[0.7rem] font-semibold uppercase tracking-[0.08em] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pine-500",
+                moreActive || moreOpen
+                  ? "bg-pine-50 text-pine-600"
+                  : "text-ink-700 hover:bg-sand-100 hover:text-pine-600"
               )}
               aria-expanded={moreOpen}
               aria-haspopup="menu"
@@ -152,7 +145,7 @@ export function Header() {
             {moreOpen ? (
               <div
                 role="menu"
-                className="absolute right-0 top-full z-[104] mt-1 min-w-[12rem] rounded-md border border-[#2A241C] bg-[#1A1611] py-2 shadow-lg"
+                className="absolute right-0 top-full z-[104] mt-2 min-w-[13rem] rounded-md border border-line bg-paper py-2 shadow-lg"
               >
                 {MORE_NAV.map((item) => {
                   const active = isActivePath(pathname, item.href);
@@ -165,10 +158,10 @@ export function Header() {
                       prefetch
                       aria-current={active ? "page" : undefined}
                       className={cn(
-                        "flex min-h-11 items-center gap-2 px-4 py-2.5 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B48A50] focus-visible:ring-inset pointer-events-auto",
+                        "flex min-h-11 items-center gap-2 px-4 py-2.5 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pine-500 focus-visible:ring-inset",
                         active
-                          ? "bg-[#B48A50]/15 text-[#C49A5C]"
-                          : "text-[#F6F3EC]/85 hover:bg-white/5 hover:text-[#F6F3EC]"
+                          ? "bg-pine-50 text-pine-600 font-semibold"
+                          : "text-ink-700 hover:bg-sand-100"
                       )}
                       onClick={() => setMoreOpen(false)}
                     >
@@ -182,17 +175,17 @@ export function Header() {
           </div>
         </nav>
 
-        <div className="flex items-center gap-0.5 shrink-0">
+        <div className="flex items-center gap-1 shrink-0">
           <div className="hidden lg:flex items-center gap-1">
             <Button
               type="button"
               variant="ghost"
               size="sm"
-              aria-label={`Currency ${currency}. Click to toggle.`}
+              aria-label={`Currency ${currency}`}
               onClick={() =>
                 setCurrency((c) => (c === "USD" ? "EUR" : c === "EUR" ? "GBP" : "USD"))
               }
-              className="text-[#F6F3EC]/75 hover:bg-white/10 hover:text-[#F6F3EC] hidden xl:inline-flex"
+              className="text-ink-500 hover:bg-sand-100 hover:text-ink-900 hidden xl:inline-flex"
             >
               <Globe className="h-4 w-4" aria-hidden /> {currency}
             </Button>
@@ -200,9 +193,9 @@ export function Header() {
               type="button"
               variant="ghost"
               size="sm"
-              aria-label={`Language ${lang}. Click to toggle.`}
-              onClick={() => setLang((l) => (l === "EN" ? "FR" : l === "FR" ? "ES" : "EN"))}
-              className="text-[#F6F3EC]/75 hover:bg-white/10 hover:text-[#F6F3EC] hidden xl:inline-flex"
+              aria-label={`Language ${lang}`}
+              onClick={() => setLang((l) => (l === "EN" ? "UR" : l === "UR" ? "AR" : "EN"))}
+              className="text-ink-500 hover:bg-sand-100 hover:text-ink-900 hidden xl:inline-flex"
             >
               <Languages className="h-4 w-4" aria-hidden /> {lang}
             </Button>
@@ -210,21 +203,11 @@ export function Header() {
             {status === "authenticated" && user ? (
               <>
                 {isAdmin && (
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    asChild
-                    className="text-[#F6F3EC]/75 hover:bg-white/10 hover:text-[#F6F3EC]"
-                  >
+                  <Button variant="ghost" size="sm" asChild className="text-ink-700 hover:bg-sand-100">
                     <Link href="/admin">Admin</Link>
                   </Button>
                 )}
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  asChild
-                  className="text-[#F6F3EC]/75 hover:bg-white/10 hover:text-[#F6F3EC]"
-                >
+                <Button variant="ghost" size="sm" asChild className="text-ink-700 hover:bg-sand-100">
                   <Link href="/dashboard">
                     <LayoutDashboard className="h-4 w-4" aria-hidden />
                     <span className="hidden xl:inline">Dashboard</span>
@@ -235,7 +218,7 @@ export function Header() {
                   variant="ghost"
                   size="sm"
                   onClick={() => signOut({ callbackUrl: "/" })}
-                  className="text-[#F6F3EC]/75 hover:bg-white/10 hover:text-[#F6F3EC]"
+                  className="text-ink-700 hover:bg-sand-100"
                 >
                   <LogOut className="h-4 w-4" aria-hidden />
                   <span className="hidden xl:inline">Sign out</span>
@@ -246,17 +229,17 @@ export function Header() {
                 <Link
                   href="/login"
                   prefetch
-                  className="inline-flex min-h-9 items-center gap-1.5 rounded-sm px-3 text-sm font-semibold text-[#F6F3EC]/75 hover:bg-white/10 hover:text-[#F6F3EC] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B48A50]"
+                  className="inline-flex min-h-11 items-center gap-1.5 rounded-full px-3 text-sm font-semibold text-ink-700 hover:bg-sand-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pine-500"
                 >
                   <User className="h-4 w-4" aria-hidden />
                   <span className="hidden xl:inline">Sign in</span>
                 </Link>
                 <Link
-                  href="/register"
+                  href="/flights"
                   prefetch
-                  className="inline-flex min-h-9 items-center rounded-sm bg-[#B48A50] px-3 text-sm font-semibold text-[#1A1611] hover:bg-[#957240] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B48A50]"
+                  className="inline-flex min-h-11 items-center rounded-full bg-pine-500 px-5 text-sm font-semibold text-white shadow-sm hover:bg-pine-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pine-500 focus-visible:ring-offset-2"
                 >
-                  Register
+                  Book Now
                 </Link>
               </>
             )}
@@ -264,7 +247,7 @@ export function Header() {
 
           <button
             type="button"
-            className="lg:hidden flex items-center justify-center p-2.5 min-h-11 min-w-11 rounded-sm text-[#F6F3EC] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B48A50]"
+            className="lg:hidden flex items-center justify-center p-2.5 min-h-11 min-w-11 rounded-full text-ink-900 hover:bg-sand-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pine-500"
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label={mobileOpen ? "Close menu" : "Open menu"}
             aria-expanded={mobileOpen}
@@ -282,7 +265,7 @@ export function Header() {
       {mobileOpen && (
         <div
           id="mobile-nav"
-          className="lg:hidden absolute inset-x-0 top-14 min-[480px]:top-[4.5rem] z-50 border-t border-[#2A241C] bg-[#1A1611] px-4 py-5 shadow-float max-h-[calc(100dvh-3.5rem)] min-[480px]:max-h-[calc(100dvh-4.5rem)] overflow-y-auto overscroll-contain pb-[max(1.25rem,env(safe-area-inset-bottom))]"
+          className="lg:hidden absolute inset-x-0 top-14 min-[480px]:top-16 z-50 border-t border-line bg-paper px-4 py-5 shadow-float max-h-[calc(100dvh-3.5rem)] overflow-y-auto overscroll-contain pb-[max(1.25rem,env(safe-area-inset-bottom))]"
         >
           <nav className="flex flex-col gap-1" aria-label="Mobile">
             {ALL_NAV.map((item) => {
@@ -294,10 +277,10 @@ export function Header() {
                   href={item.href}
                   aria-current={active ? "page" : undefined}
                   className={cn(
-                    "flex min-h-11 items-center gap-2 rounded-sm px-3 py-3 text-sm font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B48A50]",
+                    "flex min-h-11 items-center gap-2 rounded-md px-3 py-3 text-sm font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pine-500",
                     active
-                      ? "bg-[#B48A50]/15 text-[#C49A5C]"
-                      : "text-[#F6F3EC]/85 hover:bg-white/5 hover:text-[#F6F3EC]"
+                      ? "bg-pine-50 text-pine-600"
+                      : "text-ink-800 hover:bg-sand-100"
                   )}
                   onClick={() => setMobileOpen(false)}
                 >
@@ -306,7 +289,7 @@ export function Header() {
                 </Link>
               );
             })}
-            <hr className="my-3 border-[#2A241C]" />
+            <hr className="my-3 border-line" />
             <div className="flex flex-wrap gap-2 px-1 pb-2">
               <Button
                 type="button"
@@ -315,7 +298,7 @@ export function Header() {
                 onClick={() =>
                   setCurrency((c) => (c === "USD" ? "EUR" : c === "EUR" ? "GBP" : "USD"))
                 }
-                className="text-[#F6F3EC]/75 hover:bg-white/10"
+                className="text-ink-600"
               >
                 <Globe className="h-4 w-4" aria-hidden /> {currency}
               </Button>
@@ -323,8 +306,8 @@ export function Header() {
                 type="button"
                 variant="ghost"
                 size="sm"
-                onClick={() => setLang((l) => (l === "EN" ? "FR" : l === "FR" ? "ES" : "EN"))}
-                className="text-[#F6F3EC]/75 hover:bg-white/10"
+                onClick={() => setLang((l) => (l === "EN" ? "UR" : l === "UR" ? "AR" : "EN"))}
+                className="text-ink-600"
               >
                 <Languages className="h-4 w-4" aria-hidden /> {lang}
               </Button>
@@ -333,7 +316,7 @@ export function Header() {
               <>
                 <Link
                   href="/dashboard"
-                  className="flex min-h-11 items-center px-3 py-3 text-[#C49A5C] font-medium"
+                  className="flex min-h-11 items-center px-3 py-3 text-pine-600 font-semibold"
                   onClick={() => setMobileOpen(false)}
                 >
                   Dashboard
@@ -341,7 +324,7 @@ export function Header() {
                 {isAdmin && (
                   <Link
                     href="/admin"
-                    className="flex min-h-11 items-center px-3 py-3 text-[#F6F3EC] font-medium"
+                    className="flex min-h-11 items-center px-3 py-3 text-ink-800 font-medium"
                     onClick={() => setMobileOpen(false)}
                   >
                     Admin
@@ -349,7 +332,7 @@ export function Header() {
                 )}
                 <button
                   type="button"
-                  className="flex min-h-11 items-center px-3 py-3 text-left font-medium text-[#F6F3EC]"
+                  className="flex min-h-11 items-center px-3 py-3 text-left font-medium text-ink-800"
                   onClick={() => {
                     setMobileOpen(false);
                     signOut({ callbackUrl: "/" });
@@ -362,17 +345,17 @@ export function Header() {
               <>
                 <Link
                   href="/login"
-                  className="flex min-h-11 items-center px-3 py-3 text-[#C49A5C] font-medium"
+                  className="flex min-h-11 items-center px-3 py-3 text-ink-800 font-medium"
                   onClick={() => setMobileOpen(false)}
                 >
                   Sign in
                 </Link>
                 <Link
-                  href="/register"
-                  className="flex min-h-11 items-center px-3 py-3 font-medium text-[#F6F3EC]"
+                  href="/flights"
+                  className="mt-2 flex min-h-11 items-center justify-center rounded-full bg-pine-500 px-3 py-3 font-semibold text-white"
                   onClick={() => setMobileOpen(false)}
                 >
-                  Register
+                  Book Now
                 </Link>
               </>
             )}

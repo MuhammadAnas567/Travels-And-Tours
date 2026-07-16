@@ -28,6 +28,7 @@ export default async function CarsPage({ searchParams }: Props) {
   return (
     <div className="bg-sand min-h-[60vh]">
       <CatalogHero
+        variant="cars"
         eyebrow="Car hire"
         title="Airport and city pickups"
         description={

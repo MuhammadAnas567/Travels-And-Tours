@@ -18,7 +18,7 @@ export function NewsletterForm({ dark = false }: { dark?: boolean }) {
     if (result.error) {
       toast.error(result.error);
     } else {
-      toast.success("Youâ€™re on the list â€” watch for the next fare drop.");
+      toast.success("You're on the list — watch for the next fare drop.");
       setEmail("");
     }
   }
@@ -43,11 +43,11 @@ export function NewsletterForm({ dark = false }: { dark?: boolean }) {
         disabled={loading}
         className={
           dark
-            ? "h-11 rounded-md bg-accent-500 hover:bg-accent-600 text-ink-900 font-semibold shrink-0"
-            : "h-11 rounded-md shrink-0"
+            ? "h-11 rounded-full bg-paper text-pine-700 hover:bg-pine-50 font-semibold shrink-0"
+            : "h-11 rounded-full shrink-0"
         }
       >
-        {loading ? "Savingâ€¦" : "Get deals"}
+        {loading ? "Saving…" : "Get deals"}
       </Button>
     </form>
   );

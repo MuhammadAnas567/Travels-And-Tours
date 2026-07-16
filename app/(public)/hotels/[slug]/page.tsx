@@ -81,11 +81,11 @@ export default async function HotelDetailPage({ params }: Props) {
         <div className="absolute bottom-0 left-0 right-0 mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8 pb-10">
           <Link
             href="/hotels"
-            className="mb-4 inline-flex min-h-11 items-center gap-1.5 text-sm text-paper/80 hover:text-paper focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brass-500 rounded-sm"
+            className="mb-4 inline-flex min-h-11 items-center gap-1.5 text-sm text-paper/80 hover:text-paper focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pine-500 rounded-sm"
           >
             <ArrowLeft className="h-4 w-4" strokeWidth={1.5} /> Back to hotels
           </Link>
-          <div className="flex items-center gap-1 text-brass-400" aria-label={`${hotel.starRating} star hotel`}>
+          <div className="flex items-center gap-1 text-pine-400" aria-label={`${hotel.starRating} star hotel`}>
             {Array.from({ length: hotel.starRating }, (_, i) => (
               <Star key={i} className="h-4 w-4 fill-current" aria-hidden />
             ))}

@@ -30,6 +30,7 @@ export default async function DealsPage() {
   return (
     <div className="bg-sand min-h-[60vh]">
       <CatalogHero
+        variant="deals"
         eyebrow="Special offers"
         title="Seasonal deals"
         description="Save on hand-picked departures. All discounts validated server-side at checkout."
@@ -61,7 +62,7 @@ export default async function DealsPage() {
                 </p>
                 <Link
                   href="/tours"
-                  className="mt-4 inline-block text-sm font-semibold text-pine-500 link-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brass-500 rounded-sm"
+                  className="mt-4 inline-block text-sm font-semibold text-pine-500 link-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pine-500 rounded-sm"
                 >
                   Browse tours
                 </Link>
@@ -75,7 +76,7 @@ export default async function DealsPage() {
           >
             <Link
               href="/tours"
-              className="text-sm font-semibold text-pine-500 link-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brass-500 rounded-sm"
+              className="text-sm font-semibold text-pine-500 link-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pine-500 rounded-sm"
             >
               Browse tours
             </Link>

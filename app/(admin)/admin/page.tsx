@@ -111,7 +111,7 @@ export default async function AdminOverviewPage() {
           </div>
           <Link
             href="/admin/bookings"
-            className="mt-4 inline-block text-sm font-medium text-pine-600 hover:text-pine-700 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brass-500 focus-visible:ring-offset-2"
+            className="mt-4 inline-block text-sm font-medium text-pine-600 hover:text-pine-700 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pine-500 focus-visible:ring-offset-2"
           >
             View all bookings →
           </Link>

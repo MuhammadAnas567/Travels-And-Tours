@@ -29,9 +29,9 @@ export function Gallery({ images, title }: { images: string[]; title: string }) 
               key={img}
               onClick={() => setActive(i)}
               className={cn(
-                "relative h-16 w-24 shrink-0 overflow-hidden rounded-md border-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brass-500 focus-visible:ring-offset-2",
+                "relative h-16 w-24 shrink-0 overflow-hidden rounded-md border-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pine-500 focus-visible:ring-offset-2",
                 active === i
-                  ? "border-brass-500"
+                  ? "border-pine-500"
                   : "border-line opacity-70 hover:opacity-100 hover:border-pine-300"
               )}
               aria-label={`View image ${i + 1}`}

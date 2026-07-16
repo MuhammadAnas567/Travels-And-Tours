@@ -42,7 +42,7 @@ export function TestimonialsCarousel() {
         <div className="flex gap-1">
           <span className="sr-only">{t.rating} out of 5 stars</span>
           {Array.from({ length: t.rating }, (_, i) => (
-            <Star key={i} className="h-5 w-5 fill-brass-500 text-brass-500" aria-hidden />
+            <Star key={i} className="h-5 w-5 fill-pine-500 text-pine-500" aria-hidden />
           ))}
         </div>
         <blockquote className="mt-6">
@@ -60,7 +60,7 @@ export function TestimonialsCarousel() {
         <button
           type="button"
           onClick={prev}
-          className="flex h-11 w-11 items-center justify-center rounded-md border border-line bg-paper text-ink hover:border-pine-500 hover:text-pine-500 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brass-500 focus-visible:ring-offset-2"
+          className="flex h-11 w-11 items-center justify-center rounded-md border border-line bg-paper text-ink hover:border-pine-500 hover:text-pine-500 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pine-500 focus-visible:ring-offset-2"
           aria-label="Previous testimonial"
         >
           <ChevronLeft className="h-5 w-5" strokeWidth={1.5} />
@@ -75,14 +75,14 @@ export function TestimonialsCarousel() {
               aria-label={`Show testimonial ${i + 1}`}
               onClick={() => setIndex(i)}
               className={cn(
-                "flex h-11 min-w-11 items-center justify-center rounded-md p-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brass-500 focus-visible:ring-offset-2",
-                i === index ? "text-brass-500" : "text-ink-500 hover:text-pine-500"
+                "flex h-11 min-w-11 items-center justify-center rounded-md p-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pine-500 focus-visible:ring-offset-2",
+                i === index ? "text-pine-500" : "text-ink-500 hover:text-pine-500"
               )}
             >
               <span
                 className={cn(
                   "block h-2.5 w-2.5 rounded-full",
-                  i === index ? "bg-brass-500" : "bg-line"
+                  i === index ? "bg-pine-500" : "bg-line"
                 )}
               />
             </button>
@@ -91,7 +91,7 @@ export function TestimonialsCarousel() {
         <button
           type="button"
           onClick={next}
-          className="flex h-11 w-11 items-center justify-center rounded-md border border-line bg-paper text-ink hover:border-pine-500 hover:text-pine-500 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brass-500 focus-visible:ring-offset-2"
+          className="flex h-11 w-11 items-center justify-center rounded-md border border-line bg-paper text-ink hover:border-pine-500 hover:text-pine-500 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pine-500 focus-visible:ring-offset-2"
           aria-label="Next testimonial"
         >
           <ChevronRight className="h-5 w-5" strokeWidth={1.5} />

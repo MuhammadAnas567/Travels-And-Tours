@@ -128,7 +128,7 @@ export default async function TourDetailPage({ params }: Props) {
             {visaInfo && (
               <Link
                 href={`/visa/${visaInfo.countrySlug}`}
-                className="flex items-center gap-3 rounded-md border border-pine-200 bg-pine-50 p-4 transition-colors hover:bg-pine-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brass-500"
+                className="flex items-center gap-3 rounded-md border border-pine-200 bg-pine-50 p-4 transition-colors hover:bg-pine-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pine-500"
               >
                 <FileText className="h-5 w-5 text-pine-500" strokeWidth={1.5} />
                 <div>
@@ -222,7 +222,7 @@ export default async function TourDetailPage({ params }: Props) {
             />
             <Link
               href="/plan-trip"
-              className="block text-center text-sm text-pine-500 hover:text-pine-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brass-500 rounded-sm"
+              className="block text-center text-sm text-pine-500 hover:text-pine-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pine-500 rounded-sm"
             >
               Need a custom itinerary? Get a quote →
             </Link>

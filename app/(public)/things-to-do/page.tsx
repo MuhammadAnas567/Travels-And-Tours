@@ -17,6 +17,7 @@ export default async function ThingsToDoPage() {
   return (
     <div className="bg-sand min-h-[60vh]">
       <CatalogHero
+        variant="tours"
         eyebrow="Experiences"
         title="Things to do"
         description="Start with a destination — then book stays, packages, and guided experiences around it."
@@ -50,7 +51,7 @@ export default async function ThingsToDoPage() {
           </p>
           <Link
             href="/packages"
-            className="mt-4 inline-block text-sm font-semibold text-pine-500 link-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brass-500 rounded-sm"
+            className="mt-4 inline-block text-sm font-semibold text-pine-500 link-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pine-500 rounded-sm"
           >
             View packages
           </Link>

@@ -19,7 +19,7 @@ export default function WishlistPage() {
       </p>
 
       <div className="mt-10 rounded-md border border-line bg-sand/40 p-10 text-center">
-        <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-sm bg-brass-50 text-brass-600">
+        <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-sm bg-pine-50 text-pine-600">
           <Heart className="size-5" strokeWidth={1.5} aria-hidden />
         </div>
         <h2 className="mt-4 font-heading text-lg font-semibold text-ink-900">

@@ -34,7 +34,7 @@ export function InfoPage({
         </div>
         <Link
           href={ctaHref}
-          className="mt-10 inline-flex min-h-11 items-center text-sm font-semibold text-pine-500 hover:text-pine-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brass-500 rounded-sm"
+          className="mt-10 inline-flex min-h-11 items-center text-sm font-semibold text-pine-500 hover:text-pine-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pine-500 rounded-sm"
         >
           {ctaLabel}
         </Link>

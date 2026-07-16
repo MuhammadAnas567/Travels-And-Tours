@@ -72,7 +72,7 @@ export default async function DashboardPage() {
           <CardTitle>Recent Bookings</CardTitle>
           <Link
             href="/dashboard/bookings"
-            className="text-sm font-medium text-pine-600 hover:text-pine-700 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brass-500 focus-visible:ring-offset-2"
+            className="text-sm font-medium text-pine-600 hover:text-pine-700 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pine-500 focus-visible:ring-offset-2"
           >
             View all
           </Link>
@@ -128,7 +128,7 @@ export default async function DashboardPage() {
                     {booking.status === "CONFIRMED" && (
                       <Link
                         href={`/dashboard/bookings/${booking.id}/ticket`}
-                        className="rounded-sm text-pine-600 hover:text-brass-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brass-500 focus-visible:ring-offset-2"
+                        className="rounded-sm text-pine-600 hover:text-pine-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pine-500 focus-visible:ring-offset-2"
                       >
                         <Ticket
                           className="size-5"

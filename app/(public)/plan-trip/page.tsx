@@ -10,6 +10,7 @@ export default function PlanTripPage() {
   return (
     <div className="bg-sand min-h-[60vh]">
       <CatalogHero
+        variant="plan"
         eyebrow="Custom travel"
         title="Build your perfect trip"
         description="Tell us where you want to go, and our experts will craft a personalised quote within 24 hours."

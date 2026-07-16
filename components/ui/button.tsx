@@ -5,23 +5,23 @@ import { Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-semibold tracking-wide transition-all duration-[var(--duration-base)] ease-[var(--ease-brand)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brass-500 focus-visible:ring-offset-2 focus-visible:ring-offset-sand disabled:pointer-events-none disabled:opacity-50",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-semibold tracking-wide transition-all duration-[var(--duration-base)] ease-[var(--ease-brand)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pine-500 focus-visible:ring-offset-2 focus-visible:ring-offset-sand disabled:pointer-events-none disabled:opacity-50",
   {
     variants: {
       variant: {
         primary:
-          "bg-brass-500 text-ink-900 hover:bg-brass-600 rounded-sm shadow-sm hover:shadow-md hover:-translate-y-px",
+          "bg-pine-500 text-white hover:bg-pine-600 rounded-full shadow-sm hover:shadow-md hover:-translate-y-px",
         default:
-          "bg-brass-500 text-ink-900 hover:bg-brass-600 rounded-sm shadow-sm hover:shadow-md hover:-translate-y-px",
+          "bg-pine-500 text-white hover:bg-pine-600 rounded-full shadow-sm hover:shadow-md hover:-translate-y-px",
         accent:
-          "bg-brass-500 text-ink-900 hover:bg-brass-600 rounded-sm shadow-sm hover:shadow-md",
+          "bg-pine-500 text-white hover:bg-pine-600 rounded-full shadow-sm hover:shadow-md",
         secondary:
-          "border border-pine-500 bg-transparent text-pine-500 hover:bg-pine-500 hover:text-paper rounded-sm",
+          "border border-pine-500 bg-transparent text-pine-500 hover:bg-pine-500 hover:text-paper rounded-full",
         outline:
-          "border border-line bg-paper text-ink-900 hover:border-brass-400 hover:bg-brass-50 rounded-sm",
-        ghost: "hover:bg-taupe-100 text-ink-700 rounded-sm",
-        danger: "bg-error text-white hover:opacity-90 rounded-sm",
-        destructive: "bg-error text-white hover:opacity-90 rounded-sm",
+          "border border-line bg-paper text-ink-900 hover:border-pine-300 hover:bg-pine-50 rounded-full",
+        ghost: "hover:bg-pine-50 text-ink-700 rounded-full",
+        danger: "bg-error text-white hover:opacity-90 rounded-full",
+        destructive: "bg-error text-white hover:opacity-90 rounded-full",
         link: "text-pine-500 underline-offset-4 hover:underline font-medium",
       },
       size: {

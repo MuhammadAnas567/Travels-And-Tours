@@ -32,14 +32,14 @@ export function HotelCard({
     <article className="group relative overflow-hidden rounded-md bg-paper border border-line shadow-sm card-hover">
       <Link
         href="/login?callbackUrl=/dashboard/wishlist"
-        className="absolute top-3 right-3 z-10 flex h-11 w-11 items-center justify-center rounded-sm bg-paper/95 text-ink-700 shadow-sm hover:bg-paper focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brass-500"
+        className="absolute top-3 right-3 z-10 flex h-11 w-11 items-center justify-center rounded-sm bg-paper/95 text-ink-700 shadow-sm hover:bg-paper focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pine-500"
         aria-label={`Save ${name} to wishlist`}
       >
         <Heart className="h-4 w-4" strokeWidth={1.5} />
       </Link>
       <Link
         href={slug === "fallback" || !slug ? "/hotels" : `/hotels/${slug}`}
-        className="block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-brass-500"
+        className="block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-pine-500"
       >
         <div className="relative aspect-[4/3] overflow-hidden">
           <Image
@@ -52,13 +52,13 @@ export function HotelCard({
             sizes="(max-width:768px) 100vw, 33vw"
           />
           {avgRating >= 4.5 && (
-            <span className="absolute top-3 left-3 rounded-sm bg-brass-500 px-2.5 py-1 text-[0.6875rem] font-semibold uppercase tracking-[0.08em] text-ink">
+            <span className="absolute top-3 left-3 rounded-sm bg-pine-500 px-2.5 py-1 text-[0.6875rem] font-semibold uppercase tracking-[0.08em] text-white">
               Best seller
             </span>
           )}
         </div>
         <div className="p-5">
-          <div className="flex items-center gap-1 text-brass-500" aria-label={`${starRating} star hotel`}>
+          <div className="flex items-center gap-1 text-pine-500" aria-label={`${starRating} star hotel`}>
             {Array.from({ length: starRating }, (_, i) => (
               <Star key={i} className="h-3.5 w-3.5 fill-current" aria-hidden />
             ))}

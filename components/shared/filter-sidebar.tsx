@@ -174,7 +174,7 @@ export function FilterSidebar({ countries }: { countries: string[] }) {
           aria-controls="tour-filters"
         >
           <h2 className="flex items-center gap-2 font-display text-lg text-ink">
-            <SlidersHorizontal className="h-4 w-4 text-brass-500" strokeWidth={1.5} />
+            <SlidersHorizontal className="h-4 w-4 text-pine-500" strokeWidth={1.5} />
             Filters
           </h2>
           <ChevronDown

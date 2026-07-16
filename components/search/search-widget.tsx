@@ -1,7 +1,7 @@
 "use client";
 
-import { useMemo, useRef, useState } from "react";
-import { useRouter } from "next/navigation";
+import { Suspense, useEffect, useMemo, useRef, useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import {
   Plane,
   Hotel,
@@ -19,7 +19,7 @@ import { SearchRouteLine } from "@/components/search/search-route-line";
 import { cn } from "@/lib/utils";
 
 type Tab = "flights" | "hotels" | "packages" | "cars";
-type TripType = "roundtrip" | "oneway" | "multicity";
+type TripType = "roundtrip" | "oneway";
 
 const tabs: { id: Tab; label: string; icon: typeof Plane }[] = [
   { id: "flights", label: "Flights", icon: Plane },
@@ -30,12 +30,39 @@ const tabs: { id: Tab; label: string; icon: typeof Plane }[] = [
 
 const RECENT = ["KHI → DXB", "LHE → IST", "ISB → LHR"];
 
+function tabFromPath(pathname: string): Tab {
+  if (pathname.startsWith("/hotels")) return "hotels";
+  if (pathname.startsWith("/packages")) return "packages";
+  if (pathname.startsWith("/cars")) return "cars";
+  return "flights";
+}
+
 export function SearchWidget({ className }: { className?: string }) {
+  return (
+    <Suspense
+      fallback={
+        <div
+          className={cn(
+            "rounded-md bg-paper shadow-lg border border-line w-full max-w-full h-[220px] animate-pulse",
+            className
+          )}
+          aria-hidden
+        />
+      }
+    >
+      <SearchWidgetInner className={className} />
+    </Suspense>
+  );
+}
+
+function SearchWidgetInner({ className }: { className?: string }) {
   const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
   const fromRef = useRef<HTMLInputElement>(null);
   const toRef = useRef<HTMLInputElement>(null);
 
-  const [tab, setTab] = useState<Tab>("flights");
+  const [tab, setTab] = useState<Tab>(() => tabFromPath(pathname));
   const [tripType, setTripType] = useState<TripType>("roundtrip");
   const [from, setFrom] = useState("");
   const [to, setTo] = useState("");
@@ -48,6 +75,37 @@ export function SearchWidget({ className }: { className?: string }) {
   const [swapSpin, setSwapSpin] = useState(false);
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<{ from?: string; to?: string; form?: string }>({});
+
+  useEffect(() => {
+    setTab(tabFromPath(pathname));
+    const fromQ = searchParams.get("from") ?? "";
+    const toQ =
+      searchParams.get("to") ??
+      searchParams.get("city") ??
+      searchParams.get("destination") ??
+      searchParams.get("location") ??
+      "";
+    const dateQ =
+      searchParams.get("date") ??
+      searchParams.get("checkIn") ??
+      searchParams.get("pickup") ??
+      "";
+    const returnQ = searchParams.get("return") ?? searchParams.get("checkOut") ?? "";
+    const adultsQ = Number(searchParams.get("adults") ?? searchParams.get("guests") ?? "");
+    const cabinQ = searchParams.get("cabin");
+
+    if (fromQ) setFrom(fromQ);
+    if (toQ) setTo(toQ);
+    if (dateQ) setCheckIn(dateQ);
+    if (returnQ) {
+      setCheckOut(returnQ);
+      setTripType("roundtrip");
+    } else if (searchParams.has("date") && !searchParams.has("return")) {
+      setTripType("oneway");
+    }
+    if (Number.isFinite(adultsQ) && adultsQ > 0) setAdults(Math.min(9, adultsQ));
+    if (cabinQ) setCabin(cabinQ);
+  }, [pathname, searchParams]);
 
   const travellersSummary = useMemo(() => {
     const parts = [`${adults} adult${adults === 1 ? "" : "s"}`];
@@ -135,9 +193,9 @@ export function SearchWidget({ className }: { className?: string }) {
               setErrors({});
             }}
             className={cn(
-              "flex min-h-11 shrink-0 items-center gap-2 px-4 sm:px-5 py-3 text-[0.6875rem] font-semibold uppercase tracking-[0.12em] whitespace-nowrap transition-colors border-b-2 -mb-px focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-brass-500",
+              "flex min-h-11 shrink-0 items-center gap-2 px-4 sm:px-5 py-3 text-[0.6875rem] font-semibold uppercase tracking-[0.12em] whitespace-nowrap transition-colors border-b-2 -mb-px focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-pine-500",
               tab === t.id
-                ? "border-brass-500 text-pine-500 bg-brass-50"
+                ? "border-pine-500 text-pine-500 bg-pine-50"
                 : "border-transparent text-ink-500 hover:text-ink-700 hover:bg-sand"
             )}
           >
@@ -158,7 +216,6 @@ export function SearchWidget({ className }: { className?: string }) {
               [
                 ["roundtrip", "Round trip"],
                 ["oneway", "One way"],
-                ["multicity", "Multi-city"],
               ] as const
             ).map(([id, label]) => (
               <button
@@ -166,7 +223,7 @@ export function SearchWidget({ className }: { className?: string }) {
                 type="button"
                 onClick={() => setTripType(id)}
                 className={cn(
-                  "min-h-11 rounded-sm px-4 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brass-500",
+                  "min-h-11 rounded-sm px-4 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pine-500",
                   tripType === id ? "bg-paper text-ink shadow-sm" : "text-ink-500 hover:text-ink-700"
                 )}
               >
@@ -209,7 +266,7 @@ export function SearchWidget({ className }: { className?: string }) {
               <button
                 type="button"
                 onClick={swapLocations}
-                className="flex h-11 w-11 items-center justify-center rounded-sm border border-line bg-paper text-pine-500 hover:bg-pine-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brass-500"
+                className="flex h-11 w-11 items-center justify-center rounded-sm border border-line bg-paper text-pine-500 hover:bg-pine-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pine-500"
                 aria-label="Swap origin and destination"
               >
                 <ArrowLeftRight
@@ -268,14 +325,14 @@ export function SearchWidget({ className }: { className?: string }) {
               <button
                 type="button"
                 onClick={() => setTravellersOpen((o) => !o)}
-                className="flex h-12 w-full items-center gap-2 rounded-sm border border-line bg-paper px-3 text-left text-sm hover:border-taupe-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brass-500"
+                className="flex h-12 w-full items-center gap-2 rounded-sm border border-line bg-paper px-3 text-left text-sm hover:border-taupe-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pine-500"
                 aria-expanded={travellersOpen}
               >
                 <Users className="h-5 w-5 text-ink-500" strokeWidth={1.5} aria-hidden />
                 <span className="truncate text-ink">{travellersSummary}</span>
               </button>
               {travellersOpen ? (
-                <div className="absolute z-20 mt-2 left-0 right-0 sm:left-auto sm:right-0 sm:w-72 w-full max-w-[min(100vw-2rem,18rem)] rounded-md border border-line bg-paper p-4 shadow-lg">
+                <div className="absolute z-[110] mt-2 left-0 right-0 sm:left-auto sm:right-0 sm:w-72 w-full max-w-[min(100vw-2rem,18rem)] rounded-md border border-line bg-paper p-4 shadow-lg">
                   <Stepper label="Adults" value={adults} min={1} max={9} onChange={setAdults} />
                   <Stepper label="Children" value={children} min={0} max={8} onChange={setChildren} />
                   {tab === "flights" ? (
@@ -288,8 +345,8 @@ export function SearchWidget({ className }: { className?: string }) {
                             type="button"
                             onClick={() => setCabin(c)}
                             className={cn(
-                              "min-h-11 rounded-sm px-3 text-sm font-medium border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brass-500",
-                              cabin === c ? "border-brass-500 bg-brass-50 text-pine-700" : "border-line text-ink-700"
+                              "min-h-11 rounded-sm px-3 text-sm font-medium border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pine-500",
+                              cabin === c ? "border-pine-500 bg-pine-50 text-pine-700" : "border-line text-ink-700"
                             )}
                           >
                             {c}
@@ -334,7 +391,7 @@ export function SearchWidget({ className }: { className?: string }) {
                   setFrom(a);
                   setTo(b);
                 }}
-                className="min-h-11 rounded-sm border border-line px-3 text-sm text-ink-700 hover:bg-brass-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brass-500"
+                className="min-h-11 rounded-sm border border-line px-3 text-sm text-ink-700 hover:bg-pine-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pine-500"
               >
                 {chip}
               </button>
@@ -367,7 +424,7 @@ function Stepper({
           type="button"
           disabled={value <= min}
           onClick={() => onChange(Math.max(min, value - 1))}
-          className="flex h-11 w-11 items-center justify-center rounded-sm border border-line disabled:opacity-40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brass-500"
+          className="flex h-11 w-11 items-center justify-center rounded-sm border border-line disabled:opacity-40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pine-500"
           aria-label={`Decrease ${label}`}
         >
           −
@@ -377,7 +434,7 @@ function Stepper({
           type="button"
           disabled={value >= max}
           onClick={() => onChange(Math.min(max, value + 1))}
-          className="flex h-11 w-11 items-center justify-center rounded-sm border border-line disabled:opacity-40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brass-500"
+          className="flex h-11 w-11 items-center justify-center rounded-sm border border-line disabled:opacity-40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pine-500"
           aria-label={`Increase ${label}`}
         >
           +

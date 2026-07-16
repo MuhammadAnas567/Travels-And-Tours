@@ -26,6 +26,7 @@ export default async function PackagesPage({ searchParams }: Props) {
   return (
     <div className="bg-sand min-h-[60vh]">
       <CatalogHero
+        variant="packages"
         eyebrow="Packages"
         title="Vacation packages"
         description="Bundled trips with stays, activities, and expert planning built in."
@@ -49,13 +50,13 @@ export default async function PackagesPage({ searchParams }: Props) {
           >
             <Link
               href="/packages"
-              className="text-sm font-semibold text-pine-500 link-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brass-500 rounded-sm"
+              className="text-sm font-semibold text-pine-500 link-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pine-500 rounded-sm"
             >
               Clear filters
             </Link>
             <Link
               href="/tours"
-              className="text-sm font-semibold text-pine-500 link-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brass-500 rounded-sm"
+              className="text-sm font-semibold text-pine-500 link-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pine-500 rounded-sm"
             >
               View tours
             </Link>

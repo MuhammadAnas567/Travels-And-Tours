@@ -9,6 +9,7 @@ export default function PrivacyPage() {
   return (
     <div className="bg-sand">
       <CatalogHero
+        variant="default"
         eyebrow="Legal"
         title="Privacy Policy"
         description="Last updated June 2026. We respect your privacy and protect your personal data."

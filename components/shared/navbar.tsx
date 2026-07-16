@@ -32,7 +32,7 @@ export async function Navbar() {
             <Link
               key={link.href}
               href={link.href}
-              className="rounded-sm px-2 xl:px-3 py-2 text-[0.625rem] xl:text-[0.6875rem] font-semibold uppercase tracking-[0.1em] text-ink-500 transition-colors hover:bg-sand hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brass-500 whitespace-nowrap"
+              className="rounded-sm px-2 xl:px-3 py-2 text-[0.625rem] xl:text-[0.6875rem] font-semibold uppercase tracking-[0.1em] text-ink-500 transition-colors hover:bg-sand hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pine-500 whitespace-nowrap"
             >
               {link.label}
             </Link>

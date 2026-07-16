@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { CatalogHero } from "@/components/layout/catalog-hero";
 
 export const metadata: Metadata = {
   title: "About Us",
@@ -11,17 +12,12 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <div className="bg-sand">
-      <section className="relative overflow-hidden border-b border-line bg-ink">
-        <div className="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8 py-24 md:py-32">
-          <p className="eyebrow text-brass-400">Since 2010</p>
-          <h1 className="mt-4 font-display text-hero text-paper max-w-[16ch]">
-            We compose journeys, not packages.
-          </h1>
-          <p className="mt-6 max-w-xl text-lg text-paper/65 leading-relaxed">
-            UEB3 Travel pairs clear pricing with itineraries shaped by people who still know the hotels, the guides, and the quiet hours of each city.
-          </p>
-        </div>
-      </section>
+      <CatalogHero
+        variant="plan"
+        eyebrow="Since 2010"
+        title="We compose journeys, not packages."
+        description="Clear pricing with itineraries shaped by people who still know the hotels, the guides, and the quiet hours of each city."
+      />
 
       <div className="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8 section-pad">
         <div className="grid gap-16 lg:grid-cols-[1fr_0.85fr]">

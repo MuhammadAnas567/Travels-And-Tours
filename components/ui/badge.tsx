@@ -14,9 +14,9 @@ const badgeVariants = cva(
         warning: "border-transparent bg-warning/15 text-warning",
         error: "border-transparent bg-error/15 text-error",
         info: "border-transparent bg-info/15 text-info",
-        promo: "border-transparent bg-brass-100 text-brass-800",
+        promo: "border-transparent bg-pine-100 text-pine-700",
         destructive: "border-transparent bg-error/15 text-error",
-        accent: "border-transparent bg-brass-100 text-brass-800",
+        accent: "border-transparent bg-pine-100 text-pine-700",
       },
     },
     defaultVariants: {
