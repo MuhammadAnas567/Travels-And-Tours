@@ -66,7 +66,22 @@ export const FALLBACK_DESTINATIONS = [
   },
 ] as const;
 
-export const FALLBACK_HOTELS = [
+export type FallbackHotel = {
+  _id: string;
+  name: string;
+  slug: string;
+  city: string;
+  country: string;
+  starRating: number;
+  images: string[];
+  avgRating: number;
+  reviewCount: number;
+  pricePerNight: number;
+  amenities: string[];
+  description: string;
+};
+
+export const FALLBACK_HOTELS: FallbackHotel[] = [
   {
     _id: "fallback-hotel-dubai",
     name: "Marina Bay Grand",
@@ -79,6 +94,7 @@ export const FALLBACK_HOTELS = [
     reviewCount: 312,
     pricePerNight: 289,
     amenities: ["Free WiFi", "Pool", "Spa"],
+    description: "Marina-facing rooms with skyline views, spa, and late checkout on request.",
   },
   {
     _id: "fallback-hotel-paris",
@@ -92,6 +108,7 @@ export const FALLBACK_HOTELS = [
     reviewCount: 188,
     pricePerNight: 198,
     amenities: ["Free WiFi", "Breakfast Included"],
+    description: "A quiet Left Bank boutique with classic Parisian rooms and daily breakfast.",
   },
   {
     _id: "fallback-hotel-tokyo",
@@ -105,6 +122,7 @@ export const FALLBACK_HOTELS = [
     reviewCount: 241,
     pricePerNight: 215,
     amenities: ["Free WiFi", "Gym", "Restaurant"],
+    description: "Modern Shinjuku base with compact luxury rooms and easy metro access.",
   },
   {
     _id: "fallback-hotel-santorini",
@@ -118,6 +136,7 @@ export const FALLBACK_HOTELS = [
     reviewCount: 156,
     pricePerNight: 340,
     amenities: ["Pool", "Spa", "Sea View"],
+    description: "Cliffside suites overlooking the caldera — sunset terraces and private plunge pools.",
   },
   {
     _id: "fallback-hotel-bali",
@@ -131,6 +150,7 @@ export const FALLBACK_HOTELS = [
     reviewCount: 203,
     pricePerNight: 175,
     amenities: ["Pool", "Spa", "Breakfast Included"],
+    description: "Jungle-edge villas near Ubud with open-air baths and daily yoga options.",
   },
   {
     _id: "fallback-hotel-maldives",
@@ -144,5 +164,6 @@ export const FALLBACK_HOTELS = [
     reviewCount: 98,
     pricePerNight: 520,
     amenities: ["Beach Access", "Spa", "Restaurant"],
+    description: "Overwater villas with glass floors, reef snorkeling, and all-day dining.",
   },
-] as const;
+];

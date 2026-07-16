@@ -7,7 +7,8 @@ import { getHotelBySlug } from "@/lib/data/catalog";
 import { IMAGE_BLUR_DATA_URL, PLACEHOLDER_TOUR_IMAGE } from "@/lib/images";
 import { Button } from "@/components/ui/button";
 
-export const dynamic = "force-dynamic";
+export const dynamic = "force-static";
+export const revalidate = 120;
 
 type Props = {
   params: Promise<{ slug: string }>;
