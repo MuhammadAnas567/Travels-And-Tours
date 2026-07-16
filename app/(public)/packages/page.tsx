@@ -5,7 +5,7 @@ import { TourCard } from "@/components/shared/tour-card";
 import { SearchWidget } from "@/components/search/search-widget";
 import { CatalogHero, EmptyCatalog } from "@/components/layout/catalog-hero";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 60;
 
 export const metadata: Metadata = {
   title: "Vacation Packages",

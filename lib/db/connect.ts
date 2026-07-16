@@ -48,7 +48,10 @@ export async function connectDB() {
     mongoose.set("strictQuery", true);
     cached.promise = mongoose.connect(uri, {
       bufferCommands: false,
-      maxPoolSize: 10,
+      maxPoolSize: 5,
+      serverSelectionTimeoutMS: 5000,
+      connectTimeoutMS: 5000,
+      socketTimeoutMS: 10000,
     });
   }
 

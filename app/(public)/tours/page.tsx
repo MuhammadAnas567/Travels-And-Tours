@@ -8,9 +8,10 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/section";
 import { CatalogHero, EmptyCatalog } from "@/components/layout/catalog-hero";
-import { getPreferredCurrency } from "@/lib/locale";
-import { getFxRates } from "@/lib/currency";
 import Link from "next/link";
+
+/** Cache listing HTML so Vercel stays fast after first warm render */
+export const revalidate = 60;
 
 export const metadata: Metadata = {
   title: "International Tour Packages",
@@ -37,21 +38,27 @@ export default async function ToursPage({
 }) {
   const params = await searchParams;
   const page = Number(params.page) || 1;
+  const sort =
+    params.sort === "price_asc" ||
+    params.sort === "price_desc" ||
+    params.sort === "rating" ||
+    params.sort === "newest" ||
+    params.sort === "popular"
+      ? params.sort
+      : "popular";
 
-  const [{ tours, total, pages }, countries, currency, rates] = await Promise.all([
+  const [{ tours, total, pages }, countries] = await Promise.all([
     getTours({
       q: params.q,
       category: params.category as TourCategory | undefined,
       country: params.country,
       minPrice: params.minPrice ? Number(params.minPrice) : undefined,
       maxPrice: params.maxPrice ? Number(params.maxPrice) : undefined,
-      sort: (params.sort as "price_asc") ?? "popular",
+      sort,
       date: params.date,
       page,
     }),
     getTourCountries(),
-    getPreferredCurrency(),
-    getFxRates(),
   ]);
 
   const description = `${total} curated experience${total !== 1 ? "s" : ""} across the globe${
@@ -88,7 +95,7 @@ export default async function ToursPage({
             ) : (
               <div className="grid gap-7 sm:grid-cols-2 xl:grid-cols-2">
                 {tours.map((tour) => (
-                  <TourCard key={tour.id} tour={tour} currency={currency} rates={rates} />
+                  <TourCard key={tour.id} tour={tour} />
                 ))}
               </div>
             )}

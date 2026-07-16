@@ -1,10 +1,10 @@
 import Link from "next/link";
-import { prisma } from "@/lib/db";
+import { prisma, withDbTimeout } from "@/lib/db";
 import { Badge } from "@/components/ui/badge";
 import { formatCurrency } from "@/lib/currency";
 import { CatalogHero, EmptyCatalog } from "@/components/layout/catalog-hero";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 60;
 
 export const metadata = {
   title: "Deals & Offers",
@@ -13,19 +13,18 @@ export const metadata = {
 
 export default async function DealsPage() {
   const now = new Date();
-  let coupons: Awaited<ReturnType<typeof prisma.coupon.findMany>> = [];
-  try {
-    coupons = await prisma.coupon.findMany({
+  const coupons = await withDbTimeout(
+    prisma.coupon.findMany({
       where: {
         isActive: true,
         validFrom: { lte: now },
         validTo: { gte: now },
       },
       orderBy: { validTo: "asc" },
-    });
-  } catch (error) {
-    console.error("[deals] DB unavailable:", error);
-  }
+    }),
+    [],
+    5000
+  );
 
   return (
     <div className="bg-sand min-h-[60vh]">

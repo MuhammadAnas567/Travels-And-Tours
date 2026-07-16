@@ -5,7 +5,7 @@ import { CatalogHero, EmptyCatalog } from "@/components/layout/catalog-hero";
 import { Badge } from "@/components/ui/badge";
 import { formatCurrency } from "@/lib/currency";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 60;
 
 export const metadata = {
   title: "Visa Assistance",

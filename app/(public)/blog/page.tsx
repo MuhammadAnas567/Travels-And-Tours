@@ -4,7 +4,7 @@ import { prisma } from "@/lib/db";
 import { Badge } from "@/components/ui/badge";
 import { CatalogHero, EmptyCatalog } from "@/components/layout/catalog-hero";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 60;
 
 export const metadata = {
   title: "Travel Guides",

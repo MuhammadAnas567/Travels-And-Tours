@@ -11,7 +11,7 @@ export function FeaturedPackages() {
       {HOME_PACKAGES.map((pkg) => (
         <Link
           key={pkg.slug}
-          href={`/packages?q=${encodeURIComponent(pkg.title)}`}
+          href={`/packages?destination=${encodeURIComponent(pkg.destination)}`}
           className="group overflow-hidden rounded-md border border-line bg-paper shadow-sm card-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pine-500"
         >
           <div className="relative aspect-[4/3] overflow-hidden">

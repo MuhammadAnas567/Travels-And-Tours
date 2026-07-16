@@ -4,7 +4,7 @@ import { SearchWidget } from "@/components/search/search-widget";
 import { FlightResults } from "@/components/flights/flight-results";
 import { CatalogHero } from "@/components/layout/catalog-hero";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 60;
 
 export const metadata: Metadata = {
   title: "Flights",
