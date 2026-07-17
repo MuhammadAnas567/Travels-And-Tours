@@ -2,8 +2,16 @@ import { connectDB } from "@/lib/db/connect";
 import { Destination, Hotel } from "@/lib/models";
 import { FALLBACK_DESTINATIONS, FALLBACK_HOTELS } from "@/lib/data/home-fallback";
 
+function homeTimeoutMs() {
+  return process.env.VERCEL === "1" || process.env.NODE_ENV === "production" ? 10_000 : 3_000;
+}
+
 /** Resolve with fallback on timeout — never reject (avoids Next.js red console noise) */
-async function withTimeoutFallback<T>(promise: Promise<T>, fallback: T, ms = 600): Promise<T> {
+async function withTimeoutFallback<T>(
+  promise: Promise<T>,
+  fallback: T,
+  ms = homeTimeoutMs()
+): Promise<T> {
   let timer: ReturnType<typeof setTimeout> | undefined;
   try {
     return await Promise.race([
@@ -22,12 +30,11 @@ async function withTimeoutFallback<T>(promise: Promise<T>, fallback: T, ms = 600
 export async function getTrendingDestinations(limit = 8) {
   const fallback = FALLBACK_DESTINATIONS.slice(0, limit).map((d) => ({ ...d }));
   try {
-    const connected = await withTimeoutFallback(connectDB().then(() => true), false, 600);
+    const connected = await withTimeoutFallback(connectDB().then(() => true), false);
     if (!connected) return fallback;
     const rows = await withTimeoutFallback(
       Destination.find().sort({ popularity: -1 }).limit(limit).lean().exec(),
-      [] as Awaited<ReturnType<typeof Destination.find>>,
-      600
+      [] as Awaited<ReturnType<typeof Destination.find>>
     );
     if (Array.isArray(rows) && rows.length > 0) return rows;
   } catch {
@@ -39,12 +46,11 @@ export async function getTrendingDestinations(limit = 8) {
 export async function getPopularHotels(limit = 6) {
   const fallback = FALLBACK_HOTELS.slice(0, limit).map((h) => ({ ...h }));
   try {
-    const connected = await withTimeoutFallback(connectDB().then(() => true), false, 600);
+    const connected = await withTimeoutFallback(connectDB().then(() => true), false);
     if (!connected) return fallback;
     const rows = await withTimeoutFallback(
       Hotel.find().sort({ avgRating: -1, reviewCount: -1 }).limit(limit).lean().exec(),
-      [] as Awaited<ReturnType<typeof Hotel.find>>,
-      600
+      [] as Awaited<ReturnType<typeof Hotel.find>>
     );
     if (Array.isArray(rows) && rows.length > 0) return rows;
   } catch {
@@ -53,17 +59,16 @@ export async function getPopularHotels(limit = 6) {
   return fallback;
 }
 
-export async function getDealOfWeek() {
+export async function getDealOfTheWeek() {
   const fallback = { ...FALLBACK_HOTELS[0] };
   try {
-    const connected = await withTimeoutFallback(connectDB().then(() => true), false, 600);
+    const connected = await withTimeoutFallback(connectDB().then(() => true), false);
     if (!connected) return fallback;
-    const deal = await withTimeoutFallback(
-      Hotel.findOne().sort({ pricePerNight: 1 }).lean().exec(),
-      null,
-      600
+    const row = await withTimeoutFallback(
+      Hotel.findOne().sort({ avgRating: -1 }).lean().exec(),
+      null
     );
-    if (deal) return deal;
+    if (row) return row;
   } catch {
     // use fallback
   }

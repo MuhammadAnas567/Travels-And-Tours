@@ -1,41 +1,16 @@
 import { slugify } from "@/lib/utils";
 
-export type CatalogueHotel = {
-  _id: string;
+export type SeedHotelDef = {
   name: string;
-  slug: string;
   city: string;
   country: string;
-  starRating: number;
-  images: string[];
-  avgRating: number;
-  reviewCount: number;
-  pricePerNight: number;
-  amenities: string[];
+  stars: number;
+  price: number;
   tags: string[];
-  description: string;
 };
 
-const HOTEL_IMAGES = [
-  "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800",
-  "https://images.unsplash.com/photo-1582719508461-905c673771fd?w=800",
-  "https://images.unsplash.com/photo-1618773928121-c32242e63f39?w=800",
-  "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=800",
-];
-
-const AMENITIES = [
-  "Free WiFi",
-  "Pool",
-  "Spa",
-  "Gym",
-  "Restaurant",
-  "Breakfast Included",
-  "Airport Shuttle",
-  "Parking",
-];
-
-/** Canonical hotel catalogue — same slugs as `scripts/seed.ts` */
-const HOTEL_SEED = [
+/** Canonical hotel catalogue used by seed + public fallbacks (slug-stable). */
+export const SEED_HOTEL_DEFS: SeedHotelDef[] = [
   { name: "Marina Bay Grand", city: "Dubai", country: "UAE", stars: 5, price: 289, tags: ["luxury", "pool", "spa"] },
   { name: "Eiffel View Boutique", city: "Paris", country: "France", stars: 4, price: 198, tags: ["boutique", "romantic"] },
   { name: "Shinjuku Sky Hotel", city: "Tokyo", country: "Japan", stars: 4, price: 215, tags: ["city", "business"] },
@@ -64,68 +39,64 @@ const HOTEL_SEED = [
   { name: "Marrakech Riad Oasis", city: "Marrakech", country: "Morocco", stars: 4, price: 134, tags: ["culture", "spa"] },
   { name: "Prague Old Town Residence", city: "Prague", country: "Czech Republic", stars: 4, price: 148, tags: ["historic", "walkable"] },
   { name: "Zurich Lakefront", city: "Zurich", country: "Switzerland", stars: 5, price: 335, tags: ["business", "lake"] },
-] as const;
+];
 
-export const HOTEL_CATALOGUE: CatalogueHotel[] = HOTEL_SEED.map((h, i) => {
-  const slug = slugify(`${h.name}-${h.city}`);
-  return {
-    _id: `catalogue-${slug}`,
-    name: h.name,
-    slug,
-    city: h.city,
-    country: h.country,
-    starRating: h.stars,
-    images: [HOTEL_IMAGES[i % HOTEL_IMAGES.length], HOTEL_IMAGES[(i + 1) % HOTEL_IMAGES.length]],
-    avgRating: Math.round((3.9 + (i % 10) * 0.1) * 10) / 10,
-    reviewCount: 80 + i * 17,
-    pricePerNight: h.price,
-    amenities: AMENITIES.slice(0, 4 + (i % 4)),
-    tags: [...h.tags],
-    description: `Experience exceptional hospitality at ${h.name} in ${h.city}. Premium amenities, central location, and outstanding guest reviews.`,
-  };
-});
+const HOTEL_IMAGES = [
+  "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800",
+  "https://images.unsplash.com/photo-1582719508461-905c673771fd?w=800",
+  "https://images.unsplash.com/photo-1618773928121-c32242e63f39?w=800",
+  "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=800",
+];
 
-export function getCatalogueHotelBySlug(slug: string): CatalogueHotel | null {
-  const key = slug.trim().toLowerCase();
-  return HOTEL_CATALOGUE.find((h) => h.slug === key) ?? null;
+const AMENITIES = [
+  "Free WiFi",
+  "Pool",
+  "Spa",
+  "Gym",
+  "Restaurant",
+  "Breakfast Included",
+];
+
+export function hotelSlug(name: string, city: string) {
+  return slugify(`${name}-${city}`);
 }
 
-export function filterCatalogueHotels(filters: {
-  city?: string;
-  q?: string;
-  tag?: string;
-  minPrice?: number;
-  maxPrice?: number;
-}): CatalogueHotel[] {
-  let list = [...HOTEL_CATALOGUE];
-  if (filters.city) {
-    const c = filters.city.toLowerCase();
-    list = list.filter(
-      (h) =>
-        h.city.toLowerCase().includes(c) ||
-        h.country.toLowerCase().includes(c) ||
-        h.name.toLowerCase().includes(c)
-    );
-  }
-  if (filters.q) {
-    const q = filters.q.toLowerCase();
-    list = list.filter(
-      (h) =>
-        h.name.toLowerCase().includes(q) ||
-        h.city.toLowerCase().includes(q) ||
-        h.country.toLowerCase().includes(q) ||
-        h.tags.some((t) => t.includes(q))
-    );
-  }
-  if (filters.tag) {
-    const t = filters.tag.toLowerCase();
-    list = list.filter((h) => h.tags.some((tag) => tag.toLowerCase().includes(t)));
-  }
-  if (filters.minPrice != null) {
-    list = list.filter((h) => h.pricePerNight >= filters.minPrice!);
-  }
-  if (filters.maxPrice != null) {
-    list = list.filter((h) => h.pricePerNight <= filters.maxPrice!);
-  }
-  return list;
+export type FallbackHotel = {
+  _id: string;
+  name: string;
+  slug: string;
+  city: string;
+  country: string;
+  starRating: number;
+  images: string[];
+  avgRating: number;
+  reviewCount: number;
+  pricePerNight: number;
+  amenities: string[];
+  description: string;
+  tags: string[];
+};
+
+export function buildFallbackHotels(): FallbackHotel[] {
+  return SEED_HOTEL_DEFS.map((h, i) => {
+    const slug = hotelSlug(h.name, h.city);
+    const rating = Math.round((3.8 + (i % 12) * 0.1) * 10) / 10;
+    return {
+      _id: `fallback-hotel-${slug}`,
+      name: h.name,
+      slug,
+      city: h.city,
+      country: h.country,
+      starRating: h.stars,
+      images: [HOTEL_IMAGES[i % HOTEL_IMAGES.length], HOTEL_IMAGES[(i + 1) % HOTEL_IMAGES.length]],
+      avgRating: rating,
+      reviewCount: 20 + (i % 80),
+      pricePerNight: h.price,
+      amenities: AMENITIES.slice(0, 3 + (i % 3)),
+      description: `Experience exceptional hospitality at ${h.name} in ${h.city}. Premium amenities, central location, and outstanding guest reviews.`,
+      tags: h.tags,
+    };
+  });
 }
+
+export const ALL_FALLBACK_HOTELS = buildFallbackHotels();

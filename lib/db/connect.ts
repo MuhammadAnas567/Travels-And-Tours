@@ -21,12 +21,10 @@ export function getMongoUri() {
   const fallback = "mongodb://127.0.0.1:27018/travels-tours?replicaSet=rs0";
   const production = process.env.NODE_ENV === "production";
 
-  // Local `predev` starts Mongo on 127.0.0.1 — prefer that so seed + Next share data.
   if (!production && shared && isLocalUri(shared)) {
     return shared;
   }
 
-  // Production must use Atlas (or another reachable host) — never localhost.
   const uri = dedicated || shared;
   if (production) {
     if (!uri || isLocalUri(uri)) {
@@ -45,13 +43,14 @@ export async function connectDB() {
 
   if (!cached.promise) {
     const uri = getMongoUri();
+    const isProd = process.env.VERCEL === "1" || process.env.NODE_ENV === "production";
     mongoose.set("strictQuery", true);
     cached.promise = mongoose.connect(uri, {
       bufferCommands: false,
-      maxPoolSize: 5,
-      serverSelectionTimeoutMS: 2000,
-      connectTimeoutMS: 2000,
-      socketTimeoutMS: 5000,
+      maxPoolSize: isProd ? 10 : 5,
+      serverSelectionTimeoutMS: isProd ? 10_000 : 5_000,
+      connectTimeoutMS: isProd ? 10_000 : 5_000,
+      socketTimeoutMS: isProd ? 20_000 : 10_000,
     });
   }
 
