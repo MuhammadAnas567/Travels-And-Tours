@@ -7,6 +7,7 @@ import { getHotelBySlug } from "@/lib/data/catalog";
 import { IMAGE_BLUR_DATA_URL, PLACEHOLDER_TOUR_IMAGE } from "@/lib/images";
 import { Button } from "@/components/ui/button";
 import { getWhatsAppUrl } from "@/lib/site-config";
+import { DisplayPrice } from "@/components/shared/display-price";
 
 export const dynamic = "force-static";
 export const revalidate = 120;
@@ -149,7 +150,7 @@ export default async function HotelDetailPage({ params }: Props) {
         <aside className="lg:sticky lg:top-24 h-fit rounded-md border border-line bg-paper p-6 shadow-sm">
           <p className="text-[0.6875rem] font-semibold uppercase tracking-widest text-ink-500">From</p>
           <p className="mt-1 text-3xl font-semibold tabular-nums text-ink">
-            ${hotel.pricePerNight}
+            <DisplayPrice amount={hotel.pricePerNight} />
             <span className="text-base font-normal text-ink-500"> / night</span>
           </p>
           <div className="mt-4 flex items-center gap-2">

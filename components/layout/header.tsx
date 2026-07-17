@@ -7,11 +7,9 @@ import { useSession, signOut } from "next-auth/react";
 import {
   Menu,
   X,
-  Globe,
   User,
   LayoutDashboard,
   LogOut,
-  Languages,
   ChevronDown,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -19,11 +17,12 @@ import { cn } from "@/lib/utils";
 import { PRIMARY_NAV, MORE_NAV, ALL_NAV, isActivePath } from "@/components/layout/nav-config";
 import { usePreferences } from "@/components/providers/preferences-provider";
 import { navKeyForHref } from "@/lib/i18n/dictionaries";
+import { CurrencyMenu, LanguageMenu } from "@/components/layout/preference-menus";
 
 export function Header() {
   const pathname = usePathname();
   const { data: session, status } = useSession();
-  const { currency, localeLabel, cycleCurrency, cycleLocale, t } = usePreferences();
+  const { t } = usePreferences();
   const isHome = pathname === "/";
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -181,27 +180,9 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-1 shrink-0">
-          <div className="hidden md:flex items-center gap-1">
-            <Button
-              type="button"
-              variant="ghost"
-              size="sm"
-              aria-label={`Currency ${currency}. Click to change.`}
-              onClick={cycleCurrency}
-              className="text-ink-500 hover:bg-sand-100 hover:text-ink-900 tabular-nums font-semibold"
-            >
-              <Globe className="h-4 w-4" aria-hidden /> {currency}
-            </Button>
-            <Button
-              type="button"
-              variant="ghost"
-              size="sm"
-              aria-label={`Language ${localeLabel}. Click to change.`}
-              onClick={cycleLocale}
-              className="text-ink-500 hover:bg-sand-100 hover:text-ink-900 font-semibold"
-            >
-              <Languages className="h-4 w-4" aria-hidden /> {localeLabel}
-            </Button>
+          <div className="hidden md:flex items-center gap-0.5">
+            <CurrencyMenu />
+            <LanguageMenu />
 
             <div className="hidden lg:flex items-center gap-1">
               {status === "authenticated" && user ? (
@@ -296,12 +277,8 @@ export function Header() {
             })}
             <hr className="my-3 border-line" />
             <div className="flex flex-wrap gap-2 px-1 pb-2">
-              <Button type="button" variant="ghost" size="sm" onClick={cycleCurrency} className="text-ink-600 tabular-nums">
-                <Globe className="h-4 w-4" aria-hidden /> {currency}
-              </Button>
-              <Button type="button" variant="ghost" size="sm" onClick={cycleLocale} className="text-ink-600">
-                <Languages className="h-4 w-4" aria-hidden /> {localeLabel}
-              </Button>
+              <CurrencyMenu />
+              <LanguageMenu />
             </div>
             {status === "authenticated" && user ? (
               <>

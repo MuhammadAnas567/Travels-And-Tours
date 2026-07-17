@@ -4,6 +4,7 @@ import { Car, MapPin, Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SearchWidget } from "@/components/search/search-widget";
 import { CatalogHero } from "@/components/layout/catalog-hero";
+import { DisplayPrice } from "@/components/shared/display-price";
 
 export const metadata: Metadata = {
   title: "Car Hire",
@@ -66,7 +67,7 @@ export default async function CarsPage({ searchParams }: Props) {
                 {car.seats} seats · {car.bags} bags
               </p>
               <p className="mt-4 text-xl font-semibold tabular-nums text-ink">
-                from ${car.from}
+                from <DisplayPrice amount={car.from} />
                 <span className="text-sm font-normal text-ink-500"> / day</span>
               </p>
               <Button asChild variant="outline" className="mt-4 w-full rounded-md">

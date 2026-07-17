@@ -7,6 +7,7 @@ import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { IMAGE_BLUR_DATA_URL, PLACEHOLDER_TOUR_IMAGE } from "@/lib/images";
 import { ArrowRight, MapPin } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { DisplayPrice } from "@/components/shared/display-price";
 
 export type JourneyStop = {
   id: string;
@@ -88,7 +89,7 @@ export function DestinationJourney({ destinations }: Props) {
             <p className="mt-5 text-ink-700 max-w-md leading-relaxed">
               Stays from{" "}
               <span className="font-semibold tabular-nums text-ink" data-price>
-                ${current.priceFrom}
+                <DisplayPrice amount={current.priceFrom} />
               </span>{" "}
               a night. Open hotels in {current.name}, or keep moving along the route.
             </p>
@@ -124,7 +125,7 @@ export function DestinationJourney({ destinations }: Props) {
             />
             <div className="absolute inset-0 image-scrim" />
             <p className="absolute bottom-6 left-6 right-6 font-display text-2xl font-semibold text-paper">
-              From ${current.priceFrom}
+              From <DisplayPrice amount={current.priceFrom} />
               <span className="block mt-1 text-sm font-sans font-medium tracking-normal text-paper/70">
                 per night · {current.country}
               </span>

@@ -4,6 +4,7 @@ import { Star, Clock } from "lucide-react";
 import { HOME_PACKAGES, HOME_BLOG } from "@/lib/data/home-content";
 import { IMAGE_BLUR_DATA_URL } from "@/lib/images";
 import { Badge } from "@/components/ui/badge";
+import { DisplayPrice } from "@/components/shared/display-price";
 
 export function FeaturedPackages() {
   return (
@@ -46,7 +47,7 @@ export function FeaturedPackages() {
             <p className="mt-4 text-ink-900">
               <span className="text-sm text-ink-500">from </span>
               <span className="text-xl font-bold tabular-nums" data-price>
-                ${pkg.priceFrom}
+                <DisplayPrice amount={pkg.priceFrom} />
               </span>
             </p>
           </div>

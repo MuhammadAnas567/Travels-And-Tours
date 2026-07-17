@@ -2,30 +2,18 @@
 
 import Link from "next/link";
 import { usePreferences } from "@/components/providers/preferences-provider";
-import { LOCALE_NAMES } from "@/lib/i18n/dictionaries";
+import { CurrencyMenu, LanguageMenu } from "@/components/layout/preference-menus";
 
 export function FooterPrefs() {
-  const { currency, locale, cycleCurrency, cycleLocale, t } = usePreferences();
+  const { t } = usePreferences();
 
   return (
-    <div className="flex flex-wrap items-center gap-x-3 gap-y-1 lg:justify-end">
-      <button
-        type="button"
-        onClick={cycleCurrency}
-        className="hover:text-pine-200 transition-colors tabular-nums"
-      >
-        {t("footer.currency")}: {currency}
-      </button>
+    <div className="flex flex-wrap items-center gap-x-2 gap-y-1 lg:justify-end">
+      <CurrencyMenu tone="footer" />
       <span aria-hidden className="text-paper/25">
         ·
       </span>
-      <button
-        type="button"
-        onClick={cycleLocale}
-        className="hover:text-pine-200 transition-colors"
-      >
-        {t("footer.language")}: {LOCALE_NAMES[locale]}
-      </button>
+      <LanguageMenu tone="footer" />
       <span aria-hidden className="text-paper/25">
         ·
       </span>

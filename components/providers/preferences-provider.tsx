@@ -31,7 +31,8 @@ function readCookie(name: string) {
 }
 
 function writeCookie(name: string, value: string) {
-  document.cookie = `${name}=${encodeURIComponent(value)};path=/;max-age=31536000;SameSite=Lax`;
+  // No encodeURIComponent for simple codes — avoids mismatch with older readers
+  document.cookie = `${name}=${value};path=/;max-age=31536000;SameSite=Lax`;
 }
 
 function readCurrency(): Currency {
@@ -40,11 +41,14 @@ function readCurrency(): Currency {
 }
 
 function readLocale(): AppLocale {
-  const value = readCookie(LOCALE_COOKIE) as AppLocale;
-  return SUPPORTED_LOCALES.includes(value) ? value : "en";
+  const raw = readCookie(LOCALE_COOKIE);
+  // Migrate old locales
+  if (raw === "ur" || raw === "ar") return "en";
+  return SUPPORTED_LOCALES.includes(raw as AppLocale) ? (raw as AppLocale) : "en";
 }
 
 function subscribeCurrency(cb: () => void) {
+  if (typeof window === "undefined") return () => {};
   window.addEventListener(CURRENCY_EVENT, cb);
   window.addEventListener("storage", cb);
   return () => {
@@ -54,6 +58,7 @@ function subscribeCurrency(cb: () => void) {
 }
 
 function subscribeLocale(cb: () => void) {
+  if (typeof window === "undefined") return () => {};
   window.addEventListener(LOCALE_EVENT, cb);
   window.addEventListener("storage", cb);
   return () => {
@@ -96,7 +101,12 @@ export function PreferencesProvider({ children }: { children: React.ReactNode })
   useEffect(() => {
     if (!hydrated) return;
     document.documentElement.lang = locale;
-    document.documentElement.dir = locale === "ar" || locale === "ur" ? "rtl" : "ltr";
+    document.documentElement.dir = "ltr";
+    // Persist migration away from old ur/ar cookies
+    const raw = readCookie(LOCALE_COOKIE);
+    if (raw === "ur" || raw === "ar" || !raw) {
+      writeCookie(LOCALE_COOKIE, locale);
+    }
   }, [locale, hydrated]);
 
   const setCurrency = useCallback((next: Currency) => {
@@ -133,7 +143,7 @@ export function PreferencesProvider({ children }: { children: React.ReactNode })
       currency,
       locale,
       localeLabel: LOCALE_LABELS[locale],
-      dir: locale === "ar" || locale === "ur" ? "rtl" : "ltr",
+      dir: "ltr",
       setCurrency,
       cycleCurrency,
       setLocale,
@@ -156,7 +166,6 @@ export function usePreferences() {
   return ctx;
 }
 
-/** Safe hook when provider might be absent in isolated stories */
 export function useOptionalPreferences() {
   return useContext(PreferencesContext);
 }

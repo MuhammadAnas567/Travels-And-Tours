@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { IMAGE_BLUR_DATA_URL, PLACEHOLDER_TOUR_IMAGE } from "@/lib/images";
+import { DisplayPrice } from "@/components/shared/display-price";
 
 type DestinationCardProps = {
   name: string;
@@ -33,7 +34,7 @@ export function DestinationCard({ name, country, image, priceFrom, href }: Desti
           <h3 className="font-display text-lg font-semibold text-paper">{name}</h3>
           <p className="text-sm text-paper/75">{country}</p>
           <p className="mt-1 text-sm font-semibold tabular-nums text-pine-400">
-            From ${priceFrom}
+            From <DisplayPrice amount={priceFrom} />
           </p>
         </div>
       </div>

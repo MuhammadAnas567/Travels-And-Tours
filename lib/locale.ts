@@ -2,6 +2,7 @@ import { cookies } from "next/headers";
 import type { Currency } from "@prisma/client";
 import { SUPPORTED_CURRENCIES } from "@/lib/currency";
 import { CURRENCY_COOKIE, LOCALE_COOKIE } from "@/lib/constants";
+import { SUPPORTED_LOCALES, type AppLocale } from "@/lib/i18n/dictionaries";
 
 export async function getPreferredCurrency(): Promise<Currency> {
   const cookieStore = await cookies();
@@ -10,8 +11,12 @@ export async function getPreferredCurrency(): Promise<Currency> {
   return "USD";
 }
 
-export async function getPreferredLocale(): Promise<"en" | "ur"> {
+export async function getPreferredLocale(): Promise<AppLocale> {
   const cookieStore = await cookies();
   const value = cookieStore.get(LOCALE_COOKIE)?.value;
-  return value === "ur" ? "ur" : "en";
+  if (value === "ur" || value === "ar") return "en";
+  if (value && SUPPORTED_LOCALES.includes(value as AppLocale)) {
+    return value as AppLocale;
+  }
+  return "en";
 }

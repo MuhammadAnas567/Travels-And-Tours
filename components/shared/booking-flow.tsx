@@ -10,7 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { formatPrice } from "@/lib/utils";
+import { DisplayPrice } from "@/components/shared/display-price";
 
 export function BookingFlow({
   tour,
@@ -127,7 +127,7 @@ export function BookingFlow({
             <p>Children: {children}</p>
             {pricing && (
               <p className="text-lg font-semibold text-primary-700">
-                Total: {formatPrice(pricing.total)}
+                Total: <DisplayPrice amount={pricing.total} />
               </p>
             )}
             <Button onClick={() => setStep(2)} className="w-full bg-primary-500 hover:bg-primary-700">
@@ -185,7 +185,7 @@ export function BookingFlow({
             </div>
             {pricing && (
               <p className="text-sm text-ink-500">
-                Amount due: <strong className="text-ink-900">{formatPrice(pricing.total)}</strong>
+                Amount due: <strong className="text-ink-900"><DisplayPrice amount={pricing.total} /></strong>
               </p>
             )}
             <div className="flex gap-3">
@@ -199,7 +199,7 @@ export function BookingFlow({
                   if (validateStep2()) void createPaymentIntent();
                 }}
               >
-                {loading ? "Preparing paymentâ€¦" : "Continue to payment"}
+                {loading ? "Preparing payment…" : "Continue to payment"}
               </Button>
             </div>
           </CardContent>
@@ -221,7 +221,7 @@ export function BookingFlow({
               </p>
               {pricing && (
                 <p className="pt-1 text-xl font-bold text-ink-900">
-                  {formatPrice(pricing.total)}
+                  <DisplayPrice amount={pricing.total} />
                 </p>
               )}
             </div>
