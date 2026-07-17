@@ -6,12 +6,22 @@
  *   On Vercel, generate failure is fatal.
  */
 import { spawnSync } from "node:child_process";
-import { existsSync } from "node:fs";
+import { existsSync, writeFileSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const isVercel = process.env.VERCEL === "1" || process.env.CI === "true";
+
+/**
+ * Next.js 16.2 + Vercel adapter may try to load `.env` at runtime.
+ * If the file is expected but missing from the serverless bundle, every
+ * dynamic route 500s with EnvFileReadError. An empty traced `.env` avoids
+ * that crash; real secrets still come from the Vercel project env UI.
+ */
+if (isVercel && !existsSync(join(root, ".env"))) {
+  writeFileSync(join(root, ".env"), "# Generated on Vercel for Next 16.2 runtime env loader\n", "utf8");
+}
 const engine = join(
   root,
   "node_modules",

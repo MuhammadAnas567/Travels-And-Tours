@@ -28,9 +28,11 @@ export function getMongoUri() {
   const uri = dedicated || shared;
   if (production) {
     if (!uri || isLocalUri(uri)) {
-      throw new Error(
-        "Production requires MONGODB_URI (or DATABASE_URL) pointing to MongoDB Atlas — not localhost."
+      // Prefer catalogue fallbacks over hard-crashing every hotel/flight page.
+      console.error(
+        "[mongo] Production requires MONGODB_URI (or DATABASE_URL) pointing to MongoDB Atlas — not localhost."
       );
+      return "";
     }
     return uri;
   }
@@ -43,6 +45,9 @@ export async function connectDB() {
 
   if (!cached.promise) {
     const uri = getMongoUri();
+    if (!uri) {
+      throw new Error("MongoDB URI is not configured");
+    }
     const isProd = process.env.VERCEL === "1" || process.env.NODE_ENV === "production";
     mongoose.set("strictQuery", true);
     cached.promise = mongoose.connect(uri, {

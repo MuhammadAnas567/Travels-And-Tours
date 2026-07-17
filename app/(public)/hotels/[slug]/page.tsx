@@ -22,13 +22,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const hotel = await getHotelBySlug(slug);
   if (!hotel) return { title: "Hotel not found" };
+  const description = (hotel.description ?? `${hotel.name} in ${hotel.city}`).slice(0, 160);
   return {
     title: hotel.name,
-    description: hotel.description.slice(0, 160),
+    description,
     openGraph: {
       title: `${hotel.name} · ${hotel.city}`,
-      description: hotel.description.slice(0, 160),
-      images: hotel.images[0] ? [{ url: hotel.images[0], alt: hotel.name }] : undefined,
+      description,
+      images: hotel.images?.[0] ? [{ url: hotel.images[0], alt: hotel.name }] : undefined,
     },
   };
 }
@@ -38,7 +39,13 @@ export default async function HotelDetailPage({ params }: Props) {
   const hotel = await getHotelBySlug(slug);
   if (!hotel) notFound();
 
-  const hero = hotel.images[0] || PLACEHOLDER_TOUR_IMAGE;
+  const images = Array.isArray(hotel.images) ? hotel.images : [];
+  const amenities = Array.isArray(hotel.amenities) ? hotel.amenities : [];
+  const description =
+    typeof hotel.description === "string" && hotel.description.trim()
+      ? hotel.description
+      : `Experience exceptional hospitality at ${hotel.name} in ${hotel.city}.`;
+  const hero = images[0] || PLACEHOLDER_TOUR_IMAGE;
   const whatsappUrl = getWhatsAppUrl(
     `Hi! I'd like to request a stay at ${hotel.name} in ${hotel.city}.`
   );
@@ -57,8 +64,8 @@ export default async function HotelDetailPage({ params }: Props) {
     "@context": "https://schema.org",
     "@type": "Hotel",
     name: hotel.name,
-    description: hotel.description,
-    image: hotel.images,
+    description,
+    image: images,
     address: {
       "@type": "PostalAddress",
       addressLocality: hotel.city,
@@ -121,14 +128,14 @@ export default async function HotelDetailPage({ params }: Props) {
         <div className="lg:col-span-2 space-y-8">
           <section className="rounded-md border border-line bg-paper p-6 shadow-sm">
             <h2 className="font-display text-xl font-semibold text-ink">About this stay</h2>
-            <p className="mt-3 max-w-[65ch] text-ink-500 leading-relaxed">{hotel.description}</p>
+            <p className="mt-3 max-w-[65ch] text-ink-500 leading-relaxed">{description}</p>
           </section>
 
-          {hotel.amenities?.length > 0 && (
+          {amenities.length > 0 && (
             <section className="rounded-md border border-line bg-paper p-6 shadow-sm">
               <h2 className="font-display text-xl font-semibold text-ink">Amenities</h2>
               <ul className="mt-4 grid gap-2 sm:grid-cols-2">
-                {hotel.amenities.map((a) => (
+                {amenities.map((a) => (
                   <li key={a} className="flex items-center gap-2 text-sm text-ink-500">
                     <Wifi className="h-4 w-4 text-pine-500" strokeWidth={1.5} aria-hidden /> {a}
                   </li>
@@ -137,11 +144,11 @@ export default async function HotelDetailPage({ params }: Props) {
             </section>
           )}
 
-          {hotel.images.length > 1 && (
+          {images.length > 1 && (
             <section>
               <h2 className="font-display text-xl font-semibold text-ink mb-4">Gallery</h2>
               <div className="grid gap-3 sm:grid-cols-2">
-                {hotel.images.slice(1).map((src, i) => (
+                {images.slice(1).map((src, i) => (
                   <div key={src + i} className="relative aspect-[16/10] overflow-hidden rounded-md">
                     <Image
                       src={src}
