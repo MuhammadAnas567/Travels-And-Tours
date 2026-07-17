@@ -2,6 +2,9 @@ import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { AdminSidebar } from "@/components/shared/admin-sidebar";
 
+// Auth-gated pages must not prerender at build (requireStaff throws Unauthorized).
+export const dynamic = "force-dynamic";
+
 export default function AdminLayout({
   children,
 }: {

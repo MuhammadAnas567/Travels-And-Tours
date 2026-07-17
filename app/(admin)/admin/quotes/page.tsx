@@ -1,7 +1,7 @@
 import { prisma } from "@/lib/db";
-import { listAgents } from "@/actions/crm";
 import { QuotesBoard } from "@/components/crm/quotes-board";
 
+export const dynamic = "force-dynamic";
 export const metadata = { title: "Quotes CRM" };
 
 export default async function AdminQuotesPage() {
@@ -12,7 +12,11 @@ export default async function AdminQuotesPage() {
         assignedAgent: { select: { id: true, name: true, email: true } },
       },
     }),
-    listAgents(),
+    prisma.user.findMany({
+      where: { role: { in: ["AGENT", "ADMIN"] } },
+      select: { id: true, name: true, email: true, role: true },
+      orderBy: { name: "asc" },
+    }),
   ]);
 
   const boardQuotes = quotes.map((q) => ({
