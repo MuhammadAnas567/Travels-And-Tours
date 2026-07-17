@@ -72,6 +72,20 @@ const en: Dict = {
   "common.clearAll": "Clear all",
   "common.wishlistSave": "Saved to wishlist",
   "common.wishlistRemove": "Removed from wishlist",
+  "dash.account": "Your account",
+  "dash.overview": "Overview",
+  "dash.bookings": "My Bookings",
+  "dash.wishlist": "Wishlist",
+  "dash.profile": "Profile",
+  "dash.welcome": "Welcome, {name}",
+  "dash.subtitle": "Manage your bookings, wishlist, and profile",
+  "dash.totalBookings": "Total bookings",
+  "dash.upcoming": "Upcoming trips",
+  "dash.completed": "Completed",
+  "dash.recent": "Recent bookings",
+  "dash.viewAll": "View all",
+  "dash.noBookings": "No bookings yet.",
+  "dash.browseTours": "Browse tours",
 };
 
 const ur: Dict = {
@@ -131,6 +145,20 @@ const ur: Dict = {
   "common.clearAll": "سب صاف کریں",
   "common.wishlistSave": "وش لسٹ میں محفوظ",
   "common.wishlistRemove": "وش لسٹ سے ہٹایا",
+  "dash.account": "آپ کا اکاؤنٹ",
+  "dash.overview": "جائزہ",
+  "dash.bookings": "میری بکنگز",
+  "dash.wishlist": "وش لسٹ",
+  "dash.profile": "پروفائل",
+  "dash.welcome": "خوش آمدید، {name}",
+  "dash.subtitle": "بکنگز، وش لسٹ اور پروفائل منظم کریں",
+  "dash.totalBookings": "کل بکنگز",
+  "dash.upcoming": "آنے والے سفر",
+  "dash.completed": "مکمل",
+  "dash.recent": "حالیہ بکنگز",
+  "dash.viewAll": "سب دیکھیں",
+  "dash.noBookings": "ابھی کوئی بکنگ نہیں۔",
+  "dash.browseTours": "ٹورز دیکھیں",
 };
 
 const ar: Dict = {
@@ -190,6 +218,20 @@ const ar: Dict = {
   "common.clearAll": "مسح الكل",
   "common.wishlistSave": "أُضيف إلى المفضلة",
   "common.wishlistRemove": "أُزيل من المفضلة",
+  "dash.account": "حسابك",
+  "dash.overview": "نظرة عامة",
+  "dash.bookings": "حجوزاتي",
+  "dash.wishlist": "المفضلة",
+  "dash.profile": "الملف الشخصي",
+  "dash.welcome": "مرحباً، {name}",
+  "dash.subtitle": "إدارة الحجوزات والمفضلة والملف الشخصي",
+  "dash.totalBookings": "إجمالي الحجوزات",
+  "dash.upcoming": "رحلات قادمة",
+  "dash.completed": "مكتملة",
+  "dash.recent": "حجوزات حديثة",
+  "dash.viewAll": "عرض الكل",
+  "dash.noBookings": "لا حجوزات بعد.",
+  "dash.browseTours": "تصفح الجولات",
 };
 
 export const DICTIONARIES: Record<AppLocale, Dict> = { en, ur, ar };

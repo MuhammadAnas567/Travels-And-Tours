@@ -4,38 +4,44 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { LayoutDashboard, Ticket, User, Heart } from "lucide-react";
+import { usePreferences } from "@/components/providers/preferences-provider";
 
 const links = [
-  { href: "/dashboard", label: "Overview", icon: LayoutDashboard },
-  { href: "/dashboard/bookings", label: "My Bookings", icon: Ticket },
-  { href: "/dashboard/wishlist", label: "Wishlist", icon: Heart },
-  { href: "/dashboard/profile", label: "Profile", icon: User },
+  { href: "/dashboard", labelKey: "dash.overview", icon: LayoutDashboard },
+  { href: "/dashboard/bookings", labelKey: "dash.bookings", icon: Ticket },
+  { href: "/dashboard/wishlist", labelKey: "dash.wishlist", icon: Heart },
+  { href: "/dashboard/profile", labelKey: "dash.profile", icon: User },
 ];
 
 export function DashboardSidebar() {
   const pathname = usePathname();
+  const { t } = usePreferences();
 
   return (
-    <aside className="w-full shrink-0 lg:w-56">
+    <aside className="w-full shrink-0 lg:w-60">
+      <p className="mb-3 hidden text-[0.6875rem] font-semibold uppercase tracking-[0.15em] text-ink-500 lg:block">
+        {t("dash.account")}
+      </p>
       <nav
-        className="flex gap-1 overflow-x-auto scrollbar-hide pb-1 lg:flex-col lg:overflow-visible lg:space-y-1 lg:pb-0"
+        className="flex gap-1 overflow-x-auto scrollbar-hide rounded-md border border-line bg-paper p-1.5 shadow-sm lg:flex-col lg:overflow-visible lg:space-y-0.5 lg:p-2"
         aria-label="Dashboard navigation"
       >
-        {links.map(({ href, label, icon: Icon }) => {
-          const active = pathname === href || (href !== "/dashboard" && pathname.startsWith(href));
+        {links.map(({ href, labelKey, icon: Icon }) => {
+          const active =
+            pathname === href || (href !== "/dashboard" && pathname.startsWith(href));
           return (
             <Link
               key={href}
               href={href}
               className={cn(
-                "flex min-h-11 shrink-0 items-center gap-2 rounded-sm border-b-2 border-transparent px-3 py-2.5 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pine-500 lg:border-b-0 lg:border-l-2 lg:gap-3",
+                "flex min-h-11 shrink-0 items-center gap-2.5 rounded-sm px-3 py-2.5 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pine-500",
                 active
-                  ? "border-pine-500 bg-pine-50 text-pine-700"
-                  : "text-ink-500 hover:bg-sand hover:text-ink"
+                  ? "bg-pine-50 text-pine-700 font-semibold"
+                  : "text-ink-600 hover:bg-sand hover:text-ink-900"
               )}
             >
               <Icon className="h-4 w-4 shrink-0" strokeWidth={1.5} aria-hidden />
-              <span className="whitespace-nowrap">{label}</span>
+              <span className="whitespace-nowrap">{t(labelKey)}</span>
             </Link>
           );
         })}

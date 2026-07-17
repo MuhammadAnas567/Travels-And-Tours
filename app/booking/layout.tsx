@@ -1,6 +1,5 @@
-import Link from "next/link";
-import { Navbar } from "@/components/shared/navbar";
-import { Footer } from "@/components/shared/footer";
+import { Header } from "@/components/layout/header";
+import { Footer } from "@/components/layout/footer";
 
 export default function BookingLayout({
   children,
@@ -9,8 +8,10 @@ export default function BookingLayout({
 }) {
   return (
     <>
-      <Navbar />
-      <main className="flex-1">{children}</main>
+      <Header />
+      <main id="main-content" className="flex-1 bg-sand">
+        {children}
+      </main>
       <Footer />
     </>
   );
