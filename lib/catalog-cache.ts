@@ -29,7 +29,7 @@ export async function getCachedHotels() {
   } catch {
     // fall through
   }
-  return FALLBACK_HOTELS.map((h) => ({ ...h, tags: [] as string[] }));
+  return FALLBACK_HOTELS.map((h) => ({ ...h, tags: h.tags ?? [] }));
 }
 
 /** Flights for live demo — DB first, then curated routes */
