@@ -9,7 +9,7 @@ import { TrustBar, ServicesGrid, WhyChooseUs } from "@/components/home/home-sect
 import { FeaturedPackages, BlogPreview } from "@/components/home/home-editorial";
 import { HotelCard } from "@/components/cards/hotel-card";
 import { NewsletterForm } from "@/components/shared/newsletter-form";
-import { getTrendingDestinations, getPopularHotels, getDealOfWeek } from "@/lib/data/home";
+import { getTrendingDestinations, getPopularHotels, getDealOfTheWeek } from "@/lib/data/home";
 import { IMAGE_BLUR_DATA_URL } from "@/lib/images";
 import { ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -42,7 +42,7 @@ export default async function HomePage() {
   const [destinations, hotels, deal] = await Promise.all([
     getTrendingDestinations(8),
     getPopularHotels(6),
-    getDealOfWeek(),
+    getDealOfTheWeek(),
   ]);
 
   const journeyStops = destinations.map((d) => ({
