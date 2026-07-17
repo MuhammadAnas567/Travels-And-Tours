@@ -4,21 +4,26 @@ const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined;
 };
 
-/** Keep Atlas from hanging Vercel serverless for ~30s on every miss */
+/**
+ * Atlas from Vercel needs longer than 2s on cold start.
+ * Public pages still use withDbTimeout(..., 800) so they stay fast.
+ */
 function databaseUrlWithTimeouts() {
   const raw = process.env.DATABASE_URL?.trim();
   if (!raw) return undefined;
   try {
     const url = new URL(raw);
-    if (!url.searchParams.has("serverSelectionTimeoutMS")) {
-      url.searchParams.set("serverSelectionTimeoutMS", "2000");
-    }
-    if (!url.searchParams.has("connectTimeoutMS")) {
-      url.searchParams.set("connectTimeoutMS", "2000");
-    }
-    if (!url.searchParams.has("socketTimeoutMS")) {
-      url.searchParams.set("socketTimeoutMS", "5000");
-    }
+    // mongodb+srv URLs work with URL() in Node; keep query params
+    const isProd = process.env.VERCEL === "1" || process.env.NODE_ENV === "production";
+    const selectMs = isProd ? "10000" : "5000";
+    const connectMs = isProd ? "10000" : "5000";
+    const socketMs = isProd ? "20000" : "10000";
+
+    url.searchParams.set("serverSelectionTimeoutMS", selectMs);
+    url.searchParams.set("connectTimeoutMS", connectMs);
+    url.searchParams.set("socketTimeoutMS", socketMs);
+    if (!url.searchParams.has("retryWrites")) url.searchParams.set("retryWrites", "true");
+    if (!url.searchParams.has("w")) url.searchParams.set("w", "majority");
     return url.toString();
   } catch {
     return raw;
@@ -39,7 +44,7 @@ if (process.env.NODE_ENV !== "production") {
   globalForPrisma.prisma = prisma;
 }
 
-/** Race a DB call so pages never wait the full Atlas timeout */
+/** Race a DB call so public pages never wait the full Atlas timeout */
 export async function withDbTimeout<T>(
   promise: Promise<T>,
   fallback: T,
