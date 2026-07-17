@@ -104,3 +104,57 @@ export async function sendContactEmail({
   });
   return true;
 }
+
+export async function sendBookingPendingEmail({
+  to,
+  bookingId,
+  tourTitle,
+  totalPrice,
+  travelerName,
+  paymentMethod,
+}: {
+  to: string;
+  bookingId: string;
+  tourTitle: string;
+  totalPrice: string;
+  travelerName: string;
+  paymentMethod: string;
+}) {
+  const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";
+  await sendEmail({
+    to,
+    subject: `Payment pending — ${tourTitle}`,
+    html: `
+      <h1>Complete your payment</h1>
+      <p>Hi ${travelerName},</p>
+      <p>Your booking for <strong>${tourTitle}</strong> is awaiting payment verification (${paymentMethod}).</p>
+      <ul>
+        <li><strong>Reference:</strong> ${bookingId}</li>
+        <li><strong>Amount:</strong> ${totalPrice}</li>
+      </ul>
+      <p><a href="${appUrl}/booking/pending/${bookingId}">Upload payment proof</a></p>
+      <p>We typically confirm within 2 business hours after receiving proof.</p>
+    `,
+  });
+}
+
+export async function sendBookingCancelledEmail({
+  to,
+  tourTitle,
+  travelerName,
+}: {
+  to: string;
+  tourTitle: string;
+  travelerName: string;
+}) {
+  await sendEmail({
+    to,
+    subject: `Booking cancelled — ${tourTitle}`,
+    html: `
+      <h1>Booking cancelled</h1>
+      <p>Hi ${travelerName},</p>
+      <p>Your booking for <strong>${tourTitle}</strong> has been cancelled.</p>
+      <p>If this was a mistake, reply to this email or contact us and we will help.</p>
+    `,
+  });
+}

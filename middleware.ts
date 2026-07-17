@@ -40,9 +40,11 @@ export default auth((req) => {
   let response: NextResponse;
 
   if (pathname.startsWith("/admin")) {
+    const role = req.auth?.user?.role;
+    const isStaff = role === "ADMIN" || role === "AGENT";
     if (!isLoggedIn) {
       response = NextResponse.redirect(new URL("/login", req.url));
-    } else if (req.auth?.user?.role !== "ADMIN") {
+    } else if (!isStaff) {
       response = NextResponse.redirect(new URL("/", req.url));
     } else {
       response = NextResponse.next();

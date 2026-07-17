@@ -9,6 +9,7 @@ import {
   toCents,
 } from "@/lib/booking";
 import { bookingStep1Schema, bookingStep2Schema } from "@/lib/validations";
+import { applyCouponToTotal } from "@/actions/coupons";
 
 const bodySchema = z.object({
   tourId: z.string().min(1),
@@ -21,6 +22,7 @@ const bodySchema = z.object({
     phone: z.string().min(7),
   }),
   specialRequests: z.string().optional(),
+  couponCode: z.string().optional(),
 });
 
 /**
@@ -68,6 +70,25 @@ export async function POST(req: Request) {
 
     const seatsNeeded = data.adults + data.children;
 
+    const tourPre = await prisma.tour.findUnique({ where: { id: data.tourId } });
+    if (!tourPre || tourPre.status !== "ACTIVE") {
+      return NextResponse.json({ error: "Tour not available" }, { status: 400 });
+    }
+    const subtotalPre = calculateBookingTotal(
+      getTourUnitPrice(tourPre),
+      data.adults,
+      data.children
+    );
+    let priced: { total: number; couponCode?: string; discountAmount: number };
+    try {
+      priced = await applyCouponToTotal(data.couponCode, data.tourId, subtotalPre);
+    } catch (e) {
+      return NextResponse.json(
+        { error: e instanceof Error ? e.message : "Invalid coupon" },
+        { status: 400 }
+      );
+    }
+
     const { booking, totalPrice, tourTitle } = await prisma.$transaction(async (tx) => {
       const tour = await tx.tour.findUnique({ where: { id: data.tourId } });
       const tourDate = await tx.tourDate.findUnique({ where: { id: data.tourDateId } });
@@ -84,10 +105,6 @@ export async function POST(req: Request) {
         throw new Error(`Only ${seatsLeft} seats available`);
       }
 
-      // Never trust client totals — recompute on server
-      const unitPrice = getTourUnitPrice(tour);
-      const total = calculateBookingTotal(unitPrice, data.adults, data.children);
-
       const created = await tx.booking.create({
         data: {
           userId: session.user!.id,
@@ -95,7 +112,8 @@ export async function POST(req: Request) {
           tourDateId: data.tourDateId,
           adults: data.adults,
           children: data.children,
-          totalPrice: total,
+          totalPrice: priced.total,
+          couponCode: priced.couponCode,
           status: "PENDING",
           paymentMethod: "STRIPE",
           travelerInfo: data.travelerInfo,
@@ -103,7 +121,7 @@ export async function POST(req: Request) {
         },
       });
 
-      return { booking: created, totalPrice: total, tourTitle: tour.title };
+      return { booking: created, totalPrice: priced.total, tourTitle: tour.title };
     });
 
     const paymentIntent = await stripe.paymentIntents.create({

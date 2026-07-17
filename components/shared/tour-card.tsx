@@ -4,6 +4,7 @@ import { MapPin, Clock, Star, ArrowRight } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { formatCurrency, convertPrice } from "@/lib/currency";
 import { DisplayPrice } from "@/components/shared/display-price";
+import { InventoryBadge } from "@/components/shared/inventory-badge";
 import { IMAGE_BLUR_DATA_URL, PLACEHOLDER_TOUR_IMAGE } from "@/lib/images";
 import type { Currency, Tour } from "@prisma/client";
 
@@ -80,7 +81,8 @@ export function TourCard({ tour, currency = "USD", rates }: TourCardProps) {
           </div>
         </div>
         <div className="p-6">
-          <div className="mb-3 flex items-center gap-2">
+          <div className="mb-3 flex flex-wrap items-center gap-2">
+            <InventoryBadge mode="bookable" />
             <Badge
               variant="secondary"
               className="text-[0.6875rem] capitalize tracking-wide font-medium bg-sand text-ink-500 border-line"

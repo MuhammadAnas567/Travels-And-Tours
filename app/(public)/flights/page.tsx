@@ -1,38 +1,37 @@
 import type { Metadata } from "next";
-import { getCachedFlights } from "@/lib/catalog-cache";
+import { searchFlights } from "@/lib/providers/flights";
 import { SearchWidgetLazy } from "@/components/search/search-widget-lazy";
 import { FlightResults } from "@/components/flights/flight-results";
 import { CatalogHero } from "@/components/layout/catalog-hero";
 
-export const dynamic = "force-static";
-export const revalidate = 120;
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Flights",
-  description: "Search flights worldwide and compare fares by cabin class.",
+  description: "Search flights worldwide — live Amadeus fares when configured, plus catalogue routes.",
 };
 
-export default async function FlightsPage() {
-  const flights = await getCachedFlights();
+type Props = {
+  searchParams: Promise<{
+    from?: string;
+    to?: string;
+    date?: string;
+    adults?: string;
+    cabin?: string;
+  }>;
+};
 
-  const rows = flights.map((f) => ({
-    _id: String(f._id),
-    airline: f.airline,
-    airlineLogo: f.airlineLogo,
-    flightNumber: f.flightNumber,
-    from: f.from,
-    to: f.to,
-    departTime: new Date(f.departTime).toISOString(),
-    arriveTime: new Date(f.arriveTime).toISOString(),
-    durationMins: f.durationMins,
-    stops: f.stops,
-    priceByClass: f.priceByClass
-      ? {
-          economy: f.priceByClass.economy,
-          business: f.priceByClass.business,
-        }
-      : undefined,
-  }));
+export default async function FlightsPage({ searchParams }: Props) {
+  const sp = await searchParams;
+  const flights = await searchFlights({
+    from: sp.from,
+    to: sp.to,
+    date: sp.date,
+    adults: sp.adults ? Number(sp.adults) : 1,
+    cabin: sp.cabin,
+  });
+
+  const liveCount = flights.filter((f) => f.source === "amadeus").length;
 
   return (
     <div className="bg-sand min-h-[60vh]">
@@ -40,14 +39,18 @@ export default async function FlightsPage() {
         variant="flights"
         eyebrow="Flights"
         title="Compare routes and cabin fares"
-        description="Search worldwide and book with flexible cabin options."
+        description={
+          liveCount > 0
+            ? `${liveCount} live Amadeus offers + catalogue routes.`
+            : "Search worldwide. Connect Amadeus test keys for live fares."
+        }
       />
 
       <div className="mx-auto max-w-5xl px-4 sm:px-6 -mt-6 relative z-10 mb-10">
         <SearchWidgetLazy />
       </div>
 
-      <FlightResults flights={rows} />
+      <FlightResults flights={flights} />
     </div>
   );
 }

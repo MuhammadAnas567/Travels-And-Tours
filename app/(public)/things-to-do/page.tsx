@@ -3,6 +3,8 @@ import Link from "next/link";
 import { DestinationCard } from "@/components/cards/destination-card";
 import { listDestinations } from "@/lib/data/catalog";
 import { CatalogHero, EmptyCatalog } from "@/components/layout/catalog-hero";
+import { MapboxMap } from "@/components/maps/mapbox-map";
+import { resolveCityCoords } from "@/lib/geo/city-coords";
 
 export const revalidate = 60;
 
@@ -14,6 +16,23 @@ export const metadata: Metadata = {
 export default async function ThingsToDoPage() {
   const destinations = await listDestinations(12);
 
+  const mapMarkers = destinations.map((d) => {
+    const raw =
+      "coordinates" in d && d.coordinates
+        ? (d.coordinates as { lat?: number; lng?: number })
+        : null;
+    const coords =
+      raw && typeof raw.lat === "number" && typeof raw.lng === "number"
+        ? { lat: raw.lat, lng: raw.lng }
+        : resolveCityCoords(d.name);
+    return {
+      id: String(d._id),
+      lat: coords.lat,
+      lng: coords.lng,
+      label: `${d.name}, ${d.country}`,
+    };
+  });
+
   return (
     <div className="bg-sand min-h-[60vh]">
       <CatalogHero
@@ -24,6 +43,18 @@ export default async function ThingsToDoPage() {
       />
 
       <div className="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8 py-10 sm:py-12 pb-16 sm:pb-20">
+        {mapMarkers.length > 0 && (
+          <section className="mb-10">
+            <h2 className="font-display text-xl font-semibold text-ink">Explore the map</h2>
+            <p className="mt-1 text-sm text-ink-500">
+              Pin locations for featured destinations worldwide.
+            </p>
+            <div className="mt-4">
+              <MapboxMap markers={mapMarkers} height={360} zoom={2} />
+            </div>
+          </section>
+        )}
+
         {destinations.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5">
             {destinations.map((d) => (

@@ -30,7 +30,7 @@ export function Header() {
   const moreRef = useRef<HTMLDivElement>(null);
 
   const user = session?.user;
-  const isAdmin = user?.role === "ADMIN";
+  const isAdmin = user?.role === "ADMIN" || user?.role === "AGENT";
   const moreActive = MORE_NAV.some((item) => isActivePath(pathname, item.href));
   const compact = !isHome || scrolled || mobileOpen;
 

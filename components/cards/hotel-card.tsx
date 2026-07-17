@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Star, MapPin, Wifi } from "lucide-react";
 import { IMAGE_BLUR_DATA_URL, PLACEHOLDER_TOUR_IMAGE } from "@/lib/images";
 import { WishlistButton } from "@/components/cards/wishlist-button";
+import { InventoryBadge } from "@/components/shared/inventory-badge";
 import { DisplayPrice } from "@/components/shared/display-price";
 import { usePreferences } from "@/components/providers/preferences-provider";
 
@@ -99,6 +100,7 @@ export function HotelCard({
               <p className="text-xl font-semibold tabular-nums text-ink" data-price>
                 <DisplayPrice amount={pricePerNight} />
               </p>
+              <InventoryBadge mode="inquire" className="mt-1" />
             </div>
           </div>
         </div>

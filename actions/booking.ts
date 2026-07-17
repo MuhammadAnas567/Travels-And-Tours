@@ -10,6 +10,9 @@ import {
 } from "@/lib/booking";
 import { bookingStep1Schema, bookingStep2Schema } from "@/lib/validations";
 import type { TravelerInfo } from "@/types";
+import { sendBookingPendingEmail } from "@/lib/email";
+import { formatPrice } from "@/lib/utils";
+import { siteConfig } from "@/lib/site-config";
 
 export async function calculatePrice(
   tourId: string,
@@ -196,6 +199,16 @@ export async function createBookingWithLocalPayment(data: {
   const session = await getSession();
   if (!session?.user?.id) return { error: "Please sign in to book" };
 
+  if (data.paymentMethod === "BANK_TRANSFER" && !siteConfig.bankTransfer.enabled) {
+    return { error: "Bank transfer is not available right now" };
+  }
+  if (data.paymentMethod === "EASYPAISA" && !siteConfig.easypaisa.enabled) {
+    return { error: "EasyPaisa is not available right now" };
+  }
+  if (data.paymentMethod === "JAZZCASH" && !siteConfig.jazzcash.enabled) {
+    return { error: "JazzCash is not available right now" };
+  }
+
   const seatsNeeded = data.adults + data.children;
 
   const result = await prisma.$transaction(async (tx) => {
@@ -226,8 +239,21 @@ export async function createBookingWithLocalPayment(data: {
       },
     });
 
-    return { booking, totalPrice };
+    return { booking, totalPrice, tourTitle: tour.title };
   });
+
+  try {
+    await sendBookingPendingEmail({
+      to: data.travelerInfo.email,
+      bookingId: result.booking.id,
+      tourTitle: result.tourTitle,
+      totalPrice: formatPrice(result.totalPrice),
+      travelerName: data.travelerInfo.name,
+      paymentMethod: data.paymentMethod.replace("_", " "),
+    });
+  } catch {
+    // never block booking on email
+  }
 
   return {
     bookingId: result.booking.id,

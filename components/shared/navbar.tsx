@@ -43,7 +43,7 @@ export async function Navbar() {
           <CurrencySwitcher value={currency} />
           {session?.user ? (
             <>
-              {session.user.role === "ADMIN" && (
+              {(session.user.role === "ADMIN" || session.user.role === "AGENT") && (
                 <Button variant="ghost" size="sm" asChild>
                   <Link href="/admin">Admin</Link>
                 </Button>

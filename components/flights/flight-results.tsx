@@ -25,6 +25,7 @@ export type FlightResult = {
   durationMins: number;
   stops: number;
   priceByClass?: { economy?: number; business?: number; first?: number };
+  source?: "amadeus" | "catalog";
 };
 
 type SortKey = "best" | "cheapest" | "fastest";
@@ -289,7 +290,14 @@ function FlightResultsInner({ flights }: { flights: FlightResult[] }) {
                         )}
                       </div>
                       <div className="min-w-0">
-                        <p className="text-sm font-semibold text-ink truncate">{f.airline}</p>
+                        <p className="text-sm font-semibold text-ink truncate flex items-center gap-2">
+                          {f.airline}
+                          {f.source === "amadeus" ? (
+                            <span className="rounded-sm bg-pine-500 px-1.5 py-0.5 text-[0.6rem] font-semibold uppercase tracking-wider text-paper">
+                              Live
+                            </span>
+                          ) : null}
+                        </p>
                         <p className="text-xs text-ink-500">{f.flightNumber}</p>
                       </div>
                     </div>
@@ -335,9 +343,9 @@ function FlightResultsInner({ flights }: { flights: FlightResult[] }) {
                   <div className="sm:text-right">
                     <Button asChild className="w-full sm:w-auto">
                       <Link
-                        href={`/contact?subject=${encodeURIComponent(`Flight ${f.flightNumber} ${f.from}-${f.to} (${cabin})`)}`}
+                        href={`/contact?subject=${encodeURIComponent(`Flight quote: ${f.flightNumber} ${f.from}-${f.to} (${cabin})`)}&message=${encodeURIComponent(`Please quote this flight.\nFlight: ${f.flightNumber}\nRoute: ${f.from} → ${f.to}\nCabin: ${cabin}\nPreferred travellers:\n`)}`}
                       >
-                        {t("common.selectFlight")}
+                        Request quote
                       </Link>
                     </Button>
                   </div>

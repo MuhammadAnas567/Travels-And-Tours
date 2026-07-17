@@ -3,6 +3,7 @@ import { prisma, withDbTimeout } from "@/lib/db";
 import { Badge } from "@/components/ui/badge";
 import { formatCurrency } from "@/lib/currency";
 import { CatalogHero, EmptyCatalog } from "@/components/layout/catalog-hero";
+import { CopyCouponButton } from "@/components/deals/copy-coupon-button";
 
 export const dynamic = "force-static";
 export const revalidate = 120;
@@ -60,12 +61,18 @@ export default async function DealsPage() {
                 <p className="mt-3 text-xs text-ink-500">
                   Valid until {coupon.validTo.toLocaleDateString()}
                 </p>
-                <Link
-                  href="/tours"
-                  className="mt-4 inline-block text-sm font-semibold text-pine-500 link-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pine-500 rounded-sm"
-                >
-                  Browse tours
-                </Link>
+                <p className="mt-2 text-xs text-ink-600">
+                  Use at <strong>tour checkout</strong> (step 1 → Coupon code).
+                </p>
+                <div className="mt-2 flex flex-wrap items-center gap-3">
+                  <CopyCouponButton code={coupon.code} />
+                  <Link
+                    href="/tours"
+                    className="text-sm font-semibold text-pine-500 link-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pine-500 rounded-sm"
+                  >
+                    Browse tours
+                  </Link>
+                </div>
               </div>
             ))}
           </div>

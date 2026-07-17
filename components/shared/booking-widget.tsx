@@ -15,6 +15,9 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { InventoryBadge } from "@/components/shared/inventory-badge";
+import { ChargeCurrencyNotice } from "@/components/shared/charge-currency-notice";
+import { CTA_LABEL, tourInventoryMode } from "@/lib/inventory";
 import type { TourDate } from "@prisma/client";
 
 type BookingWidgetProps = {
@@ -50,6 +53,8 @@ export function BookingWidget({
     : maxGroupSize;
   const canProceed = !!tourDateId && adults + children <= seatsLeft && adults >= 1;
   const fallback = isFallbackTour(tourId);
+  const mode = tourInventoryMode(tourId);
+  const cta = CTA_LABEL[mode];
 
   const bookingUrl = `/booking/${tourId}?${new URLSearchParams({
     tourDateId,
@@ -80,6 +85,9 @@ export function BookingWidget({
   return (
     <Card className="sticky top-24 rounded-md border border-line bg-paper shadow-sm">
       <CardHeader>
+        <div className="mb-2">
+          <InventoryBadge mode={mode} />
+        </div>
         <CardTitle className="text-2xl font-semibold tabular-nums text-pine-500">
           <DisplayPrice amount={unitPrice} />
           <span className="text-sm font-normal text-ink-500"> / person</span>
@@ -162,18 +170,19 @@ export function BookingWidget({
 
         <Button className="w-full" size="lg" disabled={!canProceed} asChild={canProceed}>
           {canProceed ? (
-            <Link href={fallback ? inquireUrl : bookingUrl}>
-              {fallback ? "Request to book" : "Book Now"}
-            </Link>
+            <Link href={fallback ? inquireUrl : bookingUrl}>{cta}</Link>
           ) : (
-            <span>{fallback ? "Request to book" : "Book Now"}</span>
+            <span>{cta}</span>
           )}
         </Button>
         {fallback ? (
           <p className="text-center text-xs text-ink-500">
-            Demo catalogue — we confirm dates and payment with you directly.
+            Inquire only — we confirm dates and payment with you directly (reply within 2 business
+            hours).
           </p>
-        ) : null}
+        ) : (
+          <ChargeCurrencyNotice className="text-center text-xs text-ink-500 leading-relaxed" />
+        )}
       </CardContent>
     </Card>
   );

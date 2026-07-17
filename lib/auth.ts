@@ -89,3 +89,17 @@ export async function requireAdmin() {
   }
   return session;
 }
+
+/** ADMIN or AGENT — for quotes CRM and shared ops surfaces */
+export async function requireStaff() {
+  const session = await requireAuth();
+  const role = session.user.role;
+  if (role !== "ADMIN" && role !== "AGENT") {
+    throw new Error("Forbidden");
+  }
+  return session;
+}
+
+export function isStaffRole(role?: string | null) {
+  return role === "ADMIN" || role === "AGENT";
+}

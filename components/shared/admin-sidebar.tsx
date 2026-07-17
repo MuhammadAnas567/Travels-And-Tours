@@ -11,16 +11,22 @@ import {
   Star,
   FileText,
   MessageSquare,
+  Tag,
+  Kanban,
+  UserCog,
 } from "lucide-react";
 
 const links = [
   { href: "/admin", label: "Overview", icon: LayoutDashboard },
+  { href: "/admin/crm", label: "CRM", icon: Kanban },
+  { href: "/admin/quotes", label: "Quotes", icon: MessageSquare },
+  { href: "/admin/agents", label: "Agents", icon: UserCog },
   { href: "/admin/tours", label: "Tours", icon: Map },
   { href: "/admin/bookings", label: "Bookings", icon: CalendarCheck },
+  { href: "/admin/coupons", label: "Coupons", icon: Tag },
   { href: "/admin/visa-inquiries", label: "Visa", icon: FileText },
   { href: "/admin/customers", label: "Customers", icon: Users },
   { href: "/admin/reviews", label: "Reviews", icon: Star },
-  { href: "/admin/quotes", label: "Quotes", icon: MessageSquare },
 ];
 
 export function AdminSidebar() {

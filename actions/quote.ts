@@ -48,6 +48,7 @@ export async function submitQuoteRequest(formData: FormData) {
   const quote = await prisma.quoteRequest.create({
     data: {
       userId: session?.user?.id,
+      kind: "TRIP",
       name: data.name,
       email: data.email,
       phone: data.phone,
@@ -76,4 +77,62 @@ export async function submitQuoteRequest(formData: FormData) {
 
   revalidatePath("/admin/quotes");
   return { success: true, id: quote.id };
+}
+
+const hotelInquirySchema = z.object({
+  hotelName: z.string().min(2),
+  city: z.string().min(1),
+  country: z.string().min(1),
+  name: z.string().min(2),
+  email: z.string().email(),
+  phone: z.string().optional(),
+  checkIn: z.string().optional(),
+  checkOut: z.string().optional(),
+  guests: z.number().int().min(1).max(20),
+  notes: z.string().max(3000).optional(),
+  priceHint: z.number().optional(),
+});
+
+export async function submitHotelInquiry(input: z.infer<typeof hotelInquirySchema>) {
+  const parsed = hotelInquirySchema.safeParse(input);
+  if (!parsed.success) {
+    return { error: "Please check your details and try again" };
+  }
+
+  const session = await getSession();
+  const data = parsed.data;
+
+  const quote = await prisma.quoteRequest.create({
+    data: {
+      userId: session?.user?.id,
+      kind: "HOTEL",
+      name: data.name,
+      email: data.email,
+      phone: data.phone,
+      destinations: [`${data.hotelName} — ${data.city}, ${data.country}`],
+      startDate: data.checkIn ? new Date(data.checkIn) : null,
+      endDate: data.checkOut ? new Date(data.checkOut) : null,
+      adults: data.guests,
+      children: 0,
+      budget: data.priceHint,
+      preferences: data.notes ?? `Hotel stay inquiry for ${data.hotelName}`,
+    },
+  });
+
+  await sendEmail({
+    to: siteConfig.office.email,
+    subject: `Hotel quote: ${data.hotelName}`,
+    html: `
+      <h2>Hotel stay request</h2>
+      <p><strong>Hotel:</strong> ${data.hotelName} (${data.city}, ${data.country})</p>
+      <p><strong>Guest:</strong> ${data.name} (${data.email})</p>
+      <p><strong>Dates:</strong> ${data.checkIn ?? "—"} → ${data.checkOut ?? "—"}</p>
+      <p><strong>Guests:</strong> ${data.guests}</p>
+      <p>${data.notes ?? ""}</p>
+      <p>Ref: ${quote.id}</p>
+    `,
+  }).catch(() => {});
+
+  revalidatePath("/admin/quotes");
+  return { id: quote.id };
 }

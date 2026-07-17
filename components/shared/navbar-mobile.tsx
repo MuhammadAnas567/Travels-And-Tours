@@ -75,7 +75,7 @@ export function NavbarMobile({
                 >
                   Dashboard
                 </Link>
-                {session.user.role === "ADMIN" && (
+                {(session.user.role === "ADMIN" || session.user.role === "AGENT") && (
                   <Link
                     href="/admin"
                     className="flex min-h-11 items-center rounded-sm px-3 py-2 text-sm font-medium text-pine-700 hover:bg-pine-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pine-500"

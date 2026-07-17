@@ -28,7 +28,7 @@ export function readWishlist(): WishlistItem[] {
   }
 }
 
-function writeWishlist(items: WishlistItem[]) {
+export function writeWishlist(items: WishlistItem[]) {
   if (!canUseStorage()) return;
   localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
   window.dispatchEvent(new CustomEvent(WISHLIST_EVENT));
@@ -52,4 +52,8 @@ export function toggleWishlistItem(item: Omit<WishlistItem, "savedAt">): boolean
 
 export function removeWishlistItem(idOrSlug: string) {
   writeWishlist(readWishlist().filter((i) => i.id !== idOrSlug && i.slug !== idOrSlug));
+}
+
+export function replaceWishlist(items: WishlistItem[]) {
+  writeWishlist(items);
 }

@@ -5,11 +5,13 @@ import { notFound } from "next/navigation";
 import { MapPin, Star, Wifi, ArrowLeft } from "lucide-react";
 import { getHotelBySlug } from "@/lib/data/catalog";
 import { IMAGE_BLUR_DATA_URL, PLACEHOLDER_TOUR_IMAGE } from "@/lib/images";
-import { Button } from "@/components/ui/button";
 import { getWhatsAppUrl } from "@/lib/site-config";
-import { DisplayPrice } from "@/components/shared/display-price";
+import { HotelInquiryForm } from "@/components/hotels/hotel-inquiry-form";
+import { AvailabilityPanel } from "@/components/hotels/availability-panel";
+import { MapboxMap } from "@/components/maps/mapbox-map";
+import { resolveCityCoords } from "@/lib/geo/city-coords";
 
-export const dynamic = "force-static";
+export const dynamic = "force-dynamic";
 export const revalidate = 120;
 
 type Props = {
@@ -40,6 +42,16 @@ export default async function HotelDetailPage({ params }: Props) {
   const whatsappUrl = getWhatsAppUrl(
     `Hi! I'd like to request a stay at ${hotel.name} in ${hotel.city}.`
   );
+  const hotelCoords =
+    "coordinates" in hotel && hotel.coordinates
+      ? (hotel.coordinates as { lat?: number; lng?: number })
+      : null;
+  const coords =
+    hotelCoords &&
+    typeof hotelCoords.lat === "number" &&
+    typeof hotelCoords.lng === "number"
+      ? { lat: hotelCoords.lat, lng: hotelCoords.lng }
+      : resolveCityCoords(hotel.city);
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -145,37 +157,46 @@ export default async function HotelDetailPage({ params }: Props) {
               </div>
             </section>
           )}
+
+          <section className="rounded-md border border-line bg-paper p-6 shadow-sm">
+            <h2 className="font-display text-xl font-semibold text-ink">Location</h2>
+            <p className="mt-1 text-sm text-ink-500">
+              {hotel.city}, {hotel.country}
+            </p>
+            <div className="mt-4">
+              <MapboxMap
+                markers={[
+                  {
+                    id: hotel.slug,
+                    lat: coords.lat,
+                    lng: coords.lng,
+                    label: hotel.name,
+                  },
+                ]}
+                height={320}
+                zoom={12}
+              />
+            </div>
+          </section>
         </div>
 
-        <aside className="lg:sticky lg:top-24 h-fit rounded-md border border-line bg-paper p-6 shadow-sm">
-          <p className="text-[0.6875rem] font-semibold uppercase tracking-widest text-ink-500">From</p>
-          <p className="mt-1 text-3xl font-semibold tabular-nums text-ink">
-            <DisplayPrice amount={hotel.pricePerNight} />
-            <span className="text-base font-normal text-ink-500"> / night</span>
-          </p>
-          <div className="mt-4 flex items-center gap-2">
-            <span className="flex h-11 w-11 items-center justify-center rounded-sm bg-pine-100 text-sm font-bold tabular-nums text-pine-700">
-              {hotel.avgRating.toFixed(1)}
-            </span>
-            <span className="text-sm text-ink-500">{hotel.reviewCount} reviews</span>
+        <aside className="lg:sticky lg:top-24 h-fit space-y-5">
+          <AvailabilityPanel city={hotel.city} hotelName={hotel.name} />
+          <div className="rounded-md border border-line bg-paper p-6 shadow-sm">
+            <div className="mb-4 flex items-center gap-2">
+              <span className="flex h-11 w-11 items-center justify-center rounded-sm bg-pine-100 text-sm font-bold tabular-nums text-pine-700">
+                {hotel.avgRating.toFixed(1)}
+              </span>
+              <span className="text-sm text-ink-500">{hotel.reviewCount} reviews</span>
+            </div>
+            <HotelInquiryForm
+              hotelName={hotel.name}
+              city={hotel.city}
+              country={hotel.country}
+              pricePerNight={hotel.pricePerNight}
+              whatsappUrl={whatsappUrl}
+            />
           </div>
-          <Button asChild className="mt-6 w-full h-12">
-            <Link
-              href={`/contact?subject=${encodeURIComponent(`Request stay: ${hotel.name}`)}&message=${encodeURIComponent(`I'd like to request a stay at ${hotel.name} in ${hotel.city}, ${hotel.country}.\nPreferred dates:\nGuests:\n`)}`}
-            >
-              Request stay
-            </Link>
-          </Button>
-          {whatsappUrl ? (
-            <Button asChild variant="secondary" className="mt-3 w-full h-12">
-              <a href={whatsappUrl} target="_blank" rel="noopener noreferrer">
-                WhatsApp
-              </a>
-            </Button>
-          ) : null}
-          <p className="mt-3 text-xs text-ink-500 text-center">
-            Our planners confirm availability and rates — no fake checkout.
-          </p>
         </aside>
       </div>
     </div>
