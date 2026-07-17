@@ -4,8 +4,8 @@ import { SearchWidgetLazy } from "@/components/search/search-widget-lazy";
 import { CatalogHero } from "@/components/layout/catalog-hero";
 import { HotelsCatalogueLazy } from "@/components/hotels/hotels-catalogue-lazy";
 
-export const dynamic = "force-static";
-export const revalidate = 120;
+export const dynamic = "force-dynamic";
+export const revalidate = 60;
 
 export const metadata: Metadata = {
   title: "Hotels",

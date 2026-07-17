@@ -10,16 +10,26 @@ import type { FallbackTour } from "@/lib/data/tour-fallback";
 
 function PackagesCatalogueInner({ tours }: { tours: FallbackTour[] }) {
   const params = useSearchParams();
-  const destination = (params.get("destination") ?? params.get("q") ?? "").trim().toLowerCase();
+  const destination = (
+    params.get("destination") ??
+    params.get("q") ??
+    params.get("to") ??
+    params.get("city") ??
+    ""
+  )
+    .trim()
+    .toLowerCase();
 
   const filtered = useMemo(() => {
     if (!destination) return tours;
+    const slugHint = destination.replace(/\s+/g, "-");
     return tours.filter(
       (t) =>
         t.location.toLowerCase().includes(destination) ||
         t.country.toLowerCase().includes(destination) ||
         t.title.toLowerCase().includes(destination) ||
-        t.slug.toLowerCase().includes(destination.replace(/\s+/g, "-"))
+        t.slug.toLowerCase().includes(slugHint) ||
+        t.category.toLowerCase().includes(destination)
     );
   }, [tours, destination]);
 

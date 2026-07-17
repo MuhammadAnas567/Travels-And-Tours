@@ -1,35 +1,36 @@
 import { FALLBACK_HOTELS } from "@/lib/data/home-fallback";
 import { FALLBACK_FLIGHTS, type FallbackFlight } from "@/lib/data/flight-fallback";
+import { HOTEL_CATALOGUE } from "@/lib/data/hotel-catalogue";
 import { listFlights, listHotels } from "@/lib/data/catalog";
 
-/** Instant hotel catalogue — DB first, then curated fallbacks */
+/** Instant hotel catalogue — DB + full offline catalogue (never empty detail links) */
 export async function getCachedHotels() {
   try {
-    const rows = await listHotels({ limit: 24 });
+    const rows = await listHotels({ limit: 48 });
     if (rows.length > 0) {
       return rows.map((h) => ({
         _id: String(h._id),
-        name: h.name,
-        slug: h.slug,
-        city: h.city,
-        country: h.country,
-        starRating: h.starRating,
-        images: h.images,
-        avgRating: h.avgRating,
-        reviewCount: h.reviewCount,
-        pricePerNight: h.pricePerNight,
-        amenities: h.amenities ?? [],
+        name: String(h.name),
+        slug: String(h.slug),
+        city: String(h.city),
+        country: String(h.country),
+        starRating: Number(h.starRating) || 4,
+        images: Array.isArray(h.images) ? (h.images as string[]) : [],
+        avgRating: Number(h.avgRating) || 4.5,
+        reviewCount: Number(h.reviewCount) || 0,
+        pricePerNight: Number(h.pricePerNight) || 0,
+        amenities: Array.isArray(h.amenities) ? (h.amenities as string[]) : [],
         description:
           "description" in h && typeof h.description === "string"
             ? h.description
             : `${h.name} in ${h.city}`,
-        tags: "tags" in h && Array.isArray(h.tags) ? h.tags : [],
+        tags: "tags" in h && Array.isArray(h.tags) ? (h.tags as string[]) : [],
       }));
     }
   } catch {
     // fall through
   }
-  return FALLBACK_HOTELS.map((h) => ({ ...h, tags: [] as string[] }));
+  return HOTEL_CATALOGUE.map((h) => ({ ...h }));
 }
 
 /** Flights for live demo — DB first, then curated routes */
@@ -63,3 +64,6 @@ export async function getCachedFlights(): Promise<FallbackFlight[]> {
   }
   return FALLBACK_FLIGHTS.map((f) => ({ ...f }));
 }
+
+/** @deprecated prefer HOTEL_CATALOGUE — kept for imports */
+export { FALLBACK_HOTELS };

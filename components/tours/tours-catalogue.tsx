@@ -17,7 +17,9 @@ type Props = {
 
 function ToursCatalogueInner({ tours, countries }: Props) {
   const params = useSearchParams();
-  const q = (params.get("q") ?? "").trim().toLowerCase();
+  const q = (params.get("q") ?? params.get("destination") ?? params.get("to") ?? "")
+    .trim()
+    .toLowerCase();
   const category = params.get("category") ?? "";
   const country = params.get("country") ?? "";
   const sort = params.get("sort") ?? "popular";
@@ -29,11 +31,13 @@ function ToursCatalogueInner({ tours, countries }: Props) {
         (t) =>
           t.title.toLowerCase().includes(q) ||
           t.location.toLowerCase().includes(q) ||
-          t.country.toLowerCase().includes(q)
+          t.country.toLowerCase().includes(q) ||
+          t.slug.toLowerCase().includes(q.replace(/\s+/g, "-")) ||
+          t.category.toLowerCase().includes(q)
       );
     }
     if (category) list = list.filter((t) => t.category === category);
-    if (country) list = list.filter((t) => t.country === country);
+    if (country) list = list.filter((t) => t.country.toLowerCase() === country.toLowerCase());
     if (sort === "price_asc") list.sort((a, b) => Number(a.discountPrice ?? a.price) - Number(b.discountPrice ?? b.price));
     if (sort === "price_desc") list.sort((a, b) => Number(b.discountPrice ?? b.price) - Number(a.discountPrice ?? a.price));
     if (sort === "rating") list.sort((a, b) => b.avgRating - a.avgRating);
