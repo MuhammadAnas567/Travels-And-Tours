@@ -10,7 +10,7 @@ export const FALLBACK_RATES: Record<Currency, number> = {
 
 const CACHE_TTL_MS = 24 * 60 * 60 * 1000;
 
-export const SUPPORTED_CURRENCIES: Currency[] = ["PKR", "USD", "EUR", "GBP"];
+export const SUPPORTED_CURRENCIES: Currency[] = ["PKR", "USD"];
 
 export async function getFxRates(): Promise<Record<Currency, number>> {
   try {

@@ -37,14 +37,13 @@ function writeCookie(name: string, value: string) {
 
 function readCurrency(): Currency {
   const value = readCookie(CURRENCY_COOKIE) as Currency;
+  // Drop EUR/GBP — only PKR + USD
+  if (value === "EUR" || value === "GBP") return "USD";
   return SUPPORTED_CURRENCIES.includes(value) ? value : "USD";
 }
 
 function readLocale(): AppLocale {
-  const raw = readCookie(LOCALE_COOKIE);
-  // Migrate old locales
-  if (raw === "ur" || raw === "ar") return "en";
-  return SUPPORTED_LOCALES.includes(raw as AppLocale) ? (raw as AppLocale) : "en";
+  return "en";
 }
 
 function subscribeCurrency(cb: () => void) {
@@ -100,14 +99,15 @@ export function PreferencesProvider({ children }: { children: React.ReactNode })
 
   useEffect(() => {
     if (!hydrated) return;
-    document.documentElement.lang = locale;
+    document.documentElement.lang = "en";
     document.documentElement.dir = "ltr";
-    // Persist migration away from old ur/ar cookies
-    const raw = readCookie(LOCALE_COOKIE);
-    if (raw === "ur" || raw === "ar" || !raw) {
-      writeCookie(LOCALE_COOKIE, locale);
+    writeCookie(LOCALE_COOKIE, "en");
+    const cur = readCookie(CURRENCY_COOKIE);
+    if (cur === "EUR" || cur === "GBP" || !SUPPORTED_CURRENCIES.includes(cur as Currency)) {
+      writeCookie(CURRENCY_COOKIE, "USD");
+      notifyCurrencyChange();
     }
-  }, [locale, hydrated]);
+  }, [hydrated]);
 
   const setCurrency = useCallback((next: Currency) => {
     writeCookie(CURRENCY_COOKIE, next);

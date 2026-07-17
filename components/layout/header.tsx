@@ -17,7 +17,7 @@ import { cn } from "@/lib/utils";
 import { PRIMARY_NAV, MORE_NAV, ALL_NAV, isActivePath } from "@/components/layout/nav-config";
 import { usePreferences } from "@/components/providers/preferences-provider";
 import { navKeyForHref } from "@/lib/i18n/dictionaries";
-import { CurrencyMenu, LanguageMenu } from "@/components/layout/preference-menus";
+import { CurrencyMenu } from "@/components/layout/preference-menus";
 
 export function Header() {
   const pathname = usePathname();
@@ -182,7 +182,6 @@ export function Header() {
         <div className="flex items-center gap-1 shrink-0">
           <div className="hidden md:flex items-center gap-0.5">
             <CurrencyMenu />
-            <LanguageMenu />
 
             <div className="hidden lg:flex items-center gap-1">
               {status === "authenticated" && user ? (
@@ -278,7 +277,6 @@ export function Header() {
             <hr className="my-3 border-line" />
             <div className="flex flex-wrap gap-2 px-1 pb-2">
               <CurrencyMenu />
-              <LanguageMenu />
             </div>
             {status === "authenticated" && user ? (
               <>

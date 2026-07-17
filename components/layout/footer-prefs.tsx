@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePreferences } from "@/components/providers/preferences-provider";
-import { CurrencyMenu, LanguageMenu } from "@/components/layout/preference-menus";
+import { CurrencyMenu } from "@/components/layout/preference-menus";
 
 export function FooterPrefs() {
   const { t } = usePreferences();
@@ -10,10 +10,6 @@ export function FooterPrefs() {
   return (
     <div className="flex flex-wrap items-center gap-x-2 gap-y-1 lg:justify-end">
       <CurrencyMenu tone="footer" />
-      <span aria-hidden className="text-paper/25">
-        ·
-      </span>
-      <LanguageMenu tone="footer" />
       <span aria-hidden className="text-paper/25">
         ·
       </span>

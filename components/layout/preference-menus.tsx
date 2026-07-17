@@ -1,11 +1,10 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Globe, Languages, ChevronDown, Check } from "lucide-react";
+import { Globe, ChevronDown, Check } from "lucide-react";
 import type { Currency } from "@prisma/client";
 import { cn } from "@/lib/utils";
 import { SUPPORTED_CURRENCIES } from "@/lib/currency";
-import { LOCALE_NAMES, SUPPORTED_LOCALES, type AppLocale } from "@/lib/i18n/dictionaries";
 import { usePreferences } from "@/components/providers/preferences-provider";
 
 type Tone = "header" | "footer";
@@ -32,26 +31,6 @@ function useOutsideClose(open: boolean, onClose: () => void) {
   }, [open, onClose]);
 
   return rootRef;
-}
-
-function DropdownPanel({
-  children,
-  align = "end",
-}: {
-  children: React.ReactNode;
-  align?: "start" | "end";
-}) {
-  return (
-    <div
-      role="listbox"
-      className={cn(
-        "absolute top-full z-[120] mt-2 min-w-[11rem] overflow-hidden rounded-md border border-white/10 bg-pine-900 py-1.5 text-paper shadow-lg",
-        align === "end" ? "right-0" : "left-0"
-      )}
-    >
-      {children}
-    </div>
-  );
 }
 
 const triggerClass: Record<Tone, string> = {
@@ -87,7 +66,10 @@ export function CurrencyMenu({
         <ChevronDown className={cn("h-3.5 w-3.5 transition-transform", open && "rotate-180")} />
       </button>
       {open ? (
-        <DropdownPanel>
+        <div
+          role="listbox"
+          className="absolute right-0 top-full z-[120] mt-2 min-w-[10rem] overflow-hidden rounded-md border border-white/10 bg-pine-900 py-1.5 text-paper shadow-lg"
+        >
           <p className="px-3 py-1.5 text-[0.65rem] font-semibold uppercase tracking-[0.14em] text-pine-200">
             {t("prefs.currency")}
           </p>
@@ -112,66 +94,7 @@ export function CurrencyMenu({
               {currency === code ? <Check className="h-4 w-4" strokeWidth={2} /> : null}
             </button>
           ))}
-        </DropdownPanel>
-      ) : null}
-    </div>
-  );
-}
-
-export function LanguageMenu({
-  className,
-  tone = "header",
-}: {
-  className?: string;
-  tone?: Tone;
-}) {
-  const { locale, setLocale, t } = usePreferences();
-  const [open, setOpen] = useState(false);
-  const rootRef = useOutsideClose(open, () => setOpen(false));
-
-  return (
-    <div className={cn("relative", className)} ref={rootRef}>
-      <button
-        type="button"
-        aria-haspopup="listbox"
-        aria-expanded={open}
-        aria-label={`${t("prefs.language")}: ${LOCALE_NAMES[locale]}`}
-        onClick={() => setOpen((o) => !o)}
-        className={triggerClass[tone]}
-      >
-        <Languages className="h-4 w-4" aria-hidden />
-        {tone === "footer"
-          ? `${t("footer.language")}: ${LOCALE_NAMES[locale]}`
-          : LOCALE_NAMES[locale]}
-        <ChevronDown className={cn("h-3.5 w-3.5 transition-transform", open && "rotate-180")} />
-      </button>
-      {open ? (
-        <DropdownPanel>
-          <p className="px-3 py-1.5 text-[0.65rem] font-semibold uppercase tracking-[0.14em] text-pine-200">
-            {t("prefs.language")}
-          </p>
-          {SUPPORTED_LOCALES.map((code) => (
-            <button
-              key={code}
-              type="button"
-              role="option"
-              aria-selected={locale === code}
-              className={cn(
-                "flex w-full min-h-10 items-center justify-between gap-3 px-3 text-left text-sm",
-                locale === code
-                  ? "bg-pine-500/90 font-semibold text-paper"
-                  : "text-paper/90 hover:bg-pine-800"
-              )}
-              onClick={() => {
-                setLocale(code as AppLocale);
-                setOpen(false);
-              }}
-            >
-              <span>{LOCALE_NAMES[code]}</span>
-              {locale === code ? <Check className="h-4 w-4" strokeWidth={2} /> : null}
-            </button>
-          ))}
-        </DropdownPanel>
+        </div>
       ) : null}
     </div>
   );
