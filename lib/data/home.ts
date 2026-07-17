@@ -2,58 +2,70 @@ import { connectDB } from "@/lib/db/connect";
 import { Destination, Hotel } from "@/lib/models";
 import { FALLBACK_DESTINATIONS, FALLBACK_HOTELS } from "@/lib/data/home-fallback";
 
-async function withTimeout<T>(promise: Promise<T>, ms: number): Promise<T> {
+/** Resolve with fallback on timeout — never reject (avoids Next.js red console noise) */
+async function withTimeoutFallback<T>(promise: Promise<T>, fallback: T, ms = 600): Promise<T> {
   let timer: ReturnType<typeof setTimeout> | undefined;
   try {
     return await Promise.race([
       promise,
-      new Promise<T>((_, reject) => {
-        timer = setTimeout(() => reject(new Error("timeout")), ms);
+      new Promise<T>((resolve) => {
+        timer = setTimeout(() => resolve(fallback), ms);
       }),
     ]);
+  } catch {
+    return fallback;
   } finally {
     if (timer) clearTimeout(timer);
   }
 }
 
 export async function getTrendingDestinations(limit = 8) {
+  const fallback = FALLBACK_DESTINATIONS.slice(0, limit).map((d) => ({ ...d }));
   try {
-    await withTimeout(connectDB(), 800);
-    const rows = await withTimeout(
+    const connected = await withTimeoutFallback(connectDB().then(() => true), false, 600);
+    if (!connected) return fallback;
+    const rows = await withTimeoutFallback(
       Destination.find().sort({ popularity: -1 }).limit(limit).lean().exec(),
-      800
+      [] as Awaited<ReturnType<typeof Destination.find>>,
+      600
     );
-    if (rows.length > 0) return rows;
-  } catch (err) {
-    console.error("[home] getTrendingDestinations:", err);
+    if (Array.isArray(rows) && rows.length > 0) return rows;
+  } catch {
+    // use fallback
   }
-  return FALLBACK_DESTINATIONS.slice(0, limit).map((d) => ({ ...d }));
+  return fallback;
 }
 
 export async function getPopularHotels(limit = 6) {
+  const fallback = FALLBACK_HOTELS.slice(0, limit).map((h) => ({ ...h }));
   try {
-    await withTimeout(connectDB(), 800);
-    const rows = await withTimeout(
+    const connected = await withTimeoutFallback(connectDB().then(() => true), false, 600);
+    if (!connected) return fallback;
+    const rows = await withTimeoutFallback(
       Hotel.find().sort({ avgRating: -1, reviewCount: -1 }).limit(limit).lean().exec(),
-      800
+      [] as Awaited<ReturnType<typeof Hotel.find>>,
+      600
     );
-    if (rows.length > 0) return rows;
-  } catch (err) {
-    console.error("[home] getPopularHotels:", err);
+    if (Array.isArray(rows) && rows.length > 0) return rows;
+  } catch {
+    // use fallback
   }
-  return FALLBACK_HOTELS.slice(0, limit).map((h) => ({ ...h }));
+  return fallback;
 }
 
 export async function getDealOfWeek() {
+  const fallback = { ...FALLBACK_HOTELS[0] };
   try {
-    await withTimeout(connectDB(), 800);
-    const deal = await withTimeout(
+    const connected = await withTimeoutFallback(connectDB().then(() => true), false, 600);
+    if (!connected) return fallback;
+    const deal = await withTimeoutFallback(
       Hotel.findOne().sort({ pricePerNight: 1 }).lean().exec(),
-      800
+      null,
+      600
     );
     if (deal) return deal;
-  } catch (err) {
-    console.error("[home] getDealOfWeek:", err);
+  } catch {
+    // use fallback
   }
-  return { ...FALLBACK_HOTELS[0] };
+  return fallback;
 }

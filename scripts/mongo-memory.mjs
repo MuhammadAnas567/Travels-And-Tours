@@ -1,18 +1,26 @@
 import { MongoMemoryReplSet } from "mongodb-memory-server";
 import { MongoClient } from "mongodb";
-import { writeFileSync, readFileSync, existsSync, mkdirSync } from "node:fs";
+import {
+  writeFileSync,
+  readFileSync,
+  existsSync,
+  mkdirSync,
+  rmSync,
+} from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
+import { homedir } from "node:os";
 import net from "node:net";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const projectRoot = join(__dirname, "..");
 const port = 27018;
-// Prefer .mongo-data-v2 when present (older .mongo-data can crash mongod with exit 14)
-const dbPath = join(
-  projectRoot,
-  existsSync(join(projectRoot, ".mongo-data-v2")) ? ".mongo-data-v2" : ".mongo-data"
-);
+
+/**
+ * Project path has spaces ("Travels and Tours") which often crashes mongod (exit 14).
+ * Keep data under the user home instead.
+ */
+const dbPath = join(homedir(), ".ueb3-travel-mongo");
 
 const connectionCandidates = [
   `mongodb://127.0.0.1:${port}/travels-tours?replicaSet=rs0`,
@@ -42,6 +50,12 @@ function updateEnvFiles(databaseUrl) {
       content = `DATABASE_URL="${databaseUrl}"\n${content}`;
     }
 
+    if (/^MONGODB_URI=/m.test(content)) {
+      content = content.replace(/^MONGODB_URI=.*$/m, `MONGODB_URI="${databaseUrl}"`);
+    } else {
+      content = `${content.trimEnd()}\nMONGODB_URI="${databaseUrl}"\n`;
+    }
+
     writeFileSync(envPath, content);
   }
 }
@@ -62,7 +76,36 @@ async function detectWorkingUrl() {
   return null;
 }
 
-mkdirSync(dbPath, { recursive: true });
+function prepareDbPath({ wipe = false } = {}) {
+  if (wipe && existsSync(dbPath)) {
+    console.log(`Clearing broken Mongo data at ${dbPath} ...`);
+    rmSync(dbPath, { recursive: true, force: true });
+  }
+  mkdirSync(dbPath, { recursive: true });
+
+  // Stale lock with nothing listening on the port → previous crash
+  const lock = join(dbPath, "mongod.lock");
+  if (existsSync(lock)) {
+    try {
+      rmSync(lock, { force: true });
+    } catch {
+      // ignore
+    }
+  }
+}
+
+async function startReplSet() {
+  return MongoMemoryReplSet.create({
+    replSet: { name: "rs0", count: 1, storageEngine: "wiredTiger" },
+    instanceOpts: [
+      {
+        port,
+        dbPath,
+        storageEngine: "wiredTiger",
+      },
+    ],
+  });
+}
 
 if (await isPortOpen()) {
   const existingUrl = await detectWorkingUrl();
@@ -78,26 +121,38 @@ if (await isPortOpen()) {
   process.exit(1);
 }
 
+prepareDbPath();
 console.log(`Starting persistent MongoDB at ${dbPath} ...`);
 
-const replSet = await MongoMemoryReplSet.create({
-  replSet: { name: "rs0", count: 1, storageEngine: "wiredTiger" },
-  instanceOpts: [
-    {
-      port,
-      dbPath,
-      storageEngine: "wiredTiger",
-    },
-  ],
-});
+let replSet;
+try {
+  replSet = await startReplSet();
+} catch (error) {
+  console.warn("First Mongo start failed, wiping data dir and retrying...");
+  console.warn(String(error?.message || error));
+  prepareDbPath({ wipe: true });
+  try {
+    replSet = await startReplSet();
+  } catch (retryError) {
+    console.error("");
+    console.error("Local Mongo still failed to start.");
+    console.error("Quick alternative — use Atlas for local auth:");
+    console.error("  1. Copy Atlas URI into .env.local as DATABASE_URL and MONGODB_URI");
+    console.error("  2. npm run seed:atlas");
+    console.error("  3. npm run dev");
+    console.error("");
+    throw retryError;
+  }
+}
 
 const databaseUrl = replSet.getUri("travels-tours");
 updateEnvFiles(databaseUrl);
 
-const pidPath = join(projectRoot, ".mongo-data", "mongod.pid");
-writeFileSync(pidPath, String(process.pid));
+mkdirSync(dbPath, { recursive: true });
+writeFileSync(join(dbPath, "mongod.pid"), String(process.pid));
 
-console.log(`MongoDB ready (data persists in .mongo-data): ${databaseUrl}`);
+console.log(`MongoDB ready: ${databaseUrl}`);
+console.log(`Data folder: ${dbPath}`);
 console.log("Press Ctrl+C to stop (data is kept).");
 
 async function shutdown() {
@@ -113,5 +168,4 @@ process.on("SIGINT", shutdown);
 process.on("SIGTERM", shutdown);
 process.on("SIGHUP", shutdown);
 
-// Keep process alive without unsettled top-level await warnings
 setInterval(() => {}, 1 << 30);
