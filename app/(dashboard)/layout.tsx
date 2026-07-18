@@ -1,5 +1,5 @@
-import { Navbar } from "@/components/shared/navbar";
-import { Footer } from "@/components/shared/footer";
+import { Header } from "@/components/layout/header";
+import { Footer } from "@/components/layout/footer";
 import { DashboardSidebar } from "@/components/shared/dashboard-sidebar";
 import { getSession } from "@/lib/auth";
 import { redirect } from "next/navigation";
@@ -14,11 +14,15 @@ export default async function DashboardLayout({
 
   return (
     <>
-      <Navbar />
-      <main className="flex-1">
-        <div className="mx-auto flex max-w-7xl flex-col gap-8 px-4 py-10 lg:flex-row sm:px-6 lg:px-8">
+      <Header />
+      <main id="main-content" className="flex-1 bg-sand">
+        <div className="mx-auto flex max-w-[1280px] flex-col gap-8 px-4 py-10 sm:px-6 sm:py-14 lg:flex-row lg:gap-12 lg:px-8 lg:py-16">
           <DashboardSidebar />
-          <div className="flex-1">{children}</div>
+          <div className="min-w-0 flex-1">
+            <div className="rounded-md border border-line bg-paper p-5 shadow-sm sm:p-8 md:p-10">
+              {children}
+            </div>
+          </div>
         </div>
       </main>
       <Footer />

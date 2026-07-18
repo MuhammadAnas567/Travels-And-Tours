@@ -1,8 +1,9 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import Link from "next/link";
 import { formatPrice } from "@/lib/utils";
+import { DisplayPrice } from "@/components/shared/display-price";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -14,6 +15,9 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { InventoryBadge } from "@/components/shared/inventory-badge";
+import { ChargeCurrencyNotice } from "@/components/shared/charge-currency-notice";
+import { CTA_LABEL, tourInventoryMode } from "@/lib/inventory";
 import type { TourDate } from "@prisma/client";
 
 type BookingWidgetProps = {
@@ -25,14 +29,19 @@ type BookingWidgetProps = {
   availableDates: TourDate[];
 };
 
+function isFallbackTour(tourId: string) {
+  return tourId.startsWith("fallback-");
+}
+
 export function BookingWidget({
   tourId,
   tourSlug,
+  tourTitle,
   unitPrice,
   maxGroupSize,
   availableDates,
 }: BookingWidgetProps) {
-  const [tourDateId, setTourDateId] = useState("");
+  const [tourDateId, setTourDateId] = useState(availableDates[0]?.id ?? "");
   const [adults, setAdults] = useState(2);
   const [children, setChildren] = useState(0);
 
@@ -42,6 +51,10 @@ export function BookingWidget({
   const seatsLeft = selectedDate
     ? selectedDate.seatsTotal - selectedDate.seatsBooked
     : maxGroupSize;
+  const canProceed = !!tourDateId && adults + children <= seatsLeft && adults >= 1;
+  const fallback = isFallbackTour(tourId);
+  const mode = tourInventoryMode(tourId);
+  const cta = CTA_LABEL[mode];
 
   const bookingUrl = `/booking/${tourId}?${new URLSearchParams({
     tourDateId,
@@ -49,12 +62,35 @@ export function BookingWidget({
     children: String(children),
   }).toString()}`;
 
+  const inquireParams = new URLSearchParams({
+    subject: `Request to book: ${tourTitle ?? tourSlug}`,
+  });
+  if (selectedDate) {
+    inquireParams.set(
+      "message",
+      [
+        `Tour: ${tourTitle ?? tourSlug}`,
+        `Departure: ${new Date(selectedDate.startDate).toLocaleDateString("en-US", {
+          month: "short",
+          day: "numeric",
+          year: "numeric",
+        })}`,
+        `Travellers: ${adults} adult(s)${children ? `, ${children} child(ren)` : ""}`,
+        `Estimated total: ${formatPrice(total)}`,
+      ].join("\n")
+    );
+  }
+  const inquireUrl = `/contact?${inquireParams.toString()}`;
+
   return (
-    <Card className="sticky top-24 shadow-lg">
+    <Card className="sticky top-24 rounded-md border border-line bg-paper shadow-sm">
       <CardHeader>
-        <CardTitle className="text-2xl text-ocean-700">
-          {formatPrice(unitPrice)}
-          <span className="text-sm font-normal text-gray-500"> / person</span>
+        <div className="mb-2">
+          <InventoryBadge mode={mode} />
+        </div>
+        <CardTitle className="text-2xl font-semibold tabular-nums text-pine-500">
+          <DisplayPrice amount={unitPrice} />
+          <span className="text-sm font-normal text-ink-500"> / person</span>
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
@@ -101,7 +137,7 @@ export function BookingWidget({
               id="children"
               type="number"
               min={0}
-              max={seatsLeft - adults}
+              max={Math.max(0, seatsLeft - adults)}
               value={children}
               onChange={(e) => setChildren(Number(e.target.value))}
               className="mt-1"
@@ -109,35 +145,44 @@ export function BookingWidget({
           </div>
         </div>
 
-        <div className="rounded-lg bg-ocean-50 p-3 text-sm">
-          <div className="flex justify-between">
+        <div className="rounded-md bg-pine-50 border border-pine-100 p-3 text-sm tabular-nums">
+          <div className="flex justify-between text-ink-500">
             <span>Adults × {adults}</span>
-            <span>{formatPrice(adults * unitPrice)}</span>
+            <span>
+              <DisplayPrice amount={adults * unitPrice} />
+            </span>
           </div>
           {children > 0 && (
-            <div className="flex justify-between">
+            <div className="flex justify-between text-ink-500">
               <span>Children × {children}</span>
-              <span>{formatPrice(children * childPrice)}</span>
+              <span>
+                <DisplayPrice amount={children * childPrice} />
+              </span>
             </div>
           )}
-          <div className="mt-2 flex justify-between border-t border-ocean-200 pt-2 font-semibold">
+          <div className="mt-2 flex justify-between border-t border-pine-200 pt-2 font-semibold text-ink">
             <span>Total</span>
-            <span>{formatPrice(total)}</span>
+            <span>
+              <DisplayPrice amount={total} />
+            </span>
           </div>
         </div>
 
-        <Button
-          className="w-full"
-          size="lg"
-          disabled={!tourDateId || adults + children > seatsLeft}
-          asChild={!!tourDateId && adults + children <= seatsLeft}
-        >
-          {tourDateId && adults + children <= seatsLeft ? (
-            <Link href={bookingUrl}>Book Now</Link>
+        <Button className="w-full" size="lg" disabled={!canProceed} asChild={canProceed}>
+          {canProceed ? (
+            <Link href={fallback ? inquireUrl : bookingUrl}>{cta}</Link>
           ) : (
-            <span>Book Now</span>
+            <span>{cta}</span>
           )}
         </Button>
+        {fallback ? (
+          <p className="text-center text-xs text-ink-500">
+            Inquire only — we confirm dates and payment with you directly (reply within 2 business
+            hours).
+          </p>
+        ) : (
+          <ChargeCurrencyNotice className="text-center text-xs text-ink-500 leading-relaxed" />
+        )}
       </CardContent>
     </Card>
   );

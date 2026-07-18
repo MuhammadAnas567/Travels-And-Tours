@@ -1,8 +1,10 @@
-import Link from "next/link";
+﻿import Link from "next/link";
 import Image from "next/image";
 import { MapPin, Clock, Star, ArrowRight } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { formatCurrency, convertPrice } from "@/lib/currency";
+import { DisplayPrice } from "@/components/shared/display-price";
+import { InventoryBadge } from "@/components/shared/inventory-badge";
 import { IMAGE_BLUR_DATA_URL, PLACEHOLDER_TOUR_IMAGE } from "@/lib/images";
 import type { Currency, Tour } from "@prisma/client";
 
@@ -40,10 +42,10 @@ export function TourCard({ tour, currency = "USD", rates }: TourCardProps) {
       : originalPrice;
 
   return (
-    <article className="group card-luxury overflow-hidden">
+    <article className="group overflow-hidden rounded-md border border-line bg-paper shadow-sm card-hover">
       <Link
         href={`/tours/${tour.slug}`}
-        className="block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary-500"
+        className="block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-pine-500"
       >
         <div className="relative aspect-[4/3] overflow-hidden">
           <Image
@@ -52,43 +54,49 @@ export function TourCard({ tour, currency = "USD", rates }: TourCardProps) {
             fill
             placeholder="blur"
             blurDataURL={IMAGE_BLUR_DATA_URL}
-            className="img-cover"
+            className="img-cover img-editorial"
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
-          <div className="absolute inset-0 image-overlay opacity-70" />
+          <div className="absolute inset-0 image-scrim" />
           <div className="absolute top-0 left-0 right-0 flex items-start justify-between p-4">
             {tour.isFeatured ? (
-              <Badge className="bg-accent-500 text-ink-900 border-0 font-semibold text-[0.6875rem] tracking-wide uppercase">
+              <span className="rounded-sm bg-pine-500 px-2.5 py-1 text-[0.6875rem] font-semibold uppercase tracking-[0.08em] text-white">
                 Featured
-              </Badge>
-            ) : <span />}
+              </span>
+            ) : (
+              <span />
+            )}
             {tour.discountPrice && (
-              <Badge className="bg-error text-white border-0 font-semibold text-[0.6875rem] tracking-wide uppercase">
+              <Badge className="bg-error text-paper border-0 font-semibold text-[0.6875rem] tracking-wide uppercase">
                 On Sale
               </Badge>
             )}
           </div>
           <div className="absolute bottom-0 left-0 right-0 p-5">
-            <p className="font-heading text-2xl text-white leading-tight">{tour.location}</p>
-            <p className="mt-0.5 flex items-center gap-1.5 text-sm text-white/75">
+            <p className="font-display text-2xl font-semibold text-paper leading-tight">{tour.location}</p>
+            <p className="mt-0.5 flex items-center gap-1.5 text-sm text-paper/75">
               <MapPin className="h-3.5 w-3.5" strokeWidth={1.5} aria-hidden />
               {tour.country}
             </p>
           </div>
         </div>
         <div className="p-6">
-          <div className="mb-3 flex items-center gap-2">
-            <Badge variant="secondary" className="text-[0.6875rem] capitalize tracking-wide font-medium bg-surface-alt text-ink-500 border-line">
+          <div className="mb-3 flex flex-wrap items-center gap-2">
+            <InventoryBadge mode="bookable" />
+            <Badge
+              variant="secondary"
+              className="text-[0.6875rem] capitalize tracking-wide font-medium bg-sand text-ink-500 border-line"
+            >
               {tour.category.toLowerCase()}
             </Badge>
             {tour.avgRating > 0 && (
-              <span className="flex items-center gap-1 text-sm font-medium text-ink-500">
-                <Star className="h-3.5 w-3.5 fill-accent-500 text-accent-500" aria-hidden />
+              <span className="flex items-center gap-1 text-sm font-medium tabular-nums text-ink-500">
+                <Star className="h-3.5 w-3.5 fill-pine-500 text-pine-500" aria-hidden />
                 {tour.avgRating.toFixed(1)}
               </span>
             )}
           </div>
-          <h3 className="line-clamp-2 font-heading text-xl text-ink-900 group-hover:text-primary-500 transition-colors">
+          <h3 className="line-clamp-2 font-display text-xl font-semibold text-ink group-hover:text-pine-500 transition-colors">
             {tour.title}
           </h3>
           <div className="mt-2.5 flex items-center gap-4 text-sm text-ink-500">
@@ -100,20 +108,37 @@ export function TourCard({ tour, currency = "USD", rates }: TourCardProps) {
           </div>
           <div className="mt-5 flex items-end justify-between border-t border-line pt-4">
             <div>
-              <span className="text-[0.6875rem] font-semibold uppercase tracking-widest text-ink-500">From</span>
+              <span className="text-[0.6875rem] font-semibold uppercase tracking-widest text-ink-500">
+                From
+              </span>
               <div className="flex items-baseline gap-2">
-                <span className="text-2xl font-semibold text-primary-500">
-                  {formatCurrency(displayPrice, currency)}
+                <span className="text-2xl font-semibold tabular-nums text-pine-500">
+                  {rates ? (
+                    formatCurrency(displayPrice, currency)
+                  ) : (
+                    <DisplayPrice
+                      amount={basePrice}
+                      from={tour.baseCurrency ?? "USD"}
+                    />
+                  )}
                 </span>
-                {displayOriginal && (
-                  <span className="text-sm text-ink-500 line-through">
+                {displayOriginal && rates ? (
+                  <span className="text-sm tabular-nums text-ink-500 line-through">
                     {formatCurrency(displayOriginal, currency)}
                   </span>
-                )}
+                ) : null}
+                {originalPrice && !rates ? (
+                  <span className="text-sm tabular-nums text-ink-500 line-through">
+                    <DisplayPrice
+                      amount={originalPrice}
+                      from={tour.baseCurrency ?? "USD"}
+                    />
+                  </span>
+                ) : null}
               </div>
             </div>
-            <div className="flex h-10 w-10 items-center justify-center rounded-[var(--radius-full)] bg-primary-100 text-primary-500 transition-all group-hover:bg-primary-500 group-hover:text-white">
-              <ArrowRight className="h-4 w-4" />
+            <div className="flex h-11 w-11 items-center justify-center rounded-sm bg-pine-100 text-pine-500 transition-colors group-hover:bg-pine-500 group-hover:text-paper">
+              <ArrowRight className="h-4 w-4" strokeWidth={1.5} />
             </div>
           </div>
         </div>

@@ -17,22 +17,35 @@ const providers: Provider[] = [
     async authorize(credentials) {
       if (!credentials?.email || !credentials?.password) return null;
 
-      const email = credentials.email as string;
+      const email = (credentials.email as string).trim().toLowerCase();
       const password = credentials.password as string;
 
-      const user = await prisma.user.findUnique({ where: { email } });
-      if (!user?.hashedPassword) return null;
+      if (!process.env.DATABASE_URL?.trim()) {
+        console.error("[auth] DATABASE_URL missing on this environment");
+        return null;
+      }
 
-      const isValid = await bcrypt.compare(password, user.hashedPassword);
-      if (!isValid) return null;
+      try {
+        const user = await prisma.user.findUnique({ where: { email } });
+        if (!user?.hashedPassword) {
+          console.error("[auth] user not found or no password:", email);
+          return null;
+        }
 
-      return {
-        id: user.id,
-        email: user.email,
-        name: user.name,
-        image: user.image,
-        role: user.role,
-      };
+        const isValid = await bcrypt.compare(password, user.hashedPassword);
+        if (!isValid) return null;
+
+        return {
+          id: user.id,
+          email: user.email,
+          name: user.name,
+          image: user.image,
+          role: user.role,
+        };
+      } catch (error) {
+        console.error("[auth] database error during login:", error);
+        return null;
+      }
     },
   }),
 ];
@@ -75,4 +88,18 @@ export async function requireAdmin() {
     throw new Error("Forbidden");
   }
   return session;
+}
+
+/** ADMIN or AGENT — for quotes CRM and shared ops surfaces */
+export async function requireStaff() {
+  const session = await requireAuth();
+  const role = session.user.role;
+  if (role !== "ADMIN" && role !== "AGENT") {
+    throw new Error("Forbidden");
+  }
+  return session;
+}
+
+export function isStaffRole(role?: string | null) {
+  return role === "ADMIN" || role === "AGENT";
 }

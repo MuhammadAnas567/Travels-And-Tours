@@ -131,6 +131,13 @@ async function finalizeBooking({
       },
     });
 
+    if (booking.couponCode && booking.status !== "CONFIRMED") {
+      await tx.coupon.updateMany({
+        where: { code: booking.couponCode },
+        data: { usageCount: { increment: 1 } },
+      });
+    }
+
     const travelerInfo = booking.travelerInfo as {
       name?: string;
       email?: string;

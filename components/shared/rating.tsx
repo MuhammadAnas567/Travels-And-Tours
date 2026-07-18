@@ -1,4 +1,4 @@
-import { Star } from "lucide-react";
+﻿import { Star } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export function Rating({
@@ -22,14 +22,14 @@ export function Rating({
           className={cn(
             sizeClass,
             i < Math.round(value)
-              ? "fill-amber-400 text-amber-400"
-              : "fill-gray-200 text-gray-200"
+              ? "fill-gold-400 text-gold-400"
+              : "fill-line text-line"
           )}
           aria-hidden
         />
       ))}
       {showValue && (
-        <span className="ml-1 text-sm text-gray-600">{value.toFixed(1)}</span>
+        <span className="ml-1 text-sm text-ink-500">{value.toFixed(1)}</span>
       )}
     </div>
   );

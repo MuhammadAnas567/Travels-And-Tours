@@ -7,7 +7,7 @@ function Skeleton({ className, ...props }: React.HTMLAttributes<HTMLDivElement>)
 
 function HotelCardSkeleton() {
   return (
-    <div className="overflow-hidden rounded-[var(--radius-md)] border border-line bg-surface">
+    <div className="overflow-hidden rounded-md border border-line bg-surface">
       <Skeleton className="aspect-[4/3] w-full rounded-none" />
       <div className="space-y-3 p-5">
         <Skeleton className="h-3 w-24" />
@@ -22,4 +22,18 @@ function HotelCardSkeleton() {
   );
 }
 
-export { Skeleton, HotelCardSkeleton };
+function FlightRowSkeleton() {
+  return (
+    <div className="flex items-center gap-4 rounded-md border border-line bg-surface p-4">
+      <Skeleton className="h-10 w-10 shrink-0 rounded-sm" />
+      <div className="flex flex-1 gap-6">
+        <Skeleton className="h-8 w-24" />
+        <Skeleton className="h-4 w-20" />
+        <Skeleton className="h-8 w-24" />
+      </div>
+      <Skeleton className="h-10 w-28" />
+    </div>
+  );
+}
+
+export { Skeleton, HotelCardSkeleton, FlightRowSkeleton };

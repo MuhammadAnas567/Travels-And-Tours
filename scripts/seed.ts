@@ -1,5 +1,6 @@
 import { connectDB } from "../lib/db/connect";
 import { User, Destination, Hotel, Flight, Review } from "../lib/models";
+import { SEED_HOTEL_DEFS, hotelSlug } from "../lib/data/hotel-seed";
 import bcrypt from "bcryptjs";
 
 const DESTINATIONS = [
@@ -17,40 +18,7 @@ const DESTINATIONS = [
   { name: "Safari Kenya", country: "Kenya", category: "wildlife" as const, priceFrom: 310, popularity: 78, lat: -1.2921, lng: 36.8219, image: "https://images.unsplash.com/photo-1516426122078-c23e76319801?w=800", description: "Maasai Mara and the Great Migration." },
 ];
 
-function slugify(text: string) {
-  return text.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
-}
-
-const HOTEL_NAMES = [
-  { name: "Marina Bay Grand", city: "Dubai", country: "UAE", stars: 5, price: 289, tags: ["luxury", "pool", "spa"] },
-  { name: "Eiffel View Boutique", city: "Paris", country: "France", stars: 4, price: 198, tags: ["boutique", "romantic"] },
-  { name: "Shinjuku Sky Hotel", city: "Tokyo", country: "Japan", stars: 4, price: 215, tags: ["city", "business"] },
-  { name: "Santorini Caldera Suites", city: "Santorini", country: "Greece", stars: 5, price: 340, tags: ["luxury", "view"] },
-  { name: "Ubud Jungle Retreat", city: "Bali", country: "Indonesia", stars: 5, price: 175, tags: ["wellness", "nature"] },
-  { name: "Times Square Central", city: "New York", country: "USA", stars: 4, price: 265, tags: ["city", "theatre"] },
-  { name: "Maldives Overwater Resort", city: "Malé", country: "Maldives", stars: 5, price: 520, tags: ["beach", "luxury"] },
-  { name: "Interlaken Alpine Lodge", city: "Interlaken", country: "Switzerland", stars: 4, price: 310, tags: ["mountains", "ski"] },
-  { name: "Barcelona Gothic Quarter Inn", city: "Barcelona", country: "Spain", stars: 3, price: 142, tags: ["culture", "walkable"] },
-  { name: "Cape Grace Waterfront", city: "Cape Town", country: "South Africa", stars: 5, price: 228, tags: ["harbour", "fine-dining"] },
-  { name: "Reykjavik Northern Lights Hotel", city: "Reykjavik", country: "Iceland", stars: 4, price: 245, tags: ["adventure", "spa"] },
-  { name: "Mara Safari Camp", city: "Maasai Mara", country: "Kenya", stars: 5, price: 385, tags: ["wildlife", "safari"] },
-  { name: "London Thames Riverside", city: "London", country: "UK", stars: 4, price: 232, tags: ["historic", "river"] },
-  { name: "Singapore Orchard Luxe", city: "Singapore", country: "Singapore", stars: 5, price: 278, tags: ["shopping", "rooftop"] },
-  { name: "Rome Colosseum View", city: "Rome", country: "Italy", stars: 4, price: 189, tags: ["historic", "culture"] },
-  { name: "Sydney Harbour Hotel", city: "Sydney", country: "Australia", stars: 5, price: 295, tags: ["harbour", "luxury"] },
-  { name: "Bangkok Riverside Palace", city: "Bangkok", country: "Thailand", stars: 4, price: 98, tags: ["budget", "spa"] },
-  { name: "Istanbul Sultanahmet Suites", city: "Istanbul", country: "Turkey", stars: 4, price: 156, tags: ["culture", "historic"] },
-  { name: "Los Angeles Sunset Strip", city: "Los Angeles", country: "USA", stars: 4, price: 218, tags: ["city", "nightlife"] },
-  { name: "Amsterdam Canal House", city: "Amsterdam", country: "Netherlands", stars: 4, price: 205, tags: ["boutique", "canal"] },
-  { name: "Miami Beach Oceanfront", city: "Miami", country: "USA", stars: 5, price: 312, tags: ["beach", "pool"] },
-  { name: "Vienna Imperial Hotel", city: "Vienna", country: "Austria", stars: 5, price: 268, tags: ["classic", "culture"] },
-  { name: "Seoul Gangnam Tower", city: "Seoul", country: "South Korea", stars: 4, price: 188, tags: ["city", "modern"] },
-  { name: "Lisbon Alfama Guesthouse", city: "Lisbon", country: "Portugal", stars: 3, price: 118, tags: ["budget", "charming"] },
-  { name: "Hong Kong Victoria Peak", city: "Hong Kong", country: "China", stars: 5, price: 302, tags: ["skyline", "luxury"] },
-  { name: "Marrakech Riad Oasis", city: "Marrakech", country: "Morocco", stars: 4, price: 134, tags: ["culture", "spa"] },
-  { name: "Prague Old Town Residence", city: "Prague", country: "Czech Republic", stars: 4, price: 148, tags: ["historic", "walkable"] },
-  { name: "Zurich Lakefront", city: "Zurich", country: "Switzerland", stars: 5, price: 335, tags: ["business", "lake"] },
-];
+const HOTEL_NAMES = SEED_HOTEL_DEFS;
 
 const AMENITIES_POOL = ["Free WiFi", "Pool", "Spa", "Gym", "Restaurant", "Bar", "Room Service", "Airport Shuttle", "Parking", "Pet Friendly", "Breakfast Included", "Beach Access"];
 
@@ -114,7 +82,7 @@ async function main() {
 
   const hotels = await Hotel.insertMany(
     HOTEL_NAMES.map((h, i) => {
-      const slug = slugify(`${h.name}-${h.city}`);
+      const slug = hotelSlug(h.name, h.city);
       const amenityCount = 4 + (i % 5);
       const amenities = AMENITIES_POOL.slice(0, amenityCount);
       const rating = 3.8 + (i % 12) * 0.1;

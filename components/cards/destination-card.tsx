@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { IMAGE_BLUR_DATA_URL, PLACEHOLDER_TOUR_IMAGE } from "@/lib/images";
+import { DisplayPrice } from "@/components/shared/display-price";
 
 type DestinationCardProps = {
   name: string;
@@ -16,7 +17,7 @@ export function DestinationCard({ name, country, image, priceFrom, href }: Desti
   return (
     <Link
       href={link}
-      className="group relative shrink-0 w-64 overflow-hidden rounded-[var(--radius-md)] card-hover shadow-card focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2"
+      className="group relative w-full overflow-hidden rounded-md border border-line shadow-sm card-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pine-500 focus-visible:ring-offset-2 focus-visible:ring-offset-sand"
     >
       <div className="relative aspect-[4/3]">
         <Image
@@ -25,14 +26,16 @@ export function DestinationCard({ name, country, image, priceFrom, href }: Desti
           fill
           placeholder="blur"
           blurDataURL={IMAGE_BLUR_DATA_URL}
-          className="img-cover"
-          sizes="256px"
+          className="img-cover img-editorial"
+          sizes="(max-width:640px) 100vw, (max-width:1024px) 50vw, 25vw"
         />
-        <div className="absolute inset-0 image-overlay" />
+        <div className="absolute inset-0 image-scrim" />
         <div className="absolute bottom-0 left-0 right-0 p-4">
-          <h3 className="font-heading text-lg font-bold text-white">{name}</h3>
-          <p className="text-sm text-white/75">{country}</p>
-          <p className="mt-1 text-sm font-semibold text-accent-500">From ${priceFrom}</p>
+          <h3 className="font-display text-lg font-semibold text-paper">{name}</h3>
+          <p className="text-sm text-paper/75">{country}</p>
+          <p className="mt-1 text-sm font-semibold tabular-nums text-pine-400">
+            From <DisplayPrice amount={priceFrom} />
+          </p>
         </div>
       </div>
     </Link>

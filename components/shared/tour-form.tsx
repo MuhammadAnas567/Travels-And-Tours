@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -73,7 +73,7 @@ export function TourForm({ action, tour, updateAction }: TourFormProps) {
                 id="category"
                 name="category"
                 defaultValue={tour?.category ?? "ADVENTURE"}
-                className="mt-1 flex h-10 w-full rounded-lg border border-ocean-200 px-3 text-sm"
+                className="mt-1 flex h-10 w-full rounded-sm border border-line bg-paper px-3 text-sm text-ink-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pine-500 focus-visible:ring-offset-2"
               >
                 {categories.map((c) => (
                   <option key={c} value={c}>{c}</option>
@@ -104,7 +104,7 @@ export function TourForm({ action, tour, updateAction }: TourFormProps) {
                 id="status"
                 name="status"
                 defaultValue={tour?.status ?? "DRAFT"}
-                className="mt-1 flex h-10 w-full rounded-lg border border-ocean-200 px-3 text-sm"
+                className="mt-1 flex h-10 w-full rounded-sm border border-line bg-paper px-3 text-sm text-ink-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pine-500 focus-visible:ring-offset-2"
               >
                 <option value="ACTIVE">Active</option>
                 <option value="DRAFT">Draft</option>

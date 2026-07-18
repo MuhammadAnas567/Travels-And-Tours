@@ -27,8 +27,10 @@ export default function ProfilePage() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold text-ink-900">Profile Settings</h1>
-      <Card className="mt-6 max-w-lg">
+      <h1 className="font-heading text-2xl font-semibold tracking-tight text-ink-900">
+        Profile Settings
+      </h1>
+      <Card className="mt-6 max-w-lg border-line bg-sand/40">
         <CardHeader>
           <CardTitle>Personal Information</CardTitle>
         </CardHeader>
@@ -41,7 +43,7 @@ export default function ProfilePage() {
                 name="name"
                 defaultValue={session?.user?.name ?? ""}
                 required
-                className="mt-1"
+                className="mt-1 rounded-sm border-line focus-visible:ring-pine-500"
               />
             </div>
             <div>
@@ -52,7 +54,7 @@ export default function ProfilePage() {
                 type="email"
                 defaultValue={session?.user?.email ?? ""}
                 required
-                className="mt-1"
+                className="mt-1 rounded-sm border-line focus-visible:ring-pine-500"
               />
             </div>
             <Button type="submit" disabled={loading}>

@@ -1,5 +1,6 @@
-"use client";
+﻿"use client";
 
+import { useState } from "react";
 import { toast } from "sonner";
 import { updateBookingStatus, refundBooking } from "@/actions/admin";
 import { Button } from "@/components/ui/button";
@@ -12,15 +13,20 @@ export function BookingActions({
   bookingId: string;
   status: BookingStatus;
 }) {
+  const [showRefundConfirm, setShowRefundConfirm] = useState(false);
+  const [refunding, setRefunding] = useState(false);
+
   async function handleStatus(newStatus: BookingStatus) {
     await updateBookingStatus(bookingId, newStatus);
     toast.success("Status updated");
     window.location.reload();
   }
 
-  async function handleRefund() {
-    if (!confirm("Issue refund and cancel this booking?")) return;
+  async function handleConfirmRefund() {
+    setRefunding(true);
     const result = await refundBooking(bookingId);
+    setRefunding(false);
+    setShowRefundConfirm(false);
     if ("error" in result && result.error) toast.error(result.error);
     else {
       toast.success("Refund issued");
@@ -35,9 +41,31 @@ export function BookingActions({
           <Button size="sm" variant="ghost" onClick={() => handleStatus("COMPLETED")}>
             Complete
           </Button>
-          <Button size="sm" variant="ghost" className="text-red-600" onClick={handleRefund}>
-            Refund
-          </Button>
+          {showRefundConfirm ? (
+            <div className="flex flex-wrap items-center gap-1">
+              <span className="text-xs text-ink-500 px-1">Refund &amp; cancel?</span>
+              <Button size="sm" variant="destructive" onClick={handleConfirmRefund} disabled={refunding}>
+                {refunding ? "Processing..." : "Confirm"}
+              </Button>
+              <Button
+                size="sm"
+                variant="outline"
+                onClick={() => setShowRefundConfirm(false)}
+                disabled={refunding}
+              >
+                Cancel
+              </Button>
+            </div>
+          ) : (
+            <Button
+              size="sm"
+              variant="ghost"
+              className="text-error"
+              onClick={() => setShowRefundConfirm(true)}
+            >
+              Refund
+            </Button>
+          )}
         </>
       )}
       {status === "PENDING" && (

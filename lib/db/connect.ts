@@ -11,35 +11,59 @@ declare global {
 const cached = global.mongooseCache ?? { conn: null, promise: null };
 global.mongooseCache = cached;
 
-export function getMongoUri() {
-  const dedicated = process.env.MONGODB_URI;
-  const shared = process.env.DATABASE_URL;
-  const fallback = "mongodb://127.0.0.1:27018/travels-tours?replicaSet=rs0";
+function isLocalUri(uri: string) {
+  return uri.includes("127.0.0.1") || uri.includes("localhost");
+}
 
-  // Local `predev` starts Mongo on 127.0.0.1 — prefer that so seed + Next share data.
-  // Production/Vercel should set MONGODB_URI (or DATABASE_URL) to Atlas.
-  if (
-    process.env.NODE_ENV !== "production" &&
-    shared &&
-    (shared.includes("127.0.0.1") || shared.includes("localhost"))
-  ) {
+export function getMongoUri() {
+  const dedicated = process.env.MONGODB_URI?.trim();
+  const shared = process.env.DATABASE_URL?.trim();
+  const fallback = "mongodb://127.0.0.1:27018/travels-tours?replicaSet=rs0";
+  const production = process.env.NODE_ENV === "production";
+
+  if (!production && shared && isLocalUri(shared)) {
     return shared;
   }
 
-  return dedicated ?? shared ?? fallback;
+  const uri = dedicated || shared;
+  if (production) {
+    if (!uri || isLocalUri(uri)) {
+      // Prefer catalogue fallbacks over hard-crashing every hotel/flight page.
+      console.error(
+        "[mongo] Production requires MONGODB_URI (or DATABASE_URL) pointing to MongoDB Atlas — not localhost."
+      );
+      return "";
+    }
+    return uri;
+  }
+
+  return uri || fallback;
 }
 
 export async function connectDB() {
   if (cached.conn) return cached.conn;
 
   if (!cached.promise) {
+    const uri = getMongoUri();
+    if (!uri) {
+      throw new Error("MongoDB URI is not configured");
+    }
+    const isProd = process.env.VERCEL === "1" || process.env.NODE_ENV === "production";
     mongoose.set("strictQuery", true);
-    cached.promise = mongoose.connect(getMongoUri(), {
+    cached.promise = mongoose.connect(uri, {
       bufferCommands: false,
-      maxPoolSize: 10,
+      maxPoolSize: isProd ? 10 : 5,
+      serverSelectionTimeoutMS: isProd ? 10_000 : 5_000,
+      connectTimeoutMS: isProd ? 10_000 : 5_000,
+      socketTimeoutMS: isProd ? 20_000 : 10_000,
     });
   }
 
-  cached.conn = await cached.promise;
-  return cached.conn;
+  try {
+    cached.conn = await cached.promise;
+    return cached.conn;
+  } catch (err) {
+    cached.promise = null;
+    throw err;
+  }
 }

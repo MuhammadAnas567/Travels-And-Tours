@@ -245,13 +245,13 @@ async function main() {
   const adminPassword = await bcrypt.hash("admin123", 12);
   const userPassword = await bcrypt.hash("user123", 12);
 
-  await ensureUser("admin@traveltours.com", {
+  await ensureUser("admin@traveltours.com".toLowerCase(), {
     name: "Admin User",
     hashedPassword: adminPassword,
     role: "ADMIN",
   });
 
-  await ensureUser("user@example.com", {
+  await ensureUser("user@example.com".toLowerCase(), {
     name: "Demo User",
     hashedPassword: userPassword,
     role: "USER",

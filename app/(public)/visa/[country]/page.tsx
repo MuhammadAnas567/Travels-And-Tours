@@ -34,11 +34,16 @@ export default async function VisaDetailPage({ params }: Props) {
       <Container>
         <div className="grid gap-12 lg:grid-cols-3">
           <div className="lg:col-span-2">
-            <div className="flex items-center gap-3">
-              <span className="text-4xl">{visa.flagEmoji ?? "🌍"}</span>
+            <div className="flex items-center gap-4">
+              <span
+                className="flex h-14 min-w-14 items-center justify-center rounded-sm border border-line bg-sand px-3 font-display text-lg font-semibold tracking-wide text-pine-500"
+                aria-hidden
+              >
+                {(visa.countrySlug ?? slug).slice(0, 2).toUpperCase()}
+              </span>
               <div>
-                <p className="text-caption">Visa Assistance</p>
-                <h1 className="text-h2 font-display font-medium text-ink">
+                <p className="eyebrow">Visa Assistance</p>
+                <h1 className="mt-1 text-h2 font-display font-semibold text-ink">
                   {visa.country} — {visa.visaType}
                 </h1>
               </div>

@@ -19,9 +19,9 @@ export default async function BookingCancelPage({
 
   return (
     <div className="mx-auto flex min-h-[60vh] max-w-lg flex-col items-center justify-center px-4 py-16 text-center">
-      <XCircle className="h-16 w-16 text-amber-500" aria-hidden />
-      <h1 className="mt-4 text-2xl font-bold text-ocean-900">Payment Cancelled</h1>
-      <p className="mt-2 text-gray-600">
+      <XCircle className="h-16 w-16 text-warning" strokeWidth={1.5} aria-hidden />
+      <h1 className="mt-4 font-display text-2xl font-semibold text-ink">Payment cancelled</h1>
+      <p className="mt-2 text-ink-500 max-w-md leading-relaxed">
         Your payment was not completed. No charges were made and your seats were
         not reserved.
       </p>

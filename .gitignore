@@ -41,4 +41,8 @@ yarn-error.log*
 next-env.d.ts
 
 /lib/generated/prisma
+
+# Local MongoDB data (never commit)
 .mongo-data
+.mongo-data-v2
+.mongo-data*/

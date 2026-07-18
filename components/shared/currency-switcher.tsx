@@ -1,6 +1,5 @@
-"use client";
+﻿"use client";
 
-import { useRouter } from "next/navigation";
 import type { Currency } from "@prisma/client";
 import {
   Select,
@@ -9,19 +8,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { CURRENCY_COOKIE } from "@/lib/constants";
 import { SUPPORTED_CURRENCIES } from "@/lib/currency";
+import { usePreferences } from "@/components/providers/preferences-provider";
 
-export function CurrencySwitcher({ value }: { value: Currency }) {
-  const router = useRouter();
-
-  function onChange(currency: string) {
-    document.cookie = `${CURRENCY_COOKIE}=${currency};path=/;max-age=31536000`;
-    router.refresh();
-  }
+export function CurrencySwitcher({ value }: { value?: Currency }) {
+  const { currency, setCurrency } = usePreferences();
+  const current = value ?? currency;
 
   return (
-    <Select value={value} onValueChange={onChange}>
+    <Select value={current} onValueChange={(c) => setCurrency(c as Currency)}>
       <SelectTrigger className="h-9 w-[88px] border-line bg-surface text-xs">
         <SelectValue />
       </SelectTrigger>

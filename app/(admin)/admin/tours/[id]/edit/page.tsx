@@ -1,6 +1,5 @@
 import { notFound } from "next/navigation";
 import { prisma } from "@/lib/db";
-import { AdminSidebar } from "@/components/shared/admin-sidebar";
 import { TourForm } from "@/components/shared/tour-form";
 import { updateTour } from "@/actions/admin";
 
@@ -14,13 +13,12 @@ export default async function EditTourPage({
   if (!tour) notFound();
 
   return (
-    <div className="flex flex-col gap-8 lg:flex-row">
-      <AdminSidebar />
-      <div className="flex-1">
-        <h1 className="text-2xl font-bold text-ocean-900">Edit Tour</h1>
-        <div className="mt-6">
-          <TourForm tour={tour} updateAction={updateTour} />
-        </div>
+    <div>
+      <h1 className="font-heading text-2xl font-semibold tracking-tight text-ink-900">
+        Edit Tour
+      </h1>
+      <div className="mt-6">
+        <TourForm tour={tour} updateAction={updateTour} />
       </div>
     </div>
   );

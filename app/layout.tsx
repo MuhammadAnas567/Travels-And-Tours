@@ -1,30 +1,34 @@
 import type { Metadata } from "next";
-import { Plus_Jakarta_Sans, Inter } from "next/font/google";
+import { Fraunces, Hanken_Grotesk } from "next/font/google";
 import { Toaster } from "sonner";
 import { Providers } from "@/components/providers";
 import "./globals.css";
 
-const displayFont = Plus_Jakarta_Sans({
+const displayFont = Fraunces({
   variable: "--font-display",
   subsets: ["latin"],
-  weight: ["600", "700"],
+  weight: ["600"],
   display: "swap",
+  preload: true,
+  adjustFontFallback: true,
 });
 
-const bodyFont = Inter({
+const bodyFont = Hanken_Grotesk({
   variable: "--font-body",
   subsets: ["latin"],
   weight: ["400", "500", "600"],
   display: "swap",
+  preload: true,
+  adjustFontFallback: true,
 });
 
 export const metadata: Metadata = {
   title: {
-    default: "UEB3 Travel — Flights, Hotels & Packages Worldwide",
+    default: "UEB3 Travel — Private Journeys & Curated Escapes",
     template: "%s | UEB3 Travel",
   },
   description:
-    "Book flights, hotels, and vacation packages worldwide. Best prices, free cancellation, and 24/7 support.",
+    "Plan flights, stays, and tailor-made journeys with an editorial eye — honest fares, refined itineraries, and humans on support.",
   metadataBase: new URL(
     process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000"
   ),
@@ -48,8 +52,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${displayFont.variable} ${bodyFont.variable} h-full`}>
-      <body className="min-h-full flex flex-col antialiased bg-surface-alt text-ink-700 font-sans">
+    <html
+      lang="en"
+      className={`${displayFont.variable} ${bodyFont.variable} h-full`}
+    >
+      <body
+        className={`${bodyFont.className} min-h-full flex flex-col antialiased bg-sand text-ink-700 overflow-x-clip`}
+      >
         <a href="#main-content" className="skip-link">
           Skip to main content
         </a>

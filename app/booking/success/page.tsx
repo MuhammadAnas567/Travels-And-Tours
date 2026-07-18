@@ -87,7 +87,7 @@ export default async function BookingSuccessPage({
       </p>
 
       {booking && (
-        <div className="mt-6 w-full rounded-2xl border border-line bg-surface p-5 text-left text-sm shadow-card space-y-2">
+        <div className="mt-6 w-full rounded-lg border border-line bg-surface p-5 text-left text-sm shadow-card space-y-2">
           {booking.bookingReference && (
             <p>
               <span className="text-ink-500">Reference</span>

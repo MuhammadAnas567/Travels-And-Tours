@@ -10,17 +10,20 @@ import { Resolver } from "node:dns/promises";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 
-function loadEnvFile(name) {
+function loadEnvFile(name, { override = false } = {}) {
   const path = join(root, name);
   if (!existsSync(path)) return;
   for (const line of readFileSync(path, "utf8").split(/\r?\n/)) {
     const m = line.match(/^\s*([A-Z0-9_]+)\s*=\s*"?([^"]*)"?\s*$/);
-    if (m && !process.env[m[1]]) process.env[m[1]] = m[2];
+    if (!m) continue;
+    if (override || !process.env[m[1]]) process.env[m[1]] = m[2];
   }
 }
 
-loadEnvFile(".env.local");
+// Localhost .env first, then Atlas override file wins for seeding
 loadEnvFile(".env");
+loadEnvFile(".env.local");
+loadEnvFile(".env.atlas.local", { override: true });
 
 async function toStandardUri(srvUri) {
   const m = srvUri.match(
@@ -75,11 +78,29 @@ if (raw.startsWith("mongodb+srv://")) {
 
 console.log("Seeding Atlas:", uri.replace(/:[^:@/]+@/, ":****@"));
 
-const result = spawnSync("npx", ["tsx", "scripts/seed.ts"], {
+const env = { ...process.env, MONGODB_URI: uri, DATABASE_URL: uri };
+
+const catalogue = spawnSync("npx", ["tsx", "scripts/seed.ts"], {
   cwd: root,
   stdio: "inherit",
-  env: { ...process.env, MONGODB_URI: uri, DATABASE_URL: uri },
+  env,
+  shell: true,
+});
+if ((catalogue.status ?? 1) !== 0) process.exit(catalogue.status ?? 1);
+
+const schema = spawnSync("npx", ["prisma", "db", "push", "--skip-generate"], {
+  cwd: root,
+  stdio: "inherit",
+  env,
+  shell: true,
+});
+if ((schema.status ?? 1) !== 0) process.exit(schema.status ?? 1);
+
+const prismaSeed = spawnSync("npx", ["tsx", "prisma/seed.ts"], {
+  cwd: root,
+  stdio: "inherit",
+  env,
   shell: true,
 });
 
-process.exit(result.status ?? 1);
+process.exit(prismaSeed.status ?? 1);

@@ -34,11 +34,11 @@ export function SearchRouteLine({ from, to, className }: RouteLineProps) {
         <defs>
           <linearGradient id={`route-grad-${uid}`} x1="0" y1="0" x2="1" y2="0">
             <stop offset="0%" stopColor="var(--color-navy-500)" />
-            <stop offset="100%" stopColor="var(--color-gold-500)" />
+            <stop offset="100%" stopColor="var(--color-pine-400)" />
           </linearGradient>
         </defs>
         <circle cx="18" cy="20" r="5" fill="var(--color-navy-500)" />
-        <circle cx="302" cy="20" r="5" fill="var(--color-gold-500)" />
+        <circle cx="302" cy="20" r="5" fill="var(--color-pine-400)" />
         <path
           key={`${from}-${to}`}
           d="M24 20 C 90 4, 230 36, 296 20"
