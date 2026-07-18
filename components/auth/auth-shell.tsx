@@ -17,13 +17,13 @@ function BrandMark({ light = false }: { light?: boolean }) {
   return (
     <Link
       href="/"
-      className="flex items-center gap-2.5 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pine-500 w-fit"
+      className="flex min-w-0 w-fit items-center gap-2 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pine-500 sm:gap-2.5"
     >
       <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-pine-500 font-display text-base font-bold text-white shadow-sm">
         U
       </div>
       <span
-        className={`font-display text-xl font-semibold tracking-tight ${
+        className={`truncate font-display text-lg font-semibold tracking-tight sm:text-xl ${
           light ? "text-paper" : "text-ink-900"
         }`}
       >
@@ -78,24 +78,24 @@ export function AuthShell({ title, subtitle, children }: AuthShellProps) {
             }}
             aria-hidden
           />
-          <header className="relative z-10 flex items-center justify-between px-5 py-5 sm:px-8 lg:px-12">
-            <div className="lg:invisible">
+          <header className="relative z-10 flex min-w-0 items-center justify-between gap-3 px-4 py-4 sm:px-8 sm:py-5 lg:px-12">
+            <div className="min-w-0 lg:invisible">
               <BrandMark />
             </div>
             <Link
               href="/"
-              className="text-sm font-medium text-ink-500 hover:text-pine-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pine-500 rounded-sm"
+              className="shrink-0 rounded-sm text-sm font-medium text-ink-500 hover:text-pine-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pine-500"
             >
               ← Back to site
             </Link>
           </header>
 
-          <div className="relative z-10 flex flex-1 items-center justify-center px-5 py-8 sm:px-8 lg:px-12 lg:py-12">
+          <div className="relative z-10 flex min-w-0 flex-1 items-center justify-center px-4 py-6 sm:px-8 sm:py-8 lg:px-12 lg:py-12">
             <motion.div
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1], delay: 0.05 }}
-              className="w-full max-w-[420px]"
+              className="min-w-0 w-full max-w-[420px]"
             >
               <h1 className="font-display text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
                 {title}

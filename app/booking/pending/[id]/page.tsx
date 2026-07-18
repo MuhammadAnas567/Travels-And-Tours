@@ -6,6 +6,7 @@ import { formatCurrency } from "@/lib/currency";
 import { Container, Section } from "@/components/ui/section";
 import { Badge } from "@/components/ui/badge";
 import { PaymentProofForm } from "@/components/shared/payment-proof-form";
+import { bookingTitle, type ProductSnapshot } from "@/lib/commerce";
 
 type Props = { params: Promise<{ id: string }> };
 
@@ -22,6 +23,14 @@ export default async function PendingBookingPage({ params }: Props) {
   if (!booking || booking.status !== "PENDING_VERIFICATION") notFound();
 
   const bank = siteConfig.bankTransfer;
+  const snapshot = booking.productSnapshot as ProductSnapshot | null;
+  const title =
+    booking.tour?.title ?? bookingTitle(booking.type, snapshot ?? undefined);
+  const start = booking.tourDate?.startDate
+    ? booking.tourDate.startDate
+    : snapshot?.startDate
+      ? new Date(snapshot.startDate)
+      : null;
 
   return (
     <Section>
@@ -30,7 +39,8 @@ export default async function PendingBookingPage({ params }: Props) {
           <Badge variant="warning">Pending verification</Badge>
           <h1 className="mt-4 font-display text-h2 text-ink">Complete your payment</h1>
           <p className="mt-2 text-muted">
-            {booking.tour.title} · {booking.tourDate.startDate.toLocaleDateString()}
+            {title}
+            {start ? ` · ${start.toLocaleDateString()}` : ""}
           </p>
           <p className="mt-4 text-2xl font-semibold text-primary">
             {formatCurrency(booking.totalPrice, booking.currency)}
@@ -40,10 +50,22 @@ export default async function PendingBookingPage({ params }: Props) {
             <div className="mt-8 rounded-[var(--radius-lg)] border border-line bg-surface p-6">
               <h2 className="font-display text-lg">Bank transfer details</h2>
               <dl className="mt-4 space-y-2 text-sm">
-                <div className="flex justify-between"><dt className="text-muted">Bank</dt><dd>{bank.bankName}</dd></div>
-                <div className="flex justify-between"><dt className="text-muted">Account title</dt><dd>{bank.accountTitle}</dd></div>
-                <div className="flex justify-between"><dt className="text-muted">Account #</dt><dd className="font-mono">{bank.accountNumber || "Contact office"}</dd></div>
-                <div className="flex justify-between"><dt className="text-muted">IBAN</dt><dd className="font-mono">{bank.iban || "—"}</dd></div>
+                <div className="flex justify-between">
+                  <dt className="text-muted">Bank</dt>
+                  <dd>{bank.bankName}</dd>
+                </div>
+                <div className="flex justify-between">
+                  <dt className="text-muted">Account title</dt>
+                  <dd>{bank.accountTitle}</dd>
+                </div>
+                <div className="flex justify-between">
+                  <dt className="text-muted">Account #</dt>
+                  <dd className="font-mono">{bank.accountNumber || "Contact office"}</dd>
+                </div>
+                <div className="flex justify-between">
+                  <dt className="text-muted">IBAN</dt>
+                  <dd className="font-mono">{bank.iban || "—"}</dd>
+                </div>
               </dl>
             </div>
           )}

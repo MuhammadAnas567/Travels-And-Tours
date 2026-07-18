@@ -46,13 +46,13 @@ export function SectionHeader({
   return (
     <div
       className={cn(
-        "mb-12 max-w-2xl",
+        "mb-8 max-w-2xl sm:mb-10 lg:mb-12",
         align === "center" && "mx-auto text-center",
         className
       )}
     >
       {eyebrow && <p className="eyebrow mb-3">{eyebrow}</p>}
-      <h2 className="text-h2 text-ink">{title}</h2>
+      <h2 className="text-h2 max-w-full break-words text-ink">{title}</h2>
       {description && (
         <p className="mt-4 text-ink-500 leading-relaxed max-w-[65ch]">{description}</p>
       )}
@@ -68,7 +68,7 @@ export function Container({
   className?: string;
 }) {
   return (
-    <div className={cn("mx-auto w-full max-w-[1280px] px-4 sm:px-6 lg:px-8", className)}>
+    <div className={cn("mx-auto min-w-0 w-full max-w-[1280px] px-4 sm:px-6 lg:px-8", className)}>
       {children}
     </div>
   );

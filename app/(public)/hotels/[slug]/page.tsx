@@ -188,7 +188,11 @@ export default async function HotelDetailPage({ params }: Props) {
         </div>
 
         <aside className="lg:sticky lg:top-24 h-fit space-y-5">
-          <AvailabilityPanel city={hotel.city} hotelName={hotel.name} />
+          <AvailabilityPanel
+            hotelId={String(hotel._id)}
+            city={hotel.city}
+            hotelName={hotel.name}
+          />
           <div className="rounded-md border border-line bg-paper p-6 shadow-sm">
             <div className="mb-4 flex items-center gap-2">
               <span className="flex h-11 w-11 items-center justify-center rounded-sm bg-pine-100 text-sm font-bold tabular-nums text-pine-700">
@@ -196,6 +200,9 @@ export default async function HotelDetailPage({ params }: Props) {
               </span>
               <span className="text-sm text-ink-500">{hotel.reviewCount} reviews</span>
             </div>
+            <p className="mb-3 text-sm text-ink-500">
+              Prefer a custom quote? Our team can still help for group stays.
+            </p>
             <HotelInquiryForm
               hotelName={hotel.name}
               city={hotel.city}

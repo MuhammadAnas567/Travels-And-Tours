@@ -3,12 +3,13 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { LayoutDashboard, Ticket, User, Heart } from "lucide-react";
+import { LayoutDashboard, Ticket, User, Heart, Star } from "lucide-react";
 import { usePreferences } from "@/components/providers/preferences-provider";
 
 const links = [
   { href: "/dashboard", labelKey: "dash.overview", icon: LayoutDashboard },
   { href: "/dashboard/bookings", labelKey: "dash.bookings", icon: Ticket },
+  { href: "/dashboard/reviews", labelKey: "dash.reviews", icon: Star },
   { href: "/dashboard/wishlist", labelKey: "dash.wishlist", icon: Heart },
   { href: "/dashboard/profile", labelKey: "dash.profile", icon: User },
 ];

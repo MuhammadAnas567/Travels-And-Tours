@@ -44,8 +44,8 @@ export default async function AdminAgentsPage() {
         Promote staff to AGENT so they can access the quotes CRM.
       </p>
 
-      <form action={promoteAction} className="mt-8 flex flex-wrap items-end gap-3">
-        <div className="min-w-[240px] flex-1">
+      <form action={promoteAction} className="mt-8 flex flex-col items-stretch gap-3 sm:flex-row sm:items-end">
+        <div className="min-w-0 flex-1">
           <label htmlFor="email" className="text-xs font-semibold uppercase tracking-wide text-ink-500">
             User email
           </label>
@@ -58,7 +58,7 @@ export default async function AdminAgentsPage() {
             className="mt-1"
           />
         </div>
-        <Button type="submit" className="bg-pine-600 hover:bg-pine-700">
+        <Button type="submit" className="w-full bg-pine-600 hover:bg-pine-700 sm:w-auto">
           Promote to AGENT
         </Button>
       </form>
@@ -70,9 +70,9 @@ export default async function AdminAgentsPage() {
             key={a.id}
             className="flex flex-wrap items-center justify-between gap-3 rounded-md border border-line bg-paper px-4 py-3"
           >
-            <div>
+            <div className="min-w-0">
               <p className="font-medium text-ink-900">{a.name ?? "Unnamed"}</p>
-              <p className="text-sm text-ink-500">{a.email}</p>
+              <p className="break-all text-sm text-ink-500">{a.email}</p>
             </div>
             <div className="flex items-center gap-2">
               <Badge>AGENT</Badge>

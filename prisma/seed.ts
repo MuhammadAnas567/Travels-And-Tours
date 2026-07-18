@@ -261,6 +261,61 @@ async function main() {
     await ensureTour(tour);
   }
 
+  const cars = [
+    {
+      slug: "economy-hatchback",
+      name: "Economy hatchback",
+      category: "Economy",
+      seats: 4,
+      bags: 2,
+      transmission: "Automatic",
+      pricePerDay: 28,
+      locations: ["DXB Airport", "Islamabad", "Lahore", "Karachi"],
+      image: "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?w=800",
+    },
+    {
+      slug: "compact-suv",
+      name: "Compact SUV",
+      category: "SUV",
+      seats: 5,
+      bags: 3,
+      transmission: "Automatic",
+      pricePerDay: 45,
+      locations: ["DXB Airport", "Karachi", "Jeddah"],
+      image: "https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?w=800",
+    },
+    {
+      slug: "full-size-sedan",
+      name: "Full-size sedan",
+      category: "Sedan",
+      seats: 5,
+      bags: 4,
+      transmission: "Automatic",
+      pricePerDay: 52,
+      locations: ["LHR Airport", "Islamabad", "DXB Airport"],
+      image: "https://images.unsplash.com/photo-1550355291-bbee04a92027?w=800",
+    },
+    {
+      slug: "premium-people-carrier",
+      name: "Premium people carrier",
+      category: "MPV",
+      seats: 7,
+      bags: 5,
+      transmission: "Automatic",
+      pricePerDay: 78,
+      locations: ["DXB Airport", "Jeddah", "IST Airport"],
+      image: "https://images.unsplash.com/photo-1464219789935-c2d9d9aba644?w=800",
+    },
+  ];
+
+  for (const car of cars) {
+    const existing = await prisma.carListing.findUnique({ where: { slug: car.slug } });
+    if (!existing) {
+      await prisma.carListing.create({ data: { ...car, isActive: true } });
+    }
+  }
+  console.log(`Car listings ready (${cars.length})`);
+
   const { seedExtensions } = await import("./seed-extensions");
   await seedExtensions();
 

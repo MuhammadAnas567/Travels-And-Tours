@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Calendar, MapPin, Ticket } from "lucide-react";
 import { DashboardWelcome, DashLabel } from "@/components/dashboard/dashboard-chrome";
 import { DisplayPrice } from "@/components/shared/display-price";
+import { bookingTitle, type ProductSnapshot } from "@/lib/commerce";
 
 const statusVariant = {
   PENDING: "warning",
@@ -28,10 +29,12 @@ export default async function DashboardPage() {
     take: 5,
   });
 
-  const upcoming = bookings.filter(
-    (b) =>
-      b.status === "CONFIRMED" && new Date(b.tourDate.startDate) > new Date()
-  );
+  const upcoming = bookings.filter((b) => {
+    if (b.status !== "CONFIRMED") return false;
+    const snapshot = b.productSnapshot as ProductSnapshot | null;
+    const start = b.tourDate?.startDate ?? (snapshot?.startDate ? new Date(snapshot.startDate) : null);
+    return start ? start > new Date() : true;
+  });
   const completed = bookings.filter((b) => b.status === "COMPLETED").length;
 
   return (
@@ -81,23 +84,37 @@ export default async function DashboardPage() {
             </p>
           ) : (
             <div className="space-y-3">
-              {bookings.map((booking) => (
+              {bookings.map((booking) => {
+                const snapshot = booking.productSnapshot as ProductSnapshot | null;
+                const title =
+                  booking.tour?.title ??
+                  bookingTitle(booking.type, snapshot ?? undefined);
+                const start = booking.tourDate?.startDate
+                  ? booking.tourDate.startDate
+                  : snapshot?.startDate
+                    ? new Date(snapshot.startDate)
+                    : null;
+                const location =
+                  snapshot?.location ?? booking.tour?.location ?? booking.type;
+                return (
                 <div
                   key={booking.id}
                   className="flex flex-col gap-3 rounded-md border border-line bg-sand/40 p-4 sm:flex-row sm:items-center sm:justify-between"
                 >
                   <div>
                     <h3 className="font-display text-lg font-semibold text-ink-900">
-                      {booking.tour.title}
+                      {title}
                     </h3>
                     <div className="mt-1 flex flex-wrap gap-3 text-sm text-ink-500">
-                      <span className="flex items-center gap-1">
-                        <Calendar className="h-4 w-4" strokeWidth={1.5} aria-hidden />
-                        {formatDate(booking.tourDate.startDate)}
-                      </span>
+                      {start ? (
+                        <span className="flex items-center gap-1">
+                          <Calendar className="h-4 w-4" strokeWidth={1.5} aria-hidden />
+                          {formatDate(start)}
+                        </span>
+                      ) : null}
                       <span className="flex items-center gap-1">
                         <MapPin className="h-4 w-4" strokeWidth={1.5} aria-hidden />
-                        {booking.tour.location}
+                        {location}
                       </span>
                     </div>
                   </div>
@@ -118,7 +135,8 @@ export default async function DashboardPage() {
                     )}
                   </div>
                 </div>
-              ))}
+                );
+              })}
             </div>
           )}
         </div>

@@ -4,7 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
-import { IMAGE_BLUR_DATA_URL, PLACEHOLDER_TOUR_IMAGE } from "@/lib/images";
+import { IMAGE_BLUR_DATA_URL, PLACEHOLDER_TOUR_IMAGE, unsplashSrc } from "@/lib/images";
 import { ArrowRight, MapPin } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { DisplayPrice } from "@/components/shared/display-price";
@@ -35,12 +35,12 @@ export function DestinationJourney({ destinations }: Props) {
   }
 
   return (
-    <div className="grid gap-10 lg:grid-cols-[1fr_1.05fr] lg:items-stretch">
-      <div className="flex flex-col justify-center order-2 lg:order-1">
+    <div className="grid min-w-0 gap-8 sm:gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] lg:items-stretch">
+      <div className="order-1 flex min-w-0 flex-col justify-center">
         <div
           role="listbox"
           aria-label="Destination journey"
-          className="flex gap-2 overflow-x-auto pb-2 snap-x snap-mandatory scrollbar-hide"
+          className="-mx-4 flex max-w-[calc(100vw)] snap-x snap-mandatory gap-2 overflow-x-auto px-4 pb-2 scrollbar-hide sm:mx-0 sm:max-w-full sm:px-0"
         >
           {destinations.map((d, i) => {
             const selected = i === active;
@@ -74,7 +74,7 @@ export function DestinationJourney({ destinations }: Props) {
             animate={{ opacity: 1, y: 0 }}
             exit={reduceMotion ? undefined : { opacity: 0, y: -6 }}
             transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-            className="mt-10"
+            className="mt-7 min-w-0 sm:mt-10"
           >
             <p className="eyebrow">
               Stop {active + 1} of {destinations.length}
@@ -95,7 +95,7 @@ export function DestinationJourney({ destinations }: Props) {
             </p>
             <Link
               href={`/hotels?city=${encodeURIComponent(current.name)}`}
-              className="mt-8 inline-flex min-h-11 items-center gap-2 rounded-full bg-pine-500 px-6 py-3 text-sm font-semibold text-white hover:bg-pine-600 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pine-500 focus-visible:ring-offset-2"
+              className="mt-7 inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-full bg-pine-500 px-5 py-3 text-center text-sm font-semibold text-white transition-colors hover:bg-pine-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pine-500 focus-visible:ring-offset-2 sm:mt-8 sm:w-auto sm:px-6"
             >
               Browse stays in {current.name}
               <ArrowRight className="h-4 w-4" strokeWidth={1.5} aria-hidden />
@@ -104,7 +104,7 @@ export function DestinationJourney({ destinations }: Props) {
         </AnimatePresence>
       </div>
 
-      <div className="relative aspect-[4/5] sm:aspect-[5/4] lg:aspect-[4/5] overflow-hidden rounded-md shadow-float order-1 lg:order-2 group">
+      <div className="group relative order-2 aspect-[3/2] max-h-[22rem] w-full self-center overflow-hidden rounded-lg bg-sand-200 shadow-float sm:max-h-[26rem] lg:aspect-[4/3] lg:max-h-[30rem]">
         <AnimatePresence mode="wait">
           <motion.div
             key={current.image}
@@ -115,21 +115,35 @@ export function DestinationJourney({ destinations }: Props) {
             transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
           >
             <Image
-              src={current.image || PLACEHOLDER_TOUR_IMAGE}
+              src={unsplashSrc(current.image, 1400, 80) || PLACEHOLDER_TOUR_IMAGE}
               alt={`${current.name}, ${current.country}`}
               fill
-              className="object-cover img-editorial img-cover"
+              className="object-cover img-editorial img-cover transition-transform duration-[600ms] ease-[var(--ease-brand)] group-hover:scale-[1.03]"
               sizes="(max-width:1024px) 100vw, 48vw"
               placeholder="blur"
               blurDataURL={IMAGE_BLUR_DATA_URL}
+              unoptimized
             />
             <div className="absolute inset-0 image-scrim" />
-            <p className="absolute bottom-6 left-6 right-6 font-display text-2xl font-semibold text-paper">
-              From <DisplayPrice amount={current.priceFrom} />
-              <span className="block mt-1 text-sm font-sans font-medium tracking-normal text-paper/70">
-                per night · {current.country}
-              </span>
-            </p>
+
+            <span className="absolute left-4 top-4 inline-flex items-center gap-1.5 rounded-full bg-ink-900/55 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.12em] text-paper backdrop-blur-none sm:left-5 sm:top-5">
+              <MapPin className="h-3.5 w-3.5" strokeWidth={1.5} aria-hidden />
+              {current.country}
+            </span>
+
+            <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between gap-3 sm:bottom-5 sm:left-5 sm:right-5">
+              <div className="rounded-md bg-paper/95 px-4 py-3 shadow-sm">
+                <p className="text-[0.625rem] font-semibold uppercase tracking-[0.14em] text-ink-500">
+                  Stays from
+                </p>
+                <p className="mt-0.5 font-display text-xl font-semibold text-ink tabular-nums" data-price>
+                  <DisplayPrice amount={current.priceFrom} />
+                  <span className="ml-1 font-sans text-xs font-medium tracking-normal text-ink-500">
+                    / night
+                  </span>
+                </p>
+              </div>
+            </div>
           </motion.div>
         </AnimatePresence>
       </div>

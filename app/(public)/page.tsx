@@ -10,7 +10,7 @@ import { FeaturedPackages, BlogPreview } from "@/components/home/home-editorial"
 import { HotelCard } from "@/components/cards/hotel-card";
 import { NewsletterForm } from "@/components/shared/newsletter-form";
 import { getTrendingDestinations, getPopularHotels, getDealOfTheWeek } from "@/lib/data/home";
-import { IMAGE_BLUR_DATA_URL } from "@/lib/images";
+import { IMAGE_BLUR_DATA_URL, unsplashSrc } from "@/lib/images";
 import { ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { WishlistButton } from "@/components/cards/wishlist-button";
@@ -159,7 +159,7 @@ export default async function HomePage() {
             </div>
             <div className="relative aspect-[16/10] overflow-hidden rounded-lg shadow-float group">
               <Image
-                src={deal.images[0]}
+                src={unsplashSrc(deal.images[0], 1200, 80)}
                 alt={deal.name}
                 fill
                 className="object-cover img-cover"

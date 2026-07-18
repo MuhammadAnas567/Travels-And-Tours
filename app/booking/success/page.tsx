@@ -3,6 +3,7 @@ import { CheckCircle, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { prisma } from "@/lib/db";
 import { getStripe } from "@/lib/stripe";
+import { bookingTitle, type ProductSnapshot } from "@/lib/commerce";
 import { formatDate, formatPrice } from "@/lib/utils";
 
 type SearchParams = Promise<{
@@ -37,7 +38,6 @@ async function resolveBooking(params: Awaited<SearchParams>) {
     });
     if (bySession) return bySession;
 
-    // Fallback: look up Checkout Session → booking metadata
     const stripe = getStripe();
     if (stripe) {
       try {
@@ -64,9 +64,58 @@ export default async function BookingSuccessPage({
   searchParams: SearchParams;
 }) {
   const params = await searchParams;
-  const booking = await resolveBooking(params);
+  let booking = await resolveBooking(params);
+
+  // Finalize without waiting for webhook (local / delayed webhook)
+  if (
+    booking &&
+    booking.status !== "CONFIRMED" &&
+    (params.redirect_status === "succeeded" || params.payment_intent)
+  ) {
+    try {
+      const { finalizePaidBooking } = await import("@/lib/fulfill-booking");
+      const stripe = getStripe();
+      if (params.payment_intent && stripe) {
+        const intent = await stripe.paymentIntents.retrieve(params.payment_intent);
+        if (intent.status === "succeeded") {
+          await finalizePaidBooking({
+            bookingId: booking.id,
+            paymentIntentId: intent.id,
+          });
+          booking = await prisma.booking.findUnique({
+            where: { id: booking.id },
+            include: { tour: true, tourDate: true },
+          });
+        }
+      } else if (params.redirect_status === "succeeded" && params.booking_id) {
+        await finalizePaidBooking({ bookingId: params.booking_id });
+        booking = await prisma.booking.findUnique({
+          where: { id: params.booking_id },
+          include: { tour: true, tourDate: true },
+        });
+      }
+    } catch (err) {
+      console.error("[booking/success] finalize failed", err);
+    }
+  }
+
   const confirmed = booking?.status === "CONFIRMED";
   const traveler = booking?.travelerInfo as { name?: string } | null;
+  const snapshot = booking?.productSnapshot as ProductSnapshot | null;
+  const title = booking
+    ? booking.tour?.title ?? bookingTitle(booking.type, snapshot ?? undefined)
+    : null;
+
+  const startLabel = booking?.tourDate?.startDate
+    ? formatDate(booking.tourDate.startDate)
+    : snapshot?.startDate
+      ? formatDate(new Date(snapshot.startDate))
+      : null;
+  const endLabel = booking?.tourDate?.endDate
+    ? formatDate(booking.tourDate.endDate)
+    : snapshot?.endDate
+      ? formatDate(new Date(snapshot.endDate))
+      : null;
 
   return (
     <div className="mx-auto flex min-h-[60vh] max-w-lg flex-col items-center justify-center px-4 py-16 text-center">
@@ -98,15 +147,21 @@ export default async function BookingSuccessPage({
             </p>
           )}
           <p>
-            <span className="text-ink-500">Tour</span>
+            <span className="text-ink-500">Booking</span>
             <br />
-            <strong>{booking.tour.title}</strong>
+            <strong>{title}</strong>
+            <span className="ml-2 text-xs uppercase tracking-wider text-ink-400">
+              {booking.type}
+            </span>
           </p>
-          <p>
-            <span className="text-ink-500">Dates</span>
-            <br />
-            {formatDate(booking.tourDate.startDate)} — {formatDate(booking.tourDate.endDate)}
-          </p>
+          {(startLabel || endLabel) && (
+            <p>
+              <span className="text-ink-500">Dates</span>
+              <br />
+              {startLabel ?? "—"}
+              {endLabel ? ` — ${endLabel}` : ""}
+            </p>
+          )}
           <p>
             <span className="text-ink-500">Traveler</span>
             <br />
@@ -132,7 +187,7 @@ export default async function BookingSuccessPage({
           <Link href="/dashboard/bookings">View bookings</Link>
         </Button>
         <Button variant="outline" asChild>
-          <Link href="/tours">Browse more tours</Link>
+          <Link href="/">Continue exploring</Link>
         </Button>
       </div>
     </div>

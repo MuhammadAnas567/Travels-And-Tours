@@ -115,16 +115,16 @@ export function Footer() {
                 feel cinematic.
               </p>
             </div>
-            <div className="mt-6 md:mt-0 flex flex-wrap gap-3 shrink-0">
+            <div className="mt-6 flex w-full shrink-0 flex-col gap-3 sm:w-auto sm:flex-row md:mt-0">
               <Link
                 href="/flights"
-                className="inline-flex min-h-11 items-center justify-center rounded-full bg-paper px-6 text-sm font-semibold text-pine-700 hover:bg-pine-50 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pine-300"
+                className="inline-flex min-h-11 w-full items-center justify-center rounded-full bg-paper px-6 text-sm font-semibold text-pine-700 transition-colors hover:bg-pine-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pine-300 sm:w-auto"
               >
                 Search flights
               </Link>
               <Link
                 href="/plan-trip"
-                className="inline-flex min-h-11 items-center justify-center gap-1.5 rounded-full border border-paper/25 px-6 text-sm font-semibold text-paper hover:bg-paper/10 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pine-300"
+                className="inline-flex min-h-11 w-full items-center justify-center gap-1.5 rounded-full border border-paper/25 px-6 text-sm font-semibold text-paper transition-colors hover:bg-paper/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pine-300 sm:w-auto"
               >
                 Plan a trip
                 <ArrowUpRight className="h-4 w-4" strokeWidth={1.5} aria-hidden />
@@ -146,7 +146,7 @@ export function Footer() {
               Browse stays
             </Link>
           </div>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
+          <div className="grid grid-cols-1 gap-3 min-[380px]:grid-cols-2 sm:grid-cols-4 sm:gap-4">
             {spotlight.map((d) => (
               <Link
                 key={d.label}
@@ -245,7 +245,7 @@ export function Footer() {
               </div>
             </div>
 
-            <div className="lg:col-span-8 grid grid-cols-2 sm:grid-cols-4 gap-8 sm:gap-6">
+            <div className="grid grid-cols-1 gap-8 min-[380px]:grid-cols-2 sm:grid-cols-4 sm:gap-6 lg:col-span-8">
               {(
                 [
                   { title: "Company", links: footerLinks.company },

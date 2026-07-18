@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -8,11 +9,12 @@ import { DisplayPrice } from "@/components/shared/display-price";
 import type { HotelAvailabilityOffer } from "@/lib/providers/hotels/types";
 
 type Props = {
+  hotelId: string;
   city: string;
   hotelName: string;
 };
 
-export function AvailabilityPanel({ city, hotelName }: Props) {
+export function AvailabilityPanel({ hotelId, city, hotelName }: Props) {
   const [checkIn, setCheckIn] = useState("");
   const [checkOut, setCheckOut] = useState("");
   const [adults, setAdults] = useState(2);
@@ -24,6 +26,10 @@ export function AvailabilityPanel({ city, hotelName }: Props) {
   async function load() {
     if (!checkIn || !checkOut) {
       setError("Select check-in and check-out");
+      return;
+    }
+    if (new Date(checkOut) <= new Date(checkIn)) {
+      setError("Check-out must be after check-in");
       return;
     }
     setError("");
@@ -106,28 +112,40 @@ export function AvailabilityPanel({ city, hotelName }: Props) {
       <Button type="button" className="mt-4" onClick={() => void load()} disabled={loading}>
         {loading ? "Checking…" : "Check availability"}
       </Button>
-      {error ? <p className="mt-2 text-sm text-error">{error}</p> : null}
+      {error ? (
+        <p className="mt-2 text-sm text-ink-500" role="status">
+          {error}
+        </p>
+      ) : null}
 
       {offers.length > 0 ? (
         <ul className="mt-5 space-y-3">
-          {offers.map((o) => (
-            <li
-              key={o.id}
-              className="flex flex-wrap items-center justify-between gap-2 rounded-md border border-line bg-sand/40 px-4 py-3"
-            >
-              <div>
-                <p className="font-semibold text-ink-900">{o.roomName}</p>
-                <p className="text-sm text-ink-500">
-                  {o.board}
-                  {o.refundable ? " · Refundable" : " · Non-refundable"}
-                </p>
-              </div>
-              <p className="text-lg font-semibold tabular-nums text-pine-600">
-                <DisplayPrice amount={o.pricePerNight} />
-                <span className="text-xs font-normal text-ink-500"> / night</span>
-              </p>
-            </li>
-          ))}
+          {offers.map((o) => {
+            const href = `/hotels/book?hotelId=${encodeURIComponent(hotelId)}&room=${encodeURIComponent(o.roomName)}&checkIn=${checkIn}&checkOut=${checkOut}&adults=${adults}&children=0&price=${o.pricePerNight}`;
+            return (
+              <li
+                key={o.id}
+                className="flex flex-wrap items-center justify-between gap-3 rounded-md border border-line bg-sand/40 px-4 py-3"
+              >
+                <div className="min-w-0">
+                  <p className="font-semibold text-ink-900">{o.roomName}</p>
+                  <p className="text-sm text-ink-500">
+                    {o.board}
+                    {o.refundable ? " · Refundable" : " · Non-refundable"}
+                  </p>
+                </div>
+                <div className="flex flex-wrap items-center gap-3">
+                  <p className="text-lg font-semibold tabular-nums text-pine-600">
+                    <DisplayPrice amount={o.pricePerNight} />
+                    <span className="text-xs font-normal text-ink-500"> / night</span>
+                  </p>
+                  <Button asChild size="sm">
+                    <Link href={href}>Book &amp; pay</Link>
+                  </Button>
+                </div>
+              </li>
+            );
+          })}
         </ul>
       ) : null}
     </div>

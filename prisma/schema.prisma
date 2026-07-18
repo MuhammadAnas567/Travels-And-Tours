@@ -39,6 +39,15 @@ enum TourAudience {
   BOTH
 }
 
+enum BookingType {
+  TOUR
+  FLIGHT
+  HOTEL
+  PACKAGE
+  CAR
+  INSURANCE
+}
+
 enum BookingStatus {
   PENDING
   PENDING_VERIFICATION
@@ -46,6 +55,14 @@ enum BookingStatus {
   CANCELLED
   COMPLETED
   DEPOSIT_PAID
+}
+
+enum FulfillmentStatus {
+  PENDING
+  HELD
+  FULFILLED
+  FAILED
+  RELEASED
 }
 
 enum PaymentMethod {
@@ -197,34 +214,63 @@ model TourDate {
 }
 
 model Booking {
-  id                String        @id @default(auto()) @map("_id") @db.ObjectId
-  userId            String        @db.ObjectId
-  tourId            String        @db.ObjectId
-  tourDateId        String        @db.ObjectId
-  adults            Int
-  children          Int           @default(0)
-  totalPrice        Float
-  currency          Currency      @default(USD)
-  status            BookingStatus @default(PENDING)
-  paymentMethod     PaymentMethod @default(STRIPE)
-  paymentProofUrl   String?
-  paymentIntentId   String?
-  stripeSessionId   String?
-  bookingReference  String?       @unique
-  couponCode        String?
-  depositAmount     Float?
-  balanceDue        Float?
-  balanceDueDate    DateTime?
-  verifiedAt        DateTime?
-  verifiedBy        String?
-  travelerInfo      Json
-  specialRequests   String?
-  createdAt         DateTime      @default(now())
-  updatedAt         DateTime      @updatedAt
+  id                 String            @id @default(auto()) @map("_id") @db.ObjectId
+  userId             String            @db.ObjectId
+  type               BookingType       @default(TOUR)
+  /** Tour bookings only */
+  tourId             String?           @db.ObjectId
+  tourDateId         String?           @db.ObjectId
+  adults             Int               @default(1)
+  children           Int               @default(0)
+  totalPrice         Float
+  currency           Currency          @default(USD)
+  status             BookingStatus     @default(PENDING)
+  fulfillmentStatus  FulfillmentStatus @default(PENDING)
+  paymentMethod      PaymentMethod     @default(STRIPE)
+  paymentProofUrl    String?
+  paymentIntentId    String?
+  stripeSessionId    String?
+  bookingReference   String?           @unique
+  couponCode         String?
+  depositAmount      Float?
+  balanceDue         Float?
+  balanceDueDate     DateTime?
+  verifiedAt         DateTime?
+  verifiedBy         String?
+  travelerInfo       Json
+  specialRequests    String?
+  /** Display snapshot: title, route, hotel, car name, image, etc. */
+  productSnapshot    Json?
+  /** Typed reservation payload: passengers, cabin, room, dates, insurance add-on */
+  reservationDetails Json?
+  holdExpiresAt      DateTime?
+  insuranceAmount    Float?
+  createdAt          DateTime          @default(now())
+  updatedAt          DateTime          @updatedAt
 
-  user     User     @relation(fields: [userId], references: [id])
-  tour     Tour     @relation(fields: [tourId], references: [id])
-  tourDate TourDate @relation(fields: [tourDateId], references: [id])
+  user     User      @relation(fields: [userId], references: [id])
+  tour     Tour?     @relation(fields: [tourId], references: [id])
+  tourDate TourDate? @relation(fields: [tourDateId], references: [id])
+
+  @@index([userId, type])
+  @@index([status, holdExpiresAt])
+}
+
+/** Catalog car hire inventory (local bookable rates) */
+model CarListing {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  slug         String   @unique
+  name         String
+  category     String
+  seats        Int
+  bags         Int
+  transmission String   @default("Automatic")
+  pricePerDay  Float
+  image        String?
+  locations    String[]
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 }
 
 model Review {

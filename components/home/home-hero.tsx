@@ -33,16 +33,23 @@ export function HomeHero() {
     >
       <div className="relative min-h-[min(85vh,720px)] sm:min-h-[min(92vh,820px)] flex items-end overflow-hidden">
         <motion.div className="absolute inset-0" style={{ y, opacity }}>
-          <Image
-            src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=1920&q=85"
-            alt="Open road through red rock desert at golden hour"
-            fill
-            className="object-cover object-[center_40%]"
-            priority
-            sizes="100vw"
-            placeholder="blur"
-            blurDataURL={IMAGE_BLUR_DATA_URL}
-          />
+          <motion.div
+            className="absolute inset-0"
+            initial={false}
+            animate={reduceMotion ? undefined : { scale: [1.08, 1] }}
+            transition={{ duration: 9, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <Image
+              src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=1920&q=85"
+              alt="Open road through red rock desert at golden hour"
+              fill
+              className="object-cover object-[center_40%]"
+              priority
+              sizes="100vw"
+              placeholder="blur"
+              blurDataURL={IMAGE_BLUR_DATA_URL}
+            />
+          </motion.div>
         </motion.div>
         <div className="absolute inset-0 bg-gradient-to-t from-pine-900/85 via-pine-900/35 to-pine-900/20 pointer-events-none" />
         <div className="absolute inset-0 image-overlay-hero pointer-events-none" aria-hidden />

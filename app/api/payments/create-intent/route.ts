@@ -10,6 +10,8 @@ import {
 } from "@/lib/booking";
 import { bookingStep1Schema, bookingStep2Schema } from "@/lib/validations";
 import { applyCouponToTotal } from "@/actions/coupons";
+import { holdExpiresAt } from "@/lib/commerce";
+import { resolveCheckoutUserId } from "@/lib/checkout-user";
 
 const bodySchema = z.object({
   tourId: z.string().min(1),
@@ -27,27 +29,23 @@ const bodySchema = z.object({
 
 /**
  * POST /api/payments/create-intent
- * Auth required. Recomputes price server-side, creates PENDING booking + Stripe PaymentIntent.
+ * Guest checkout supported — creates user from traveller email when needed.
  */
 export async function POST(req: Request) {
   try {
-    const session = await getSession();
-    if (!session?.user?.id) {
-      return NextResponse.json({ error: "Please sign in to book" }, { status: 401 });
-    }
-
-    if (!isStripeConfigured()) {
+    if (!isStripeConfigured() || !process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY) {
       return NextResponse.json(
-        { error: "Payments are not configured. Set STRIPE_SECRET_KEY in .env.local" },
+        { error: "Online payments are not ready yet. Please try again shortly." },
         { status: 503 }
       );
     }
 
     const stripe = getStripe();
     if (!stripe) {
-      return NextResponse.json({ error: "Stripe unavailable" }, { status: 503 });
+      return NextResponse.json({ error: "Payments temporarily unavailable" }, { status: 503 });
     }
 
+    const session = await getSession();
     const json = await req.json();
     const parsed = bodySchema.safeParse(json);
     if (!parsed.success) {
@@ -58,6 +56,12 @@ export async function POST(req: Request) {
     }
 
     const data = parsed.data;
+    const userId = await resolveCheckoutUserId({
+      sessionUserId: session?.user?.id,
+      email: data.travelerInfo.email,
+      name: data.travelerInfo.name,
+    });
+
     const step1 = bookingStep1Schema.safeParse({
       tourDateId: data.tourDateId,
       adults: data.adults,
@@ -107,7 +111,8 @@ export async function POST(req: Request) {
 
       const created = await tx.booking.create({
         data: {
-          userId: session.user!.id,
+          userId,
+          type: "TOUR",
           tourId: data.tourId,
           tourDateId: data.tourDateId,
           adults: data.adults,
@@ -115,9 +120,19 @@ export async function POST(req: Request) {
           totalPrice: priced.total,
           couponCode: priced.couponCode,
           status: "PENDING",
+          fulfillmentStatus: "HELD",
           paymentMethod: "STRIPE",
           travelerInfo: data.travelerInfo,
           specialRequests: data.specialRequests,
+          holdExpiresAt: holdExpiresAt(),
+          productSnapshot: {
+            title: tour.title,
+            subtitle: `${tour.location}, ${tour.country}`,
+            startDate: tourDate.startDate.toISOString(),
+            endDate: tourDate.endDate.toISOString(),
+            location: `${tour.location}, ${tour.country}`,
+            image: tour.images?.[0],
+          },
         },
       });
 
@@ -131,7 +146,7 @@ export async function POST(req: Request) {
       receipt_email: data.travelerInfo.email,
       metadata: {
         bookingId: booking.id,
-        userId: session.user.id,
+        userId,
         tourId: data.tourId,
       },
       description: `UEB3 Tours — ${tourTitle}`,

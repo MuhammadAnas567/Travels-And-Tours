@@ -4,6 +4,7 @@ import { redirect, notFound } from "next/navigation";
 import { formatPrice, formatDate } from "@/lib/utils";
 import type { TravelerInfo } from "@/types";
 import { PrintButton } from "@/components/shared/print-button";
+import { bookingTitle, type ProductSnapshot } from "@/lib/commerce";
 
 export default async function TicketPage({
   params,
@@ -16,13 +17,30 @@ export default async function TicketPage({
   const { id } = await params;
 
   const booking = await prisma.booking.findFirst({
-    where: { id, userId: session.user.id, status: "CONFIRMED" },
+    where: {
+      userId: session.user.id,
+      status: "CONFIRMED",
+      OR: [{ id }, { bookingReference: id }],
+    },
     include: { tour: true, tourDate: true },
   });
 
   if (!booking) notFound();
 
   const traveler = booking.travelerInfo as TravelerInfo;
+  const snapshot = booking.productSnapshot as ProductSnapshot | null;
+  const title =
+    booking.tour?.title ?? bookingTitle(booking.type, snapshot ?? undefined);
+  const start = booking.tourDate?.startDate
+    ? booking.tourDate.startDate
+    : snapshot?.startDate
+      ? new Date(snapshot.startDate)
+      : null;
+  const end = booking.tourDate?.endDate
+    ? booking.tourDate.endDate
+    : snapshot?.endDate
+      ? new Date(snapshot.endDate)
+      : null;
 
   return (
     <div className="mx-auto max-w-2xl print:max-w-none">
@@ -39,40 +57,46 @@ export default async function TicketPage({
       <div className="rounded-md border-2 border-line bg-paper p-8 shadow-sm">
         <div className="border-b border-line pb-6 text-center">
           <h1 className="font-heading text-2xl font-semibold tracking-tight text-ink-900">
-            UEB3 Tours
+            UEB3 Travel
           </h1>
-          <p className="mt-1 text-sm text-ink-500">Electronic Travel Ticket</p>
+          <p className="mt-1 text-sm text-ink-500">Electronic Travel Ticket / Voucher</p>
+          <p className="mt-2 text-xs font-semibold uppercase tracking-[0.14em] text-pine-600">
+            {booking.type}
+          </p>
         </div>
 
         <div className="mt-6 space-y-4">
           <div className="flex justify-between gap-4">
-            <span className="text-ink-500">Booking ID</span>
+            <span className="text-ink-500">Reference</span>
             <span className="font-mono font-medium text-ink-900">
-              {booking.id}
+              {booking.bookingReference ?? booking.id}
             </span>
           </div>
           <div className="flex justify-between gap-4">
-            <span className="text-ink-500">Tour</span>
-            <span className="font-medium text-ink-900">{booking.tour.title}</span>
+            <span className="text-ink-500">Product</span>
+            <span className="font-medium text-right text-ink-900">{title}</span>
           </div>
-          <div className="flex justify-between gap-4">
-            <span className="text-ink-500">Destination</span>
-            <span className="text-ink-700">
-              {booking.tour.location}, {booking.tour.country}
-            </span>
-          </div>
-          <div className="flex justify-between gap-4">
-            <span className="text-ink-500">Departure</span>
-            <span className="tabular-nums text-ink-700">
-              {formatDate(booking.tourDate.startDate)}
-            </span>
-          </div>
-          <div className="flex justify-between gap-4">
-            <span className="text-ink-500">Return</span>
-            <span className="tabular-nums text-ink-700">
-              {formatDate(booking.tourDate.endDate)}
-            </span>
-          </div>
+          {(snapshot?.location || booking.tour) && (
+            <div className="flex justify-between gap-4">
+              <span className="text-ink-500">Location</span>
+              <span className="text-right text-ink-700">
+                {snapshot?.location ??
+                  `${booking.tour!.location}, ${booking.tour!.country}`}
+              </span>
+            </div>
+          )}
+          {start ? (
+            <div className="flex justify-between gap-4">
+              <span className="text-ink-500">Start</span>
+              <span className="tabular-nums text-ink-700">{formatDate(start)}</span>
+            </div>
+          ) : null}
+          {end ? (
+            <div className="flex justify-between gap-4">
+              <span className="text-ink-500">End</span>
+              <span className="tabular-nums text-ink-700">{formatDate(end)}</span>
+            </div>
+          ) : null}
           <div className="flex justify-between gap-4">
             <span className="text-ink-500">Travelers</span>
             <span className="text-ink-700">
@@ -97,8 +121,7 @@ export default async function TicketPage({
         </div>
 
         <p className="mt-8 text-center text-xs text-ink-300">
-          Present this e-ticket at check-in. For support, contact
-          hello@ueb3tours.com
+          Present this e-ticket at check-in. For support, contact hello@ueb3tours.com
         </p>
       </div>
     </div>

@@ -20,12 +20,12 @@ export async function submitReview(data: {
     where: {
       userId: session.user.id,
       tourId: data.tourId,
-      status: "COMPLETED",
+      status: { in: ["CONFIRMED", "COMPLETED"] },
     },
   });
 
   if (!completedBooking) {
-    return { error: "You can only review tours you have completed" };
+    return { error: "You can only review tours you have booked" };
   }
 
   await prisma.review.upsert({

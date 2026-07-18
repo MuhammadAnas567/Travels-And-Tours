@@ -22,8 +22,8 @@ export default async function AdminToursPage() {
         </Button>
       </div>
 
-      <div className="mt-6 overflow-x-auto rounded-md border border-line bg-paper">
-        <table className="w-full text-sm">
+      <div className="-mx-4 mt-6 overflow-x-auto border-y border-line bg-paper sm:mx-0 sm:rounded-md sm:border">
+        <table className="min-w-[720px] w-full text-sm">
           <thead>
             <tr className="border-b border-line bg-sand text-left text-ink-500">
               <th className="p-4 font-medium">Title</th>

@@ -59,7 +59,12 @@ function formatDuration(mins: number) {
 }
 
 function formatTime(iso: string) {
-  return new Date(iso).toLocaleTimeString(undefined, { hour: "2-digit", minute: "2-digit" });
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return "—";
+  // Fixed UTC clock to keep SSR and client HTML identical
+  const h = String(d.getUTCHours()).padStart(2, "0");
+  const m = String(d.getUTCMinutes()).padStart(2, "0");
+  return `${h}:${m}`;
 }
 
 function cabinFromParam(raw: string | null): CabinKey {
@@ -340,14 +345,20 @@ function FlightResultsInner({ flights }: { flights: FlightResult[] }) {
                     <p className="text-xs text-ink-500">{cabin}</p>
                   </div>
 
-                  <div className="sm:text-right">
+                  <div className="flex flex-col gap-2 sm:items-end sm:text-right">
                     <Button asChild className="w-full sm:w-auto">
                       <Link
-                        href={`/contact?subject=${encodeURIComponent(`Flight quote: ${f.flightNumber} ${f.from}-${f.to} (${cabin})`)}&message=${encodeURIComponent(`Please quote this flight.\nFlight: ${f.flightNumber}\nRoute: ${f.from} → ${f.to}\nCabin: ${cabin}\nPreferred travellers:\n`)}`}
+                        href={`/flights/book?flightId=${encodeURIComponent(f._id)}&cabin=${cabin}&adults=1&children=0`}
                       >
-                        Request quote
+                        Book &amp; pay
                       </Link>
                     </Button>
+                    <Link
+                      href={`/contact?subject=${encodeURIComponent(`Flight advice: ${f.flightNumber} ${f.from}-${f.to}`)}&message=${encodeURIComponent(`I need help with this flight.\nFlight: ${f.flightNumber}\nRoute: ${f.from} → ${f.to}\nCabin: ${cabin}\n`)}`}
+                      className="text-xs font-medium text-ink-500 hover:text-pine-600"
+                    >
+                      Ask an expert
+                    </Link>
                   </div>
                   </article>
                 );

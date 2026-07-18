@@ -111,7 +111,11 @@ export async function refundBooking(bookingId: string) {
   }
 
   await prisma.$transaction(async (tx) => {
-    if (booking.status === "CONFIRMED") {
+    if (
+      booking.status === "CONFIRMED" &&
+      booking.tourDateId &&
+      (booking.type === "TOUR" || booking.type === "PACKAGE")
+    ) {
       await tx.tourDate.update({
         where: { id: booking.tourDateId },
         data: { seatsBooked: { decrement: booking.adults + booking.children } },
@@ -119,7 +123,7 @@ export async function refundBooking(bookingId: string) {
     }
     await tx.booking.update({
       where: { id: bookingId },
-      data: { status: "CANCELLED" },
+      data: { status: "CANCELLED", fulfillmentStatus: "RELEASED" },
     });
   });
 

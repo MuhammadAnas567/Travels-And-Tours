@@ -159,16 +159,23 @@ export async function cancelBooking(bookingId: string) {
     return { error: "Cannot cancel this booking" };
   }
 
-  // Only allow cancellation if departure is more than 7 days away
-  const daysUntil = Math.ceil(
-    (booking.tourDate.startDate.getTime() - Date.now()) / (1000 * 60 * 60 * 24)
-  );
-  if (daysUntil < 7) {
-    return { error: "Cancellation not allowed within 7 days of departure" };
+  const snapshot = booking.productSnapshot as { startDate?: string } | null;
+  const start =
+    booking.tourDate?.startDate ??
+    (snapshot?.startDate ? new Date(snapshot.startDate) : null);
+  if (start) {
+    const daysUntil = Math.ceil((start.getTime() - Date.now()) / (1000 * 60 * 60 * 24));
+    if (daysUntil < 7) {
+      return { error: "Cancellation not allowed within 7 days of departure" };
+    }
   }
 
   await prisma.$transaction(async (tx) => {
-    if (booking.status === "CONFIRMED") {
+    if (
+      booking.status === "CONFIRMED" &&
+      booking.tourDateId &&
+      (booking.type === "TOUR" || booking.type === "PACKAGE")
+    ) {
       await tx.tourDate.update({
         where: { id: booking.tourDateId },
         data: {
@@ -180,7 +187,7 @@ export async function cancelBooking(bookingId: string) {
     }
     await tx.booking.update({
       where: { id: bookingId },
-      data: { status: "CANCELLED" },
+      data: { status: "CANCELLED", fulfillmentStatus: "RELEASED" },
     });
   });
 
@@ -227,15 +234,23 @@ export async function createBookingWithLocalPayment(data: {
     const booking = await tx.booking.create({
       data: {
         userId: session.user!.id,
+        type: "TOUR",
         tourId: data.tourId,
         tourDateId: data.tourDateId,
         adults: data.adults,
         children: data.children,
         totalPrice,
         status: "PENDING_VERIFICATION",
+        fulfillmentStatus: "HELD",
         paymentMethod: data.paymentMethod,
         travelerInfo: data.travelerInfo,
         specialRequests: data.specialRequests,
+        productSnapshot: {
+          title: tour.title,
+          location: `${tour.location}, ${tour.country}`,
+          startDate: tourDate.startDate.toISOString(),
+          endDate: tourDate.endDate.toISOString(),
+        },
       },
     });
 
@@ -292,19 +307,24 @@ export async function verifyBookingPayment(bookingId: string) {
       throw new Error("Invalid booking");
     }
 
-    const seatsNeeded = booking.adults + booking.children;
-    const seatsLeft = booking.tourDate.seatsTotal - booking.tourDate.seatsBooked;
-    if (seatsNeeded > seatsLeft) throw new Error("Not enough seats");
+    if (booking.tourDateId && booking.tourDate) {
+      const seatsNeeded = booking.adults + booking.children;
+      const seatsLeft = booking.tourDate.seatsTotal - booking.tourDate.seatsBooked;
+      if (seatsNeeded > seatsLeft) throw new Error("Not enough seats");
 
-    await tx.tourDate.update({
-      where: { id: booking.tourDateId },
-      data: { seatsBooked: { increment: seatsNeeded } },
-    });
+      await tx.tourDate.update({
+        where: { id: booking.tourDateId },
+        data: { seatsBooked: { increment: seatsNeeded } },
+      });
+    }
 
+    const { generateBookingReference } = await import("@/lib/stripe");
     await tx.booking.update({
       where: { id: bookingId },
       data: {
         status: "CONFIRMED",
+        fulfillmentStatus: "FULFILLED",
+        bookingReference: booking.bookingReference ?? generateBookingReference(),
         verifiedAt: new Date(),
         verifiedBy: session.user!.id,
       },

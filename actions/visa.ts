@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/db";
 import { getSession } from "@/lib/auth";
 import { sendEmail } from "@/lib/email";
-import { siteConfig } from "@/lib/site-config";
+import { getContactInbox } from "@/lib/site-config";
 import { z } from "zod";
 import type { VisaInquiryStatus } from "@prisma/client";
 
@@ -49,7 +49,7 @@ export async function submitVisaInquiry(formData: FormData) {
   });
 
   await sendEmail({
-    to: siteConfig.office.email,
+    to: getContactInbox(),
     subject: `New visa inquiry: ${country}`,
     html: `
       <h2>New Visa Assistance Request</h2>

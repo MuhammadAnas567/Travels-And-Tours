@@ -2,9 +2,9 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { signIn } from "next-auth/react";
-import { loginUser } from "@/actions/auth";
+import { loginSchema } from "@/lib/validations";
 import { AuthShell } from "@/components/auth/auth-shell";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -13,29 +13,62 @@ import { Label } from "@/components/ui/label";
 const googleEnabled = Boolean(process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID);
 
 export default function LoginForm() {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl") ?? "/dashboard";
-  const [error, setError] = useState<string | null>(null);
+  const resetOk = searchParams.get("reset") === "1";
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
+  const [error, setError] = useState<string | null>(
+    resetOk ? "Password updated. Sign in with your new password." : null
+  );
   const [loading, setLoading] = useState(false);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setLoading(true);
     setError(null);
+    setFieldErrors({});
+
     const formData = new FormData(e.currentTarget);
-    formData.set("callbackUrl", callbackUrl);
-    try {
-      const result = await loginUser(formData);
-      if (result?.error) {
-        const err = result.error as Record<string, string[] | undefined>;
-        setError(err._form?.[0] ?? err.email?.[0] ?? err.password?.[0] ?? "Login failed");
-        setLoading(false);
+    const raw = {
+      email: String(formData.get("email") ?? "").trim().toLowerCase(),
+      password: String(formData.get("password") ?? ""),
+    };
+
+    const parsed = loginSchema.safeParse(raw);
+    if (!parsed.success) {
+      const next: Record<string, string> = {};
+      for (const issue of parsed.error.issues) {
+        const key = String(issue.path[0] ?? "_form");
+        if (!next[key]) next[key] = issue.message;
       }
+      setFieldErrors(next);
+      setLoading(false);
+      return;
+    }
+
+    try {
+      const result = await signIn("credentials", {
+        email: parsed.data.email,
+        password: parsed.data.password,
+        redirect: false,
+      });
+
+      if (result?.error) {
+        setError("Email or password is incorrect. Check your details and try again.");
+        setLoading(false);
+        return;
+      }
+
+      router.replace(callbackUrl);
+      router.refresh();
     } catch {
       setError("Could not sign in. Check your connection and try again.");
       setLoading(false);
     }
   }
+
+  const registerHref = `/register?callbackUrl=${encodeURIComponent(callbackUrl)}`;
 
   return (
     <AuthShell
@@ -49,11 +82,20 @@ export default function LoginForm() {
             id="email"
             name="email"
             type="email"
-            required
             autoComplete="email"
             placeholder="you@example.com"
             className="mt-1.5 h-12 bg-paper"
+            aria-invalid={Boolean(fieldErrors.email)}
+            onChange={() => {
+              if (error) setError(null);
+              if (fieldErrors.email) setFieldErrors((f) => ({ ...f, email: "" }));
+            }}
           />
+          {fieldErrors.email ? (
+            <p className="mt-1 text-sm text-ink-600" role="status">
+              {fieldErrors.email}
+            </p>
+          ) : null}
         </div>
         <div>
           <div className="flex items-center justify-between gap-2">
@@ -69,21 +111,39 @@ export default function LoginForm() {
             id="password"
             name="password"
             type="password"
-            required
             autoComplete="current-password"
-            placeholder="••••••••"
+            placeholder="Your password"
             className="mt-1.5 h-12 bg-paper"
+            aria-invalid={Boolean(fieldErrors.password)}
+            onChange={() => {
+              if (error) setError(null);
+              if (fieldErrors.password) setFieldErrors((f) => ({ ...f, password: "" }));
+            }}
           />
+          {fieldErrors.password ? (
+            <p className="mt-1 text-sm text-ink-600" role="status">
+              {fieldErrors.password}
+            </p>
+          ) : null}
         </div>
         {error ? (
-          <p className="rounded-sm border border-error/30 bg-error/5 px-3 py-2 text-sm text-error" role="alert">
+          <p
+            className={`text-sm ${resetOk && !error.includes("incorrect") ? "text-pine-700" : "text-ink-600"}`}
+            role="status"
+            aria-live="polite"
+          >
             {error}
           </p>
         ) : null}
-        <Button type="submit" className="w-full h-12 text-base" disabled={loading}>
+        <Button type="submit" className="min-h-12 w-full text-base" aria-busy={loading}>
           {loading ? "Signing in…" : "Sign in"}
         </Button>
       </form>
+
+      <p className="mt-4 rounded-md border border-line bg-paper px-3 py-2 text-xs text-ink-500">
+        Demo: <span className="font-medium text-ink-700">user@example.com</span> /{" "}
+        <span className="font-medium text-ink-700">user123</span>
+      </p>
 
       {googleEnabled ? (
         <>
@@ -106,19 +166,9 @@ export default function LoginForm() {
         </>
       ) : null}
 
-      <div className="mt-6 rounded-md border border-pine-100 bg-pine-50/80 px-4 py-3 text-sm text-ink-700">
-        <p className="font-semibold text-pine-800">Demo account</p>
-        <p className="mt-1 tabular-nums">
-          user@example.com · <span className="font-medium">user123</span>
-        </p>
-        <p className="mt-0.5 text-xs text-ink-500">
-          Vercel pe DATABASE_URL = Atlas URI hona zaroori hai
-        </p>
-      </div>
-
       <p className="mt-6 text-center text-sm text-ink-500">
         Don&apos;t have an account?{" "}
-        <Link href="/register" className="font-semibold text-pine-600 hover:underline">
+        <Link href={registerHref} className="font-semibold text-pine-600 hover:underline">
           Sign up
         </Link>
       </p>

@@ -81,8 +81,8 @@ export default async function AdminOverviewPage() {
           <CardTitle>Recent Bookings</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm">
+          <div className="-mx-6 overflow-x-auto px-6">
+            <table className="min-w-[640px] w-full text-sm">
               <thead>
                 <tr className="border-b border-line text-left text-ink-500">
                   <th className="pb-3 pr-4 font-medium">Tour</th>

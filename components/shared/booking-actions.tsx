@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { toast } from "sonner";
 import { updateBookingStatus, refundBooking } from "@/actions/admin";
+import { verifyBookingPayment } from "@/actions/booking";
 import { Button } from "@/components/ui/button";
 import type { BookingStatus } from "@prisma/client";
 
@@ -15,11 +16,23 @@ export function BookingActions({
 }) {
   const [showRefundConfirm, setShowRefundConfirm] = useState(false);
   const [refunding, setRefunding] = useState(false);
+  const [verifying, setVerifying] = useState(false);
 
   async function handleStatus(newStatus: BookingStatus) {
     await updateBookingStatus(bookingId, newStatus);
     toast.success("Status updated");
     window.location.reload();
+  }
+
+  async function handleVerify() {
+    setVerifying(true);
+    const result = await verifyBookingPayment(bookingId);
+    setVerifying(false);
+    if ("error" in result && result.error) toast.error(result.error);
+    else {
+      toast.success("Payment verified — booking confirmed");
+      window.location.reload();
+    }
   }
 
   async function handleConfirmRefund() {
@@ -72,6 +85,16 @@ export function BookingActions({
         <Button size="sm" variant="ghost" onClick={() => handleStatus("CANCELLED")}>
           Cancel
         </Button>
+      )}
+      {status === "PENDING_VERIFICATION" && (
+        <>
+          <Button size="sm" onClick={() => void handleVerify()} disabled={verifying}>
+            {verifying ? "Verifying…" : "Verify payment"}
+          </Button>
+          <Button size="sm" variant="ghost" onClick={() => handleStatus("CANCELLED")}>
+            Reject
+          </Button>
+        </>
       )}
     </div>
   );

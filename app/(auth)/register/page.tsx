@@ -1,9 +1,11 @@
 ﻿"use client";
 
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
 import { signIn } from "next-auth/react";
 import { registerUser } from "@/actions/auth";
+import { registerSchema } from "@/lib/validations";
 import { AuthShell } from "@/components/auth/auth-shell";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -11,29 +13,75 @@ import { Label } from "@/components/ui/label";
 
 const googleEnabled = Boolean(process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID);
 
-export default function RegisterPage() {
-  const [errors, setErrors] = useState<Record<string, string[]>>({});
+function RegisterForm() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get("callbackUrl") ?? "/dashboard";
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const [formError, setFormError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setLoading(true);
-    setErrors({});
+    setFieldErrors({});
     setFormError(null);
+
     const formData = new FormData(e.currentTarget);
+    const raw = {
+      name: String(formData.get("name") ?? "").trim(),
+      email: String(formData.get("email") ?? "").trim().toLowerCase(),
+      password: String(formData.get("password") ?? ""),
+      confirmPassword: String(formData.get("confirmPassword") ?? ""),
+    };
+
+    const parsed = registerSchema.safeParse(raw);
+    if (!parsed.success) {
+      const next: Record<string, string> = {};
+      for (const issue of parsed.error.issues) {
+        const key = String(issue.path[0] ?? "_form");
+        if (!next[key]) next[key] = issue.message;
+      }
+      setFieldErrors(next);
+      setLoading(false);
+      return;
+    }
+
     try {
-      const result = await registerUser(formData);
+      const payload = new FormData();
+      payload.set("name", parsed.data.name);
+      payload.set("email", parsed.data.email);
+      payload.set("password", parsed.data.password);
+      payload.set("confirmPassword", parsed.data.confirmPassword);
+
+      const result = await registerUser(payload);
       if (result?.error) {
-        const err = result.error as Record<string, string[]>;
-        setErrors(err);
+        const err = result.error as Record<string, string[] | undefined>;
+        const next: Record<string, string> = {};
+        for (const [k, v] of Object.entries(err)) {
+          if (v?.[0]) next[k] = v[0];
+        }
+        setFieldErrors(next);
         setFormError(err._form?.[0] ?? null);
         setLoading(false);
+        return;
       }
+
+      const signed = await signIn("credentials", {
+        email: parsed.data.email,
+        password: parsed.data.password,
+        redirect: false,
+      });
+      if (signed?.error) {
+        setFormError("Account created — please sign in.");
+        setLoading(false);
+        router.push(`/login?callbackUrl=${encodeURIComponent(callbackUrl)}`);
+        return;
+      }
+      router.replace(callbackUrl);
+      router.refresh();
     } catch {
-      setFormError(
-        "Could not create account. The live database may not be configured yet — try again shortly."
-      );
+      setFormError("Could not create account. Try again in a moment.");
       setLoading(false);
     }
   }
@@ -49,12 +97,14 @@ export default function RegisterPage() {
           <Input
             id="name"
             name="name"
-            required
             autoComplete="name"
             placeholder="Your name"
             className="mt-1.5 h-12 bg-paper"
+            aria-invalid={Boolean(fieldErrors.name)}
           />
-          {errors.name ? <p className="mt-1 text-sm text-error">{errors.name[0]}</p> : null}
+          {fieldErrors.name ? (
+            <p className="mt-1 text-sm text-ink-600">{fieldErrors.name}</p>
+          ) : null}
         </div>
         <div>
           <Label htmlFor="email">Email</Label>
@@ -62,12 +112,14 @@ export default function RegisterPage() {
             id="email"
             name="email"
             type="email"
-            required
             autoComplete="email"
             placeholder="you@example.com"
             className="mt-1.5 h-12 bg-paper"
+            aria-invalid={Boolean(fieldErrors.email)}
           />
-          {errors.email ? <p className="mt-1 text-sm text-error">{errors.email[0]}</p> : null}
+          {fieldErrors.email ? (
+            <p className="mt-1 text-sm text-ink-600">{fieldErrors.email}</p>
+          ) : null}
         </div>
         <div>
           <Label htmlFor="password">Password</Label>
@@ -75,13 +127,13 @@ export default function RegisterPage() {
             id="password"
             name="password"
             type="password"
-            required
             autoComplete="new-password"
-            placeholder="At least 8 characters"
+            placeholder="At least 6 characters"
             className="mt-1.5 h-12 bg-paper"
+            aria-invalid={Boolean(fieldErrors.password)}
           />
-          {errors.password ? (
-            <p className="mt-1 text-sm text-error">{errors.password[0]}</p>
+          {fieldErrors.password ? (
+            <p className="mt-1 text-sm text-ink-600">{fieldErrors.password}</p>
           ) : null}
         </div>
         <div>
@@ -90,21 +142,21 @@ export default function RegisterPage() {
             id="confirmPassword"
             name="confirmPassword"
             type="password"
-            required
             autoComplete="new-password"
             placeholder="Repeat password"
             className="mt-1.5 h-12 bg-paper"
+            aria-invalid={Boolean(fieldErrors.confirmPassword)}
           />
-          {errors.confirmPassword ? (
-            <p className="mt-1 text-sm text-error">{errors.confirmPassword[0]}</p>
+          {fieldErrors.confirmPassword ? (
+            <p className="mt-1 text-sm text-ink-600">{fieldErrors.confirmPassword}</p>
           ) : null}
         </div>
         {formError ? (
-          <p className="rounded-sm border border-error/30 bg-error/5 px-3 py-2 text-sm text-error" role="alert">
+          <p className="text-sm text-ink-600" role="status">
             {formError}
           </p>
         ) : null}
-        <Button type="submit" className="w-full h-12 text-base" disabled={loading}>
+        <Button type="submit" className="w-full h-12 text-base" aria-busy={loading}>
           {loading ? "Creating account…" : "Create account"}
         </Button>
       </form>
@@ -123,7 +175,7 @@ export default function RegisterPage() {
             type="button"
             variant="outline"
             className="w-full h-12 bg-paper"
-            onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
+            onClick={() => signIn("google", { callbackUrl })}
           >
             Continue with Google
           </Button>
@@ -132,10 +184,27 @@ export default function RegisterPage() {
 
       <p className="mt-6 text-center text-sm text-ink-500">
         Already have an account?{" "}
-        <Link href="/login" className="font-semibold text-pine-600 hover:underline">
+        <Link
+          href={`/login?callbackUrl=${encodeURIComponent(callbackUrl)}`}
+          className="font-semibold text-pine-600 hover:underline"
+        >
           Sign in
         </Link>
       </p>
     </AuthShell>
+  );
+}
+
+export default function RegisterPage() {
+  return (
+    <Suspense
+      fallback={
+        <AuthShell title="Create your account" subtitle="Loading…">
+          <p className="text-sm text-ink-500">Preparing form…</p>
+        </AuthShell>
+      }
+    >
+      <RegisterForm />
+    </Suspense>
   );
 }

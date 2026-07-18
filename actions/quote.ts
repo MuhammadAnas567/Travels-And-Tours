@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/db";
 import { getSession } from "@/lib/auth";
 import { sendEmail } from "@/lib/email";
-import { siteConfig } from "@/lib/site-config";
+import { getContactInbox } from "@/lib/site-config";
 import { z } from "zod";
 
 const quoteSchema = z.object({
@@ -63,7 +63,7 @@ export async function submitQuoteRequest(formData: FormData) {
   });
 
   await sendEmail({
-    to: siteConfig.office.email,
+    to: getContactInbox(),
     subject: `Custom trip quote: ${destinations.join(", ")}`,
     html: `
       <h2>New Quote Request</h2>
@@ -120,7 +120,7 @@ export async function submitHotelInquiry(input: z.infer<typeof hotelInquirySchem
   });
 
   await sendEmail({
-    to: siteConfig.office.email,
+    to: getContactInbox(),
     subject: `Hotel quote: ${data.hotelName}`,
     html: `
       <h2>Hotel stay request</h2>

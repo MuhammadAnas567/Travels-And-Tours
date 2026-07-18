@@ -44,6 +44,7 @@ export function BookingWidget({
   const [tourDateId, setTourDateId] = useState(availableDates[0]?.id ?? "");
   const [adults, setAdults] = useState(2);
   const [children, setChildren] = useState(0);
+  const [bookingError, setBookingError] = useState("");
 
   const childPrice = unitPrice * 0.7;
   const total = adults * unitPrice + children * childPrice;
@@ -83,7 +84,7 @@ export function BookingWidget({
   const inquireUrl = `/contact?${inquireParams.toString()}`;
 
   return (
-    <Card className="sticky top-24 rounded-md border border-line bg-paper shadow-sm">
+    <Card className="rounded-md border border-line bg-paper shadow-sm lg:sticky lg:top-24">
       <CardHeader>
         <div className="mb-2">
           <InventoryBadge mode={mode} />
@@ -96,7 +97,13 @@ export function BookingWidget({
       <CardContent className="space-y-4">
         <div>
           <Label htmlFor="tour-date">Select date</Label>
-          <Select value={tourDateId} onValueChange={setTourDateId}>
+          <Select
+            value={tourDateId}
+            onValueChange={(value) => {
+              setTourDateId(value);
+              setBookingError("");
+            }}
+          >
             <SelectTrigger id="tour-date" className="mt-1">
               <SelectValue placeholder="Choose a departure date" />
             </SelectTrigger>
@@ -127,7 +134,10 @@ export function BookingWidget({
               min={1}
               max={seatsLeft}
               value={adults}
-              onChange={(e) => setAdults(Number(e.target.value))}
+              onChange={(e) => {
+                setAdults(Number(e.target.value));
+                setBookingError("");
+              }}
               className="mt-1"
             />
           </div>
@@ -139,7 +149,10 @@ export function BookingWidget({
               min={0}
               max={Math.max(0, seatsLeft - adults)}
               value={children}
-              onChange={(e) => setChildren(Number(e.target.value))}
+              onChange={(e) => {
+                setChildren(Number(e.target.value));
+                setBookingError("");
+              }}
               className="mt-1"
             />
           </div>
@@ -168,13 +181,32 @@ export function BookingWidget({
           </div>
         </div>
 
-        <Button className="w-full" size="lg" disabled={!canProceed} asChild={canProceed}>
+        <Button
+          className="w-full"
+          size="lg"
+          asChild={canProceed}
+          onClick={
+            canProceed
+              ? undefined
+              : () =>
+                  setBookingError(
+                    !tourDateId
+                      ? "Choose a departure date to continue."
+                      : `Choose no more than ${seatsLeft} available seats.`
+                  )
+          }
+        >
           {canProceed ? (
             <Link href={fallback ? inquireUrl : bookingUrl}>{cta}</Link>
           ) : (
             <span>{cta}</span>
           )}
         </Button>
+        {bookingError ? (
+          <p className="text-center text-sm text-ink-500" role="status">
+            {bookingError}
+          </p>
+        ) : null}
         {fallback ? (
           <p className="text-center text-xs text-ink-500">
             Inquire only — we confirm dates and payment with you directly (reply within 2 business

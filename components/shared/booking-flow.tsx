@@ -67,7 +67,7 @@ export function BookingFlow({
   }, [tour.id, tourDateId, adults, children, router]);
 
   async function applyCoupon() {
-    if (!pricing) return;
+    if (!pricing || couponBusy || !couponInput.trim()) return;
     setCouponBusy(true);
     const result = await validateCouponCode({
       code: couponInput,
@@ -225,8 +225,11 @@ export function BookingFlow({
   }
 
   return (
-    <div className="mx-auto max-w-2xl px-4 py-10">
-      <h1 className="text-2xl font-bold text-ink-900">Book: {tour.title}</h1>
+    <div
+      className="mx-auto min-w-0 max-w-2xl px-4 py-8 sm:px-6 sm:py-10"
+      aria-busy={loading}
+    >
+      <h1 className="break-words text-2xl font-bold text-ink-900">Book: {tour.title}</h1>
 
       <div className="mt-4 flex gap-2" aria-hidden>
         {[1, 2, 3].map((s) => (
@@ -269,22 +272,28 @@ export function BookingFlow({
             )}
             <div className="space-y-2">
               <Label htmlFor="coupon">Coupon code</Label>
-              <div className="flex gap-2">
+              <div className="flex flex-col gap-2 sm:flex-row">
                 <Input
                   id="coupon"
                   value={couponInput}
                   onChange={(e) => setCouponInput(e.target.value.toUpperCase())}
                   placeholder="e.g. SUMMER10"
                   disabled={!!appliedCoupon}
-                  className="uppercase"
+                  className="min-w-0 uppercase"
                 />
                 {appliedCoupon ? (
-                  <Button type="button" variant="outline" onClick={clearCoupon}>
+                  <Button type="button" variant="outline" onClick={clearCoupon} className="w-full sm:w-auto">
                     Remove
                   </Button>
                 ) : (
-                  <Button type="button" variant="secondary" disabled={couponBusy || !couponInput} onClick={() => void applyCoupon()}>
-                    Apply
+                  <Button
+                    type="button"
+                    variant="secondary"
+                    className="w-full sm:w-auto"
+                    aria-busy={couponBusy}
+                    onClick={() => void applyCoupon()}
+                  >
+                    {couponBusy ? "Applying…" : "Apply"}
                   </Button>
                 )}
               </div>
@@ -360,13 +369,12 @@ export function BookingFlow({
               </p>
             )}
             <ChargeCurrencyNotice />
-            <div className="flex gap-3">
-              <Button type="button" variant="outline" onClick={() => setStep(1)}>
+            <div className="flex flex-col-reverse gap-3 sm:flex-row">
+              <Button type="button" variant="outline" onClick={() => setStep(1)} className="w-full sm:w-auto">
                 Back
               </Button>
               <Button
-                className="flex-1 bg-primary-500 hover:bg-primary-700"
-                disabled={loading}
+                className="w-full flex-1 bg-primary-500 hover:bg-primary-700"
                 onClick={() => {
                   if (validateStep2()) setStep(3);
                 }}
@@ -422,7 +430,7 @@ export function BookingFlow({
                   onSelectJazzcash={() => void handleWallet("jazzcash")}
                   onSelectEasypaisa={() => void handleWallet("easypaisa")}
                 />
-                <Button type="button" variant="outline" onClick={() => setStep(2)}>
+                <Button type="button" variant="outline" onClick={() => setStep(2)} className="w-full sm:w-auto">
                   Back
                 </Button>
               </>

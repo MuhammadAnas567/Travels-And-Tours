@@ -28,6 +28,7 @@ export async function sendEmail({
 export async function sendBookingConfirmationEmail({
   to,
   bookingId,
+  bookingReference,
   tourTitle,
   startDate,
   endDate,
@@ -36,6 +37,7 @@ export async function sendBookingConfirmationEmail({
 }: {
   to: string;
   bookingId: string;
+  bookingReference?: string;
   tourTitle: string;
   startDate: string;
   endDate: string;
@@ -50,6 +52,7 @@ export async function sendBookingConfirmationEmail({
 
   const from = process.env.RESEND_FROM_EMAIL ?? "onboarding@resend.dev";
   const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";
+  const ref = bookingReference ?? bookingId;
 
   await resend.emails.send({
     from,
@@ -60,7 +63,7 @@ export async function sendBookingConfirmationEmail({
       <p>Hi ${travelerName},</p>
       <p>Thank you for booking <strong>${tourTitle}</strong>.</p>
       <ul>
-        <li><strong>Booking ID:</strong> ${bookingId}</li>
+        <li><strong>Reference:</strong> ${ref}</li>
         <li><strong>Dates:</strong> ${startDate} — ${endDate}</li>
         <li><strong>Total:</strong> ${totalPrice}</li>
       </ul>

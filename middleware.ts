@@ -9,6 +9,14 @@ const SESSION_COOKIE_PREFIXES = [
   "__Secure-authjs.session-token",
 ] as const;
 
+/** Routes agents may access (CRM / quotes / visa). Everything else under /admin is ADMIN-only. */
+const AGENT_ALLOWED = [
+  "/admin/quotes",
+  "/admin/crm",
+  "/admin/visa-inquiries",
+  "/admin", // overview landing — page itself can show limited widgets
+];
+
 function isSessionCookie(name: string) {
   return SESSION_COOKIE_PREFIXES.some(
     (prefix) => name === prefix || name.startsWith(`${prefix}.`)
@@ -26,9 +34,15 @@ function clearSessionCookies(
   }
 }
 
+function agentMayAccess(pathname: string) {
+  if (pathname === "/admin" || pathname === "/admin/") return true;
+  return AGENT_ALLOWED.some(
+    (prefix) => prefix !== "/admin" && (pathname === prefix || pathname.startsWith(`${prefix}/`))
+  );
+}
+
 /**
- * Only run auth on protected areas — public pages (/, /tours, /packages, …)
- * skip NextAuth entirely so Vercel TTFB stays low.
+ * Only run auth on protected areas — public pages skip NextAuth for TTFB.
  */
 export default auth((req) => {
   const { pathname } = req.nextUrl;
@@ -41,20 +55,25 @@ export default auth((req) => {
 
   if (pathname.startsWith("/admin")) {
     const role = req.auth?.user?.role;
-    const isStaff = role === "ADMIN" || role === "AGENT";
     if (!isLoggedIn) {
       response = NextResponse.redirect(new URL("/login", req.url));
-    } else if (!isStaff) {
-      response = NextResponse.redirect(new URL("/", req.url));
-    } else {
+    } else if (role === "ADMIN") {
       response = NextResponse.next();
+    } else if (role === "AGENT") {
+      if (agentMayAccess(pathname)) {
+        response = NextResponse.next();
+      } else {
+        response = NextResponse.redirect(new URL("/admin/quotes", req.url));
+      }
+    } else {
+      response = NextResponse.redirect(new URL("/", req.url));
     }
-  } else if (
-    (pathname.startsWith("/dashboard") || pathname.startsWith("/booking")) &&
-    !isLoggedIn
-  ) {
+  } else if (pathname.startsWith("/dashboard") && !isLoggedIn) {
     const loginUrl = new URL("/login", req.url);
-    loginUrl.searchParams.set("callbackUrl", pathname);
+    loginUrl.searchParams.set(
+      "callbackUrl",
+      `${pathname}${req.nextUrl.search || ""}`
+    );
     response = NextResponse.redirect(loginUrl);
   } else {
     response = NextResponse.next();
@@ -68,5 +87,5 @@ export default auth((req) => {
 });
 
 export const config = {
-  matcher: ["/admin/:path*", "/dashboard/:path*", "/booking/:path*"],
+  matcher: ["/admin/:path*", "/dashboard/:path*"],
 };

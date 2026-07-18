@@ -3,6 +3,7 @@ import type { Prisma } from "@prisma/client";
 import { contactSchema } from "@/lib/validations";
 import { sendContactEmail } from "@/lib/email";
 import { prisma, withDbTimeout } from "@/lib/db";
+import { getContactInbox } from "@/lib/site-config";
 
 const rateLimit = new Map<string, { count: number; reset: number }>();
 
@@ -107,11 +108,11 @@ export async function POST(req: Request) {
     const stored = emailed ? true : await persistInquiry(parsed.data);
 
     if (!emailed && !stored) {
+      const inbox = getContactInbox();
       return NextResponse.json(
         {
-          error:
-            "Could not save your message (database offline). Email hello@ueb3tours.com or try WhatsApp.",
-          mailto: `mailto:hello@ueb3tours.com?subject=${encodeURIComponent(parsed.data.subject)}&body=${encodeURIComponent(`From: ${parsed.data.name} <${parsed.data.email}>\n\n${parsed.data.message}`)}`,
+          error: `Could not save your message (database offline). Email ${inbox} or try WhatsApp.`,
+          mailto: `mailto:${inbox}?subject=${encodeURIComponent(parsed.data.subject)}&body=${encodeURIComponent(`From: ${parsed.data.name} <${parsed.data.email}>\n\n${parsed.data.message}`)}`,
         },
         { status: 503 }
       );

@@ -40,12 +40,24 @@ export const siteConfig = {
     ptdcLicense: sanitizeLicense(process.env.TRUST_PTDC_LICENSE),
   },
   office: {
-    address: process.env.OFFICE_ADDRESS ?? "Office 12, Blue Area, Islamabad, Pakistan",
-    email: process.env.CONTACT_EMAIL ?? "hello@ueb3tours.com",
-    phone: process.env.OFFICE_PHONE ?? "+92 300 1234567",
+    /** Public display values — must use NEXT_PUBLIC_* so SSR and client match */
+    address:
+      process.env.NEXT_PUBLIC_OFFICE_ADDRESS ??
+      "Office 12, Blue Area, Islamabad, Pakistan",
+    email: process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? "hello@ueb3tours.com",
+    phone: process.env.NEXT_PUBLIC_OFFICE_PHONE ?? "+92 300 1234567",
     hours: "Mon–Sat, 10am–7pm PKT",
   },
 } as const;
+
+/** Server-only inbox for contact form / Resend (may differ from public display email) */
+export function getContactInbox() {
+  return (
+    process.env.CONTACT_EMAIL ??
+    process.env.NEXT_PUBLIC_CONTACT_EMAIL ??
+    "hello@ueb3tours.com"
+  );
+}
 
 function sanitizeLicense(value?: string | null) {
   if (!value?.trim()) return "";

@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
@@ -34,11 +34,16 @@ function ContactFallback() {
 
 function ContactPageInner() {
   const searchParams = useSearchParams();
-  const [subject, setSubject] = useState(() => searchParams.get("subject") ?? "");
-  const [message, setMessage] = useState(() => searchParams.get("message") ?? "");
+  const [subject, setSubject] = useState("");
+  const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const [formError, setFormError] = useState<string | null>(null);
   const whatsappUrl = getWhatsAppUrl();
+
+  useEffect(() => {
+    setSubject(searchParams.get("subject") ?? "");
+    setMessage(searchParams.get("message") ?? "");
+  }, [searchParams]);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -145,7 +150,7 @@ function ContactPageInner() {
                   />
                 </div>
                 {formError ? (
-                  <p className="text-sm text-error" role="alert">
+                  <p className="text-sm text-ink-500" role="status">
                     {formError}
                   </p>
                 ) : null}

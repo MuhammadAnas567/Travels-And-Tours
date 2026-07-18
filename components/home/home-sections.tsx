@@ -11,6 +11,7 @@ import {
   Smartphone,
   Headphones,
   Sparkles,
+  ArrowRight,
   type LucideIcon,
 } from "lucide-react";
 import { HOME_SERVICES, HOME_TRUST, HOME_PARTNERS, HOME_WHY } from "@/lib/data/home-content";
@@ -77,8 +78,13 @@ export function ServicesGrid() {
               </span>
               <h3 className="mt-4 font-display text-base font-semibold text-ink-900">{s.title}</h3>
               <p className="mt-2 text-sm text-ink-500 leading-relaxed flex-1">{s.description}</p>
-              <span className="mt-4 text-sm font-semibold text-pine-500 group-hover:text-pine-500">
-                Explore →
+              <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-pine-500">
+                Explore
+                <ArrowRight
+                  className="h-4 w-4 transition-transform duration-[var(--duration-base)] ease-[var(--ease-brand)] group-hover:translate-x-1"
+                  strokeWidth={1.5}
+                  aria-hidden
+                />
               </span>
             </Link>
           </Reveal>

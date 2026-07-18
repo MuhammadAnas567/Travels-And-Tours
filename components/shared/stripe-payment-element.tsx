@@ -70,11 +70,11 @@ function PaymentForm({
           className="flex-1 bg-primary-500 hover:bg-primary-700"
           disabled={!stripe || !elements || loading}
         >
-          {loading ? "Processingâ€¦" : "Pay securely"}
+          {loading ? "Processing…" : "Pay securely"}
         </Button>
       </div>
       <p className="text-center text-xs text-ink-500">
-        Secured by Stripe Â· Cards, wallets &amp; 3D Secure supported
+        Secured by Stripe · Cards, wallets &amp; 3D Secure supported
       </p>
     </form>
   );

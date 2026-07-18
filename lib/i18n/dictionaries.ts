@@ -71,6 +71,7 @@ const en: Dict = {
   "dash.account": "Your account",
   "dash.overview": "Overview",
   "dash.bookings": "My Bookings",
+  "dash.reviews": "Reviews",
   "dash.wishlist": "Wishlist",
   "dash.profile": "Profile",
   "dash.welcome": "Welcome, {name}",
