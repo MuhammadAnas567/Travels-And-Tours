@@ -16,6 +16,11 @@ export const revalidate = 120;
 
 type Props = {
   params: Promise<{ slug: string }>;
+  searchParams: Promise<{
+    checkIn?: string;
+    checkOut?: string;
+    guests?: string;
+  }>;
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -34,8 +39,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default async function HotelDetailPage({ params }: Props) {
+export default async function HotelDetailPage({ params, searchParams }: Props) {
   const { slug } = await params;
+  const stay = await searchParams;
   const hotel = await getHotelBySlug(slug);
   if (!hotel) notFound();
 
@@ -209,6 +215,9 @@ export default async function HotelDetailPage({ params }: Props) {
               country={hotel.country}
               pricePerNight={hotel.pricePerNight}
               whatsappUrl={whatsappUrl}
+              initialCheckIn={stay.checkIn?.trim() || ""}
+              initialCheckOut={stay.checkOut?.trim() || ""}
+              initialGuests={stay.guests?.trim() || "2"}
             />
           </div>
         </aside>

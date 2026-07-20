@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Car, MapPin, Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SearchWidget } from "@/components/search/search-widget";
-import { CatalogHero } from "@/components/layout/catalog-hero";
+import { CatalogHero, EmptyCatalog } from "@/components/layout/catalog-hero";
 import { DisplayPrice } from "@/components/shared/display-price";
 import { prisma } from "@/lib/db";
 
@@ -13,7 +13,13 @@ export const metadata: Metadata = {
 };
 
 type Props = {
-  searchParams: Promise<{ location?: string; pickup?: string; return?: string }>;
+  searchParams: Promise<{
+    location?: string;
+    from?: string;
+    to?: string;
+    pickup?: string;
+    return?: string;
+  }>;
 };
 
 const FALLBACK_CARS = [
@@ -26,7 +32,7 @@ const FALLBACK_CARS = [
     bags: 2,
     transmission: "Automatic",
     pricePerDay: 28,
-    locations: ["DXB Airport", "Islamabad", "Lahore"],
+    locations: ["DXB Airport", "Dubai", "Islamabad", "Lahore"],
     image: null as string | null,
   },
   {
@@ -38,7 +44,7 @@ const FALLBACK_CARS = [
     bags: 3,
     transmission: "Automatic",
     pricePerDay: 45,
-    locations: ["DXB Airport", "Karachi"],
+    locations: ["DXB Airport", "Dubai", "Karachi"],
     image: null,
   },
   {
@@ -50,7 +56,7 @@ const FALLBACK_CARS = [
     bags: 4,
     transmission: "Automatic",
     pricePerDay: 52,
-    locations: ["LHR Airport", "Islamabad"],
+    locations: ["LHR Airport", "London", "Islamabad"],
     image: null,
   },
   {
@@ -62,14 +68,19 @@ const FALLBACK_CARS = [
     bags: 5,
     transmission: "Automatic",
     pricePerDay: 78,
-    locations: ["DXB Airport", "Jeddah"],
+    locations: ["DXB Airport", "Dubai", "Jeddah"],
     image: null,
   },
 ];
 
 export default async function CarsPage({ searchParams }: Props) {
   const params = await searchParams;
-  const location = params.location?.trim();
+  const location = (
+    params.location?.trim() ||
+    params.to?.trim() ||
+    params.from?.trim() ||
+    ""
+  );
   const pickup = params.pickup?.trim();
   const ret = params.return?.trim();
 
@@ -82,13 +93,11 @@ export default async function CarsPage({ searchParams }: Props) {
     cars = FALLBACK_CARS as typeof cars;
   }
 
-  const filtered = location
+  const list = location
     ? cars.filter((c) =>
         c.locations.some((l) => l.toLowerCase().includes(location.toLowerCase()))
       )
     : cars;
-
-  const list = filtered.length > 0 ? filtered : cars;
 
   return (
     <div className="bg-sand min-h-[60vh]">
@@ -117,37 +126,54 @@ export default async function CarsPage({ searchParams }: Props) {
           </span>
         </div>
 
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {list.map((car) => {
-            const bookHref =
-              car.id.startsWith("fallback")
+        {location && list.length > 0 ? (
+          <p className="mb-4 text-sm text-ink-500" aria-live="polite">
+            Showing {list.length} vehicle{list.length === 1 ? "" : "s"} near “{location}”
+            {pickup ? ` · pickup ${pickup}` : ""}
+          </p>
+        ) : null}
+
+        {list.length === 0 ? (
+          <EmptyCatalog
+            title="No cars match this location"
+            description={`Nothing available near “${location}”. Try Dubai, Karachi, Islamabad, or browse all vehicles.`}
+          >
+            <Button asChild variant="outline">
+              <Link href="/cars">Browse all cars</Link>
+            </Button>
+          </EmptyCatalog>
+        ) : (
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {list.map((car) => {
+              const bookHref = car.id.startsWith("fallback")
                 ? `/contact?subject=${encodeURIComponent(`Car hire: ${car.name}`)}`
                 : `/cars/book?carId=${car.id}${location ? `&location=${encodeURIComponent(location)}` : ""}${pickup ? `&pickup=${pickup}` : ""}${ret ? `&return=${ret}` : ""}`;
-            return (
-              <article
-                key={car.id}
-                className="rounded-md border border-line bg-paper p-5 shadow-sm transition-[box-shadow,transform] duration-[var(--duration-fast)] ease-[var(--ease-brand)] hover:shadow-md hover:-translate-y-0.5"
-              >
-                <div className="flex h-12 w-12 items-center justify-center rounded-md bg-pine-100 text-pine-500">
-                  <Car className="h-6 w-6" strokeWidth={1.5} />
-                </div>
-                <h2 className="mt-4 font-display text-lg font-semibold text-ink">{car.name}</h2>
-                <p className="mt-1 text-sm text-ink-500">
-                  {car.seats} seats · {car.bags} bags · {car.transmission}
-                </p>
-                <p className="mt-4 text-xl font-semibold tabular-nums text-ink">
-                  from <DisplayPrice amount={car.pricePerDay} />
-                  <span className="text-sm font-normal text-ink-500"> / day</span>
-                </p>
-                <Button asChild className="mt-4 w-full rounded-md">
-                  <Link href={bookHref}>
-                    {car.id.startsWith("fallback") ? "Request quote" : "Book & pay"}
-                  </Link>
-                </Button>
-              </article>
-            );
-          })}
-        </div>
+              return (
+                <article
+                  key={car.id}
+                  className="rounded-md border border-line bg-paper p-5 shadow-sm transition-[box-shadow,transform] duration-[var(--duration-fast)] ease-[var(--ease-brand)] hover:shadow-md hover:-translate-y-0.5"
+                >
+                  <div className="flex h-12 w-12 items-center justify-center rounded-md bg-pine-100 text-pine-500">
+                    <Car className="h-6 w-6" strokeWidth={1.5} />
+                  </div>
+                  <h2 className="mt-4 font-display text-lg font-semibold text-ink">{car.name}</h2>
+                  <p className="mt-1 text-sm text-ink-500">
+                    {car.seats} seats · {car.bags} bags · {car.transmission}
+                  </p>
+                  <p className="mt-4 text-xl font-semibold tabular-nums text-ink">
+                    from <DisplayPrice amount={car.pricePerDay} />
+                    <span className="text-sm font-normal text-ink-500"> / day</span>
+                  </p>
+                  <Button asChild className="mt-4 w-full rounded-md">
+                    <Link href={bookHref}>
+                      {car.id.startsWith("fallback") ? "Request quote" : "Book & pay"}
+                    </Link>
+                  </Button>
+                </article>
+              );
+            })}
+          </div>
+        )}
       </div>
     </div>
   );

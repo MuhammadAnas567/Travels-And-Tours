@@ -17,6 +17,9 @@ type Props = {
   country: string;
   pricePerNight: number;
   whatsappUrl?: string | null;
+  initialCheckIn?: string;
+  initialCheckOut?: string;
+  initialGuests?: string;
 };
 
 export function HotelInquiryForm({
@@ -25,6 +28,9 @@ export function HotelInquiryForm({
   country,
   pricePerNight,
   whatsappUrl,
+  initialCheckIn = "",
+  initialCheckOut = "",
+  initialGuests = "2",
 }: Props) {
   const [loading, setLoading] = useState(false);
   const [ticketId, setTicketId] = useState<string | null>(null);
@@ -32,9 +38,9 @@ export function HotelInquiryForm({
     name: "",
     email: "",
     phone: "",
-    checkIn: "",
-    checkOut: "",
-    guests: "2",
+    checkIn: initialCheckIn,
+    checkOut: initialCheckOut,
+    guests: initialGuests || "2",
     notes: "",
   });
 

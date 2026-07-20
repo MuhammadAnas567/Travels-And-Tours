@@ -21,6 +21,8 @@ type HotelCardProps = {
   reviewCount: number;
   pricePerNight: number;
   amenities?: string[];
+  /** Extra query string for stay dates / guests, e.g. "checkIn=...&guests=2" */
+  query?: string;
 };
 
 export function HotelCard({
@@ -35,9 +37,11 @@ export function HotelCard({
   reviewCount,
   pricePerNight,
   amenities = [],
+  query,
 }: HotelCardProps) {
   const { t } = usePreferences();
-  const href = slug === "fallback" || !slug ? "/hotels" : `/hotels/${slug}`;
+  const base = slug === "fallback" || !slug ? "/hotels" : `/hotels/${slug}`;
+  const href = query ? `${base}?${query}` : base;
   const img = image || PLACEHOLDER_TOUR_IMAGE;
 
   return (

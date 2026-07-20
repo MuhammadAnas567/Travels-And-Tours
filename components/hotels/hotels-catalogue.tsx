@@ -22,11 +22,34 @@ export type HotelCatalogueItem = {
   tags?: string[];
 };
 
+function formatStayDate(iso: string) {
+  if (!iso) return "";
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return iso;
+  return d.toLocaleDateString(undefined, {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
+}
+
 function HotelsCatalogueInner({ hotels }: { hotels: HotelCatalogueItem[] }) {
   const params = useSearchParams();
   const city = (params.get("city") ?? "").trim().toLowerCase();
   const q = (params.get("q") ?? "").trim().toLowerCase();
   const tag = (params.get("tag") ?? "").trim().toLowerCase();
+  const checkIn = (params.get("checkIn") ?? "").trim();
+  const checkOut = (params.get("checkOut") ?? "").trim();
+  const guestsRaw = params.get("guests") ?? params.get("adults") ?? "";
+  const guests = Number(guestsRaw);
+
+  const stayQuery = useMemo(() => {
+    const qs = new URLSearchParams();
+    if (checkIn) qs.set("checkIn", checkIn);
+    if (checkOut) qs.set("checkOut", checkOut);
+    if (Number.isFinite(guests) && guests > 0) qs.set("guests", String(guests));
+    return qs.toString();
+  }, [checkIn, checkOut, guests]);
 
   const filtered = useMemo(() => {
     let list = [...hotels];
@@ -62,6 +85,14 @@ function HotelsCatalogueInner({ hotels }: { hotels: HotelCatalogueItem[] }) {
     .filter(Boolean)
     .join(", ");
 
+  const stayLabel = [
+    checkIn && `check-in ${formatStayDate(checkIn)}`,
+    checkOut && `check-out ${formatStayDate(checkOut)}`,
+    Number.isFinite(guests) && guests > 0 && `${guests} guest${guests === 1 ? "" : "s"}`,
+  ]
+    .filter(Boolean)
+    .join(" · ");
+
   if (filtered.length === 0) {
     return (
       <EmptyCatalog
@@ -84,10 +115,11 @@ function HotelsCatalogueInner({ hotels }: { hotels: HotelCatalogueItem[] }) {
 
   return (
     <div>
-      {(city || q || tag) && (
+      {(city || q || tag || stayLabel) && (
         <p className="mb-4 text-sm text-ink-500" aria-live="polite">
           Showing {filtered.length} stay{filtered.length === 1 ? "" : "s"}
           {filterLabel ? ` for ${filterLabel}` : ""}
+          {stayLabel ? ` · ${stayLabel}` : ""}
         </p>
       )}
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -105,6 +137,7 @@ function HotelsCatalogueInner({ hotels }: { hotels: HotelCatalogueItem[] }) {
             reviewCount={h.reviewCount}
             pricePerNight={h.pricePerNight}
             amenities={h.amenities}
+            query={stayQuery || undefined}
           />
         ))}
       </div>

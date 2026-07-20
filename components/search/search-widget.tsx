@@ -171,8 +171,13 @@ function SearchWidgetInner({ className }: { className?: string }) {
       if (to) params.set("destination", to);
       router.push(`/packages?${params.toString()}`);
     } else {
+      // Cars: drop-off (`to`) is the primary location; pickup city (`from`) is a fallback.
       if (to) params.set("location", to);
+      else if (from) params.set("location", from);
+      if (from) params.set("from", from);
+      if (to) params.set("to", to);
       if (checkIn) params.set("pickup", checkIn);
+      if (checkOut) params.set("return", checkOut);
       router.push(`/cars?${params.toString()}`);
     }
   }

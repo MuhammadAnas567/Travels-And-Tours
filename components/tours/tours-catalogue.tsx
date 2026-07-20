@@ -17,12 +17,20 @@ type Props = {
 
 function ToursCatalogueInner({ tours, countries }: Props) {
   const params = useSearchParams();
-  const q = (params.get("q") ?? params.get("destination") ?? params.get("to") ?? "")
+  const q = (
+    params.get("q") ??
+    params.get("destination") ??
+    params.get("to") ??
+    params.get("city") ??
+    ""
+  )
     .trim()
     .toLowerCase();
   const category = params.get("category") ?? "";
   const country = params.get("country") ?? "";
   const sort = params.get("sort") ?? "popular";
+  const minPrice = Number(params.get("minPrice") ?? "");
+  const maxPrice = Number(params.get("maxPrice") ?? "");
 
   const filtered = useMemo(() => {
     let list = [...tours];
@@ -38,11 +46,31 @@ function ToursCatalogueInner({ tours, countries }: Props) {
     }
     if (category) list = list.filter((t) => t.category === category);
     if (country) list = list.filter((t) => t.country.toLowerCase() === country.toLowerCase());
-    if (sort === "price_asc") list.sort((a, b) => Number(a.discountPrice ?? a.price) - Number(b.discountPrice ?? b.price));
-    if (sort === "price_desc") list.sort((a, b) => Number(b.discountPrice ?? b.price) - Number(a.discountPrice ?? a.price));
+    if (Number.isFinite(minPrice) && minPrice > 0) {
+      list = list.filter((t) => Number(t.discountPrice ?? t.price) >= minPrice);
+    }
+    if (Number.isFinite(maxPrice) && maxPrice > 0) {
+      list = list.filter((t) => Number(t.discountPrice ?? t.price) <= maxPrice);
+    }
+    if (sort === "price_asc")
+      list.sort(
+        (a, b) => Number(a.discountPrice ?? a.price) - Number(b.discountPrice ?? b.price)
+      );
+    if (sort === "price_desc")
+      list.sort(
+        (a, b) => Number(b.discountPrice ?? b.price) - Number(a.discountPrice ?? a.price)
+      );
     if (sort === "rating") list.sort((a, b) => b.avgRating - a.avgRating);
     return list;
-  }, [tours, q, category, country, sort]);
+  }, [tours, q, category, country, sort, minPrice, maxPrice]);
+
+  const activeBits = [
+    q && `“${q}”`,
+    category && category.toLowerCase(),
+    country,
+    Number.isFinite(minPrice) && minPrice > 0 && `from $${minPrice}`,
+    Number.isFinite(maxPrice) && maxPrice > 0 && `to $${maxPrice}`,
+  ].filter(Boolean);
 
   return (
     <div className="grid gap-6 sm:gap-8 lg:grid-cols-4">
@@ -50,10 +78,16 @@ function ToursCatalogueInner({ tours, countries }: Props) {
         <FilterSidebar countries={countries} />
       </div>
       <div className="order-1 lg:order-2 lg:col-span-3">
+        {activeBits.length > 0 && filtered.length > 0 ? (
+          <p className="mb-4 text-sm text-ink-500" aria-live="polite">
+            Showing {filtered.length} tour{filtered.length === 1 ? "" : "s"}
+            {` for ${activeBits.join(" · ")}`}
+          </p>
+        ) : null}
         {filtered.length === 0 ? (
           <EmptyCatalog
             title="No tours match your filters"
-            description="Try adjusting your search or browse all destinations."
+            description="Try adjusting price, category, or browse all destinations."
           >
             <Button variant="accent" asChild>
               <Link href="/tours">View all tours</Link>
