@@ -12,9 +12,15 @@ export async function GET(req: Request) {
   const cabin = searchParams.get("cabin") ?? undefined;
 
   const flights = await searchFlights({ from, to, date, adults, cabin });
+  const live = flights.some((f) => f.source === "duffel" || f.source === "amadeus");
+  const provider = flights.some((f) => f.source === "duffel")
+    ? "duffel"
+    : flights.some((f) => f.source === "amadeus")
+      ? "amadeus"
+      : "catalog";
   return NextResponse.json({
     count: flights.length,
-    source: flights.some((f) => f.source === "amadeus") ? "amadeus+catalog" : "catalog",
+    source: live ? `${provider}+catalog` : "catalog",
     flights,
   });
 }

@@ -1,6 +1,8 @@
 import { getCachedFlights } from "@/lib/catalog-cache";
 import { searchAmadeusFlightOffers, type NormalizedFlight } from "@/lib/providers/amadeus/flights";
 import { isAmadeusConfigured } from "@/lib/providers/amadeus/client";
+import { searchDuffelFlightOffers } from "@/lib/providers/duffel/flights";
+import { isDuffelConfigured } from "@/lib/providers/duffel/client";
 
 function tomorrowISO() {
   const d = new Date();
@@ -19,24 +21,51 @@ export async function searchFlights(input: {
   const to = (input.to ?? "").trim().toUpperCase();
   const date = input.date || tomorrowISO();
 
+  const cabinRaw = (input.cabin ?? "economy").toLowerCase();
+  const duffelCabin =
+    cabinRaw.includes("business")
+      ? ("business" as const)
+      : cabinRaw.includes("first")
+        ? ("first" as const)
+        : ("economy" as const);
+  const amadeusClass =
+    duffelCabin === "business"
+      ? "BUSINESS"
+      : duffelCabin === "first"
+        ? "FIRST"
+        : "ECONOMY";
+
   const live: NormalizedFlight[] = [];
-  if (from.length === 3 && to.length === 3 && isAmadeusConfigured()) {
-    try {
-      const offers = await searchAmadeusFlightOffers({
-        origin: from,
-        destination: to,
-        departureDate: date,
-        adults: input.adults ?? 1,
-        travelClass:
-          input.cabin?.toUpperCase().includes("BUSINESS")
-            ? "BUSINESS"
-            : input.cabin?.toUpperCase().includes("FIRST")
-              ? "FIRST"
-              : "ECONOMY",
-      });
-      live.push(...offers);
-    } catch (e) {
-      console.error("[searchFlights] amadeus", e);
+  if (from.length === 3 && to.length === 3) {
+    // Prefer Duffel (self-serve) when configured; then Amadeus.
+    if (isDuffelConfigured()) {
+      try {
+        const offers = await searchDuffelFlightOffers({
+          origin: from,
+          destination: to,
+          departureDate: date,
+          adults: input.adults ?? 1,
+          cabin: duffelCabin,
+        });
+        live.push(...offers);
+      } catch (e) {
+        console.error("[searchFlights] duffel", e);
+      }
+    }
+
+    if (!live.length && isAmadeusConfigured()) {
+      try {
+        const offers = await searchAmadeusFlightOffers({
+          origin: from,
+          destination: to,
+          departureDate: date,
+          adults: input.adults ?? 1,
+          travelClass: amadeusClass,
+        });
+        live.push(...offers);
+      } catch (e) {
+        console.error("[searchFlights] amadeus", e);
+      }
     }
   }
 
@@ -62,7 +91,6 @@ export async function searchFlights(input: {
     source: "catalog" as const,
   }));
 
-  // Prefer live offers; append catalog matches for same route
   const filteredCatalog =
     from && to
       ? catalogRows.filter(

@@ -80,16 +80,24 @@ API: `GET /api/hotels/availability?city=Dubai&checkIn=&checkOut=&adults=2`
 
 ---
 
-## 6. Amadeus flights
+## 6. Flights — Duffel (recommended) + Amadeus
 
+### Duffel (self-serve, preferred)
 | Variable | Notes |
 |---|---|
-| `AMADEUS_CLIENT_ID` | https://developers.amadeus.com/ |
+| `DUFFEL_ACCESS_TOKEN` | https://duffel.com/ → Dashboard → Developers |
+
+Pay-as-you-go. Instant keys. Live flight offers on `/flights`.
+
+### Amadeus (enterprise)
+| Variable | Notes |
+|---|---|
+| `AMADEUS_CLIENT_ID` | Enterprise access via Amadeus sales |
 | `AMADEUS_CLIENT_SECRET` | |
 | `AMADEUS_ENV=test` | use `production` only after approval |
 
-**Flow:** Search → Amadeus Flight Offers (test) → merge with catalogue → “Live” badge.  
-Booking still **Request quote** until Flight Create Orders is enabled (needs agency/IATA for production).
+**Flow:** Search → Duffel (if token) else Amadeus → merge catalogue → “Live” badge.  
+Booking still **Request quote** until ticket orders are enabled.
 
 API: `GET /api/flights/search?from=KHI&to=DXB&date=2026-08-01&adults=1`
 
@@ -100,9 +108,10 @@ API: `GET /api/flights/search?from=KHI&to=DXB&date=2026-08-01&adults=1`
 1. Stripe test keys (revenue path)  
 2. Mapbox token (UX)  
 3. CRM agents (ops)  
-4. Amadeus test keys (flights)  
-5. Hotelbeds test keys (hotels)  
-6. JazzCash/EasyPaisa merchant sandbox (local pay)
+4. Duffel access token (flights)  
+5. Amadeus enterprise (optional fallback)  
+6. Hotelbeds test keys (hotels)  
+7. JazzCash/EasyPaisa merchant sandbox (local pay)
 
 ---
 

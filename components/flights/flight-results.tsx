@@ -25,7 +25,7 @@ export type FlightResult = {
   durationMins: number;
   stops: number;
   priceByClass?: { economy?: number; business?: number; first?: number };
-  source?: "amadeus" | "catalog";
+  source?: "amadeus" | "duffel" | "catalog";
 };
 
 type SortKey = "best" | "cheapest" | "fastest";
@@ -276,90 +276,93 @@ function FlightResultsInner({ flights }: { flights: FlightResult[] }) {
                 return (
                   <article
                     key={f._id}
-                    className="grid grid-cols-1 items-center gap-3 sm:gap-4 rounded-md border border-line bg-paper p-3 sm:p-4 shadow-sm sm:grid-cols-[140px_1fr_120px_140px]"
+                    className="flex flex-col gap-4 rounded-md border border-line bg-paper p-3 shadow-sm sm:p-4 lg:flex-row lg:items-center lg:gap-6"
                   >
-                    <div className="flex items-center gap-3 min-w-0">
-                      <div className="relative h-10 w-10 shrink-0 overflow-hidden rounded-sm bg-pine-50">
-                        {f.airlineLogo ? (
-                          <Image
-                            src={f.airlineLogo}
-                            alt=""
-                            fill
-                            className="object-cover"
-                            sizes="40px"
-                            placeholder="blur"
-                            blurDataURL={IMAGE_BLUR_DATA_URL}
-                          />
-                        ) : (
-                          <Plane className="m-2 h-6 w-6 text-pine-500" strokeWidth={1.5} />
-                        )}
-                      </div>
-                      <div className="min-w-0">
-                        <p className="text-sm font-semibold text-ink truncate flex items-center gap-2">
-                          {f.airline}
-                          {f.source === "amadeus" ? (
-                            <span className="rounded-sm bg-pine-500 px-1.5 py-0.5 text-[0.6rem] font-semibold uppercase tracking-wider text-paper">
-                              Live
-                            </span>
-                          ) : null}
-                        </p>
-                        <p className="text-xs text-ink-500">{f.flightNumber}</p>
-                      </div>
-                    </div>
-
-                    <div className="flex items-center gap-2 sm:gap-4 min-w-0 overflow-x-auto">
-                      <div className="shrink-0">
-                        <p className="text-base sm:text-lg font-semibold tabular-nums text-ink">
-                          {formatTime(f.departTime)}
-                        </p>
-                        <p className="text-[13px] text-ink-500">{f.from}</p>
-                      </div>
-                      <div className="flex min-w-[72px] sm:min-w-[88px] flex-col items-center shrink-0">
-                        <p className="text-[13px] tabular-nums text-ink-500">
-                          {formatDuration(f.durationMins)}
-                        </p>
-                        <div className="my-1 h-px w-full bg-line" />
-                        <p
-                          className={cn(
-                            "text-[13px]",
-                            f.stops === 0 ? "font-medium text-success" : "text-ink-500"
+                    <div className="flex min-w-0 flex-1 flex-col gap-4 sm:flex-row sm:items-center sm:gap-5">
+                      <div className="flex min-w-0 items-center gap-3 sm:w-[148px] sm:shrink-0">
+                        <div className="relative h-10 w-10 shrink-0 overflow-hidden rounded-sm bg-pine-50">
+                          {f.airlineLogo ? (
+                            <Image
+                              src={f.airlineLogo}
+                              alt=""
+                              fill
+                              className="object-cover"
+                              sizes="40px"
+                              placeholder="blur"
+                              blurDataURL={IMAGE_BLUR_DATA_URL}
+                            />
+                          ) : (
+                            <Plane className="m-2 h-6 w-6 text-pine-500" strokeWidth={1.5} />
                           )}
+                        </div>
+                        <div className="min-w-0">
+                          <p className="flex items-center gap-2 truncate text-sm font-semibold text-ink">
+                            {f.airline}
+                            {f.source === "amadeus" || f.source === "duffel" ? (
+                              <span className="rounded-sm bg-pine-500 px-1.5 py-0.5 text-[0.6rem] font-semibold uppercase tracking-wider text-paper">
+                                Live
+                              </span>
+                            ) : null}
+                          </p>
+                          <p className="text-xs text-ink-500">{f.flightNumber}</p>
+                        </div>
+                      </div>
+
+                      <div className="flex min-w-0 flex-1 items-center justify-between gap-3 sm:justify-start sm:gap-5">
+                        <div className="shrink-0">
+                          <p className="text-base font-semibold tabular-nums text-ink sm:text-lg">
+                            {formatTime(f.departTime)}
+                          </p>
+                          <p className="text-[13px] text-ink-500">{f.from}</p>
+                        </div>
+                        <div className="flex min-w-[4.5rem] flex-col items-center shrink-0 sm:min-w-[5.5rem]">
+                          <p className="text-[13px] tabular-nums text-ink-500">
+                            {formatDuration(f.durationMins)}
+                          </p>
+                          <div className="my-1 h-px w-full bg-line" />
+                          <p
+                            className={cn(
+                              "text-[13px]",
+                              f.stops === 0 ? "font-medium text-success" : "text-ink-500"
+                            )}
+                          >
+                            {f.stops === 0
+                              ? t("common.direct")
+                              : `${f.stops} stop${f.stops > 1 ? "s" : ""}`}
+                          </p>
+                        </div>
+                        <div className="shrink-0 text-right sm:text-left">
+                          <p className="text-base font-semibold tabular-nums text-ink-900 sm:text-lg">
+                            {formatTime(f.arriveTime)}
+                          </p>
+                          <p className="text-[13px] text-ink-500">{f.to}</p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="flex shrink-0 flex-col gap-3 border-t border-line pt-3 sm:flex-row sm:items-center sm:justify-between sm:border-0 sm:pt-0 lg:w-[13.5rem] lg:flex-col lg:items-stretch lg:justify-center">
+                      <div className="min-w-0 sm:text-left lg:text-right">
+                        <p className="text-xl font-bold tabular-nums leading-tight text-ink-900 sm:text-[1.35rem]">
+                          {Number.isFinite(fare) ? <DisplayPrice amount={fare} /> : "—"}
+                        </p>
+                        <p className="mt-0.5 text-xs capitalize text-ink-500">{cabin}</p>
+                      </div>
+                      <div className="flex w-full flex-col gap-2">
+                        <Button asChild className="w-full shrink-0">
+                          <Link
+                            href={`/flights/book?flightId=${encodeURIComponent(f._id)}&cabin=${cabin}&adults=1&children=0`}
+                          >
+                            Book &amp; pay
+                          </Link>
+                        </Button>
+                        <Link
+                          href={`/contact?subject=${encodeURIComponent(`Flight advice: ${f.flightNumber} ${f.from}-${f.to}`)}&message=${encodeURIComponent(`I need help with this flight.\nFlight: ${f.flightNumber}\nRoute: ${f.from} → ${f.to}\nCabin: ${cabin}\n`)}`}
+                          className="text-center text-xs font-medium text-ink-500 hover:text-pine-600"
                         >
-                        {f.stops === 0
-                          ? t("common.direct")
-                          : `${f.stops} stop${f.stops > 1 ? "s" : ""}`}
-                      </p>
+                          Ask an expert
+                        </Link>
+                      </div>
                     </div>
-                    <div>
-                      <p className="text-lg font-semibold tabular-nums text-ink-900">
-                        {formatTime(f.arriveTime)}
-                      </p>
-                      <p className="text-[13px] text-ink-500">{f.to}</p>
-                    </div>
-                  </div>
-
-                  <div className="text-right sm:text-left">
-                    <p className="text-2xl font-bold tabular-nums text-ink-900">
-                      {Number.isFinite(fare) ? <DisplayPrice amount={fare} /> : "—"}
-                    </p>
-                    <p className="text-xs text-ink-500">{cabin}</p>
-                  </div>
-
-                  <div className="flex flex-col gap-2 sm:items-end sm:text-right">
-                    <Button asChild className="w-full sm:w-auto">
-                      <Link
-                        href={`/flights/book?flightId=${encodeURIComponent(f._id)}&cabin=${cabin}&adults=1&children=0`}
-                      >
-                        Book &amp; pay
-                      </Link>
-                    </Button>
-                    <Link
-                      href={`/contact?subject=${encodeURIComponent(`Flight advice: ${f.flightNumber} ${f.from}-${f.to}`)}&message=${encodeURIComponent(`I need help with this flight.\nFlight: ${f.flightNumber}\nRoute: ${f.from} → ${f.to}\nCabin: ${cabin}\n`)}`}
-                      className="text-xs font-medium text-ink-500 hover:text-pine-600"
-                    >
-                      Ask an expert
-                    </Link>
-                  </div>
                   </article>
                 );
               })

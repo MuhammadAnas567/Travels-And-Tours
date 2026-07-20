@@ -106,13 +106,13 @@ export function TourCard({ tour, currency = "USD", rates }: TourCardProps) {
             </span>
             <span>Up to {tour.maxGroupSize} guests</span>
           </div>
-          <div className="mt-5 flex items-end justify-between border-t border-line pt-4">
-            <div>
+          <div className="mt-5 flex items-end justify-between gap-3 border-t border-line pt-4">
+            <div className="min-w-0">
               <span className="text-[0.6875rem] font-semibold uppercase tracking-widest text-ink-500">
                 From
               </span>
-              <div className="flex items-baseline gap-2">
-                <span className="text-2xl font-semibold tabular-nums text-pine-500">
+              <div className="flex flex-wrap items-baseline gap-2">
+                <span className="text-xl font-semibold tabular-nums text-pine-500 sm:text-2xl">
                   {rates ? (
                     formatCurrency(displayPrice, currency)
                   ) : (

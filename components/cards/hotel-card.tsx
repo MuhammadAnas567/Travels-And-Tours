@@ -88,16 +88,16 @@ export function HotelCard({
               <Wifi className="h-3 w-3" strokeWidth={1.5} aria-hidden /> {amenities.slice(0, 2).join(" · ")}
             </p>
           )}
-          <div className="mt-4 flex items-end justify-between">
-            <div className="flex items-center gap-2">
-              <span className="flex h-8 w-8 items-center justify-center rounded-sm bg-pine-100 text-sm font-bold tabular-nums text-pine-700">
+          <div className="mt-4 flex items-end justify-between gap-3">
+            <div className="flex min-w-0 items-center gap-2">
+              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-sm bg-pine-100 text-sm font-bold tabular-nums text-pine-700">
                 {avgRating.toFixed(1)}
               </span>
-              <span className="text-xs text-ink-500">{reviewCount} reviews</span>
+              <span className="truncate text-xs text-ink-500">{reviewCount} reviews</span>
             </div>
-            <div className="text-right">
+            <div className="min-w-0 shrink-0 text-right">
               <p className="text-xs text-ink-500">{t("common.perNight")}</p>
-              <p className="text-xl font-semibold tabular-nums text-ink" data-price>
+              <p className="text-lg font-semibold tabular-nums text-ink sm:text-xl" data-price>
                 <DisplayPrice amount={pricePerNight} />
               </p>
               <InventoryBadge mode="inquire" className="mt-1" />

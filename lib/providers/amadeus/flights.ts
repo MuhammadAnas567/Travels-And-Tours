@@ -12,7 +12,7 @@ export type NormalizedFlight = {
   durationMins: number;
   stops: number;
   priceByClass?: { economy?: number; business?: number; first?: number };
-  source: "amadeus" | "catalog";
+  source: "amadeus" | "duffel" | "catalog";
 };
 
 type AmadeusOffer = {

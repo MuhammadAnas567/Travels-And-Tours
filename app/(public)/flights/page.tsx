@@ -31,7 +31,7 @@ export default async function FlightsPage({ searchParams }: Props) {
     cabin: sp.cabin,
   });
 
-  const liveCount = flights.filter((f) => f.source === "amadeus").length;
+  const liveCount = flights.filter((f) => f.source === "amadeus" || f.source === "duffel").length;
 
   return (
     <div className="bg-sand min-h-[60vh]">
@@ -41,8 +41,8 @@ export default async function FlightsPage({ searchParams }: Props) {
         title="Compare routes and cabin fares"
         description={
           liveCount > 0
-            ? `${liveCount} live Amadeus offers + catalogue routes.`
-            : "Search worldwide. Connect Amadeus test keys for live fares."
+            ? `${liveCount} live offers + catalogue routes.`
+            : "Search worldwide. Add Duffel (or Amadeus) keys for live fares."
         }
       />
 
