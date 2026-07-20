@@ -96,10 +96,14 @@ export async function createBookingAndCheckout(data: {
         travelerInfo: data.travelerInfo,
         specialRequests: data.specialRequests,
       },
-      include: { tour: true, tourDate: true },
     });
 
-    return { booking, totalPrice };
+    return {
+      booking,
+      totalPrice,
+      tourTitle: tour.title,
+      departureDate: tourDate.startDate,
+    };
   });
 
   // Legacy Checkout Session path (kept for compatibility).
@@ -119,8 +123,8 @@ export async function createBookingAndCheckout(data: {
         price_data: {
           currency: "usd",
           product_data: {
-            name: result.booking.tour.title,
-            description: `Departure: ${result.booking.tourDate.startDate.toLocaleDateString()}`,
+            name: result.tourTitle,
+            description: `Departure: ${result.departureDate.toLocaleDateString()}`,
           },
           unit_amount: toCents(Number(result.totalPrice)),
         },

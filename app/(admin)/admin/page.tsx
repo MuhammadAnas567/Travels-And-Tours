@@ -94,7 +94,7 @@ export default async function AdminOverviewPage() {
               <tbody>
                 {recentBookings.map((b) => (
                   <tr key={b.id} className="border-b border-line">
-                    <td className="py-3 pr-4 text-ink-900">{b.tour.title}</td>
+                    <td className="py-3 pr-4 text-ink-900">{b.tour?.title ?? "Booking"}</td>
                     <td className="py-3 pr-4 text-ink-700">
                       {b.user.name ?? b.user.email}
                     </td>

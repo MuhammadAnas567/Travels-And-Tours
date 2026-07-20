@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
+import type { Prisma } from "@prisma/client";
 import { getSession } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 import { connectDB } from "@/lib/db/connect";
@@ -138,8 +139,8 @@ export async function POST(req: Request) {
 
     let subtotal = 0;
     let title = "";
-    let productSnapshot: Record<string, unknown> = {};
-    let reservationDetails: Record<string, unknown> = {};
+    let productSnapshot: Prisma.InputJsonValue = {};
+    let reservationDetails: Prisma.InputJsonValue = {};
     let adults = 1;
     let children = 0;
     let tourId: string | undefined;
@@ -153,14 +154,19 @@ export async function POST(req: Request) {
         return NextResponse.json({ error: "Flight not found" }, { status: 404 });
       }
       const cabin = data.cabin;
+      const prices = (flight.priceByClass ?? { economy: 0 }) as {
+        economy?: number;
+        business?: number;
+        first?: number;
+      };
+      const economy = Number(prices.economy ?? 0);
+      const business = Number(prices.business ?? economy);
+      const first = Number(prices.first ?? business);
       const unit =
-        cabin === "first"
-          ? (flight.priceByClass as { first?: number; business?: number; economy: number }).first ??
-            (flight.priceByClass as { business?: number; economy: number }).business ??
-            flight.priceByClass.economy
-          : cabin === "business"
-            ? flight.priceByClass.business ?? flight.priceByClass.economy
-            : flight.priceByClass.economy;
+        cabin === "first" ? first : cabin === "business" ? business : economy;
+      if (!Number.isFinite(unit) || unit <= 0) {
+        return NextResponse.json({ error: "Flight fare unavailable" }, { status: 400 });
+      }
 
       adults = data.adults;
       children = data.children;

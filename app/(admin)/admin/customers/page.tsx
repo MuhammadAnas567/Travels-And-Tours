@@ -42,7 +42,7 @@ export default async function AdminCustomersPage() {
               <ul className="mt-3 space-y-1 border-t border-line pt-3 text-sm text-ink-500">
                 {user.bookings.map((b) => (
                   <li key={b.id}>
-                    • {b.tour.title} ({b.status.toLowerCase()})
+                    • {b.tour?.title ?? "Booking"} ({b.status.toLowerCase()})
                   </li>
                 ))}
               </ul>
