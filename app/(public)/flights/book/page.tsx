@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
-import { connectDB } from "@/lib/db/connect";
-import { Flight } from "@/lib/models/Flight";
+import { getFlightById } from "@/lib/data/catalog";
 import { CommerceCheckout } from "@/components/booking/commerce-checkout";
 import { formatPrice } from "@/lib/utils";
 
@@ -46,8 +45,7 @@ export default async function FlightBookPage({ searchParams }: Props) {
   const children = Math.min(8, Math.max(0, Number(params.children) || 0));
   const pax = adults + children;
 
-  await connectDB();
-  const flight = await Flight.findById(flightId).lean();
+  const flight = await getFlightById(flightId);
   if (!flight) notFound();
 
   const unit = unitPrice(flight.priceByClass as { economy?: number; business?: number; first?: number }, cabin);

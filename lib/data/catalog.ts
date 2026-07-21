@@ -129,6 +129,10 @@ export type FlightListFilters = {
   limit?: number;
 };
 
+function isMongoObjectId(id: string) {
+  return /^[a-f\d]{24}$/i.test(id);
+}
+
 export async function listFlights(filters: FlightListFilters = {}) {
   try {
     const connected = await withTimeoutFallback(connectDB().then(() => true), false);
@@ -159,6 +163,33 @@ export async function listFlights(filters: FlightListFilters = {}) {
     fallback = fallback.filter((f) => f.to.toUpperCase().includes(to));
   }
   return fallback.slice(0, filters.limit ?? 40);
+}
+
+/** Resolve DB ObjectId or curated fallback ids like `fb-flight-khi-doj-1`. */
+export async function getFlightById(id: string) {
+  const normalized = decodeURIComponent(id).trim();
+  if (!normalized) return null;
+
+  const fallback = FALLBACK_FLIGHTS.find((f) => f._id === normalized);
+  if (fallback) {
+    return { ...fallback, seatsAvailable: 100 };
+  }
+
+  if (!isMongoObjectId(normalized)) return null;
+
+  try {
+    const connected = await withTimeoutFallback(connectDB().then(() => true), false);
+    if (connected) {
+      const flight = await withTimeoutFallback(
+        Flight.findById(normalized).lean().exec(),
+        null
+      );
+      if (flight) return flight;
+    }
+  } catch {
+    // fall through
+  }
+  return null;
 }
 
 export async function listDestinations(limit = 12) {

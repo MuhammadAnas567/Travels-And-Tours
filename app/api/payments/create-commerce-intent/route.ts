@@ -4,6 +4,7 @@ import type { Prisma } from "@prisma/client";
 import { getSession } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 import { connectDB } from "@/lib/db/connect";
+import { getFlightById } from "@/lib/data/catalog";
 import { Flight } from "@/lib/models/Flight";
 import { Hotel } from "@/lib/models/Hotel";
 import { resolveCheckoutUserId } from "@/lib/checkout-user";
@@ -148,8 +149,7 @@ export async function POST(req: Request) {
     const bookingType = data.type;
 
     if (data.type === "FLIGHT") {
-      await connectDB();
-      const flight = await Flight.findById(data.flightId).lean();
+      const flight = await getFlightById(data.flightId);
       if (!flight) {
         return NextResponse.json({ error: "Flight not found" }, { status: 404 });
       }
@@ -177,7 +177,9 @@ export async function POST(req: Request) {
           { status: 400 }
         );
       }
-      if ((flight.seatsAvailable ?? 0) < pax) {
+      const seats =
+        typeof flight.seatsAvailable === "number" ? flight.seatsAvailable : 100;
+      if (seats < pax) {
         return NextResponse.json({ error: "Not enough seats left on this flight" }, { status: 400 });
       }
 
@@ -207,11 +209,15 @@ export async function POST(req: Request) {
       };
       reservationDetails = reservation;
 
-      heldFlightId = String(flight._id);
-      heldPax = pax;
-      await Flight.findByIdAndUpdate(flight._id, {
-        $inc: { seatsAvailable: -pax },
-      });
+      // Fallback flights (fb-flight-*) are not Mongo docs — skip seat hold
+      if (/^[a-f\d]{24}$/i.test(String(flight._id))) {
+        heldFlightId = String(flight._id);
+        heldPax = pax;
+        await connectDB();
+        await Flight.findByIdAndUpdate(flight._id, {
+          $inc: { seatsAvailable: -pax },
+        });
+      }
     } else if (data.type === "HOTEL") {
       await connectDB();
       const hotel = await Hotel.findById(data.hotelId).lean();

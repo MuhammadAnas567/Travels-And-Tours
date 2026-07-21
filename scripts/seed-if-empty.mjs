@@ -56,7 +56,7 @@ async function getCounts(uri) {
   }
 }
 
-function run(scriptRel) {
+function run(scriptRel, databaseUrl) {
   return new Promise((resolve, reject) => {
     // Windows: spawn npx.cmd with shell:false → EINVAL; use node + local tsx
     const tsxCli = join(projectRoot, "node_modules", "tsx", "dist", "cli.mjs");
@@ -64,7 +64,8 @@ function run(scriptRel) {
       cwd: projectRoot,
       stdio: "inherit",
       shell: false,
-      env: { ...process.env },
+      // Prisma seed does not load .env.local; pass URL explicitly
+      env: { ...process.env, DATABASE_URL: databaseUrl },
     });
     child.on("exit", (code) => {
       if (code === 0) resolve();
@@ -89,12 +90,12 @@ try {
 
   if (needPrisma) {
     console.log("Seeding Prisma data (tours / users)...");
-    await run("prisma/seed.ts");
+    await run("prisma/seed.ts", uri);
   }
 
   if (needCatalog) {
     console.log("Seeding catalog data (destinations / hotels / flights)...");
-    await run("scripts/seed.ts");
+    await run("scripts/seed.ts", uri);
   }
 
   console.log("Seed complete — data persists in .mongo-data.");
