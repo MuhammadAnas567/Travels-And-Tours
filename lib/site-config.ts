@@ -43,10 +43,11 @@ export const siteConfig = {
     /** Public display values — must use NEXT_PUBLIC_* so SSR and client match */
     address:
       process.env.NEXT_PUBLIC_OFFICE_ADDRESS ??
-      "Office 12, Blue Area, Islamabad, Pakistan",
+      "MB 54, 4th Floor, Sector B, Phase 6, DHA Lahore, Pakistan",
     email: process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? "hello@ueb3tours.com",
-    phone: process.env.NEXT_PUBLIC_OFFICE_PHONE ?? "+92 300 1234567",
+    phone: process.env.NEXT_PUBLIC_OFFICE_PHONE ?? "+92 42 37260405",
     hours: "Mon–Sat, 10am–7pm PKT",
+    city: "Lahore",
   },
 } as const;
 

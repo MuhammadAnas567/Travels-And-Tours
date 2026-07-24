@@ -32,10 +32,10 @@ export const HOME_SERVICES = [
 ];
 
 export const HOME_TRUST = [
-  { label: "10k+ travellers", sub: "booked with us" },
-  { label: "4.8 / 5", sub: "average rating" },
-  { label: "120+ countries", sub: "covered" },
-  { label: "24/7", sub: "human support" },
+  { value: 10, suffix: "k+", sub: "travellers booked with us" },
+  { value: 4.8, suffix: " / 5", sub: "average traveller rating" },
+  { value: 120, suffix: "+", sub: "countries covered" },
+  { value: 24, suffix: "/7", sub: "human support" },
 ];
 
 export const HOME_PARTNERS = [

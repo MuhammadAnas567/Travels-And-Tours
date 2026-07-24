@@ -173,7 +173,7 @@ export function CommerceCheckout({
                     className="mt-1"
                     value={traveler.phone}
                     onChange={(e) => setTraveler((t) => ({ ...t, phone: e.target.value }))}
-                    placeholder="+92 300 1234567"
+                    placeholder="+92 42 37260405"
                     autoComplete="tel"
                   />
                 </div>

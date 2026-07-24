@@ -162,18 +162,30 @@ function ContactPageInner() {
           </Card>
 
           <div className="space-y-8">
-            <div className="rounded-md border border-line bg-paper p-8">
-              <p className="eyebrow">Office</p>
+            <div className="rounded-md border border-line bg-paper p-8 shadow-sm">
+              <p className="eyebrow">Lahore office</p>
               <p className="mt-4 text-ink-700 leading-relaxed">{siteConfig.office.address}</p>
-              <p className="mt-3 text-ink-700">
-                {siteConfig.office.email}
-                <br />
-                {siteConfig.office.phone}
+              <p className="mt-4 space-y-2 text-ink-700">
+                <a
+                  href={`mailto:${siteConfig.office.email}`}
+                  className="block text-pine-600 hover:text-pine-700 transition-colors"
+                >
+                  {siteConfig.office.email}
+                </a>
+                <a
+                  href={`tel:${siteConfig.office.phone.replace(/\s/g, "")}`}
+                  className="block tabular-nums font-medium hover:text-pine-700 transition-colors"
+                >
+                  {siteConfig.office.phone}
+                </a>
               </p>
-            </div>
-            <div className="rounded-md border border-line bg-paper p-8">
-              <p className="eyebrow">Hours</p>
-              <p className="mt-4 text-ink-700 leading-relaxed">{siteConfig.office.hours}</p>
+              <p className="mt-4 text-sm text-ink-500">{siteConfig.office.hours}</p>
+              <a
+                href={`tel:${siteConfig.office.phone.replace(/\s/g, "")}`}
+                className="mt-6 inline-flex min-h-11 items-center justify-center rounded-full bg-brass-500 px-5 text-sm font-semibold text-ink-900 transition-colors hover:bg-brass-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brass-500 focus-visible:ring-offset-2"
+              >
+                Call the desk
+              </a>
             </div>
             {whatsappUrl ? (
               <div className="rounded-md border border-line bg-pine-700 p-8 text-paper">

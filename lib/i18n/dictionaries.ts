@@ -50,7 +50,7 @@ const en: Dict = {
   "hero.eyebrow": "UEB3 Travel · Worldwide",
   "hero.title": "Find your next horizon.",
   "hero.sub":
-    "Flights, stays, and packages in one search — cinematic destinations, clear prices, humans on support.",
+    "Search global flights and stays, book packages with clear totals, and reach a real desk in Lahore when plans change.",
   "trust.price": "Best price clarity",
   "trust.secure": "Secure checkout",
   "trust.support": "24/7 support",

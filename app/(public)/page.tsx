@@ -29,10 +29,10 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=1200&q=80",
+        url: "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?w=1200&q=90",
         width: 1200,
         height: 630,
-        alt: "Desert road at golden hour",
+        alt: "Cinque Terre coast at golden hour",
       },
     ],
   },
@@ -61,6 +61,14 @@ export default async function HomePage() {
     description: "Book flights, hotels, and vacation packages worldwide.",
     areaServed: "Worldwide",
     priceRange: "$$",
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: "MB 54, 4th Floor, Sector B, Phase 6, DHA",
+      addressLocality: "Lahore",
+      addressCountry: "PK",
+    },
+    telephone: "+92-42-37260405",
+    email: "hello@ueb3tours.com",
   };
 
   return (
