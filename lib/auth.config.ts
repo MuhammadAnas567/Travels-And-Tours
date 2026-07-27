@@ -7,7 +7,14 @@ export const authConfig = {
     signIn: "/login",
   },
   providers: [],
-  session: { strategy: "jwt" },
+  session: {
+    strategy: "jwt",
+    // Shorter cookie work; still long enough for travel browsing sessions
+    maxAge: 30 * 24 * 60 * 60,
+  },
+  jwt: {
+    maxAge: 30 * 24 * 60 * 60,
+  },
   callbacks: {
     async jwt({ token, user, trigger, session }) {
       if (user) {

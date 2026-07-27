@@ -1,8 +1,8 @@
 ﻿"use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { signIn } from "next-auth/react";
 import { loginSchema } from "@/lib/validations";
 import { AuthShell } from "@/components/auth/auth-shell";
@@ -14,7 +14,6 @@ import { safeCallbackUrl } from "@/lib/safe-callback-url";
 const googleEnabled = Boolean(process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID);
 
 export default function LoginForm() {
-  const router = useRouter();
   const searchParams = useSearchParams();
   const callbackUrl = safeCallbackUrl(searchParams.get("callbackUrl"), "/dashboard");
   const resetOk = searchParams.get("reset") === "1";
@@ -28,6 +27,15 @@ export default function LoginForm() {
         : null
   );
   const [loading, setLoading] = useState(false);
+
+  // Warm Prisma/Atlas while the user types — first Sign in stays fast
+  useEffect(() => {
+    const ctrl = new AbortController();
+    void fetch("/api/auth/warm", { signal: ctrl.signal, cache: "no-store" }).catch(
+      () => {}
+    );
+    return () => ctrl.abort();
+  }, []);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -61,38 +69,13 @@ export default function LoginForm() {
       });
 
       if (result?.error) {
-        let message =
-          "Email or password is incorrect. Check your details and try again.";
-        try {
-          const health = await fetch("/api/health", { cache: "no-store" });
-          const data = (await health.json()) as {
-            ok?: boolean;
-            hint?: string;
-            checks?: {
-              databaseReachable?: boolean;
-              demoUserExists?: boolean;
-            };
-          };
-          if (data.checks?.databaseReachable === false) {
-            message =
-              "Sign-in unavailable — database is not reachable. Try again shortly.";
-          } else if (
-            data.checks?.demoUserExists === false &&
-            parsed.data.email === "user@example.com"
-          ) {
-            message =
-              "Demo account is missing. Restart the app so seed can create user@example.com / user123.";
-          }
-        } catch {
-          /* keep default message */
-        }
-        setError(message);
+        setError("Email or password is incorrect. Check your details and try again.");
         setLoading(false);
         return;
       }
 
-      router.replace(callbackUrl);
-      router.refresh();
+      // Hard navigation is faster than replace + full RSC refresh
+      window.location.assign(callbackUrl);
     } catch {
       setError("Could not sign in. Check your connection and try again.");
       setLoading(false);

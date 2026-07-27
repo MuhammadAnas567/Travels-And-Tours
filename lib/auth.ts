@@ -6,6 +6,11 @@ import bcrypt from "bcryptjs";
 import { prisma } from "@/lib/db";
 import { authConfig } from "@/lib/auth.config";
 import type { Provider } from "next-auth/providers";
+import type { NextAuthConfig } from "next-auth";
+
+const googleConfigured = Boolean(
+  process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET
+);
 
 const providers: Provider[] = [
   Credentials({
@@ -26,11 +31,22 @@ const providers: Provider[] = [
       }
 
       try {
-        const user = await prisma.user.findUnique({ where: { email } });
-        if (!user?.hashedPassword) {
-          console.error("[auth] user not found or no password:", email);
-          return null;
-        }
+        // Reuse pooled connection — avoids cold handshake on every login
+        await prisma.$connect();
+
+        const user = await prisma.user.findUnique({
+          where: { email },
+          select: {
+            id: true,
+            email: true,
+            name: true,
+            image: true,
+            role: true,
+            hashedPassword: true,
+          },
+        });
+
+        if (!user?.hashedPassword) return null;
 
         const isValid = await bcrypt.compare(password, user.hashedPassword);
         if (!isValid) return null;
@@ -50,21 +66,27 @@ const providers: Provider[] = [
   }),
 ];
 
-if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
+if (googleConfigured) {
   providers.unshift(
     Google({
-      clientId: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      clientId: process.env.GOOGLE_CLIENT_ID!,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
       allowDangerousEmailAccountLinking: true,
     })
   );
 }
 
-export const { handlers, auth, signIn, signOut } = NextAuth({
+/**
+ * JWT sessions do not need the Prisma adapter for credentials login.
+ * Adapter only adds DB round-trips — keep it for Google account linking only.
+ */
+const authOptions: NextAuthConfig = {
   ...authConfig,
-  adapter: PrismaAdapter(prisma),
   providers,
-});
+  ...(googleConfigured ? { adapter: PrismaAdapter(prisma) } : {}),
+};
+
+export const { handlers, auth, signIn, signOut } = NextAuth(authOptions);
 
 export async function getSession() {
   try {

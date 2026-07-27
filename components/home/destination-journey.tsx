@@ -40,7 +40,7 @@ export function DestinationJourney({ destinations }: Props) {
         <div
           role="listbox"
           aria-label="Destination journey"
-          className="-mx-4 flex max-w-[calc(100vw)] snap-x snap-mandatory gap-2 overflow-x-auto px-4 pb-2 scrollbar-hide sm:mx-0 sm:max-w-full sm:px-0"
+          className="-mx-4 flex w-full max-w-full snap-x snap-mandatory gap-2 overflow-x-auto px-4 pb-2 scrollbar-hide sm:mx-0 sm:px-0"
         >
           {destinations.map((d, i) => {
             const selected = i === active;

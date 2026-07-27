@@ -4,7 +4,7 @@ import { Suspense, useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { Plane, SlidersHorizontal } from "lucide-react";
+import { Plane, SlidersHorizontal, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { EmptyState } from "@/components/ui/empty-state";
 import { FlightRowSkeleton } from "@/components/ui/skeleton";
@@ -127,6 +127,20 @@ function FlightResultsInner({ flights }: { flights: FlightResult[] }) {
     window.setTimeout(() => setDimming(false), 280);
   }
 
+  useEffect(() => {
+    if (!filtersOpen) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setFiltersOpen(false);
+    };
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = prev;
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [filtersOpen]);
+
   const activeFilters = maxStops !== null ? 1 : 0;
 
   const sortTabs: { key: SortKey; label: string; value: string; amount?: number }[] = [
@@ -153,26 +167,23 @@ function FlightResultsInner({ flights }: { flights: FlightResult[] }) {
   return (
     <div className="mx-auto max-w-[1280px] px-3 sm:px-4 md:px-6 lg:px-8 pb-24 sm:pb-24 lg:pb-12 w-full overflow-x-clip">
       <div className="flex flex-col gap-4 sm:gap-6 lg:flex-row">
-        <aside
-          className={cn(
-            "w-full lg:w-[280px] shrink-0 rounded-md border border-line bg-paper p-4 sm:p-5 h-fit lg:sticky lg:top-24",
-            filtersOpen ? "block" : "hidden lg:block"
-          )}
-        >
+        <aside className="hidden h-fit w-full shrink-0 rounded-md border border-line bg-paper p-4 sm:p-5 lg:sticky lg:top-24 lg:block lg:w-[280px]">
           <div className="flex items-center justify-between">
-            <h2 className="font-heading text-base font-semibold text-ink-900">Filters</h2>
+            <h2 className="font-display text-base font-semibold text-ink-900">Filters</h2>
             {activeFilters > 0 ? (
               <button
                 type="button"
                 onClick={() => applyFilter(null)}
-                className="text-sm font-semibold text-navy-500 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-navy-500 rounded-sm"
+                className="rounded-sm text-sm font-semibold text-pine-600 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pine-500"
               >
                 Clear all
               </button>
             ) : null}
           </div>
           <fieldset className="mt-4 space-y-2">
-            <legend className="text-caption">Stops</legend>
+            <legend className="text-[0.6875rem] font-semibold uppercase tracking-[0.12em] text-ink-500">
+              Stops
+            </legend>
             {[
               { label: "Any", value: null as number | null },
               { label: "Direct", value: 0 },
@@ -185,15 +196,15 @@ function FlightResultsInner({ flights }: { flights: FlightResult[] }) {
               return (
                 <label
                   key={String(opt.value)}
-                  className="flex min-h-11 cursor-pointer items-center justify-between gap-2 rounded-sm px-2 hover:bg-surface-alt"
+                  className="flex min-h-11 cursor-pointer items-center justify-between gap-2 rounded-sm px-2 hover:bg-sand"
                 >
                   <span className="flex items-center gap-2 text-sm text-ink-700">
                     <input
                       type="radio"
-                      name="stops"
+                      name="stops-desktop"
                       checked={maxStops === opt.value}
                       onChange={() => applyFilter(opt.value)}
-                      className="accent-[var(--color-navy-500)]"
+                      className="accent-[var(--color-pine-500)]"
                     />
                     {opt.label}
                   </span>
@@ -203,6 +214,83 @@ function FlightResultsInner({ flights }: { flights: FlightResult[] }) {
             })}
           </fieldset>
         </aside>
+
+        {filtersOpen ? (
+          <div className="fixed inset-0 z-40 lg:hidden" role="dialog" aria-modal="true" aria-label="Filters">
+            <button
+              type="button"
+              className="absolute inset-0 bg-ink/50"
+              aria-label="Close filters"
+              onClick={() => setFiltersOpen(false)}
+            />
+            <div className="absolute inset-x-0 bottom-0 max-h-[85dvh] overflow-y-auto rounded-t-lg border border-line bg-paper p-5 pb-[max(1.25rem,env(safe-area-inset-bottom))] shadow-lg">
+              <div className="mx-auto mb-4 h-1 w-10 rounded-full bg-line" aria-hidden />
+              <div className="flex items-center justify-between gap-3">
+                <h2 className="font-display text-lg font-semibold text-ink-900">Filters</h2>
+                <button
+                  type="button"
+                  onClick={() => setFiltersOpen(false)}
+                  className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-full text-ink-700 hover:bg-sand focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pine-500"
+                  aria-label="Close"
+                >
+                  <X className="h-5 w-5" strokeWidth={1.5} />
+                </button>
+              </div>
+              {activeFilters > 0 ? (
+                <button
+                  type="button"
+                  onClick={() => applyFilter(null)}
+                  className="mt-2 text-sm font-semibold text-pine-600 hover:underline"
+                >
+                  Clear all
+                </button>
+              ) : null}
+              <fieldset className="mt-4 space-y-2">
+                <legend className="text-[0.6875rem] font-semibold uppercase tracking-[0.12em] text-ink-500">
+                  Stops
+                </legend>
+                {[
+                  { label: "Any", value: null as number | null },
+                  { label: "Direct", value: 0 },
+                  { label: "1 stop max", value: 1 },
+                ].map((opt) => {
+                  const count =
+                    opt.value === null
+                      ? routeFiltered.length
+                      : routeFiltered.filter((f) => f.stops <= (opt.value as number)).length;
+                  return (
+                    <label
+                      key={String(opt.value)}
+                      className="flex min-h-11 cursor-pointer items-center justify-between gap-2 rounded-sm px-2 hover:bg-sand"
+                    >
+                      <span className="flex items-center gap-2 text-sm text-ink-700">
+                        <input
+                          type="radio"
+                          name="stops-mobile"
+                          checked={maxStops === opt.value}
+                          onChange={() => {
+                            applyFilter(opt.value);
+                            setFiltersOpen(false);
+                          }}
+                          className="accent-[var(--color-pine-500)]"
+                        />
+                        {opt.label}
+                      </span>
+                      <span className="tabular-nums text-sm text-ink-500">{count}</span>
+                    </label>
+                  );
+                })}
+              </fieldset>
+              <Button
+                type="button"
+                className="mt-6 w-full min-h-11"
+                onClick={() => setFiltersOpen(false)}
+              >
+                Show {filtered.length} results
+              </Button>
+            </div>
+          </div>
+        ) : null}
 
         <div className="min-w-0 flex-1">
           <div className="grid grid-cols-3 gap-1 sm:gap-2 rounded-md border border-line bg-paper p-1">
@@ -360,6 +448,7 @@ function FlightResultsInner({ flights }: { flights: FlightResult[] }) {
           variant="secondary"
           className="w-full min-h-11"
           onClick={() => setFiltersOpen((o) => !o)}
+          aria-expanded={filtersOpen}
         >
           <SlidersHorizontal className="h-5 w-5" strokeWidth={1.5} />
           {t("common.filters")}

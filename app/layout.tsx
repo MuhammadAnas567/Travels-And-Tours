@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Fraunces, Hanken_Grotesk } from "next/font/google";
 import { Toaster } from "sonner";
 import { Providers } from "@/components/providers";
@@ -21,6 +21,16 @@ const bodyFont = Hanken_Grotesk({
   preload: true,
   adjustFontFallback: true,
 });
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#f3efe6" },
+    { media: "(prefers-color-scheme: dark)", color: "#0a3d38" },
+  ],
+};
 
 export const metadata: Metadata = {
   title: {

@@ -175,54 +175,53 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-1 shrink-0">
-          <div className="hidden md:flex items-center gap-0.5">
-            <CurrencyMenu />
+          <CurrencyMenu className="hidden md:flex" />
 
-            <div className="hidden lg:flex items-center gap-1">
-              {status === "authenticated" && user ? (
-                <>
-                  {isAdmin && (
-                    <Button variant="ghost" size="sm" asChild className="text-ink-700 hover:bg-sand-100">
-                      <Link href="/admin">{t("nav.admin")}</Link>
-                    </Button>
-                  )}
+          {/* Tablet+ auth CTAs — avoid empty chrome between md and lg */}
+          <div className="hidden md:flex items-center gap-1">
+            {status === "authenticated" && user ? (
+              <>
+                {isAdmin && (
                   <Button variant="ghost" size="sm" asChild className="text-ink-700 hover:bg-sand-100">
-                    <Link href="/dashboard">
-                      <LayoutDashboard className="h-4 w-4" aria-hidden />
-                      <span className="hidden xl:inline">{t("nav.dashboard")}</span>
-                    </Link>
+                    <Link href="/admin">{t("nav.admin")}</Link>
                   </Button>
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => signOut({ callbackUrl: "/" })}
-                    className="text-ink-700 hover:bg-sand-100"
-                  >
-                    <LogOut className="h-4 w-4" aria-hidden />
-                    <span className="hidden xl:inline">{t("nav.signOut")}</span>
-                  </Button>
-                </>
-              ) : (
-                <>
-                  <Link
-                    href="/login"
-                    prefetch
-                    className="inline-flex min-h-11 items-center gap-1.5 rounded-full px-3 text-sm font-semibold text-ink-700 hover:bg-sand-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pine-500"
-                  >
-                    <User className="h-4 w-4" aria-hidden />
-                    <span className="hidden xl:inline">{t("nav.signIn")}</span>
+                )}
+                <Button variant="ghost" size="sm" asChild className="text-ink-700 hover:bg-sand-100">
+                  <Link href="/dashboard">
+                    <LayoutDashboard className="h-4 w-4" aria-hidden />
+                    <span className="hidden lg:inline">{t("nav.dashboard")}</span>
                   </Link>
-                  <Link
-                    href="/flights"
-                    prefetch
-                    className="inline-flex min-h-11 items-center rounded-full bg-pine-500 px-5 text-sm font-semibold text-white shadow-sm hover:bg-pine-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pine-500 focus-visible:ring-offset-2"
-                  >
-                    {t("nav.bookNow")}
-                  </Link>
-                </>
-              )}
-            </div>
+                </Button>
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => signOut({ callbackUrl: "/" })}
+                  className="text-ink-700 hover:bg-sand-100"
+                >
+                  <LogOut className="h-4 w-4" aria-hidden />
+                  <span className="hidden lg:inline">{t("nav.signOut")}</span>
+                </Button>
+              </>
+            ) : (
+              <>
+                <Link
+                  href="/login"
+                  prefetch
+                  className="inline-flex min-h-11 items-center gap-1.5 rounded-full px-3 text-sm font-semibold text-ink-700 hover:bg-sand-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pine-500"
+                >
+                  <User className="h-4 w-4" aria-hidden />
+                  <span className="hidden lg:inline">{t("nav.signIn")}</span>
+                </Link>
+                <Link
+                  href="/flights"
+                  prefetch
+                  className="inline-flex min-h-11 items-center rounded-full bg-pine-500 px-4 lg:px-5 text-sm font-semibold text-white shadow-sm hover:bg-pine-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pine-500 focus-visible:ring-offset-2"
+                >
+                  {t("nav.bookNow")}
+                </Link>
+              </>
+            )}
           </div>
 
           <button
