@@ -4,7 +4,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { Star, MapPin, Wifi } from "lucide-react";
 import { IMAGE_BLUR_DATA_URL, PLACEHOLDER_TOUR_IMAGE } from "@/lib/images";
-import { WishlistButton } from "@/components/cards/wishlist-button";
 import { InventoryBadge } from "@/components/shared/inventory-badge";
 import { DisplayPrice } from "@/components/shared/display-price";
 import { usePreferences } from "@/components/providers/preferences-provider";
@@ -26,7 +25,7 @@ type HotelCardProps = {
 };
 
 export function HotelCard({
-  id,
+  id: _id,
   slug,
   name,
   city,
@@ -46,15 +45,6 @@ export function HotelCard({
 
   return (
     <article className="group relative overflow-hidden rounded-md bg-paper border border-line shadow-sm card-hover">
-      <WishlistButton
-        id={id || slug}
-        slug={slug}
-        name={name}
-        city={city}
-        country={country}
-        image={img}
-        pricePerNight={pricePerNight}
-      />
       <Link
         href={href}
         className="block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-pine-500"

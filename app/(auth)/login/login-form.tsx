@@ -104,7 +104,7 @@ export default function LoginForm() {
   return (
     <AuthShell
       title="Welcome back"
-      subtitle="Sign in to manage bookings, wishlist, and trip plans."
+      subtitle="Sign in to manage bookings and trip plans."
     >
       <form onSubmit={handleSubmit} className="space-y-4" noValidate>
         <div>

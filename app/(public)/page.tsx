@@ -13,7 +13,6 @@ import { getTrendingDestinations, getPopularHotels, getDealOfTheWeek } from "@/l
 import { IMAGE_BLUR_DATA_URL, unsplashSrc } from "@/lib/images";
 import { ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { WishlistButton } from "@/components/cards/wishlist-button";
 import { DisplayPrice } from "@/components/shared/display-price";
 
 export const dynamic = "force-static";
@@ -174,16 +173,6 @@ export default async function HomePage() {
                 sizes="(max-width:768px) 100vw, 40vw"
                 placeholder="blur"
                 blurDataURL={IMAGE_BLUR_DATA_URL}
-              />
-              <WishlistButton
-                id={String(deal._id)}
-                slug={deal.slug}
-                name={deal.name}
-                city={deal.city}
-                country={deal.country}
-                image={deal.images[0] ?? ""}
-                pricePerNight={deal.pricePerNight}
-                className="rounded-full"
               />
             </div>
           </div>
