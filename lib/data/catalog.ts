@@ -71,7 +71,22 @@ function filterFallbackHotels(filters: HotelListFilters) {
   return fallback.slice(0, filters.limit ?? 48);
 }
 
-export async function listHotels(filters: HotelListFilters = {}) {
+export type HotelListItem = {
+  _id: unknown;
+  name: string;
+  slug: string;
+  city: string;
+  country: string;
+  starRating: number;
+  images: string[];
+  avgRating: number;
+  reviewCount: number;
+  pricePerNight: number;
+  amenities?: string[];
+  tags?: string[];
+};
+
+export async function listHotels(filters: HotelListFilters = {}): Promise<HotelListItem[]> {
   try {
     const connected = await withTimeoutFallback(connectDB().then(() => true), false);
     if (connected) {
@@ -90,16 +105,10 @@ export async function listHotels(filters: HotelListFilters = {}) {
           .limit(Math.max(filters.limit ?? 48, 120))
           .lean()
           .exec(),
-        [] as Awaited<ReturnType<typeof Hotel.find>>
+        [] as HotelListItem[]
       );
       if (Array.isArray(rows) && rows.length > 0) {
-        let list = rows as Array<{
-          name: string;
-          city: string;
-          country: string;
-          pricePerNight: number;
-          tags?: string[];
-        }>;
+        let list = rows as HotelListItem[];
         if (filters.city) {
           const c = filters.city;
           list = list.filter(
@@ -124,7 +133,7 @@ export async function listHotels(filters: HotelListFilters = {}) {
   } catch {
     // fall through
   }
-  return filterFallbackHotels(filters);
+  return filterFallbackHotels(filters) as HotelListItem[];
 }
 
 export async function getHotelBySlug(slug: string) {
