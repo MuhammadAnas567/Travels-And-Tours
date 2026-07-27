@@ -2,7 +2,7 @@ import { InfoPage, infoMetadata } from "@/components/shared/info-page";
 
 export const metadata = infoMetadata(
   "Advertise",
-  "Advertise destinations and travel products to UEB3 travellers."
+  "Advertise destinations and travel products to Arreat travellers."
 );
 
 export default function AdvertisePage() {

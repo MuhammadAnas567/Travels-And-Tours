@@ -22,8 +22,8 @@ export function getStripe(): Stripe | null {
   return stripeInstance;
 }
 
-/** Generate a human-readable booking reference, e.g. UEB3-A1B2C3 */
+/** Generate a human-readable booking reference, e.g. ART-A1B2C3 */
 export function generateBookingReference() {
   const part = Math.random().toString(36).slice(2, 8).toUpperCase();
-  return `UEB3-${part}`;
+  return `ART-${part}`;
 }

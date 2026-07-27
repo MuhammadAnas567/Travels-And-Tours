@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import { NewsletterForm } from "@/components/shared/newsletter-form";
 import { FooterPrefs } from "@/components/layout/footer-prefs";
+import { Logo } from "@/components/shared/logo";
 import { siteConfig } from "@/lib/site-config";
 import { IMAGE_BLUR_DATA_URL } from "@/lib/images";
 
@@ -89,12 +90,12 @@ export function Footer() {
             placeholder="blur"
             blurDataURL={IMAGE_BLUR_DATA_URL}
           />
-          <div className="absolute inset-0 bg-ink-900/95" aria-hidden />
+          <div className="absolute inset-0 bg-pine-900/96" aria-hidden />
           <div
-            className="absolute inset-0 opacity-50"
+            className="absolute inset-0 opacity-60"
             style={{
               background:
-                "radial-gradient(ellipse 70% 45% at 0% 0%, rgba(47,68,56,0.55), transparent 55%), radial-gradient(ellipse 50% 40% at 100% 100%, rgba(180,138,80,0.12), transparent 50%)",
+                "radial-gradient(ellipse 70% 45% at 0% 0%, rgba(197,160,89,0.14), transparent 55%), radial-gradient(ellipse 50% 40% at 100% 100%, rgba(10,61,56,0.5), transparent 50%)",
             }}
             aria-hidden
           />
@@ -104,7 +105,7 @@ export function Footer() {
           <div className="relative overflow-hidden rounded-lg border border-paper/12 bg-paper/[0.06] px-6 py-8 sm:px-10 sm:py-10 md:flex md:items-center md:justify-between md:gap-10">
             <div className="max-w-xl">
               <p className="text-[0.6875rem] font-semibold uppercase tracking-[0.18em] text-brass-400">
-                UEB3 Travel
+                {siteConfig.name}
               </p>
               <h2 className="mt-3 font-display text-3xl md:text-4xl font-semibold text-paper leading-tight tracking-tight">
                 Find your next horizon.
@@ -172,11 +173,8 @@ export function Footer() {
         <div className="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
           <div className="grid gap-12 lg:grid-cols-12">
             <div className="lg:col-span-4">
-              <div className="flex items-center gap-3">
-                <div className="flex h-11 w-11 items-center justify-center rounded-full bg-brass-500 font-display text-lg font-bold text-ink-900 shadow-sm">
-                  U
-                </div>
-                <span className="font-display text-xl font-semibold text-paper">UEB3 Travel</span>
+              <div className="flex flex-col items-start">
+                <Logo href="/" variant="stack" onDark />
               </div>
               <p className="mt-4 text-sm text-paper/60 leading-relaxed max-w-sm">
                 An international travel desk for routes, stays, and custom itineraries — based in
@@ -291,7 +289,7 @@ export function Footer() {
             <div className="flex flex-col gap-3 text-xs text-paper/45 lg:items-end lg:text-right">
               <FooterPrefs />
               <p>
-                © {new Date().getFullYear()} UEB3 Travel · {siteConfig.office.city}
+                © {new Date().getFullYear()} {siteConfig.name} · {siteConfig.office.city}
               </p>
             </div>
           </div>

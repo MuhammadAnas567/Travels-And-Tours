@@ -9,6 +9,7 @@ import { EmptyCatalog } from "@/components/layout/catalog-hero";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import type { FallbackTour } from "@/lib/data/tour-fallback";
+import { matchesPlace } from "@/lib/airports";
 
 type Props = {
   tours: FallbackTour[];
@@ -37,15 +38,21 @@ function ToursCatalogueInner({ tours, countries }: Props) {
     if (q) {
       list = list.filter(
         (t) =>
-          t.title.toLowerCase().includes(q) ||
-          t.location.toLowerCase().includes(q) ||
-          t.country.toLowerCase().includes(q) ||
+          matchesPlace(t.title, q) ||
+          matchesPlace(t.location, q) ||
+          matchesPlace(t.country, q) ||
           t.slug.toLowerCase().includes(q.replace(/\s+/g, "-")) ||
           t.category.toLowerCase().includes(q)
       );
     }
     if (category) list = list.filter((t) => t.category === category);
-    if (country) list = list.filter((t) => t.country.toLowerCase() === country.toLowerCase());
+    if (country) {
+      list = list.filter(
+        (t) =>
+          t.country.toLowerCase() === country.toLowerCase() ||
+          matchesPlace(t.country, country)
+      );
+    }
     if (Number.isFinite(minPrice) && minPrice > 0) {
       list = list.filter((t) => Number(t.discountPrice ?? t.price) >= minPrice);
     }
@@ -56,11 +63,19 @@ function ToursCatalogueInner({ tours, countries }: Props) {
       list.sort(
         (a, b) => Number(a.discountPrice ?? a.price) - Number(b.discountPrice ?? b.price)
       );
-    if (sort === "price_desc")
+    else if (sort === "price_desc")
       list.sort(
         (a, b) => Number(b.discountPrice ?? b.price) - Number(a.discountPrice ?? a.price)
       );
-    if (sort === "rating") list.sort((a, b) => b.avgRating - a.avgRating);
+    else if (sort === "rating") list.sort((a, b) => b.avgRating - a.avgRating);
+    else if (sort === "newest") list.sort((a, b) => b.id.localeCompare(a.id));
+    else
+      // popular — featured first, then rating
+      list.sort((a, b) => {
+        const feat = Number(b.isFeatured) - Number(a.isFeatured);
+        if (feat !== 0) return feat;
+        return b.avgRating - a.avgRating;
+      });
     return list;
   }, [tours, q, category, country, sort, minPrice, maxPrice]);
 

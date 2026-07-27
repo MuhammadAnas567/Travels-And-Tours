@@ -22,9 +22,9 @@ export async function Navbar() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-line bg-paper">
-      <div className="mx-auto flex h-14 min-[480px]:h-[4.5rem] w-full max-w-[1280px] items-center justify-between gap-2 px-3 min-[480px]:px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto flex h-16 min-[480px]:h-[4.5rem] w-full max-w-[1280px] items-center justify-between gap-2 px-3 min-[480px]:px-4 sm:px-6 lg:px-8">
         <div className="min-w-0 shrink">
-          <Logo />
+          <Logo variant="compact" />
         </div>
 
         <nav className="hidden lg:flex items-center gap-0.5 min-w-0 overflow-x-auto scrollbar-hide" aria-label="Main">

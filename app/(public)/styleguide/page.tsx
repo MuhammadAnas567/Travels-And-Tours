@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton, HotelCardSkeleton, FlightRowSkeleton } from "@/components/ui/skeleton";
 import { EmptyState } from "@/components/ui/empty-state";
+import { Logo } from "@/components/shared/logo";
 import { StyleguideClient, ErrorStateDemo } from "./styleguide-client";
 
 export const metadata: Metadata = {
@@ -14,31 +15,31 @@ export const metadata: Metadata = {
 };
 
 const pine = [
-  ["50", "#EEF2EF"],
-  ["100", "#D5DED8"],
-  ["200", "#A8B9AE"],
-  ["300", "#7A9383"],
-  ["400", "#526B5C"],
-  ["500", "#2F4438"],
-  ["600", "#273A30"],
-  ["700", "#1F2E26"],
-  ["800", "#17221C"],
-  ["900", "#0F1713"],
+  ["50", "#E8F2F0"],
+  ["100", "#CFE4E0"],
+  ["200", "#9EC9C1"],
+  ["300", "#5FA89C"],
+  ["400", "#2F7A70"],
+  ["500", "#0A3D38"],
+  ["600", "#083530"],
+  ["700", "#062C28"],
+  ["800", "#04231F"],
+  ["900", "#031A17"],
 ];
 const brass = [
-  ["50", "#FAF6EF"],
-  ["100", "#F0E6D4"],
-  ["300", "#D0AD74"],
-  ["500", "#B48A50"],
-  ["600", "#957240"],
-  ["900", "#3A2C19"],
+  ["50", "#FAF6EB"],
+  ["100", "#F3E9CC"],
+  ["300", "#D4BC68"],
+  ["500", "#C5A059"],
+  ["600", "#A8863F"],
+  ["900", "#45371A"],
 ];
 const ink = [
-  ["900", "#1A1611"],
-  ["700", "#3D362C"],
-  ["500", "#7A7165"],
-  ["300", "#B0A89C"],
-  ["100", "#E4DFD6"],
+  ["900", "#071E1B"],
+  ["700", "#1A4540"],
+  ["500", "#5A746F"],
+  ["300", "#9AB0AB"],
+  ["100", "#D8E4E1"],
 ];
 
 function contrastRatio(hex: string, against: string) {
@@ -62,16 +63,31 @@ export default function StyleguidePage() {
     <div className="bg-sand min-h-screen">
       <div className="border-b border-line bg-paper">
         <div className="mx-auto max-w-[1280px] px-4 sm:px-6 py-12">
-          <p className="eyebrow">UEB3 · Luxury editorial</p>
+          <p className="eyebrow">Arreat Travels & Tours · Logo system</p>
           <h1 className="mt-3 text-hero text-ink">Styleguide</h1>
           <p className="mt-4 text-ink-500 max-w-[65ch]">
-            If a state is not on this page, it does not exist. Kill switch is active — default
+            Emerald teal + metallic gold from the brand lockup. Kill switch is active — default
             Tailwind gray/blue utilities produce no CSS. Fraunces + Hanken Grotesk.
           </p>
         </div>
       </div>
 
       <div className="mx-auto max-w-[1280px] px-4 sm:px-6 py-16 space-y-20">
+        <section>
+          <h2 className="text-h2">Brand lockup</h2>
+          <div className="mt-6 grid gap-6 md:grid-cols-2">
+            <div className="rounded-md border border-line bg-sand p-10 flex items-center justify-center">
+              <Logo href={false} variant="stack" />
+            </div>
+            <div className="bg-sand-200 rounded-md p-10 flex items-center justify-center min-h-[200px]">
+              <Logo href={false} variant="stack" />
+            </div>
+          </div>
+          <p className="mt-4 text-sm text-ink-500 max-w-[65ch]">
+            Brand plate: rounded square, teal field, mark above ARREAT / TRAVELS &amp; TOURS — no border.
+          </p>
+        </section>
+
         <section>
           <h2 className="text-h2">Color tokens</h2>
           <div className="mt-8 grid gap-10 lg:grid-cols-3">
@@ -87,7 +103,7 @@ export default function StyleguidePage() {
                     />
                     <p className="mt-1 text-xs tabular-nums text-ink-700">{step}</p>
                     <p className="text-[10px] tabular-nums text-ink-500">{hex}</p>
-                    <p className="text-[10px] text-ink-500">w {contrastRatio(hex, "#F6F3EC")}</p>
+                    <p className="text-[10px] text-ink-500">w {contrastRatio(hex, "#FBF9F4")}</p>
                   </div>
                 ))}
               </div>
@@ -116,8 +132,8 @@ export default function StyleguidePage() {
               </div>
               <div className="mt-4 flex flex-wrap gap-3">
                 {[
-                  ["sand", "#ECEAE4"],
-                  ["paper", "#F6F3EC"],
+                  ["sand", "#F3EFE6"],
+                  ["paper", "#FBF9F4"],
                   ["line", "#DDD7CC"],
                   ["success", "#3D6B4F"],
                   ["error", "#A33B2D"],

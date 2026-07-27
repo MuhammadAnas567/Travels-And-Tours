@@ -3,68 +3,66 @@
 @source not "../.cursor";
 @source not "../public/qa-screenshots";
 
-/* ─── Modern Travel System (Airbnb×Hopper) — KILL SWITCH + TOKENS ─── */
+/* ─── Arreat Travels & Tours — logo teal + metallic gold ─── */
 :root {
-  /* Core brand — cool ink */
-  --color-ink: #0f172a;
-  --color-ink-900: #0f172a;
-  --color-ink-800: #1e293b;
-  --color-ink-700: #334155;
-  --color-ink-500: #64748b;
-  --color-ink-300: #94a3b8;
-  --color-ink-100: #e2e8f0;
+  /* Ink — deep teal-black (logo field) */
+  --color-ink: #071e1b;
+  --color-ink-900: #071e1b;
+  --color-ink-800: #0c2f2a;
+  --color-ink-700: #1a4540;
+  --color-ink-500: #5a746f;
+  --color-ink-300: #9ab0ab;
+  --color-ink-100: #d8e4e1;
 
-  --color-sand: #f7f5f2;
-  --color-sand-100: #fafaf8;
-  --color-sand-200: #eeebe6;
-  --color-sand-300: #e5e0d9;
+  /* Warm champagne sand — complements gold, not cream-cliché terracotta */
+  --color-sand: #f3efe6;
+  --color-sand-100: #f8f5ee;
+  --color-sand-200: #ebe5d8;
+  --color-sand-300: #ddd5c4;
 
-  --color-paper: #ffffff;
-  --color-paper-raised: #ffffff;
+  --color-paper: #fbf9f4;
+  --color-paper-raised: #fffcf7;
 
-  /* Brass aliases → ocean teal (no coral) */
-  --color-brass-50: #e6f5f5;
-  --color-brass-100: #c5e8e8;
-  --color-brass-200: #a0d9d9;
-  --color-brass-300: #5bb8b8;
-  --color-brass-400: #2a9696;
-  --color-brass-500: #0b7b7b;
-  --color-brass-600: #096666;
-  --color-brass-700: #074f4f;
-  --color-brass-800: #054444;
-  --color-brass-900: #043535;
+  /* Brass = logo metallic gold — CTAs + stars only */
+  --color-brass-50: #faf6eb;
+  --color-brass-100: #f3e9cc;
+  --color-brass-200: #e6d49a;
+  --color-brass-300: #d4bc68;
+  --color-brass-400: #c9a84c;
+  --color-brass-500: #c5a059;
+  --color-brass-600: #a8863f;
+  --color-brass-700: #866a30;
+  --color-brass-800: #655024;
+  --color-brass-900: #45371a;
 
-  /* Pine → ocean teal */
-  --color-pine-50: #e6f5f5;
-  --color-pine-100: #c5e8e8;
-  --color-pine-200: #a0d9d9;
-  --color-pine-300: #5bb8b8;
-  --color-pine-400: #2a9696;
-  --color-pine-500: #0b7b7b;
-  --color-pine-600: #096666;
-  --color-pine-700: #074f4f;
-  --color-pine-800: #054444;
-  --color-pine-900: #043535;
+  /* Pine = logo deep emerald teal — surfaces, links, chrome */
+  --color-pine-50: #e8f2f0;
+  --color-pine-100: #cfe4e0;
+  --color-pine-200: #9ec9c1;
+  --color-pine-300: #5fa89c;
+  --color-pine-400: #2f7a70;
+  --color-pine-500: #0a3d38;
+  --color-pine-600: #083530;
+  --color-pine-700: #062c28;
+  --color-pine-800: #04231f;
+  --color-pine-900: #031a17;
 
-  /* Warm neutral taupe — aligned to sand surfaces */
-  --color-taupe-50: #fafaf8;
-  --color-taupe-100: #f7f5f2;
-  --color-taupe-200: #eeebe6;
-  --color-taupe-300: #e5e0d9;
-  --color-taupe-400: #cbd5e1;
-  --color-taupe-500: #94a3b8;
-  --color-taupe-600: #64748b;
-  --color-taupe-700: #475569;
+  --color-taupe-50: #f8f5ee;
+  --color-taupe-100: #f3efe6;
+  --color-taupe-200: #ebe5d8;
+  --color-taupe-300: #ddd5c4;
+  --color-taupe-400: #b8b0a0;
+  --color-taupe-500: #8a8376;
+  --color-taupe-600: #5a746f;
+  --color-taupe-700: #1a4540;
 
-  --color-line: #e5e7eb;
-  --color-line-strong: #cbd5e1;
+  --color-line: #e0d9cb;
+  --color-line-strong: #c9c0ae;
 
-  --color-success: #16a34a;
-  --color-error: #dc2626;
-  --color-warning: #d97706;
-  --color-info: #0d9488;
-
-  /* Fonts: owned by next/font via --font-display / --font-body on <html> — do not override here */
+  --color-success: #2f7a4e;
+  --color-error: #b42318;
+  --color-warning: #b8860b;
+  --color-info: #0a3d38;
 
   --text-sm: 0.875rem;
   --text-base: 1rem;
@@ -86,14 +84,14 @@
   --space-24: 96px;
   --space-32: 128px;
 
-  --radius-sm: 10px;
-  --radius-md: 16px;
-  --radius-lg: 24px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
   --radius-full: 999px;
 
-  --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.05);
-  --shadow-md: 0 8px 24px rgba(15, 23, 42, 0.08);
-  --shadow-lg: 0 20px 48px rgba(15, 23, 42, 0.12);
+  --shadow-sm: 0 1px 2px rgba(7, 30, 27, 0.06);
+  --shadow-md: 0 8px 24px rgba(7, 30, 27, 0.1);
+  --shadow-lg: 0 20px 48px rgba(7, 30, 27, 0.14);
 
   --ease-brand: cubic-bezier(0.22, 1, 0.36, 1);
   --duration-fast: 180ms;
@@ -115,141 +113,139 @@
   --color-white: #ffffff;
   --color-black: #000000;
 
-  /* Canonical travel tokens */
-  --color-ink: #0f172a;
-  --color-ink-900: #0f172a;
-  --color-ink-800: #1e293b;
-  --color-ink-700: #334155;
-  --color-ink-500: #64748b;
-  --color-ink-300: #94a3b8;
-  --color-ink-100: #e2e8f0;
+  --color-ink: #071e1b;
+  --color-ink-900: #071e1b;
+  --color-ink-800: #0c2f2a;
+  --color-ink-700: #1a4540;
+  --color-ink-500: #5a746f;
+  --color-ink-300: #9ab0ab;
+  --color-ink-100: #d8e4e1;
 
-  --color-sand: #f7f5f2;
-  --color-sand-100: #fafaf8;
-  --color-sand-200: #eeebe6;
-  --color-sand-300: #e5e0d9;
+  --color-sand: #f3efe6;
+  --color-sand-100: #f8f5ee;
+  --color-sand-200: #ebe5d8;
+  --color-sand-300: #ddd5c4;
 
-  --color-paper: #ffffff;
-  --color-paper-raised: #ffffff;
+  --color-paper: #fbf9f4;
+  --color-paper-raised: #fffcf7;
 
-  --color-brass-50: #e6f5f5;
-  --color-brass-100: #c5e8e8;
-  --color-brass-200: #a0d9d9;
-  --color-brass-300: #5bb8b8;
-  --color-brass-400: #2a9696;
-  --color-brass-500: #0b7b7b;
-  --color-brass-600: #096666;
-  --color-brass-700: #074f4f;
-  --color-brass-800: #054444;
-  --color-brass-900: #043535;
-  --color-brass: #0b7b7b;
+  --color-brass-50: #faf6eb;
+  --color-brass-100: #f3e9cc;
+  --color-brass-200: #e6d49a;
+  --color-brass-300: #d4bc68;
+  --color-brass-400: #c9a84c;
+  --color-brass-500: #c5a059;
+  --color-brass-600: #a8863f;
+  --color-brass-700: #866a30;
+  --color-brass-800: #655024;
+  --color-brass-900: #45371a;
+  --color-brass: #c5a059;
 
-  --color-pine-50: #e6f5f5;
-  --color-pine-100: #c5e8e8;
-  --color-pine-200: #a0d9d9;
-  --color-pine-300: #5bb8b8;
-  --color-pine-400: #2a9696;
-  --color-pine-500: #0b7b7b;
-  --color-pine-600: #096666;
-  --color-pine-700: #074f4f;
-  --color-pine-800: #054444;
-  --color-pine-900: #043535;
-  --color-pine: #0b7b7b;
+  --color-pine-50: #e8f2f0;
+  --color-pine-100: #cfe4e0;
+  --color-pine-200: #9ec9c1;
+  --color-pine-300: #5fa89c;
+  --color-pine-400: #2f7a70;
+  --color-pine-500: #0a3d38;
+  --color-pine-600: #083530;
+  --color-pine-700: #062c28;
+  --color-pine-800: #04231f;
+  --color-pine-900: #031a17;
+  --color-pine: #0a3d38;
 
-  --color-taupe-50: #fafaf8;
-  --color-taupe-100: #f7f5f2;
-  --color-taupe-200: #eeebe6;
-  --color-taupe-300: #e5e0d9;
-  --color-taupe-400: #cbd5e1;
-  --color-taupe-500: #94a3b8;
-  --color-taupe-600: #64748b;
-  --color-taupe-700: #475569;
+  --color-taupe-50: #f8f5ee;
+  --color-taupe-100: #f3efe6;
+  --color-taupe-200: #ebe5d8;
+  --color-taupe-300: #ddd5c4;
+  --color-taupe-400: #b8b0a0;
+  --color-taupe-500: #8a8376;
+  --color-taupe-600: #5a746f;
+  --color-taupe-700: #1a4540;
 
-  --color-line: #e5e7eb;
-  --color-line-strong: #cbd5e1;
-  --color-border: #e5e7eb;
+  --color-line: #e0d9cb;
+  --color-line-strong: #c9c0ae;
+  --color-border: #e0d9cb;
 
-  --color-success: #16a34a;
-  --color-error: #dc2626;
-  --color-warning: #d97706;
-  --color-info: #0d9488;
+  --color-success: #2f7a4e;
+  --color-error: #b42318;
+  --color-warning: #b8860b;
+  --color-info: #0a3d38;
 
-  /* Surfaces — map old names so existing utilities keep working */
-  --color-surface: #ffffff;
-  --color-surface-alt: #f7f5f2;
-  --color-surface-sunken: #eeebe6;
+  --color-surface: #fbf9f4;
+  --color-surface-alt: #f3efe6;
+  --color-surface-sunken: #ebe5d8;
 
-  /* Compatibility: navy → ocean; gold = soft champagne (ratings); accent → pine */
-  --color-navy-50: #e6f5f5;
-  --color-navy-100: #c5e8e8;
-  --color-navy-200: #a0d9d9;
-  --color-navy-300: #5bb8b8;
-  --color-navy-400: #2a9696;
-  --color-navy-500: #0b7b7b;
-  --color-navy-600: #096666;
-  --color-navy-700: #074f4f;
-  --color-navy-800: #054444;
-  --color-navy-900: #043535;
+  /* Compat aliases */
+  --color-navy-50: #e8f2f0;
+  --color-navy-100: #cfe4e0;
+  --color-navy-200: #9ec9c1;
+  --color-navy-300: #5fa89c;
+  --color-navy-400: #2f7a70;
+  --color-navy-500: #0a3d38;
+  --color-navy-600: #083530;
+  --color-navy-700: #062c28;
+  --color-navy-800: #04231f;
+  --color-navy-900: #031a17;
 
   --color-gold-50: #faf6eb;
-  --color-gold-100: #f0e6c8;
-  --color-gold-200: #e4d4a4;
-  --color-gold-300: #d4bc72;
-  --color-gold-400: #c4a54a;
-  --color-gold-500: #b8922e;
-  --color-gold-600: #9a7a24;
-  --color-gold-700: #7a611c;
-  --color-gold-800: #5c4915;
-  --color-gold-900: #3d310e;
-  --color-gold: #b8922e;
-  --color-gold-light: #f0e6c8;
+  --color-gold-100: #f3e9cc;
+  --color-gold-200: #e6d49a;
+  --color-gold-300: #d4bc68;
+  --color-gold-400: #c9a84c;
+  --color-gold-500: #c5a059;
+  --color-gold-600: #a8863f;
+  --color-gold-700: #866a30;
+  --color-gold-800: #655024;
+  --color-gold-900: #45371a;
+  --color-gold: #c5a059;
+  --color-gold-light: #f3e9cc;
 
-  --color-primary: #0b7b7b;
-  --color-primary-50: #e6f5f5;
-  --color-primary-100: #c5e8e8;
-  --color-primary-300: #5bb8b8;
-  --color-primary-500: #0b7b7b;
-  --color-primary-700: #074f4f;
-  --color-primary-900: #043535;
+  --color-primary: #0a3d38;
+  --color-primary-50: #e8f2f0;
+  --color-primary-100: #cfe4e0;
+  --color-primary-300: #5fa89c;
+  --color-primary-500: #0a3d38;
+  --color-primary-700: #062c28;
+  --color-primary-900: #031a17;
 
-  --color-accent-100: #c5e8e8;
-  --color-accent-500: #0b7b7b;
-  --color-accent-600: #096666;
+  --color-accent-100: #f3e9cc;
+  --color-accent-500: #c5a059;
+  --color-accent-600: #a8863f;
 
-  --color-ocean-50: #e6f5f5;
-  --color-ocean-100: #c5e8e8;
-  --color-ocean-200: #a0d9d9;
-  --color-ocean-500: #0b7b7b;
-  --color-ocean-600: #096666;
-  --color-ocean-700: #074f4f;
-  --color-ocean-800: #054444;
-  --color-ocean-900: #043535;
-  --color-ocean: #0b7b7b;
+  --color-ocean-50: #e8f2f0;
+  --color-ocean-100: #cfe4e0;
+  --color-ocean-200: #9ec9c1;
+  --color-ocean-500: #0a3d38;
+  --color-ocean-600: #083530;
+  --color-ocean-700: #062c28;
+  --color-ocean-800: #04231f;
+  --color-ocean-900: #031a17;
+  --color-ocean: #0a3d38;
 
-  --color-pearl: #ffffff;
-  --color-midnight: #0f172a;
-  --color-cream: #ffffff;
-  --color-muted: #64748b;
-  --color-danger: #dc2626;
-  --color-background: #f7f5f2;
-  --color-foreground: #0f172a;
+  --color-pearl: #fbf9f4;
+  --color-midnight: #071e1b;
+  --color-cream: #f3efe6;
+  --color-muted: #5a746f;
+  --color-danger: #b42318;
+  --color-background: #f3efe6;
+  --color-foreground: #071e1b;
 
   --radius-none: 0;
-  --radius-sm: 10px;
-  --radius-md: 16px;
-  --radius-lg: 24px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
   --radius-full: 999px;
-  --radius-xl: 24px;
-  --radius-2xl: 24px;
-  --radius-3xl: 24px;
+  --radius-xl: 12px;
+  --radius-2xl: 12px;
+  --radius-3xl: 12px;
 
   --shadow-none: none;
-  --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.05);
-  --shadow-md: 0 8px 24px rgba(15, 23, 42, 0.08);
-  --shadow-lg: 0 20px 48px rgba(15, 23, 42, 0.12);
-  --shadow-xl: 0 20px 48px rgba(15, 23, 42, 0.12);
-  --shadow-card: 0 8px 24px rgba(15, 23, 42, 0.08);
-  --shadow-float: 0 20px 48px rgba(15, 23, 42, 0.12);
+  --shadow-sm: 0 1px 2px rgba(7, 30, 27, 0.06);
+  --shadow-md: 0 8px 24px rgba(7, 30, 27, 0.1);
+  --shadow-lg: 0 20px 48px rgba(7, 30, 27, 0.14);
+  --shadow-xl: 0 20px 48px rgba(7, 30, 27, 0.14);
+  --shadow-card: 0 8px 24px rgba(7, 30, 27, 0.1);
+  --shadow-float: 0 20px 48px rgba(7, 30, 27, 0.14);
 
   --font-sans: var(--font-body), ui-sans-serif, system-ui, sans-serif;
   --font-heading: var(--font-display), ui-serif, Georgia, serif;
@@ -278,7 +274,10 @@
   }
 
   body {
-    background: var(--color-sand);
+    background:
+      radial-gradient(1200px 600px at 10% -10%, rgba(10, 61, 56, 0.06), transparent 55%),
+      radial-gradient(900px 500px at 90% 0%, rgba(197, 160, 89, 0.07), transparent 50%),
+      var(--color-sand);
     color: var(--color-ink-700);
     font-family: var(--font-body), ui-sans-serif, system-ui, sans-serif;
     font-size: var(--text-base);
@@ -331,7 +330,7 @@
   }
 
   :focus-visible {
-    outline: 2px solid var(--color-pine-500);
+    outline: 2px solid var(--color-brass-500);
     outline-offset: 2px;
   }
 
@@ -344,7 +343,7 @@
     position: fixed; top: var(--space-4); left: var(--space-4); z-index: 100;
     width: auto; height: auto; margin: 0; clip: auto; overflow: visible;
     border-radius: var(--radius-sm);
-    background: var(--color-pine-500); color: var(--color-paper);
+    background: var(--color-brass-500); color: var(--color-ink-900);
     padding: var(--space-3) var(--space-4);
     font-weight: 600; font-size: var(--text-sm);
   }
@@ -363,9 +362,8 @@
     border-radius: var(--radius-sm);
   }
 
-  /* Unified editorial image grade */
   .img-editorial {
-    filter: saturate(0.82) contrast(1.06) brightness(0.97);
+    filter: saturate(0.88) contrast(1.05) brightness(0.97);
   }
 
   .img-cover {
@@ -393,16 +391,16 @@
   .image-overlay-hero {
     background: linear-gradient(
       to top,
-      rgba(4, 53, 53, 0.72) 0%,
-      rgba(4, 53, 53, 0.28) 42%,
-      rgba(4, 53, 53, 0.12) 100%
+      rgba(7, 30, 27, 0.88) 0%,
+      rgba(10, 61, 56, 0.45) 42%,
+      rgba(10, 61, 56, 0.18) 100%
     );
   }
 
   .image-scrim {
     background: linear-gradient(
       to top,
-      rgba(4, 53, 53, 0.55) 0%,
+      rgba(7, 30, 27, 0.62) 0%,
       transparent 60%
     );
   }
@@ -421,7 +419,7 @@
   }
 
   .link-underline {
-    background-image: linear-gradient(var(--color-pine-500), var(--color-pine-500));
+    background-image: linear-gradient(var(--color-brass-500), var(--color-brass-500));
     background-position: 0 100%;
     background-repeat: no-repeat;
     background-size: 0% 1px;
@@ -433,9 +431,9 @@
     font-family: var(--font-body), ui-sans-serif, system-ui, sans-serif;
     font-size: 0.6875rem;
     font-weight: 600;
-    letter-spacing: 0.15em;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: var(--color-pine-500);
+    color: var(--color-brass-600);
   }
 
   .film-grain::after {
@@ -443,9 +441,29 @@
     pointer-events: none;
     position: absolute;
     inset: 0;
-    opacity: 0.04;
-    mix-blend-mode: multiply;
+    opacity: 0.05;
+    mix-blend-mode: soft-light;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* Logo-inspired dark band with soft A watermark */
+  .arreat-band {
+    background-color: var(--color-pine-500);
+    background-image:
+      radial-gradient(ellipse 80% 60% at 50% 40%, rgba(197, 160, 89, 0.08), transparent 70%),
+      radial-gradient(ellipse 50% 40% at 80% 80%, rgba(0, 0, 0, 0.25), transparent 60%);
+    position: relative;
+    overflow: hidden;
+  }
+  .arreat-band::before {
+    content: "";
+    position: absolute;
+    inset: -10% auto auto 55%;
+    width: min(48vw, 420px);
+    aspect-ratio: 1;
+    opacity: 0.07;
+    background: url("/arreat-logo.png") center / contain no-repeat;
+    pointer-events: none;
   }
 }
 
@@ -483,10 +501,10 @@
   .scrollbar-hide::-webkit-scrollbar { display: none; }
 
   .glass-panel {
-    background-color: rgb(255 255 255 / 0.8);
+    background-color: rgb(251 249 244 / 0.88);
     backdrop-filter: blur(24px);
     -webkit-backdrop-filter: blur(24px);
-    border: 1px solid rgb(255 255 255 / 0.4);
+    border: 1px solid rgb(224 217 203 / 0.7);
   }
 
   .ken-burns {

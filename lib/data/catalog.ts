@@ -2,6 +2,7 @@ import { connectDB } from "@/lib/db/connect";
 import { Hotel, Flight, Destination } from "@/lib/models";
 import { FALLBACK_DESTINATIONS, FALLBACK_HOTELS } from "@/lib/data/home-fallback";
 import { FALLBACK_FLIGHTS } from "@/lib/data/flight-fallback";
+import { matchesPlace, resolveAirport } from "@/lib/airports";
 
 function catalogTimeoutMs() {
   // Vercel cold start + Atlas often exceeds 600ms — that caused hotel detail 404s
@@ -36,21 +37,21 @@ export type HotelListFilters = {
 function filterFallbackHotels(filters: HotelListFilters) {
   let fallback = FALLBACK_HOTELS.map((h) => ({ ...h }));
   if (filters.city) {
-    const c = filters.city.toLowerCase();
+    const c = filters.city;
     fallback = fallback.filter(
       (h) =>
-        h.city.toLowerCase().includes(c) ||
-        h.country.toLowerCase().includes(c) ||
-        h.name.toLowerCase().includes(c)
+        matchesPlace(h.city, c) ||
+        matchesPlace(h.country, c) ||
+        matchesPlace(h.name, c)
     );
   }
   if (filters.q) {
-    const q = filters.q.toLowerCase();
+    const q = filters.q;
     fallback = fallback.filter(
       (h) =>
-        h.name.toLowerCase().includes(q) ||
-        h.city.toLowerCase().includes(q) ||
-        h.country.toLowerCase().includes(q)
+        matchesPlace(h.name, q) ||
+        matchesPlace(h.city, q) ||
+        matchesPlace(h.country, q)
     );
   }
   if (filters.tag) {
@@ -134,12 +135,14 @@ function isMongoObjectId(id: string) {
 }
 
 export async function listFlights(filters: FlightListFilters = {}) {
+  const fromCode = filters.from ? resolveAirport(filters.from) : "";
+  const toCode = filters.to ? resolveAirport(filters.to) : "";
   try {
     const connected = await withTimeoutFallback(connectDB().then(() => true), false);
     if (connected) {
       const query: Record<string, unknown> = {};
-      if (filters.from) query.from = new RegExp(filters.from, "i");
-      if (filters.to) query.to = new RegExp(filters.to, "i");
+      if (fromCode) query.from = new RegExp(`^${fromCode}$`, "i");
+      if (toCode) query.to = new RegExp(`^${toCode}$`, "i");
       const rows = await withTimeoutFallback(
         Flight.find(query)
           .sort({ departTime: 1 })
@@ -154,13 +157,11 @@ export async function listFlights(filters: FlightListFilters = {}) {
     // fall through
   }
   let fallback = FALLBACK_FLIGHTS.map((f) => ({ ...f }));
-  if (filters.from) {
-    const from = filters.from.toUpperCase();
-    fallback = fallback.filter((f) => f.from.toUpperCase().includes(from));
+  if (fromCode) {
+    fallback = fallback.filter((f) => f.from.toUpperCase() === fromCode);
   }
-  if (filters.to) {
-    const to = filters.to.toUpperCase();
-    fallback = fallback.filter((f) => f.to.toUpperCase().includes(to));
+  if (toCode) {
+    fallback = fallback.filter((f) => f.to.toUpperCase() === toCode);
   }
   return fallback.slice(0, filters.limit ?? 40);
 }

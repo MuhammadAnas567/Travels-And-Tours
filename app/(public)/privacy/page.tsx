@@ -39,8 +39,8 @@ export default function PrivacyPage() {
             <h2 className="font-display text-xl font-semibold text-ink">Contact</h2>
             <p className="mt-3">
               For privacy inquiries, contact{" "}
-              <a href="mailto:hello@ueb3tours.com" className="text-pine-500 link-underline">
-                hello@ueb3tours.com
+              <a href="mailto:hello@arreattravel.com" className="text-pine-500 link-underline">
+                hello@arreattravel.com
               </a>
               .
             </p>

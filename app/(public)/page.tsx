@@ -20,11 +20,11 @@ export const dynamic = "force-static";
 export const revalidate = 120;
 
 export const metadata: Metadata = {
-  title: "UEB3 Travel — Flights, Hotels & Journeys Worldwide",
+  title: "Arreat Travels & Tours — Flights, Hotels & Journeys Worldwide",
   description:
     "Book flights, hotels, tour packages, and visas with clear prices and 24/7 support. A modern travel platform for explorers.",
   openGraph: {
-    title: "UEB3 Travel — Find your next horizon",
+    title: "Arreat Travels & Tours — Find your next horizon",
     description: "Flights, stays, and packages in one cinematic search experience.",
     type: "website",
     images: [
@@ -56,7 +56,7 @@ export default async function HomePage() {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "TravelAgency",
-    name: "UEB3 Travel",
+    name: "Arreat Travels & Tours",
     url: process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000",
     description: "Book flights, hotels, and vacation packages worldwide.",
     areaServed: "Worldwide",
@@ -68,7 +68,7 @@ export default async function HomePage() {
       addressCountry: "PK",
     },
     telephone: "+92-42-37260405",
-    email: "hello@ueb3tours.com",
+    email: "hello@arreattravel.com",
   };
 
   return (
@@ -243,7 +243,7 @@ export default async function HomePage() {
       <section className="section-pad bg-sand-100">
         <div className="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8">
           <div className="mb-10 max-w-xl">
-            <p className="eyebrow">Why UEB3</p>
+            <p className="eyebrow">Why Arreat Travels</p>
             <h2 className="mt-3 text-h2 text-ink">Built for real travellers</h2>
           </div>
           <WhyChooseUs />

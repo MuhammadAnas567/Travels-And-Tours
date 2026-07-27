@@ -1,4 +1,4 @@
-# UEB3 Tours — Travel & Tours Booking Platform
+# Arreat Travels & Tours — Travel & Tours Booking Platform
 
 A production-ready full-stack travel booking platform built with **Next.js 16 (App Router)**, **TypeScript**, **Prisma**, **MongoDB**, **NextAuth.js**, and **Stripe**.
 
@@ -96,7 +96,7 @@ stripe listen --forward-to localhost:3000/api/webhooks/stripe
 
 4. Book a tour while signed in. On the **Payment** step the Stripe Payment Element mounts in-page (no redirect). Use test card `4242 4242 4242 4242`, any future expiry, any CVC.
 
-5. The webhook (`payment_intent.succeeded`) is the **source of truth**: it confirms the booking, generates `bookingReference` (e.g. `UEB3-A1B2C3`), and sends the confirmation email. Success page reads the finalized booking from MongoDB.
+5. The webhook (`payment_intent.succeeded`) is the **source of truth**: it confirms the booking, generates `bookingReference` (e.g. `ART-A1B2C3`), and sends the confirmation email. Success page reads the finalized booking from MongoDB.
 
 6. Optional CLI trigger (PaymentIntent path):
 

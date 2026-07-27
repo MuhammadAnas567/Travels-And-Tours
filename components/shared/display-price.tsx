@@ -7,7 +7,7 @@ import { useSyncExternalStore } from "react";
 import { CURRENCY_COOKIE } from "@/lib/constants";
 import { SUPPORTED_CURRENCIES } from "@/lib/currency";
 
-const CURRENCY_EVENT = "ueb3-currency-change";
+const CURRENCY_EVENT = "arreat-currency-change";
 
 function readCookieCurrency(): Currency {
   if (typeof document === "undefined") return "USD";

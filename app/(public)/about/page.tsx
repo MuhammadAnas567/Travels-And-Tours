@@ -6,7 +6,7 @@ import { CatalogHero } from "@/components/layout/catalog-hero";
 export const metadata: Metadata = {
   title: "About Us",
   description:
-    "UEB3 Travel plans private journeys and curated escapes — clear fares, local partners, and humans on support.",
+    "Arreat Travels & Tours plans private journeys and curated escapes — clear fares, local partners, and humans on support.",
 };
 
 export default function AboutPage() {
@@ -26,7 +26,7 @@ export default function AboutPage() {
             <h2 className="mt-3 text-h2 text-ink">Built for travellers who notice the details</h2>
             <div className="mt-6 space-y-5 text-ink-700 leading-relaxed max-w-[65ch]">
               <p>
-                Founded in 2010, UEB3 has helped travellers cross 50+ countries — from Amalfi dawn walks to safari camps on the Maasai Mara. We favour partners who keep places intact and travellers well looked after.
+                Founded in 2010, Arreat has helped travellers cross 50+ countries — from Amalfi dawn walks to safari camps on the Maasai Mara. We favour partners who keep places intact and travellers well looked after.
               </p>
               <p>
                 Every route is checked for timing, transfer quality, and cancellation honesty. Adventure, honeymoon, or a quiet week by the sea — the brief stays specific.

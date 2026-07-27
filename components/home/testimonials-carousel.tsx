@@ -14,7 +14,7 @@ const testimonials = [
   {
     name: "Ahmed K.",
     location: "Dubai, UAE",
-    text: "Our Maldives package was clear on what’s included — no surprise resort fees. UEB3 made the honeymoon planning calm.",
+    text: "Our Maldives package was clear on what’s included — no surprise resort fees. Arreat made the honeymoon planning calm.",
     rating: 5,
   },
   {

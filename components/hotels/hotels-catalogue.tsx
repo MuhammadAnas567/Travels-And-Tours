@@ -6,6 +6,7 @@ import { useSearchParams } from "next/navigation";
 import { HotelCard } from "@/components/cards/hotel-card";
 import { EmptyCatalog } from "@/components/layout/catalog-hero";
 import { Skeleton } from "@/components/ui/skeleton";
+import { matchesPlace } from "@/lib/airports";
 
 export type HotelCatalogueItem = {
   _id: string;
@@ -33,7 +34,13 @@ function formatStayDate(iso: string) {
   });
 }
 
-function HotelsCatalogueInner({ hotels }: { hotels: HotelCatalogueItem[] }) {
+function HotelsCatalogueInner({
+  hotels,
+  serverFiltered = false,
+}: {
+  hotels: HotelCatalogueItem[];
+  serverFiltered?: boolean;
+}) {
   const params = useSearchParams();
   const city = (params.get("city") ?? "").trim().toLowerCase();
   const q = (params.get("q") ?? "").trim().toLowerCase();
@@ -52,21 +59,24 @@ function HotelsCatalogueInner({ hotels }: { hotels: HotelCatalogueItem[] }) {
   }, [checkIn, checkOut, guests]);
 
   const filtered = useMemo(() => {
+    // Server already applied city/q/tag — do not re-filter and empty a valid list
+    if (serverFiltered) return hotels;
+
     let list = [...hotels];
     if (city) {
       list = list.filter(
         (h) =>
-          h.city.toLowerCase().includes(city) ||
-          h.country.toLowerCase().includes(city) ||
-          h.name.toLowerCase().includes(city)
+          matchesPlace(h.city, city) ||
+          matchesPlace(h.country, city) ||
+          matchesPlace(h.name, city)
       );
     }
     if (q) {
       list = list.filter(
         (h) =>
-          h.name.toLowerCase().includes(q) ||
-          h.city.toLowerCase().includes(q) ||
-          h.country.toLowerCase().includes(q)
+          matchesPlace(h.name, q) ||
+          matchesPlace(h.city, q) ||
+          matchesPlace(h.country, q)
       );
     }
     if (tag) {
@@ -74,12 +84,12 @@ function HotelsCatalogueInner({ hotels }: { hotels: HotelCatalogueItem[] }) {
         (h) =>
           (h.tags ?? []).some((t) => t.toLowerCase().includes(tag)) ||
           (h.amenities ?? []).some((a) => a.toLowerCase().includes(tag)) ||
-          h.city.toLowerCase().includes(tag) ||
-          h.name.toLowerCase().includes(tag)
+          matchesPlace(h.city, tag) ||
+          matchesPlace(h.name, tag)
       );
     }
     return list;
-  }, [hotels, city, q, tag]);
+  }, [hotels, city, q, tag, serverFiltered]);
 
   const filterLabel = [city && `city “${city}”`, q && `“${q}”`, tag && `tag “${tag}”`]
     .filter(Boolean)
@@ -145,10 +155,16 @@ function HotelsCatalogueInner({ hotels }: { hotels: HotelCatalogueItem[] }) {
   );
 }
 
-export function HotelsCatalogue({ hotels }: { hotels: HotelCatalogueItem[] }) {
+export function HotelsCatalogue({
+  hotels,
+  serverFiltered = false,
+}: {
+  hotels: HotelCatalogueItem[];
+  serverFiltered?: boolean;
+}) {
   return (
     <Suspense fallback={<Skeleton className="h-96 w-full rounded-md" />}>
-      <HotelsCatalogueInner hotels={hotels} />
+      <HotelsCatalogueInner hotels={hotels} serverFiltered={serverFiltered} />
     </Suspense>
   );
 }

@@ -17,7 +17,7 @@ export function SearchBar({ className = "", dark = false }: { className?: string
     e.preventDefault();
     const params = new URLSearchParams();
     if (destination) params.set("q", destination);
-    if (date) params.set("date", date);
+    // Date / guests are for trip planning context — not catalogue filters
     if (travelers) params.set("travelers", travelers);
     router.push(`/tours?${params.toString()}`);
   }

@@ -12,6 +12,7 @@ import { IMAGE_BLUR_DATA_URL } from "@/lib/images";
 import { cn } from "@/lib/utils";
 import { DisplayPrice } from "@/components/shared/display-price";
 import { usePreferences } from "@/components/providers/preferences-provider";
+import { resolveAirport } from "@/lib/airports";
 
 export type FlightResult = {
   _id: string;
@@ -30,27 +31,6 @@ export type FlightResult = {
 
 type SortKey = "best" | "cheapest" | "fastest";
 type CabinKey = "economy" | "business" | "first";
-
-const CITY_TO_CODE: Record<string, string> = {
-  karachi: "KHI",
-  lahore: "LHE",
-  islamabad: "ISB",
-  dubai: "DXB",
-  istanbul: "IST",
-  london: "LHR",
-  jeddah: "JED",
-  doha: "DOH",
-  abu: "AUH",
-  "abu dhabi": "AUH",
-};
-
-function normalizeAirport(raw: string) {
-  const t = raw.trim().toUpperCase();
-  if (!t) return "";
-  if (t.length === 3) return t;
-  const mapped = CITY_TO_CODE[raw.trim().toLowerCase()];
-  return mapped ?? t;
-}
 
 function formatDuration(mins: number) {
   const h = Math.floor(mins / 60);
@@ -93,8 +73,8 @@ function FlightResultsInner({ flights }: { flights: FlightResult[] }) {
     const toQ = params.get("to") ?? q.get("to") ?? "";
     const cabinQ = params.get("cabin") ?? q.get("cabin");
     setRoute({
-      from: normalizeAirport(fromQ),
-      to: normalizeAirport(toQ),
+      from: resolveAirport(fromQ),
+      to: resolveAirport(toQ),
       cabin: cabinFromParam(cabinQ),
     });
   }, [params]);
@@ -261,7 +241,7 @@ function FlightResultsInner({ flights }: { flights: FlightResult[] }) {
                 title="No flights match this search"
                 description={
                   from || to
-                    ? "Try another route (e.g. KHI → DXB) or clear filters."
+                    ? `No catalogue matches for ${from || "Any"} → ${to || "Any"}. Try DXB → KUL, KHI → DXB, or clear filters.`
                     : "Widen stops or clear filters to see more routes."
                 }
                 actionLabel="Show all flights"

@@ -7,6 +7,7 @@ import { TourCard } from "@/components/shared/tour-card";
 import { EmptyCatalog } from "@/components/layout/catalog-hero";
 import { Skeleton } from "@/components/ui/skeleton";
 import type { FallbackTour } from "@/lib/data/tour-fallback";
+import { matchesPlace } from "@/lib/airports";
 
 function PackagesCatalogueInner({ tours }: { tours: FallbackTour[] }) {
   const params = useSearchParams();
@@ -25,9 +26,9 @@ function PackagesCatalogueInner({ tours }: { tours: FallbackTour[] }) {
     const slugHint = destination.replace(/\s+/g, "-");
     return tours.filter(
       (t) =>
-        t.location.toLowerCase().includes(destination) ||
-        t.country.toLowerCase().includes(destination) ||
-        t.title.toLowerCase().includes(destination) ||
+        matchesPlace(t.location, destination) ||
+        matchesPlace(t.country, destination) ||
+        matchesPlace(t.title, destination) ||
         t.slug.toLowerCase().includes(slugHint) ||
         t.category.toLowerCase().includes(destination)
     );

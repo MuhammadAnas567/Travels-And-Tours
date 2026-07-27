@@ -31,6 +31,7 @@ export default async function HotelsPage({ searchParams }: Props) {
   const tag = sp.tag?.trim();
 
   let hotels;
+  const hasSearch = Boolean(city || q || tag);
   try {
     const rows = await listHotels({
       city: city || undefined,
@@ -53,10 +54,11 @@ export default async function HotelsPage({ searchParams }: Props) {
       tags: "tags" in h && Array.isArray(h.tags) ? h.tags : [],
     }));
   } catch {
-    hotels = FALLBACK_HOTELS.map((h) => ({ ...h, tags: h.tags ?? [] }));
+    hotels = hasSearch ? [] : FALLBACK_HOTELS.map((h) => ({ ...h, tags: h.tags ?? [] }));
   }
 
-  if (hotels.length === 0) {
+  // Only dump full catalogue when browsing with no search — never wipe a filtered empty
+  if (hotels.length === 0 && !hasSearch) {
     hotels = FALLBACK_HOTELS.map((h) => ({ ...h, tags: h.tags ?? [] }));
   }
 
@@ -80,7 +82,7 @@ export default async function HotelsPage({ searchParams }: Props) {
       </div>
 
       <div className="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8 pb-20">
-        <HotelsCatalogueLazy hotels={hotels} />
+        <HotelsCatalogueLazy hotels={hotels} serverFiltered={hasSearch} />
       </div>
     </div>
   );

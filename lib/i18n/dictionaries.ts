@@ -47,7 +47,7 @@ const en: Dict = {
   "search.recent": "Recent",
   "search.adults": "adults",
   "search.adult": "adult",
-  "hero.eyebrow": "UEB3 Travel · Worldwide",
+  "hero.eyebrow": "Arreat Travels & Tours · Worldwide",
   "hero.title": "Find your next horizon.",
   "hero.sub":
     "Search global flights and stays, book packages with clear totals, and reach a real desk in Lahore when plans change.",

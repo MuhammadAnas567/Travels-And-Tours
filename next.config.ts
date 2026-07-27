@@ -9,6 +9,8 @@ const nextConfig: NextConfig = {
     "/**": ["./.env"],
   },
   images: {
+    // Next 16 defaults to [75] only — hero + editorial slots use 90
+    qualities: [60, 70, 75, 80, 85, 90],
     remotePatterns: [
       { protocol: "https", hostname: "images.unsplash.com" },
       { protocol: "https", hostname: "images.pexels.com" },

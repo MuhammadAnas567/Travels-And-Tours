@@ -6,6 +6,7 @@ import { SearchWidget } from "@/components/search/search-widget";
 import { CatalogHero, EmptyCatalog } from "@/components/layout/catalog-hero";
 import { DisplayPrice } from "@/components/shared/display-price";
 import { prisma } from "@/lib/db";
+import { matchesPlace } from "@/lib/airports";
 
 export const metadata: Metadata = {
   title: "Car Hire",
@@ -32,7 +33,7 @@ const FALLBACK_CARS = [
     bags: 2,
     transmission: "Automatic",
     pricePerDay: 28,
-    locations: ["DXB Airport", "Dubai", "Islamabad", "Lahore"],
+    locations: ["DXB Airport", "Dubai", "Kuala Lumpur", "KUL Airport", "Islamabad", "Lahore"],
     image: null as string | null,
   },
   {
@@ -95,7 +96,11 @@ export default async function CarsPage({ searchParams }: Props) {
 
   const list = location
     ? cars.filter((c) =>
-        c.locations.some((l) => l.toLowerCase().includes(location.toLowerCase()))
+        c.locations.some(
+          (l) =>
+            l.toLowerCase().includes(location.toLowerCase()) ||
+            matchesPlace(l, location)
+        )
       )
     : cars;
 
@@ -107,8 +112,8 @@ export default async function CarsPage({ searchParams }: Props) {
         title="Airport and city pickups"
         description={
           location
-            ? `Pickup near ${location}`
-            : "Book now with clear daily rates and optional travel insurance."
+            ? `Pickup near ${location}${pickup ? ` · dates apply at booking` : ""}`
+            : "Book now with clear daily rates and optional travel insurance. Pickup and return dates are set when you book."
         }
       />
 

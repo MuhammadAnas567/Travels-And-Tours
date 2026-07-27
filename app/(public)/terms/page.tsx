@@ -12,11 +12,11 @@ export default function TermsPage() {
         variant="default"
         eyebrow="Legal"
         title="Terms of Service"
-        description="Last updated June 2026. By using UEB3 Travel, you agree to these terms."
+        description="Last updated June 2026. By using Arreat Travels & Tours, you agree to these terms."
       />
       <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 py-14 md:py-20">
         <div className="space-y-8 text-ink-700 leading-relaxed">
-          <p>By using UEB3 Travel, you agree to these terms. Please read them carefully.</p>
+          <p>By using Arreat Travels & Tours, you agree to these terms. Please read them carefully.</p>
           <div>
             <h2 className="font-display text-xl font-semibold text-ink">Bookings & Payments</h2>
             <p className="mt-3">
@@ -32,7 +32,7 @@ export default function TermsPage() {
           <div>
             <h2 className="font-display text-xl font-semibold text-ink">Liability</h2>
             <p className="mt-3">
-              UEB3 Travel acts as an intermediary between travellers and local operators. We are not liable for events beyond our control.
+              Arreat Travels & Tours acts as an intermediary between travellers and local operators. We are not liable for events beyond our control.
             </p>
           </div>
         </div>

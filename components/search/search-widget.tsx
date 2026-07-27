@@ -16,6 +16,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { SearchRouteLine } from "@/components/search/search-route-line";
+import { resolveAirport } from "@/lib/airports";
 import { cn } from "@/lib/utils";
 import { usePreferences } from "@/components/providers/preferences-provider";
 
@@ -153,8 +154,11 @@ function SearchWidgetInner({ className }: { className?: string }) {
     const params = new URLSearchParams();
 
     if (tab === "flights") {
-      if (from) params.set("from", from);
-      if (to) params.set("to", to);
+      // Resolve city/country free-text to IATA so server + client filters agree
+      const origin = resolveAirport(from);
+      const dest = resolveAirport(to);
+      if (origin) params.set("from", origin);
+      if (dest) params.set("to", dest);
       if (checkIn) params.set("date", checkIn);
       if (tripType === "roundtrip" && checkOut) params.set("return", checkOut);
       params.set("adults", String(adults));

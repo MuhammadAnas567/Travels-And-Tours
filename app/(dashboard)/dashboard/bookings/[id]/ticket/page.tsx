@@ -57,7 +57,7 @@ export default async function TicketPage({
       <div className="rounded-md border-2 border-line bg-paper p-8 shadow-sm">
         <div className="border-b border-line pb-6 text-center">
           <h1 className="font-heading text-2xl font-semibold tracking-tight text-ink-900">
-            UEB3 Travel
+            Arreat Travels & Tours
           </h1>
           <p className="mt-1 text-sm text-ink-500">Electronic Travel Ticket / Voucher</p>
           <p className="mt-2 text-xs font-semibold uppercase tracking-[0.14em] text-pine-600">
@@ -121,7 +121,7 @@ export default async function TicketPage({
         </div>
 
         <p className="mt-8 text-center text-xs text-ink-300">
-          Present this e-ticket at check-in. For support, contact hello@ueb3tours.com
+          Present this e-ticket at check-in. For support, contact hello@arreattravel.com
         </p>
       </div>
     </div>

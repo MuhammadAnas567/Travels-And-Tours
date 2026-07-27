@@ -123,7 +123,7 @@ export async function requestPasswordReset(formData: FormData) {
     const { sendEmail } = await import("@/lib/email");
     await sendEmail({
       to: email,
-      subject: "Reset your UEB3 Travel password",
+      subject: "Reset your Arreat Travels & Tours password",
       html: `
         <h1>Password reset</h1>
         <p>Click the link below to choose a new password. It expires in one hour.</p>

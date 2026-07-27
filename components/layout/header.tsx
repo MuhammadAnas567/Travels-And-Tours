@@ -18,6 +18,7 @@ import { PRIMARY_NAV, MORE_NAV, ALL_NAV, isActivePath } from "@/components/layou
 import { usePreferences } from "@/components/providers/preferences-provider";
 import { navKeyForHref } from "@/lib/i18n/dictionaries";
 import { CurrencyMenu } from "@/components/layout/preference-menus";
+import { Logo } from "@/components/shared/logo";
 
 export function Header() {
   const pathname = usePathname();
@@ -85,18 +86,12 @@ export function Header() {
         compact ? "shadow-md" : "shadow-sm"
       )}
     >
-      <div className="relative z-[101] mx-auto flex h-14 min-[480px]:h-16 w-full max-w-[1280px] items-center justify-between gap-2 px-3 min-[480px]:px-4 sm:px-6 lg:px-8">
-        <Link
+      <div className="relative z-[101] mx-auto flex h-16 min-[480px]:h-[4.5rem] w-full max-w-[1280px] items-center justify-between gap-2 px-3 min-[480px]:px-4 sm:px-6 lg:px-8">
+        <Logo
           href="/"
-          className="relative z-[102] flex min-w-0 items-center gap-2.5 shrink rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pine-500 focus-visible:ring-offset-2 focus-visible:ring-offset-paper"
-        >
-          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-pine-500 font-display text-base font-bold text-white shadow-sm">
-            U
-          </div>
-          <span className="font-display text-lg min-[480px]:text-xl font-semibold tracking-tight text-ink-900 truncate">
-            UEB3<span className="hidden min-[380px]:inline"> Travel</span>
-          </span>
-        </Link>
+          variant="compact"
+          className="relative z-[102] shrink-0"
+        />
 
         <nav
           className="relative z-[102] hidden lg:flex items-center gap-0.5 shrink min-w-0"
@@ -114,7 +109,7 @@ export function Header() {
                 className={cn(
                   "group relative z-[102] flex items-center gap-1.5 rounded-full px-3 py-2 text-[0.7rem] font-semibold uppercase tracking-[0.08em] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pine-500 focus-visible:ring-offset-2 whitespace-nowrap pointer-events-auto",
                   active
-                    ? "bg-pine-50 text-pine-600"
+                    ? "bg-brass-50 text-pine-700 ring-1 ring-brass-200"
                     : "text-ink-700 hover:bg-sand-100 hover:text-pine-600"
                 )}
               >

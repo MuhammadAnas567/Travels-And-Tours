@@ -114,7 +114,7 @@ export async function seedExtensions() {
       title: "Turkey Visa for Pakistanis: Complete 2026 Guide",
       excerpt:
         "Everything you need to know about applying for a Turkey tourist visa from Pakistan — documents, fees, and processing times.",
-      content: `Turkey remains one of the most popular destinations for Pakistani travellers. The e-Visa system has simplified the process significantly.\n\n## Who needs a visa?\nMost Pakistani passport holders require a visa before travel.\n\n## How we help\nUEB3 Tours handles your e-Visa application end-to-end, so you can focus on planning your itinerary.`,
+      content: `Turkey remains one of the most popular destinations for Pakistani travellers. The e-Visa system has simplified the process significantly.\n\n## Who needs a visa?\nMost Pakistani passport holders require a visa before travel.\n\n## How we help\nArreat Travel and Tour handles your e-Visa application end-to-end, so you can focus on planning your itinerary.`,
       category: "Visa Guides",
       tags: ["turkey", "visa", "pakistan"],
       coverImage: "https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?w=1200",

@@ -58,7 +58,7 @@ export function initiateJazzCashPayment(input: JazzCashInitiateInput): {
     pp_Amount: String(Math.round(input.amount * 100)),
     pp_TxnCurrency: input.currency ?? "PKR",
     pp_TxnRefNo: `JC${input.bookingId.slice(-12)}`,
-    pp_Description: (input.description ?? "UEB3 booking").slice(0, 100),
+    pp_Description: (input.description ?? "Arreat booking").slice(0, 100),
     pp_BillReference: input.bookingId,
     pp_ReturnURL: `${appUrl}/api/payments/wallets/sandbox?provider=jazzcash&bookingId=${input.bookingId}`,
   };

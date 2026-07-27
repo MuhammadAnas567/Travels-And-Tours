@@ -1,4 +1,6 @@
 import { getCachedFlights } from "@/lib/catalog-cache";
+import { FALLBACK_FLIGHTS } from "@/lib/data/flight-fallback";
+import { isIataCode, resolveAirport } from "@/lib/airports";
 import { searchAmadeusFlightOffers, type NormalizedFlight } from "@/lib/providers/amadeus/flights";
 import { isAmadeusConfigured } from "@/lib/providers/amadeus/client";
 import { searchDuffelFlightOffers } from "@/lib/providers/duffel/flights";
@@ -10,6 +12,58 @@ function tomorrowISO() {
   return d.toISOString().slice(0, 10);
 }
 
+function toNormalizedCatalog(
+  rows: {
+    _id: string;
+    airline: string;
+    airlineLogo?: string;
+    flightNumber: string;
+    from: string;
+    to: string;
+    departTime: string;
+    arriveTime: string;
+    durationMins: number;
+    stops: number;
+    priceByClass?: { economy?: number; business?: number; first?: number };
+  }[]
+): NormalizedFlight[] {
+  return rows.map((f) => ({
+    _id: String(f._id),
+    airline: f.airline,
+    airlineLogo: f.airlineLogo,
+    flightNumber: f.flightNumber,
+    from: f.from,
+    to: f.to,
+    departTime: new Date(f.departTime).toISOString(),
+    arriveTime: new Date(f.arriveTime).toISOString(),
+    durationMins: f.durationMins,
+    stops: f.stops,
+    priceByClass: f.priceByClass
+      ? {
+          economy: f.priceByClass.economy,
+          business: f.priceByClass.business,
+          first: f.priceByClass.first,
+        }
+      : undefined,
+    source: "catalog" as const,
+  }));
+}
+
+function matchRoute(
+  rows: NormalizedFlight[],
+  from: string,
+  to: string
+): NormalizedFlight[] {
+  if (from && to) {
+    return rows.filter(
+      (f) => f.from.toUpperCase() === from && f.to.toUpperCase() === to
+    );
+  }
+  if (from) return rows.filter((f) => f.from.toUpperCase() === from);
+  if (to) return rows.filter((f) => f.to.toUpperCase() === to);
+  return rows;
+}
+
 export async function searchFlights(input: {
   from?: string;
   to?: string;
@@ -17,9 +71,10 @@ export async function searchFlights(input: {
   adults?: number;
   cabin?: string;
 }): Promise<NormalizedFlight[]> {
-  const from = (input.from ?? "").trim().toUpperCase();
-  const to = (input.to ?? "").trim().toUpperCase();
+  const from = resolveAirport(input.from);
+  const to = resolveAirport(input.to);
   const date = input.date || tomorrowISO();
+  const explicitRoute = Boolean(from && to);
 
   const cabinRaw = (input.cabin ?? "economy").toLowerCase();
   const duffelCabin =
@@ -36,8 +91,7 @@ export async function searchFlights(input: {
         : "ECONOMY";
 
   const live: NormalizedFlight[] = [];
-  if (from.length === 3 && to.length === 3) {
-    // Prefer Duffel (self-serve) when configured; then Amadeus.
+  if (isIataCode(from) && isIataCode(to)) {
     if (isDuffelConfigured()) {
       try {
         const offers = await searchDuffelFlightOffers({
@@ -70,37 +124,17 @@ export async function searchFlights(input: {
   }
 
   const catalog = await getCachedFlights();
-  const catalogRows: NormalizedFlight[] = catalog.map((f) => ({
-    _id: String(f._id),
-    airline: f.airline,
-    airlineLogo: f.airlineLogo,
-    flightNumber: f.flightNumber,
-    from: f.from,
-    to: f.to,
-    departTime: new Date(f.departTime).toISOString(),
-    arriveTime: new Date(f.arriveTime).toISOString(),
-    durationMins: f.durationMins,
-    stops: f.stops,
-    priceByClass: f.priceByClass
-      ? {
-          economy: f.priceByClass.economy,
-          business: f.priceByClass.business,
-          first: f.priceByClass.first,
-        }
-      : undefined,
-    source: "catalog" as const,
-  }));
+  const catalogRows = toNormalizedCatalog(catalog);
+  let filteredCatalog = matchRoute(catalogRows, from, to);
 
-  const filteredCatalog =
-    from && to
-      ? catalogRows.filter(
-          (f) =>
-            f.from.toUpperCase() === from && f.to.toUpperCase() === to
-        )
-      : catalogRows;
+  // Merge curated fallbacks when DB catalogue lacks this route (e.g. DXB→KUL)
+  if (explicitRoute && filteredCatalog.length === 0) {
+    filteredCatalog = matchRoute(toNormalizedCatalog(FALLBACK_FLIGHTS), from, to);
+  }
 
   if (live.length) {
     return [...live, ...filteredCatalog];
   }
+  if (explicitRoute) return filteredCatalog;
   return filteredCatalog.length ? filteredCatalog : catalogRows;
 }

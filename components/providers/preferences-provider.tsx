@@ -21,8 +21,8 @@ import {
   type AppLocale,
 } from "@/lib/i18n/dictionaries";
 
-const CURRENCY_EVENT = "ueb3-currency-change";
-const LOCALE_EVENT = "ueb3-locale-change";
+const CURRENCY_EVENT = "arreat-currency-change";
+const LOCALE_EVENT = "arreat-locale-change";
 
 function readCookie(name: string) {
   if (typeof document === "undefined") return "";
@@ -110,9 +110,13 @@ export function PreferencesProvider({ children }: { children: React.ReactNode })
   }, [hydrated]);
 
   const setCurrency = useCallback((next: Currency) => {
+    if (readCurrency() === next) return;
     writeCookie(CURRENCY_COOKIE, next);
     notifyCurrencyChange();
-    toast.success(translate(readLocale(), "currency.toast", { code: next }));
+    toast.success(translate(readLocale(), "currency.toast", { code: next }), {
+      id: "currency-change",
+      duration: 2500,
+    });
   }, []);
 
   const cycleCurrency = useCallback(() => {
@@ -122,9 +126,13 @@ export function PreferencesProvider({ children }: { children: React.ReactNode })
   }, [setCurrency]);
 
   const setLocale = useCallback((next: AppLocale) => {
+    if (readLocale() === next) return;
     writeCookie(LOCALE_COOKIE, next);
     notifyLocaleChange();
-    toast.success(translate(next, "locale.toast", { name: LOCALE_NAMES[next] }));
+    toast.success(translate(next, "locale.toast", { name: LOCALE_NAMES[next] }), {
+      id: "locale-change",
+      duration: 2500,
+    });
   }, []);
 
   const cycleLocale = useCallback(() => {

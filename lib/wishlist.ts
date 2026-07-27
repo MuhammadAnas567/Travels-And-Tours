@@ -9,8 +9,8 @@ export type WishlistItem = {
   savedAt: string;
 };
 
-const STORAGE_KEY = "ueb3-wishlist";
-export const WISHLIST_EVENT = "ueb3-wishlist-change";
+const STORAGE_KEY = "arreat-wishlist";
+export const WISHLIST_EVENT = "arreat-wishlist-change";
 
 function canUseStorage() {
   return typeof window !== "undefined" && typeof localStorage !== "undefined";

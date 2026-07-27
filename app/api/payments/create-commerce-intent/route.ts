@@ -361,7 +361,7 @@ export async function POST(req: Request) {
           userId,
           bookingType,
         },
-        description: `UEB3 Travel — ${title}`,
+        description: `Arreat Travels & Tours — ${title}`,
       });
     } catch (piErr) {
       await prisma.booking.update({

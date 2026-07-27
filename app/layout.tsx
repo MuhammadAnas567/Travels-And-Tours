@@ -24,8 +24,8 @@ const bodyFont = Hanken_Grotesk({
 
 export const metadata: Metadata = {
   title: {
-    default: "UEB3 Travel — Private Journeys & Curated Escapes",
-    template: "%s | UEB3 Travel",
+    default: "Arreat Travels & Tours — Private Journeys & Curated Escapes",
+    template: "%s | Arreat Travels & Tours",
   },
   description:
     "Plan flights, stays, and tailor-made journeys with an editorial eye — honest fares, refined itineraries, and humans on support.",
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000"
   ),
   openGraph: {
-    siteName: "UEB3 Travel",
+    siteName: "Arreat Travels & Tours",
     locale: "en_US",
     type: "website",
   },
@@ -64,7 +64,7 @@ export default function RootLayout({
           Skip to main content
         </a>
         <Providers>{children}</Providers>
-        <Toaster position="top-right" richColors />
+        <Toaster position="bottom-center" richColors duration={2500} closeButton />
       </body>
     </html>
   );

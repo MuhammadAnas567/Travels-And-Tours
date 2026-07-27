@@ -1,12 +1,13 @@
 export const siteConfig = {
-  name: "UEB3 Tours",
+  name: "Arreat Travels & Tours",
+  shortName: "Arreat Travels",
   tagline: "Curated international journeys for the discerning traveller.",
   supportSla: "We reply within 2 business hours (Mon–Sat, 10am–7pm PKT).",
   whatsapp: {
     number: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "",
     defaultMessage:
       process.env.NEXT_PUBLIC_WHATSAPP_MESSAGE ??
-      "Hi! I'm interested in UEB3 Tours international packages.",
+      "Hi! I'm interested in Arreat Travels & Tours international packages.",
     apiEnabled: !!process.env.WHATSAPP_API_TOKEN,
   },
   bankTransfer: {
@@ -14,7 +15,7 @@ export const siteConfig = {
       process.env.BANK_TRANSFER_ENABLED === "true" &&
       !!(process.env.BANK_ACCOUNT_NUMBER || process.env.BANK_IBAN),
     bankName: process.env.BANK_NAME ?? "HBL",
-    accountTitle: process.env.BANK_ACCOUNT_TITLE ?? "UEB3 Tours Pvt Ltd",
+    accountTitle: process.env.BANK_ACCOUNT_TITLE ?? "Arreat Travels & Tours",
     accountNumber: process.env.BANK_ACCOUNT_NUMBER ?? "",
     iban: process.env.BANK_IBAN ?? "",
   },
@@ -44,7 +45,7 @@ export const siteConfig = {
     address:
       process.env.NEXT_PUBLIC_OFFICE_ADDRESS ??
       "MB 54, 4th Floor, Sector B, Phase 6, DHA Lahore, Pakistan",
-    email: process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? "hello@ueb3tours.com",
+    email: process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? "hello@arreattravel.com",
     phone: process.env.NEXT_PUBLIC_OFFICE_PHONE ?? "+92 42 37260405",
     hours: "Mon–Sat, 10am–7pm PKT",
     city: "Lahore",
@@ -56,7 +57,7 @@ export function getContactInbox() {
   return (
     process.env.CONTACT_EMAIL ??
     process.env.NEXT_PUBLIC_CONTACT_EMAIL ??
-    "hello@ueb3tours.com"
+    "hello@arreattravel.com"
   );
 }
 

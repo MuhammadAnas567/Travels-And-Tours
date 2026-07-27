@@ -34,6 +34,7 @@ const ROUTES = [
   ["ORD", "MIA"], ["AMS", "FCO"], ["IST", "LHR"], ["BKK", "HKG"], ["DOH", "JFK"],
   ["SFO", "ICN"], ["MEL", "AKL"], ["YYZ", "YVR"], ["MAD", "LIS"], ["ZRH", "VIE"],
   ["DEL", "DXB"], ["KUL", "SIN"], ["CPH", "OSL"], ["MEX", "LAX"], ["GRU", "EZE"],
+  ["DXB", "KUL"], ["KUL", "DXB"], ["KHI", "KUL"], ["KHI", "DXB"], ["LHE", "DXB"],
 ];
 
 const AIRLINES = [
@@ -59,12 +60,12 @@ async function main() {
   const passwordHash = await bcrypt.hash("demo1234", 12);
   const demoUser = await User.create({
     name: "Demo Traveler",
-    email: "demo@ueb3travel.com",
+    email: "demo@arreattravel.com",
     passwordHash,
     role: "user",
     wishlist: [],
   });
-  console.log("Demo user: demo@ueb3travel.com / demo1234");
+  console.log("Demo user: demo@arreattravel.com / demo1234");
 
   await Destination.insertMany(
     DESTINATIONS.map((d) => ({

@@ -3,7 +3,7 @@ import { CatalogHero } from "@/components/layout/catalog-hero";
 
 export const metadata: Metadata = {
   title: "FAQ",
-  description: "Frequently asked questions about booking tours with UEB3 Tours.",
+  description: "Frequently asked questions about booking tours with Arreat Travels & Tours.",
 };
 
 const faqs = [

@@ -225,7 +225,7 @@ export async function getTourBySlug(slug: string) {
 
   return {
     ...fb,
-    description: `${fb.title} — a curated UEB3 journey with stays, transfers, and local support.`,
+    description: `${fb.title} — a curated Arreat journey with stays, transfers, and local support.`,
     audience: "BOTH" as const,
     included: ["Accommodation", "Daily breakfast", "Airport transfers"],
     excluded: ["International flights", "Travel insurance", "Personal expenses"],

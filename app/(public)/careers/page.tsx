@@ -2,13 +2,13 @@ import { InfoPage, infoMetadata } from "@/components/shared/info-page";
 
 export const metadata = infoMetadata(
   "Careers",
-  "Join UEB3 Travel — roles in product, operations, and destination partnerships."
+  "Join Arreat Travels & Tours — roles in product, operations, and destination partnerships."
 );
 
 export default function CareersPage() {
   return (
     <InfoPage
-      title="Careers at UEB3 Travel"
+      title="Careers at Arreat Travels & Tours"
       description="We're building a global travel platform with a small, ambitious team."
       body={[
         "We hire for product engineering, customer experience, and destination partnerships. Open roles are shared here as they open.",

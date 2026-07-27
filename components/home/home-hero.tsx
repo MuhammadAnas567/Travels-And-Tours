@@ -5,13 +5,13 @@ import { useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { SearchWidget } from "@/components/search/search-widget";
-import { IMAGE_BLUR_DATA_URL } from "@/lib/images";
+import { IMAGE_BLUR_DATA_URL, unsplashLoader } from "@/lib/images";
 import { Shield, BadgePercent, Headphones, Lock, ArrowRight } from "lucide-react";
 import { usePreferences } from "@/components/providers/preferences-provider";
 
 /** Cinque Terre coast — home hero only (not reused elsewhere). */
 const HERO_IMAGE =
-  "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?auto=format&fit=crop&w=2560&q=90";
+  "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?auto=format&fit=crop&w=1920&q=80";
 
 export function HomeHero() {
   const reduceMotion = useReducedMotion();
@@ -34,7 +34,7 @@ export function HomeHero() {
   return (
     <section
       ref={ref}
-      className="relative -mt-14 min-[480px]:-mt-16 pt-14 min-[480px]:pt-16 w-full overflow-x-clip"
+      className="relative -mt-16 min-[480px]:-mt-[4.5rem] pt-16 min-[480px]:pt-[4.5rem] w-full overflow-x-clip"
     >
       <div className="relative min-h-[min(78vh,640px)] sm:min-h-[min(88vh,780px)] flex items-end overflow-hidden">
         <motion.div className="absolute inset-0" style={{ y, opacity }}>
@@ -52,6 +52,7 @@ export function HomeHero() {
               priority
               sizes="100vw"
               quality={90}
+              loader={unsplashLoader}
               placeholder="blur"
               blurDataURL={IMAGE_BLUR_DATA_URL}
             />

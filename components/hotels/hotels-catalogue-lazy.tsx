@@ -13,6 +13,12 @@ const HotelsCatalogue = dynamic(
   }
 );
 
-export function HotelsCatalogueLazy({ hotels }: { hotels: HotelCatalogueItem[] }) {
-  return <HotelsCatalogue hotels={hotels} />;
+export function HotelsCatalogueLazy({
+  hotels,
+  serverFiltered = false,
+}: {
+  hotels: HotelCatalogueItem[];
+  serverFiltered?: boolean;
+}) {
+  return <HotelsCatalogue hotels={hotels} serverFiltered={serverFiltered} />;
 }
