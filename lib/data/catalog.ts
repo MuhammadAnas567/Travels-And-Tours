@@ -76,15 +76,8 @@ export async function listHotels(filters: HotelListFilters = {}) {
     const connected = await withTimeoutFallback(connectDB().then(() => true), false);
     if (connected) {
       const query: Record<string, unknown> = {};
-      if (filters.city) query.city = new RegExp(filters.city, "i");
+      // City/q filtered in memory via matchesPlace (accents: Male ↔ Malé)
       if (filters.tag) query.tags = new RegExp(filters.tag, "i");
-      if (filters.q) {
-        query.$or = [
-          { name: new RegExp(filters.q, "i") },
-          { city: new RegExp(filters.q, "i") },
-          { country: new RegExp(filters.q, "i") },
-        ];
-      }
       if (filters.minPrice != null || filters.maxPrice != null) {
         const price: Record<string, number> = {};
         if (filters.minPrice != null) price.$gte = filters.minPrice;
@@ -94,12 +87,39 @@ export async function listHotels(filters: HotelListFilters = {}) {
       const rows = await withTimeoutFallback(
         Hotel.find(query)
           .sort({ avgRating: -1, reviewCount: -1 })
-          .limit(filters.limit ?? 48)
+          .limit(Math.max(filters.limit ?? 48, 120))
           .lean()
           .exec(),
         [] as Awaited<ReturnType<typeof Hotel.find>>
       );
-      if (Array.isArray(rows) && rows.length > 0) return rows;
+      if (Array.isArray(rows) && rows.length > 0) {
+        let list = rows as Array<{
+          name: string;
+          city: string;
+          country: string;
+          pricePerNight: number;
+          tags?: string[];
+        }>;
+        if (filters.city) {
+          const c = filters.city;
+          list = list.filter(
+            (h) =>
+              matchesPlace(h.city, c) ||
+              matchesPlace(h.country, c) ||
+              matchesPlace(h.name, c)
+          );
+        }
+        if (filters.q) {
+          const q = filters.q;
+          list = list.filter(
+            (h) =>
+              matchesPlace(h.name, q) ||
+              matchesPlace(h.city, q) ||
+              matchesPlace(h.country, q)
+          );
+        }
+        return list.slice(0, filters.limit ?? 48);
+      }
     }
   } catch {
     // fall through

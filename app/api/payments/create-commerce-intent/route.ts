@@ -227,8 +227,20 @@ export async function POST(req: Request) {
       const nights = nightsBetween(data.checkIn, data.checkOut);
       adults = data.adults;
       children = data.children;
-      // Server-priced only — never trust client amount
-      const pricePerNight = hotel.pricePerNight;
+      const rooms = Array.isArray(hotel.rooms) ? hotel.rooms : [];
+      const matchedRoom = rooms.find(
+        (r: { type?: string; price?: number }) =>
+          String(r.type ?? "").toLowerCase() === data.roomName.toLowerCase()
+      );
+      // Server-priced from room inventory — never trust client amount
+      const pricePerNight =
+        typeof matchedRoom?.price === "number" && matchedRoom.price > 0
+          ? matchedRoom.price
+          : hotel.pricePerNight;
+      const roomName =
+        typeof matchedRoom?.type === "string" && matchedRoom.type
+          ? matchedRoom.type
+          : data.roomName;
       subtotal = pricePerNight * nights;
       title = hotel.name;
       const reservation: HotelReservation = {
@@ -237,7 +249,7 @@ export async function POST(req: Request) {
         hotelName: hotel.name,
         city: hotel.city,
         country: hotel.country,
-        roomName: data.roomName,
+        roomName,
         checkIn: data.checkIn,
         checkOut: data.checkOut,
         nights,
@@ -246,7 +258,7 @@ export async function POST(req: Request) {
       };
       productSnapshot = {
         title: hotel.name,
-        subtitle: `${data.roomName} · ${nights} night${nights === 1 ? "" : "s"}`,
+        subtitle: `${roomName} · ${nights} night${nights === 1 ? "" : "s"}`,
         startDate: data.checkIn,
         endDate: data.checkOut,
         location: `${hotel.city}, ${hotel.country}`,

@@ -183,7 +183,17 @@ async function ensureUser(
   const existing = await prisma.user.findUnique({ where: { email } });
   if (!existing) {
     await prisma.user.create({ data: { email, ...data } });
+    return;
   }
+  // Always refresh demo passwords + role so login stays reliable after mixed seeds
+  await prisma.user.update({
+    where: { email },
+    data: {
+      name: data.name,
+      hashedPassword: data.hashedPassword,
+      role: data.role,
+    },
+  });
 }
 
 async function ensureTour(

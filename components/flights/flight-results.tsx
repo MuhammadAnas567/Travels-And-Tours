@@ -79,6 +79,9 @@ function FlightResultsInner({ flights }: { flights: FlightResult[] }) {
     });
   }, [params]);
 
+  const adults = Math.max(1, Number(params.get("adults") ?? "1") || 1);
+  const children = Math.max(0, Number(params.get("children") ?? "0") || 0);
+
   const from = route.from;
   const to = route.to;
   const cabin = route.cabin;
@@ -330,7 +333,7 @@ function FlightResultsInner({ flights }: { flights: FlightResult[] }) {
                       <div className="flex w-full flex-col gap-2">
                         <Button asChild className="w-full shrink-0">
                           <Link
-                            href={`/flights/book?flightId=${encodeURIComponent(f._id)}&cabin=${cabin}&adults=1&children=0`}
+                            href={`/flights/book?flightId=${encodeURIComponent(f._id)}&cabin=${cabin}&adults=${adults}&children=${children}`}
                           >
                             Book &amp; pay
                           </Link>

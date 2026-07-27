@@ -12,12 +12,14 @@ import { Textarea } from "@/components/ui/textarea";
 type VisaInquiryFormProps = {
   visaInfoId: string;
   country: string;
+  countrySlug: string;
   isLoggedIn: boolean;
 };
 
 export function VisaInquiryForm({
   visaInfoId,
   country,
+  countrySlug,
   isLoggedIn,
 }: VisaInquiryFormProps) {
   const router = useRouter();
@@ -26,7 +28,7 @@ export function VisaInquiryForm({
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (!isLoggedIn) {
-      router.push(`/login?callbackUrl=/visa/${country.toLowerCase().replace(/\s+/g, "-")}`);
+      router.push(`/login?callbackUrl=${encodeURIComponent(`/visa/${countrySlug}`)}`);
       return;
     }
     setLoading(true);

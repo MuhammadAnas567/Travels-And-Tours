@@ -1,7 +1,7 @@
 import { connectDB } from "../lib/db/connect";
-import { User, Destination, Hotel, Flight, Review } from "../lib/models";
+import { Destination, Hotel, Flight, Review } from "../lib/models";
 import { SEED_HOTEL_DEFS, hotelSlug } from "../lib/data/hotel-seed";
-import bcrypt from "bcryptjs";
+import mongoose from "mongoose";
 
 const DESTINATIONS = [
   { name: "Santorini", country: "Greece", category: "beach" as const, priceFrom: 189, popularity: 98, lat: 36.3932, lng: 25.4615, image: "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?w=800", description: "Iconic white-washed villages and caldera sunsets." },
@@ -49,23 +49,16 @@ async function main() {
   await connectDB();
   console.log("Connected to MongoDB");
 
+  // Catalogue only — never wipe Prisma auth users (shared User collection)
   await Promise.all([
-    User.deleteMany({}),
     Destination.deleteMany({}),
     Hotel.deleteMany({}),
     Flight.deleteMany({}),
     Review.deleteMany({}),
   ]);
 
-  const passwordHash = await bcrypt.hash("demo1234", 12);
-  const demoUser = await User.create({
-    name: "Demo Traveler",
-    email: "demo@arreattravel.com",
-    passwordHash,
-    role: "user",
-    wishlist: [],
-  });
-  console.log("Demo user: demo@arreattravel.com / demo1234");
+  console.log("Catalogue seed (destinations / hotels / flights) — auth users left untouched");
+  console.log("Sign in with: user@example.com / user123 (from prisma seed)");
 
   await Destination.insertMany(
     DESTINATIONS.map((d) => ({
@@ -139,31 +132,55 @@ async function main() {
   await Flight.insertMany(flights);
   console.log(`Seeded ${flights.length} flights`);
 
-  const reviewSamples = [
-    { rating: 5, title: "Absolutely perfect stay", comment: "Immaculate rooms, friendly staff, and an unbeatable location." },
-    { rating: 4, title: "Great value", comment: "Comfortable beds and excellent breakfast. Would book again." },
-    { rating: 5, title: "Luxury at its finest", comment: "The spa and rooftop pool made our anniversary unforgettable." },
-  ];
+  // Attach sample reviews to an existing Prisma auth user if present (shared Mongo).
+  // Do not create a separate Mongoose auth user — that breaks NextAuth (hashedPassword).
+  const authUser =
+    (await mongoose.connection.db
+      ?.collection("User")
+      .findOne({ email: "user@example.com" })) ??
+    (await mongoose.connection.db?.collection("User").findOne({}));
 
-  const reviews = [];
-  for (let i = 0; i < Math.min(15, hotels.length); i++) {
-    const sample = reviewSamples[i % reviewSamples.length];
-    reviews.push({
-      user: demoUser._id,
-      hotel: hotels[i]._id,
-      rating: sample.rating,
-      title: sample.title,
-      comment: sample.comment,
-      categories: {
-        cleanliness: sample.rating,
-        location: sample.rating,
-        service: sample.rating - (i % 2 === 0 ? 0 : 1),
-        value: sample.rating - 1,
+  if (authUser?._id) {
+    const reviewSamples = [
+      {
+        rating: 5,
+        title: "Absolutely perfect stay",
+        comment: "Immaculate rooms, friendly staff, and an unbeatable location.",
       },
-    });
+      {
+        rating: 4,
+        title: "Great value",
+        comment: "Comfortable beds and excellent breakfast. Would book again.",
+      },
+      {
+        rating: 5,
+        title: "Luxury at its finest",
+        comment: "The spa and rooftop pool made our anniversary unforgettable.",
+      },
+    ];
+
+    const reviews = [];
+    for (let i = 0; i < Math.min(15, hotels.length); i++) {
+      const sample = reviewSamples[i % reviewSamples.length];
+      reviews.push({
+        user: authUser._id,
+        hotel: hotels[i]._id,
+        rating: sample.rating,
+        title: sample.title,
+        comment: sample.comment,
+        categories: {
+          cleanliness: sample.rating,
+          location: sample.rating,
+          service: sample.rating - (i % 2 === 0 ? 0 : 1),
+          value: sample.rating - 1,
+        },
+      });
+    }
+    await Review.insertMany(reviews);
+    console.log(`Seeded ${reviews.length} reviews`);
+  } else {
+    console.log("Skipped reviews — run prisma seed first for auth users");
   }
-  await Review.insertMany(reviews);
-  console.log(`Seeded ${reviews.length} reviews`);
 
   console.log("\nSeed complete!");
   process.exit(0);

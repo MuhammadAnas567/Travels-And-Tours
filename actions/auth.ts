@@ -5,6 +5,7 @@ import bcrypt from "bcryptjs";
 import { signIn } from "@/lib/auth";
 import { registerSchema, loginSchema } from "@/lib/validations";
 import { AuthError } from "next-auth";
+import { safeCallbackUrl } from "@/lib/safe-callback-url";
 
 export async function registerUser(formData: FormData) {
   const parsed = registerSchema.safeParse({
@@ -18,18 +19,31 @@ export async function registerUser(formData: FormData) {
     return { error: parsed.error.flatten().fieldErrors };
   }
 
-  const { name, email, password } = parsed.data;
+  const { name, password } = parsed.data;
+  const email = parsed.data.email.trim().toLowerCase();
 
   try {
     const existing = await prisma.user.findUnique({ where: { email } });
-    if (existing) {
+    if (existing?.hashedPassword) {
       return { error: { email: ["Email already registered"] } };
     }
 
     const hashedPassword = await bcrypt.hash(password, 12);
-    await prisma.user.create({
-      data: { name, email, hashedPassword },
-    });
+
+    if (existing && !existing.hashedPassword) {
+      // Guest checkout created this email without a password — claim it on signup
+      await prisma.user.update({
+        where: { email },
+        data: {
+          name: name.trim() || existing.name,
+          hashedPassword,
+        },
+      });
+    } else {
+      await prisma.user.create({
+        data: { name, email, hashedPassword },
+      });
+    }
   } catch (error) {
     console.error("[registerUser]", error);
     return {
@@ -55,7 +69,10 @@ export async function loginUser(formData: FormData) {
     return { error: parsed.error.flatten().fieldErrors };
   }
 
-  const callbackUrl = (formData.get("callbackUrl") as string) || "/dashboard";
+  const callbackUrl = safeCallbackUrl(
+    formData.get("callbackUrl") as string | null,
+    "/dashboard"
+  );
 
   const email = parsed.data.email.trim().toLowerCase();
 
@@ -99,8 +116,9 @@ export async function updateProfile(formData: FormData) {
 }
 
 export async function requestPasswordReset(formData: FormData) {
-  const email = formData.get("email") as string;
-  if (!email) return { error: "Email is required" };
+  const rawEmail = formData.get("email") as string;
+  if (!rawEmail) return { error: "Email is required" };
+  const email = rawEmail.trim().toLowerCase();
 
   const user = await prisma.user.findUnique({ where: { email } });
   if (!user) {

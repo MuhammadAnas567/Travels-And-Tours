@@ -103,6 +103,7 @@ export default async function VisaDetailPage({ params }: Props) {
             <VisaInquiryForm
               visaInfoId={visa.id}
               country={visa.country}
+              countrySlug={slug}
               isLoggedIn={!!session?.user}
             />
           </div>

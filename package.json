@@ -9,6 +9,7 @@
     "dev:mongo": "node ./scripts/mongo-memory.mjs",
     "db:mongo": "node ./scripts/mongo-memory.mjs",
     "db:seed-if-empty": "node ./scripts/seed-if-empty.mjs",
+    "db:ensure-auth": "node ./scripts/seed-if-empty.mjs",
     "build": "node ./scripts/production-build.mjs",
     "vercel-build": "npm run build",
     "start": "next start",

@@ -9,13 +9,14 @@ import { AuthShell } from "@/components/auth/auth-shell";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { safeCallbackUrl } from "@/lib/safe-callback-url";
 
 const googleEnabled = Boolean(process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID);
 
 export default function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get("callbackUrl") ?? "/dashboard";
+  const callbackUrl = safeCallbackUrl(searchParams.get("callbackUrl"), "/dashboard");
   const resetOk = searchParams.get("reset") === "1";
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const [error, setError] = useState<string | null>(
@@ -55,7 +56,32 @@ export default function LoginForm() {
       });
 
       if (result?.error) {
-        setError("Email or password is incorrect. Check your details and try again.");
+        let message =
+          "Email or password is incorrect. Check your details and try again.";
+        try {
+          const health = await fetch("/api/health", { cache: "no-store" });
+          const data = (await health.json()) as {
+            ok?: boolean;
+            hint?: string;
+            checks?: {
+              databaseReachable?: boolean;
+              demoUserExists?: boolean;
+            };
+          };
+          if (data.checks?.databaseReachable === false) {
+            message =
+              "Sign-in unavailable — database is not reachable. Try again shortly.";
+          } else if (
+            data.checks?.demoUserExists === false &&
+            parsed.data.email === "user@example.com"
+          ) {
+            message =
+              "Demo account is missing. Restart the app so seed can create user@example.com / user123.";
+          }
+        } catch {
+          /* keep default message */
+        }
+        setError(message);
         setLoading(false);
         return;
       }

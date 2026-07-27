@@ -1,3 +1,9 @@
+/**
+ * Legacy Mongoose User model — DO NOT use for auth.
+ * NextAuth / Prisma owns the `User` collection (`hashedPassword`).
+ * Creating docs here with `passwordHash` breaks login.
+ * Prefer Prisma `prisma.user` for all account operations.
+ */
 import mongoose, { Schema, type InferSchemaType, type Model } from "mongoose";
 
 const UserSchema = new Schema(

@@ -1,7 +1,7 @@
 /**
  * Seeds only when data is missing.
- * - Prisma: Tour / User (packages, admin)
- * - Mongoose: Destination / Hotel / Flight (home images, hotels, flights)
+ * - Catalogue first (destinations / hotels / flights) — never touches auth users
+ * - Prisma last (tours + demo auth users) so login always works
  * Runs from ensure-mongo on every `npm run dev`.
  */
 import { spawn } from "node:child_process";
@@ -35,20 +35,33 @@ async function countByNames(db, names) {
   return 0;
 }
 
+async function hasPrismaDemoUser(db) {
+  const cols = await db.listCollections().toArray();
+  const map = new Map(cols.map((c) => [c.name.toLowerCase(), c.name]));
+  const userCol = map.get("user");
+  if (!userCol) return false;
+  const demo = await db.collection(userCol).findOne({
+    email: "user@example.com",
+    hashedPassword: { $exists: true, $ne: null },
+  });
+  return Boolean(demo);
+}
+
 async function getCounts(uri) {
   const client = new MongoClient(uri, { serverSelectionTimeoutMS: 10000 });
   try {
     await client.connect();
     const db = client.db();
+    const demoUser = await hasPrismaDemoUser(db);
     const counts = {
       tours: await countByNames(db, ["Tour", "tours"]),
-      users: await countByNames(db, ["User", "users"]),
       destinations: await countByNames(db, ["destinations", "Destination"]),
       hotels: await countByNames(db, ["hotels", "Hotel"]),
       flights: await countByNames(db, ["flights", "Flight"]),
+      demoUser,
     };
     console.log(
-      `DB check — tours:${counts.tours} users:${counts.users} destinations:${counts.destinations} hotels:${counts.hotels} flights:${counts.flights}`
+      `DB check — tours:${counts.tours} destinations:${counts.destinations} hotels:${counts.hotels} flights:${counts.flights} demoUser:${counts.demoUser}`
     );
     return counts;
   } finally {
@@ -58,13 +71,11 @@ async function getCounts(uri) {
 
 function run(scriptRel, databaseUrl) {
   return new Promise((resolve, reject) => {
-    // Windows: spawn npx.cmd with shell:false → EINVAL; use node + local tsx
     const tsxCli = join(projectRoot, "node_modules", "tsx", "dist", "cli.mjs");
     const child = spawn(process.execPath, [tsxCli, scriptRel], {
       cwd: projectRoot,
       stdio: "inherit",
       shell: false,
-      // Prisma seed does not load .env.local; pass URL explicitly
       env: { ...process.env, DATABASE_URL: databaseUrl },
     });
     child.on("exit", (code) => {
@@ -79,23 +90,28 @@ const uri = readDatabaseUrl();
 
 try {
   const counts = await getCounts(uri);
-  const needPrisma = counts.users === 0 || counts.tours === 0;
   const needCatalog =
     counts.destinations === 0 || counts.hotels === 0 || counts.flights === 0;
+  const needPrisma = counts.tours === 0 || !counts.demoUser;
 
   if (!needPrisma && !needCatalog) {
-    console.log("Database already seeded — skipping.");
+    console.log("Catalogue + tours present — ensuring demo auth passwords…");
+    await run("prisma/ensure-auth-users.ts", uri);
+    console.log("Database already seeded.");
     process.exit(0);
   }
 
-  if (needPrisma) {
-    console.log("Seeding Prisma data (tours / users)...");
-    await run("prisma/seed.ts", uri);
-  }
-
+  // Catalogue first so reviews can attach to Prisma users seeded next
   if (needCatalog) {
     console.log("Seeding catalog data (destinations / hotels / flights)...");
     await run("scripts/seed.ts", uri);
+  }
+
+  if (needPrisma) {
+    console.log("Seeding Prisma data (tours / auth users)...");
+    await run("prisma/seed.ts", uri);
+  } else {
+    await run("prisma/ensure-auth-users.ts", uri);
   }
 
   console.log("Seed complete — data persists in .mongo-data.");

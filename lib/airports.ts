@@ -79,23 +79,32 @@ const PLACE_ALIASES: Record<string, string[]> = {
   pakistan: ["pakistan", "karachi", "lahore", "islamabad"],
   uk: ["uk", "united kingdom", "london", "england"],
   "united kingdom": ["uk", "united kingdom", "london", "england"],
+  maldives: ["maldives", "male", "malé"],
+  male: ["maldives", "male", "malé"],
+  "malé": ["maldives", "male", "malé"],
 };
 
 /** Expand a free-text place query into match tokens (includes original). */
 export function placeMatchTokens(raw: string | null | undefined): string[] {
-  const q = (raw ?? "").trim().toLowerCase();
+  const q = stripDiacritics((raw ?? "").trim().toLowerCase());
   if (!q) return [];
   const tokens = new Set<string>([q]);
   const aliases = PLACE_ALIASES[q];
-  if (aliases) aliases.forEach((a) => tokens.add(a));
+  if (aliases) aliases.forEach((a) => tokens.add(stripDiacritics(a)));
   for (const [key, list] of Object.entries(PLACE_ALIASES)) {
-    if (q.includes(key) || key.includes(q)) list.forEach((a) => tokens.add(a));
+    if (q.includes(key) || key.includes(q)) {
+      list.forEach((a) => tokens.add(stripDiacritics(a)));
+    }
   }
   return [...tokens];
 }
 
+function stripDiacritics(value: string): string {
+  return value.normalize("NFD").replace(/\p{M}/gu, "");
+}
+
 /** Whether haystack (city/country/title/…) matches any expanded place token. */
 export function matchesPlace(haystack: string, query: string): boolean {
-  const h = haystack.toLowerCase();
+  const h = stripDiacritics(haystack.toLowerCase());
   return placeMatchTokens(query).some((t) => h.includes(t) || t.includes(h));
 }

@@ -37,7 +37,7 @@ const footerLinks = {
     { label: "Dubai", href: "/hotels?city=Dubai" },
     { label: "Paris", href: "/hotels?city=Paris" },
     { label: "Tokyo", href: "/hotels?city=Tokyo" },
-    { label: "Maldives", href: "/hotels?city=Male" },
+    { label: "Maldives", href: "/hotels?city=Mal%C3%A9" },
     { label: "New York", href: "/hotels?city=New York" },
     { label: "Bali", href: "/hotels?city=Bali" },
   ],
@@ -64,7 +64,7 @@ const spotlight = [
   },
   {
     label: "Maldives",
-    href: "/hotels?city=Male",
+    href: "/hotels?city=Mal%C3%A9",
     src: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&q=80",
   },
   {

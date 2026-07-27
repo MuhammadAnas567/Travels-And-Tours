@@ -40,7 +40,20 @@ export default async function HotelBookPage({ searchParams }: Props) {
   if (!hotel) notFound();
 
   const nights = nightsBetween(checkIn, checkOut);
-  const pricePerNight = Number(params.price) || hotel.pricePerNight;
+  const rooms = Array.isArray(hotel.rooms) ? hotel.rooms : [];
+  const matchedRoom = rooms.find(
+    (r: { type?: string; price?: number }) =>
+      String(r.type ?? "").toLowerCase() === roomName.toLowerCase()
+  );
+  // Server-priced only — never trust client `price` query
+  const pricePerNight =
+    typeof matchedRoom?.price === "number" && matchedRoom.price > 0
+      ? matchedRoom.price
+      : hotel.pricePerNight;
+  const resolvedRoomName =
+    typeof matchedRoom?.type === "string" && matchedRoom.type
+      ? matchedRoom.type
+      : roomName;
   const subtotal = pricePerNight * nights;
 
   return (
@@ -52,7 +65,7 @@ export default async function HotelBookPage({ searchParams }: Props) {
             {hotel.name}
           </h1>
           <p className="mt-2 text-ink-500">
-            {hotel.city}, {hotel.country} · {roomName} · {nights} night
+            {hotel.city}, {hotel.country} · {resolvedRoomName} · {nights} night
             {nights === 1 ? "" : "s"}
           </p>
           <Link
@@ -68,11 +81,11 @@ export default async function HotelBookPage({ searchParams }: Props) {
         <CommerceCheckout
           kind="HOTEL"
           title={hotel.name}
-          subtitle={`${roomName} · ${hotel.city}`}
+          subtitle={`${resolvedRoomName} · ${hotel.city}`}
           subtotal={subtotal}
-          requireAuthHref={`/hotels/book?hotelId=${hotelId}&room=${encodeURIComponent(roomName)}&checkIn=${checkIn}&checkOut=${checkOut}&adults=${adults}&children=${children}&price=${pricePerNight}`}
+          requireAuthHref={`/hotels/book?hotelId=${hotelId}&room=${encodeURIComponent(resolvedRoomName)}&checkIn=${checkIn}&checkOut=${checkOut}&adults=${adults}&children=${children}`}
           summaryRows={[
-            { label: "Room", value: roomName },
+            { label: "Room", value: resolvedRoomName },
             { label: "Check-in", value: checkIn },
             { label: "Check-out", value: checkOut },
             { label: "Nights", value: String(nights) },
@@ -81,7 +94,7 @@ export default async function HotelBookPage({ searchParams }: Props) {
           ]}
           bookingPayload={{
             hotelId: String(hotel._id),
-            roomName,
+            roomName: resolvedRoomName,
             checkIn,
             checkOut,
             adults,

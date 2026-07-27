@@ -13,6 +13,7 @@ import type { TravelerInfo } from "@/types";
 import { sendBookingPendingEmail } from "@/lib/email";
 import { formatPrice } from "@/lib/utils";
 import { siteConfig } from "@/lib/site-config";
+import { resolveCheckoutUserId } from "@/lib/checkout-user";
 
 export async function calculatePrice(
   tourId: string,
@@ -53,7 +54,19 @@ export async function createBookingAndCheckout(data: {
   specialRequests?: string;
 }) {
   const session = await getSession();
-  if (!session?.user?.id) return { error: "Please sign in to book" };
+
+  let userId: string;
+  try {
+    userId = await resolveCheckoutUserId({
+      sessionUserId: session?.user?.id,
+      email: data.travelerInfo.email,
+      name: data.travelerInfo.name,
+    });
+  } catch (err) {
+    return {
+      error: err instanceof Error ? err.message : "A valid email is required to book",
+    };
+  }
 
   const step1 = bookingStep1Schema.safeParse({
     tourDateId: data.tourDateId,
@@ -86,7 +99,7 @@ export async function createBookingAndCheckout(data: {
 
     const booking = await tx.booking.create({
       data: {
-        userId: session.user!.id,
+        userId,
         tourId,
         tourDateId,
         adults,
@@ -208,7 +221,6 @@ export async function createBookingWithLocalPayment(data: {
   paymentMethod: "BANK_TRANSFER" | "EASYPAISA" | "JAZZCASH";
 }) {
   const session = await getSession();
-  if (!session?.user?.id) return { error: "Please sign in to book" };
 
   if (data.paymentMethod === "BANK_TRANSFER" && !siteConfig.bankTransfer.enabled) {
     return { error: "Bank transfer is not available right now" };
@@ -218,6 +230,19 @@ export async function createBookingWithLocalPayment(data: {
   }
   if (data.paymentMethod === "JAZZCASH" && !siteConfig.jazzcash.enabled) {
     return { error: "JazzCash is not available right now" };
+  }
+
+  let userId: string;
+  try {
+    userId = await resolveCheckoutUserId({
+      sessionUserId: session?.user?.id,
+      email: data.travelerInfo.email,
+      name: data.travelerInfo.name,
+    });
+  } catch (err) {
+    return {
+      error: err instanceof Error ? err.message : "A valid email is required to book",
+    };
   }
 
   const seatsNeeded = data.adults + data.children;
@@ -237,7 +262,7 @@ export async function createBookingWithLocalPayment(data: {
 
     const booking = await tx.booking.create({
       data: {
-        userId: session.user!.id,
+        userId,
         type: "TOUR",
         tourId: data.tourId,
         tourDateId: data.tourDateId,

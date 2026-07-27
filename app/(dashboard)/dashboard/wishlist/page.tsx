@@ -21,7 +21,7 @@ export default function WishlistPage() {
         {t("dash.wishlist")}
       </h1>
       <p className="mt-2 text-ink-500">
-        Stays you’ve saved — kept on this device across refresh
+        Stays you’ve saved — synced to your account when signed in
       </p>
 
       {items.length === 0 ? (
