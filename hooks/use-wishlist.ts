@@ -2,12 +2,14 @@
 
 import { useCallback, useEffect, useState, useSyncExternalStore } from "react";
 import {
+  getWishlistSnapshot,
   isInWishlist,
-  readWishlist,
   toggleWishlistItem,
   WISHLIST_EVENT,
   type WishlistItem,
 } from "@/lib/wishlist";
+
+const EMPTY: WishlistItem[] = [];
 
 function subscribe(onStoreChange: () => void) {
   if (typeof window === "undefined") return () => {};
@@ -21,7 +23,7 @@ function subscribe(onStoreChange: () => void) {
 }
 
 export function useWishlist() {
-  const items = useSyncExternalStore(subscribe, readWishlist, () => [] as WishlistItem[]);
+  const items = useSyncExternalStore(subscribe, getWishlistSnapshot, () => EMPTY);
 
   const toggle = useCallback((item: Omit<WishlistItem, "savedAt">) => {
     return toggleWishlistItem(item);

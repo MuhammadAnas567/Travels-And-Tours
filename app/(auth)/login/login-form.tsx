@@ -18,9 +18,14 @@ export default function LoginForm() {
   const searchParams = useSearchParams();
   const callbackUrl = safeCallbackUrl(searchParams.get("callbackUrl"), "/dashboard");
   const resetOk = searchParams.get("reset") === "1";
+  const registeredOk = searchParams.get("registered") === "1";
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const [error, setError] = useState<string | null>(
-    resetOk ? "Password updated. Sign in with your new password." : null
+    registeredOk
+      ? "Account created. Sign in with your email and password."
+      : resetOk
+        ? "Password updated. Sign in with your new password."
+        : null
   );
   const [loading, setLoading] = useState(false);
 
@@ -154,7 +159,11 @@ export default function LoginForm() {
         </div>
         {error ? (
           <p
-            className={`text-sm ${resetOk && !error.includes("incorrect") ? "text-pine-700" : "text-ink-600"}`}
+            className={`text-sm ${
+              (registeredOk || resetOk) && !error.toLowerCase().includes("incorrect")
+                ? "text-pine-700"
+                : "text-ink-600"
+            }`}
             role="status"
             aria-live="polite"
           >

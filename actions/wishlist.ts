@@ -7,13 +7,29 @@ import type { WishlistItem } from "@/lib/wishlist";
 
 function asItems(raw: unknown): WishlistItem[] {
   if (!Array.isArray(raw)) return [];
-  return raw.filter(
-    (i): i is WishlistItem =>
-      !!i &&
-      typeof i === "object" &&
-      typeof (i as WishlistItem).id === "string" &&
-      typeof (i as WishlistItem).slug === "string"
-  );
+  return raw
+    .map((i) => {
+      if (!i || typeof i !== "object") return null;
+      const item = i as Partial<WishlistItem>;
+      if (typeof item.id !== "string" || typeof item.slug !== "string") return null;
+      return {
+        id: item.id,
+        slug: item.slug,
+        name: typeof item.name === "string" && item.name ? item.name : "Saved stay",
+        city: typeof item.city === "string" ? item.city : "",
+        country: typeof item.country === "string" ? item.country : "",
+        image: typeof item.image === "string" ? item.image : "",
+        pricePerNight:
+          typeof item.pricePerNight === "number" && Number.isFinite(item.pricePerNight)
+            ? item.pricePerNight
+            : 0,
+        savedAt:
+          typeof item.savedAt === "string" && item.savedAt
+            ? item.savedAt
+            : new Date(0).toISOString(),
+      } satisfies WishlistItem;
+    })
+    .filter((i): i is WishlistItem => i !== null);
 }
 
 export async function getServerWishlist(): Promise<WishlistItem[]> {

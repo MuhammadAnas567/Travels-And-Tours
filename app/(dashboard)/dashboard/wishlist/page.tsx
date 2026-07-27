@@ -10,6 +10,14 @@ import { DisplayPrice } from "@/components/shared/display-price";
 import { usePreferences } from "@/components/providers/preferences-provider";
 import { IMAGE_BLUR_DATA_URL, PLACEHOLDER_TOUR_IMAGE } from "@/lib/images";
 
+function safeImageSrc(src: string | undefined) {
+  if (!src) return PLACEHOLDER_TOUR_IMAGE;
+  if (src.startsWith("http://") || src.startsWith("https://") || src.startsWith("/")) {
+    return src;
+  }
+  return PLACEHOLDER_TOUR_IMAGE;
+}
+
 export default function WishlistPage() {
   const { items } = useWishlist();
   const { t } = usePreferences();
@@ -21,7 +29,7 @@ export default function WishlistPage() {
         {t("dash.wishlist")}
       </h1>
       <p className="mt-2 text-ink-500">
-        Stays you’ve saved — synced to your account when signed in
+        Stays you&apos;ve saved — synced to your account when signed in
       </p>
 
       {items.length === 0 ? (
@@ -48,8 +56,8 @@ export default function WishlistPage() {
             >
               <div className="relative h-28 w-full shrink-0 overflow-hidden rounded-sm sm:h-24 sm:w-36">
                 <Image
-                  src={item.image || PLACEHOLDER_TOUR_IMAGE}
-                  alt={item.name}
+                  src={safeImageSrc(item.image)}
+                  alt={item.name || "Saved stay"}
                   fill
                   className="object-cover"
                   sizes="144px"
@@ -59,13 +67,13 @@ export default function WishlistPage() {
               </div>
               <div className="min-w-0 flex-1">
                 <Link
-                  href={`/hotels/${item.slug}`}
+                  href={`/hotels/${encodeURIComponent(item.slug)}`}
                   className="font-display text-lg font-semibold text-ink hover:text-pine-500"
                 >
                   {item.name}
                 </Link>
                 <p className="text-sm text-ink-500">
-                  {item.city}, {item.country}
+                  {[item.city, item.country].filter(Boolean).join(", ") || "—"}
                 </p>
                 <p className="mt-1 text-sm font-semibold tabular-nums text-pine-600">
                   <DisplayPrice amount={item.pricePerNight} />{" "}
@@ -74,7 +82,7 @@ export default function WishlistPage() {
               </div>
               <div className="flex gap-2 sm:flex-col">
                 <Button asChild size="sm">
-                  <Link href={`/hotels/${item.slug}`}>View</Link>
+                  <Link href={`/hotels/${encodeURIComponent(item.slug)}`}>View</Link>
                 </Button>
                 <Button
                   type="button"

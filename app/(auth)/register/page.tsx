@@ -68,19 +68,12 @@ function RegisterForm() {
         return;
       }
 
-      const signed = await signIn("credentials", {
-        email: parsed.data.email,
-        password: parsed.data.password,
-        redirect: false,
+      // Account created — send to sign-in (no auto login)
+      const loginQs = new URLSearchParams({
+        registered: "1",
+        callbackUrl,
       });
-      if (signed?.error) {
-        setFormError("Account created — please sign in.");
-        setLoading(false);
-        router.push(`/login?callbackUrl=${encodeURIComponent(callbackUrl)}`);
-        return;
-      }
-      router.replace(callbackUrl);
-      router.refresh();
+      router.replace(`/login?${loginQs.toString()}`);
     } catch {
       setFormError("Could not create account. Try again in a moment.");
       setLoading(false);
