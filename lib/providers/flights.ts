@@ -132,6 +132,18 @@ export async function searchFlights(input: {
     filteredCatalog = matchRoute(toNormalizedCatalog(FALLBACK_FLIGHTS), from, to);
   }
 
+  // Prefer outbound legs near the requested date (intl sites always pin a date)
+  if (input.date && filteredCatalog.length > 1) {
+    const target = new Date(`${input.date}T12:00:00`).getTime();
+    if (Number.isFinite(target)) {
+      filteredCatalog = [...filteredCatalog].sort((a, b) => {
+        const da = Math.abs(new Date(a.departTime).getTime() - target);
+        const db = Math.abs(new Date(b.departTime).getTime() - target);
+        return da - db;
+      });
+    }
+  }
+
   if (live.length) {
     return [...live, ...filteredCatalog];
   }

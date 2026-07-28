@@ -65,7 +65,10 @@ export default async function FlightBookPage({ searchParams }: Props) {
           <p className="mt-2 text-ink-500">
             {flight.from} → {flight.to} · {cabin} · {pax} traveller{pax === 1 ? "" : "s"}
           </p>
-          <Link href="/flights" className="mt-4 inline-block text-sm font-semibold text-pine-600 link-underline">
+          <Link
+            href={`/flights?from=${encodeURIComponent(flight.from)}&to=${encodeURIComponent(flight.to)}&adults=${adults}&children=${children}&cabin=${cabin}`}
+            className="mt-4 inline-block text-sm font-semibold text-pine-600 link-underline"
+          >
             ← Back to search
           </Link>
         </div>

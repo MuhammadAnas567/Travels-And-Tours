@@ -8,13 +8,13 @@ import {
   Package,
   Car,
   ArrowLeftRight,
-  Calendar,
   Users,
   MapPin,
   Search,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { DateField, daysFromTodayISO, todayISO } from "@/components/ui/date-field";
 import { SearchRouteLine } from "@/components/search/search-route-line";
 import { resolveAirport } from "@/lib/airports";
 import { cn } from "@/lib/utils";
@@ -78,15 +78,21 @@ function SearchWidgetInner({ className }: { className?: string }) {
   const [tripType, setTripType] = useState<TripType>("roundtrip");
   const [from, setFrom] = useState("");
   const [to, setTo] = useState("");
-  const [checkIn, setCheckIn] = useState("");
-  const [checkOut, setCheckOut] = useState("");
-  const [adults, setAdults] = useState(2);
+  const [checkIn, setCheckIn] = useState(() => daysFromTodayISO(7));
+  const [checkOut, setCheckOut] = useState(() => daysFromTodayISO(14));
+  const [adults, setAdults] = useState(1);
   const [children, setChildren] = useState(0);
   const [cabin, setCabin] = useState("Economy");
   const [travellersOpen, setTravellersOpen] = useState(false);
   const [swapSpin, setSwapSpin] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [errors, setErrors] = useState<{ from?: string; to?: string; form?: string }>({});
+  const [errors, setErrors] = useState<{
+    from?: string;
+    to?: string;
+    checkIn?: string;
+    checkOut?: string;
+    form?: string;
+  }>({});
 
   useEffect(() => {
     setLoading(false);
@@ -113,6 +119,9 @@ function SearchWidgetInner({ className }: { className?: string }) {
     if (fromQ) setFrom(fromQ);
     if (toQ) setTo(toQ);
     if (dateQ) setCheckIn(dateQ);
+    else if (!searchParams.toString()) {
+      /* keep defaults when landing without query */
+    }
     if (returnQ) {
       setCheckOut(returnQ);
       setTripType("roundtrip");
@@ -120,15 +129,20 @@ function SearchWidgetInner({ className }: { className?: string }) {
       setTripType("oneway");
     }
     if (Number.isFinite(adultsQ) && adultsQ > 0) setAdults(Math.min(9, adultsQ));
+    const childrenQ = Number(searchParams.get("children") ?? "");
+    if (Number.isFinite(childrenQ) && childrenQ >= 0) setChildren(Math.min(8, childrenQ));
     if (cabinQ) setCabin(cabinQ);
   }, [pathname, searchParams]);
+
+  const minDepart = todayISO();
+  const minReturn = checkIn && checkIn > minDepart ? checkIn : minDepart;
 
   const travellersSummary = useMemo(() => {
     const parts = [`${adults} adult${adults === 1 ? "" : "s"}`];
     if (children > 0) parts.push(`${children} child${children === 1 ? "" : "ren"}`);
-    parts.push(cabin);
+    if (tab === "flights") parts.push(cabin);
     return parts.join(" · ");
-  }, [adults, children, cabin]);
+  }, [adults, children, cabin, tab]);
 
   function validate() {
     const next: typeof errors = {};
@@ -141,6 +155,22 @@ function SearchWidgetInner({ className }: { className?: string }) {
     } else if (!to.trim() && !from.trim()) {
       next.to = "Enter a destination";
     }
+
+    if (tab === "flights") {
+      if (!checkIn) next.checkIn = "Select a departure date";
+      else if (checkIn < minDepart) next.checkIn = "Departure can’t be in the past";
+      if (tripType === "roundtrip") {
+        if (!checkOut) next.checkOut = "Select a return date";
+        else if (checkOut < checkIn) next.checkOut = "Return must be on or after departure";
+      }
+    }
+
+    if (tab === "hotels") {
+      if (checkIn && checkOut && checkOut < checkIn) {
+        next.checkOut = "Check-out must be after check-in";
+      }
+    }
+
     setErrors(next);
     if (next.from) fromRef.current?.focus();
     else if (next.to) toRef.current?.focus();
@@ -154,14 +184,15 @@ function SearchWidgetInner({ className }: { className?: string }) {
     const params = new URLSearchParams();
 
     if (tab === "flights") {
-      // Resolve city/country free-text to IATA so server + client filters agree
       const origin = resolveAirport(from);
       const dest = resolveAirport(to);
       if (origin) params.set("from", origin);
       if (dest) params.set("to", dest);
-      if (checkIn) params.set("date", checkIn);
+      params.set("date", checkIn || daysFromTodayISO(7));
       if (tripType === "roundtrip" && checkOut) params.set("return", checkOut);
+      params.set("trip", tripType);
       params.set("adults", String(adults));
+      params.set("children", String(children));
       params.set("cabin", cabin);
       router.push(`/flights?${params.toString()}`);
     } else if (tab === "hotels") {
@@ -175,7 +206,6 @@ function SearchWidgetInner({ className }: { className?: string }) {
       if (to) params.set("destination", to);
       router.push(`/packages?${params.toString()}`);
     } else {
-      // Cars: drop-off (`to`) is the primary location; pickup city (`from`) is a fallback.
       if (to) params.set("location", to);
       else if (from) params.set("location", from);
       if (from) params.set("from", from);
@@ -252,7 +282,16 @@ function SearchWidgetInner({ className }: { className?: string }) {
               <button
                 key={id}
                 type="button"
-                onClick={() => setTripType(id)}
+                onClick={() => {
+                  setTripType(id);
+                  if (id === "roundtrip" && checkIn) {
+                    const d = new Date(`${checkIn}T12:00:00`);
+                    d.setDate(d.getDate() + 7);
+                    setCheckOut(
+                      `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`
+                    );
+                  }
+                }}
                 className={cn(
                   "min-h-11 rounded-sm px-4 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pine-500",
                   tripType === id ? "bg-paper text-ink shadow-sm" : "text-ink-500 hover:text-ink-700"
@@ -326,27 +365,41 @@ function SearchWidgetInner({ className }: { className?: string }) {
           </div>
 
           <div className="md:col-span-2">
-            <Input
+            <DateField
               id="search-checkin"
-              type="date"
               label={dateLabel}
               value={checkIn}
-              onChange={(e) => setCheckIn(e.target.value)}
-              prefixIcon={<Calendar strokeWidth={1.5} />}
-              className="h-12"
+              min={minDepart}
+              error={errors.checkIn}
+              required={tab === "flights"}
+              onChange={(v) => {
+                setCheckIn(v);
+                setErrors((prev) => ({ ...prev, checkIn: undefined, checkOut: undefined }));
+                if (checkOut && v && checkOut < v) {
+                  setCheckOut(v);
+                }
+              }}
             />
           </div>
 
-          {(tab === "hotels" || tab === "packages" || (tab === "flights" && tripType === "roundtrip")) && (
+          {(tab === "hotels" ||
+            tab === "packages" ||
+            tab === "cars" ||
+            (tab === "flights" && tripType === "roundtrip")) && (
             <div className="md:col-span-2">
-              <Input
+              <DateField
                 id="search-checkout"
-                type="date"
-                label={tab === "flights" ? "Return" : "Check-out"}
+                label={
+                  tab === "flights" ? "Return" : tab === "cars" ? "Drop-off date" : "Check-out"
+                }
                 value={checkOut}
-                onChange={(e) => setCheckOut(e.target.value)}
-                prefixIcon={<Calendar strokeWidth={1.5} />}
-                className="h-12"
+                min={minReturn}
+                error={errors.checkOut}
+                required={tab === "flights" && tripType === "roundtrip"}
+                onChange={(v) => {
+                  setCheckOut(v);
+                  setErrors((prev) => ({ ...prev, checkOut: undefined }));
+                }}
               />
             </div>
           )}
