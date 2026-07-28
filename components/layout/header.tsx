@@ -86,15 +86,17 @@ export function Header() {
         compact ? "shadow-md" : "shadow-sm"
       )}
     >
-      <div className="relative z-[101] mx-auto flex h-16 min-[480px]:h-[4.5rem] w-full max-w-[1280px] items-center justify-between gap-2 px-3 min-[480px]:px-4 sm:px-6 lg:px-8">
+      <div className="relative z-[101] mx-auto flex h-16 min-[480px]:h-[4.5rem] w-full max-w-[1280px] items-center px-4 sm:px-6 lg:px-8">
+        {/* Logo nudged further right toward the nav */}
         <Logo
           href="/"
           variant="compact"
-          className="relative z-[102] shrink-0"
+          className="relative z-[102] ml-6 shrink-0 sm:ml-10 lg:ml-14 xl:ml-16"
         />
 
+        {/* Nav slightly left of true center */}
         <nav
-          className="relative z-[102] hidden lg:flex items-center gap-0.5 shrink min-w-0"
+          className="absolute left-[42%] top-1/2 z-[102] hidden -translate-x-1/2 -translate-y-1/2 items-center gap-0 lg:flex xl:left-[44%]"
           aria-label="Main"
         >
           {PRIMARY_NAV.map((item) => {
@@ -107,7 +109,7 @@ export function Header() {
                 prefetch
                 aria-current={active ? "page" : undefined}
                 className={cn(
-                  "group relative z-[102] flex items-center gap-1.5 rounded-full px-3 py-2 text-[0.7rem] font-semibold uppercase tracking-[0.08em] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pine-500 focus-visible:ring-offset-2 whitespace-nowrap pointer-events-auto",
+                  "group relative z-[102] flex items-center gap-1.5 rounded-full px-2.5 py-2 text-[0.7rem] font-semibold uppercase tracking-[0.08em] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pine-500 focus-visible:ring-offset-2 whitespace-nowrap pointer-events-auto",
                   active
                     ? "bg-brass-50 text-pine-700 ring-1 ring-brass-200"
                     : "text-ink-700 hover:bg-sand-100 hover:text-pine-600"
@@ -125,7 +127,7 @@ export function Header() {
             <button
               type="button"
               className={cn(
-                "group relative flex items-center gap-1 rounded-full px-3 py-2 text-[0.7rem] font-semibold uppercase tracking-[0.08em] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pine-500",
+                "group relative flex items-center gap-1 rounded-full px-2.5 py-2 text-[0.7rem] font-semibold uppercase tracking-[0.08em] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pine-500",
                 moreActive || moreOpen
                   ? "bg-pine-50 text-pine-600"
                   : "text-ink-700 hover:bg-sand-100 hover:text-pine-600"
@@ -174,7 +176,7 @@ export function Header() {
           </div>
         </nav>
 
-        <div className="flex items-center gap-1 shrink-0">
+        <div className="relative z-[102] ml-auto flex shrink-0 items-center gap-1">
           <CurrencyMenu className="hidden md:flex" />
 
           {/* Tablet+ auth CTAs — avoid empty chrome between md and lg */}
