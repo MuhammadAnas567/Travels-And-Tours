@@ -50,6 +50,11 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
   },
+  icons: {
+    icon: "/arreat-logo-square.png",
+    shortcut: "/arreat-logo-square.png",
+    apple: "/arreat-logo-square.png",
+  },
   robots: {
     index: true,
     follow: true,

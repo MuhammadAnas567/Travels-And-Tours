@@ -14,6 +14,7 @@ type DateFieldProps = {
   max?: string;
   error?: string;
   required?: boolean;
+  disabled?: boolean;
   className?: string;
 };
 
@@ -27,6 +28,7 @@ export function DateField({
   max,
   error,
   required,
+  disabled,
   className,
 }: DateFieldProps) {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -34,7 +36,7 @@ export function DateField({
 
   function openPicker() {
     const el = inputRef.current;
-    if (!el) return;
+    if (!el || disabled) return;
     el.focus();
     try {
       // Chromium / Safari 16+ — makes calendar reliably open on click
@@ -59,7 +61,10 @@ export function DateField({
           tabIndex={-1}
           aria-hidden
           onClick={openPicker}
-          className="absolute left-3 top-1/2 z-[1] -translate-y-1/2 text-pine-600"
+          className={cn(
+            "absolute left-3 top-1/2 z-[1] -translate-y-1/2 text-pine-600",
+            disabled && "text-ink-300"
+          )}
         >
           <Calendar className="h-5 w-5" strokeWidth={1.5} />
         </button>
@@ -71,14 +76,16 @@ export function DateField({
           min={min}
           max={max}
           required={required}
+          disabled={disabled}
           aria-invalid={hasError || undefined}
           aria-describedby={hasError ? `${id}-error` : undefined}
           onChange={(e) => onChange(e.target.value)}
           onClick={openPicker}
           className={cn(
-            "date-field flex h-12 w-full cursor-pointer rounded-sm border bg-paper py-2 pl-10 pr-3 text-sm text-ink tabular-nums",
+            "date-field flex h-12 w-full rounded-sm border bg-paper py-2 pl-10 pr-3 text-sm text-ink tabular-nums",
             "ring-offset-sand transition-[border-color,box-shadow] duration-[var(--duration-fast)]",
             "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pine-500 focus-visible:ring-offset-2",
+            disabled && "cursor-not-allowed bg-sand text-ink-300",
             hasError
               ? "border-error focus-visible:ring-error"
               : "border-line hover:border-taupe-400"

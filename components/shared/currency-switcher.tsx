@@ -11,13 +11,16 @@ import {
 import { SUPPORTED_CURRENCIES } from "@/lib/currency";
 import { usePreferences } from "@/components/providers/preferences-provider";
 
-export function CurrencySwitcher({ value }: { value?: Currency }) {
+/**
+ * Live currency control. Do not pass a server-rendered `value` — it freezes the
+ * Select on the SSR snapshot and makes USD/PKR switching appear broken.
+ */
+export function CurrencySwitcher() {
   const { currency, setCurrency } = usePreferences();
-  const current = value ?? currency;
 
   return (
-    <Select value={current} onValueChange={(c) => setCurrency(c as Currency)}>
-      <SelectTrigger className="h-9 w-[88px] border-line bg-surface text-xs">
+    <Select value={currency} onValueChange={(c) => setCurrency(c as Currency)}>
+      <SelectTrigger className="h-9 w-[88px] border-line bg-paper text-xs">
         <SelectValue />
       </SelectTrigger>
       <SelectContent>

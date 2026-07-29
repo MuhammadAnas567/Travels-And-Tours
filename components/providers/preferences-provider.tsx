@@ -31,13 +31,11 @@ function readCookie(name: string) {
 }
 
 function writeCookie(name: string, value: string) {
-  // No encodeURIComponent for simple codes — avoids mismatch with older readers
   document.cookie = `${name}=${value};path=/;max-age=31536000;SameSite=Lax`;
 }
 
 function readCurrency(): Currency {
   const value = readCookie(CURRENCY_COOKIE) as Currency;
-  // Drop EUR/GBP — only PKR + USD
   if (value === "EUR" || value === "GBP") return "USD";
   return SUPPORTED_CURRENCIES.includes(value) ? value : "USD";
 }

@@ -4,6 +4,11 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { signIn } from "next-auth/react";
+import {
+  assertCredentialsLogin,
+  resendSignupOtp,
+  verifySignupOtp,
+} from "@/actions/auth";
 import { loginSchema } from "@/lib/validations";
 import { AuthShell } from "@/components/auth/auth-shell";
 import { Button } from "@/components/ui/button";
@@ -18,17 +23,22 @@ export default function LoginForm() {
   const callbackUrl = safeCallbackUrl(searchParams.get("callbackUrl"), "/dashboard");
   const resetOk = searchParams.get("reset") === "1";
   const registeredOk = searchParams.get("registered") === "1";
+  const verifiedOk = searchParams.get("verified") === "1";
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const [error, setError] = useState<string | null>(
-    registeredOk
-      ? "Account created. Sign in with your email and password."
-      : resetOk
-        ? "Password updated. Sign in with your new password."
-        : null
+    verifiedOk
+      ? "Email verified. Sign in with your password."
+      : registeredOk
+        ? "Account created. Sign in with your email and password."
+        : resetOk
+          ? "Password updated. Sign in with your new password."
+          : null
   );
   const [loading, setLoading] = useState(false);
+  const [pendingEmail, setPendingEmail] = useState<string | null>(null);
+  const [otp, setOtp] = useState("");
+  const [otpMessage, setOtpMessage] = useState<string | null>(null);
 
-  // Warm Prisma/Atlas while the user types — first Sign in stays fast
   useEffect(() => {
     const ctrl = new AbortController();
     void fetch("/api/auth/warm", { signal: ctrl.signal, cache: "no-store" }).catch(
@@ -62,6 +72,35 @@ export default function LoginForm() {
     }
 
     try {
+      const gatePayload = new FormData();
+      gatePayload.set("email", parsed.data.email);
+      gatePayload.set("password", parsed.data.password);
+      const gate = await assertCredentialsLogin(gatePayload);
+
+      if (
+        gate &&
+        "error" in gate &&
+        gate.error &&
+        !("needsVerification" in gate && gate.needsVerification)
+      ) {
+        const err = gate.error as Record<string, string[] | undefined>;
+        const next: Record<string, string> = {};
+        for (const [k, v] of Object.entries(err)) {
+          if (v?.[0]) next[k] = v[0];
+        }
+        setFieldErrors(next);
+        setError(err._form?.[0] ?? "Email or password is incorrect.");
+        setLoading(false);
+        return;
+      }
+
+      if (gate && "needsVerification" in gate && gate.needsVerification && gate.email) {
+        setPendingEmail(gate.email);
+        setOtpMessage(`Enter the code sent to ${gate.email}, or request a new one.`);
+        setLoading(false);
+        return;
+      }
+
       const result = await signIn("credentials", {
         email: parsed.data.email,
         password: parsed.data.password,
@@ -74,7 +113,6 @@ export default function LoginForm() {
         return;
       }
 
-      // Hard navigation is faster than replace + full RSC refresh
       window.location.assign(callbackUrl);
     } catch {
       setError("Could not sign in. Check your connection and try again.");
@@ -82,7 +120,86 @@ export default function LoginForm() {
     }
   }
 
+  async function handleVerifyOtp(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    if (!pendingEmail) return;
+    setLoading(true);
+    setError(null);
+    const payload = new FormData();
+    payload.set("email", pendingEmail);
+    payload.set("otp", otp);
+    const result = await verifySignupOtp(payload);
+    if (result?.error) {
+      setError(result.error);
+      setLoading(false);
+      return;
+    }
+    setPendingEmail(null);
+    setError("Email verified. Enter your password and sign in.");
+    setLoading(false);
+  }
+
+  async function handleResend() {
+    if (!pendingEmail) return;
+    setLoading(true);
+    const payload = new FormData();
+    payload.set("email", pendingEmail);
+    const result = await resendSignupOtp(payload);
+    setLoading(false);
+    if (result?.error) {
+      setError(result.error);
+      return;
+    }
+    setOtpMessage(`A new code was sent to ${pendingEmail}.`);
+  }
+
   const registerHref = `/register?callbackUrl=${encodeURIComponent(callbackUrl)}`;
+
+  if (pendingEmail) {
+    return (
+      <AuthShell
+        title="Verify your email"
+        subtitle={`Finish signing in for ${pendingEmail}.`}
+      >
+        <form onSubmit={handleVerifyOtp} className="space-y-4" noValidate>
+          {otpMessage ? (
+            <p className="text-sm text-pine-700" role="status">
+              {otpMessage}
+            </p>
+          ) : null}
+          <div>
+            <Label htmlFor="otp">Verification code</Label>
+            <Input
+              id="otp"
+              inputMode="numeric"
+              autoComplete="one-time-code"
+              placeholder="6-digit code"
+              className="mt-1.5 h-12 bg-paper tracking-[0.35em] tabular-nums"
+              value={otp}
+              onChange={(e) => setOtp(e.target.value.replace(/\D/g, "").slice(0, 6))}
+            />
+          </div>
+          {error ? (
+            <p className="text-sm text-ink-600" role="status">
+              {error}
+            </p>
+          ) : null}
+          <Button type="submit" className="min-h-12 w-full text-base" aria-busy={loading}>
+            {loading ? "Verifying…" : "Verify email"}
+          </Button>
+          <Button
+            type="button"
+            variant="outline"
+            className="w-full h-12 bg-paper"
+            disabled={loading}
+            onClick={handleResend}
+          >
+            Resend code
+          </Button>
+        </form>
+      </AuthShell>
+    );
+  }
 
   return (
     <AuthShell
@@ -143,7 +260,8 @@ export default function LoginForm() {
         {error ? (
           <p
             className={`text-sm ${
-              (registeredOk || resetOk) && !error.toLowerCase().includes("incorrect")
+              (registeredOk || resetOk || verifiedOk) &&
+              !error.toLowerCase().includes("incorrect")
                 ? "text-pine-700"
                 : "text-ink-600"
             }`}

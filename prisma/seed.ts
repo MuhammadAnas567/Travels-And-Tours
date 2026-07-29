@@ -182,7 +182,9 @@ async function ensureUser(
 ) {
   const existing = await prisma.user.findUnique({ where: { email } });
   if (!existing) {
-    await prisma.user.create({ data: { email, ...data } });
+    await prisma.user.create({
+      data: { email, ...data, emailVerified: new Date() },
+    });
     return;
   }
   // Always refresh demo passwords + role so login stays reliable after mixed seeds
@@ -192,6 +194,7 @@ async function ensureUser(
       name: data.name,
       hashedPassword: data.hashedPassword,
       role: data.role,
+      emailVerified: existing.emailVerified ?? new Date(),
     },
   });
 }

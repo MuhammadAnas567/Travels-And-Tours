@@ -1,0 +1,4925 @@
+Aalborg (DK) - AAL
+Aarhus (DK) - AAR
+Aasiaat (GL) - JEG
+Abadan (IR) - ABD
+Abakan (RU) - ABA
+Abariringa (KI) - CIS
+Abbotsford (CA) - YXX
+Abeche (TD) - AEH
+Aberdeen (GB) - ABZ
+Aberdeen (US) - ABR, APG
+Abha (SA) - AHB
+Abidjan (CI) - ABJ
+Abilene (US) - ABI, DYS
+Abraham Bay Settlement (BS) - MYG
+Abu Dhabi (AE) - AUH, AZI
+Abu Musa (IR) - AEU
+Abu Simbel (EG) - ABS
+Abuja (NG) - ABV
+Acapulco (MX) - ACA
+Acarigua (VE) - AGV
+Accra (GH) - ACC
+Achinsk (RU) - ACS
+Ad Dammam (SA) - DMM
+Ada (US) - ADT
+Adak (US) - ADK
+Adampur (IN) - AIP
+Addis Ababa (ET) - ADD
+Adelaide (AU) - ADL
+Aden (YE) - ADE
+Adıyaman (TR) - ADF
+Adrar (DZ) - AZR
+Afyonkarahisar (TR) - AFY
+Agadez (NE) - AJY
+Agadir (MA) - AGA
+Agartala (IN) - IXA
+Agatti (IN) - AGX
+Agen (FR) - AGF
+Aggeneys (ZA) - AGZ
+Agno (CH) - LUG
+Agra (IN) - AGR
+Ağrı (TR) - AJI
+Aguadilla (PR) - BQN
+Aguascalientes (MX) - AGU
+Aguni (JP) - AGJ
+Ahe Atoll (PF) - AHE
+Ahl Angad (MA) - OUD
+Ahmed Al Jaber AB (KW) - XIJ
+Ahmedabad (IN) - AMD
+Ahuano (EC) - TNW
+Ahvaz (IR) - AWZ
+Ailinglapalap Atoll (MH) - JEJ
+Aitutaki (CK) - AIT
+Aizawl (IN) - AJL
+Ajaccio (FR) - AJA
+Ajmer (IN) - KQH
+Akhiok (US) - AKK
+Akiachak (US) - KKI
+Akiak (US) - AKI
+Akita (JP) - AXT
+Aklavik (CA) - LAK
+Akola (IN) - AKD
+Akron (US) - AKC, CAK
+Akrotiri (CY) - AKT
+Aksu (CN) - AKU
+Aktau (KZ) - SCO
+Aktobe (KZ) - AKX
+Akulivik (CA) - AKV
+Akure (NG) - AKR
+Akureyri (IS) - AEY
+Akutan (US) - KQA
+Al Aaroui (MA) - NDR
+Al Ain (AE) - AAN
+Al Albraq (LY) - LAQ
+Al Ghaydah (YE) - AAY
+Al Habbaniyah (IQ) - TQD
+Al Hoceima (MA) - AHU
+Al Jiza (EG) - SPX
+Al Kharj (SA) - AKH
+Al Masna'ah (OM) - MNH
+Al Wajh (SA) - EJH
+Al-Baha (SA) - ABT
+Al-Jawf (SA) - AJF
+Al-Ula (SA) - ULH
+Alajero, La Gomera Island (ES) - GMZ
+Alakanuk (US) - AUK
+Alamogordo (US) - ALM, HMN
+Alamosa (US) - ALS
+Alava (ES) - VIT
+Albacete (ES) - ABC
+Albany (AU) - ALH
+Albany (US) - ABY, ALB
+Albi (FR) - LBI
+Albion Park Rail (AU) - WOL
+Albrook (PA) - PAC
+Albuquerque (US) - ABQ
+Aleknagik (US) - WKK
+Aleppo (SY) - ALP
+Alert (CA) - YLT
+Alert Bay (CA) - YAL
+Ålesund (NO) - AES
+Alexander Bay (ZA) - ALJ
+Alexandra (NZ) - ALR
+Alexandria (EG) - HBE
+Alexandria (US) - AEX, AXN, ESF
+Alexandroupolis (GR) - AXD
+Alghero (IT) - AHO
+Algiers (DZ) - ALG
+Alicante (ES) - ALC
+Alice (US) - ALI
+Alice Springs (AU) - ASP
+Aligarh (IN) - HRH
+Allahabad (IN) - IXD
+Allakaket (US) - AET
+Allentown/Bethlehem (US) - ABE
+Alliance (US) - AIA
+Alma (CA) - YTF
+Almaty (KZ) - ALA
+Almeirim (BR) - GGF, MEU
+Almería (ES) - LEI
+Alofi (NU) - IUE
+Alor Satar (MY) - AOR
+Alpena (US) - APN
+Alstahaug (NO) - SSJ
+Alta (NO) - ALF
+Alta Floresta (BR) - AFL
+Altai (MN) - LTI
+Altamira (BR) - ATM
+Altay (CN) - AAT
+Altıntaş (TR) - KZR
+Alto (US) - RUI
+Alton/St Louis (US) - ALN
+Altoona (US) - AOO
+Altus (US) - LTS
+Amagi (JP) - TKN
+Amakusa (JP) - AXJ
+Amami (JP) - ASJ
+Amarillo (US) - AMA
+Amasya (TR) - MZH
+Ambato (EC) - ATF
+Ambikapur (IN) - AHA
+Ambler (US) - ABL
+Ambon (ID) - AMQ
+Amderma (RU) - AMV
+Amirabad (IR) - NUJ
+Amman (JO) - ADJ, AMM
+Amos (CA) - YEY
+Ampara (LK) - ADP
+Amritsar (IN) - ATQ
+Amsterdam (NL) - AMS
+Anaa (PF) - AAA
+Anaco (VE) - AAO
+Anacortes (US) - OTS
+Anadyr (RU) - DYR
+Anahim Lake (CA) - YAA
+Anaktuvuk Pass (US) - AKP
+Analalava (MG) - HVA
+Anchorage (US) - ANC, EDF, MRI
+Andahuaylas (PE) - ANS
+Andenes (NO) - ANX
+Anderson (US) - AND
+Andijan (UZ) - AZN
+Andravida (GR) - PYR
+Andrézieux-Bouthéon, Loire (FR) - EBU
+Andros (BS) - TZN
+Andros Island (BS) - SAQ
+Andros Town (BS) - ASD
+Ängelholm (SE) - AGH
+Angelsey (GB) - VLY
+Angers (FR) - ANE
+Angleton (US) - LJN
+Angling Lake (CA) - YAX
+Angoulême (FR) - ANG
+Aniak (US) - ANI
+Ankang (CN) - AKA
+Ankara (TR) - ANK, ESB
+Annaba (DZ) - AAE
+Annecy (FR) - NCY
+Anniston (US) - ANB
+Anqing (CN) - AQG
+Anshan (CN) - AOG
+Anshun (CN) - AVA
+Anta (PE) - ATA
+Antakya (TR) - HTY
+Antalya (TR) - AYT
+Antananarivo (MG) - TNR
+Antisiranana (MG) - DIE
+Antofagasta (CL) - ANF
+Antsirabe (MG) - ANM
+Antsohihy (MG) - WAI
+Antwerp (BE) - ANR
+Anua (SB) - BNY
+Anuradhapura (LK) - ACJ
+Anvik (US) - ANV
+Anyang (CN) - HQQ
+Aomori (JP) - AOJ
+Apapelgino (RU) - PWE
+Apataki (PF) - APK
+Apia (WS) - APW
+Apiay (CO) - API
+Appleton (US) - ATW
+Aqaba (JO) - AQJ
+Ar Rayyan (QA) - XJD
+Aracaju (BR) - AJU
+Aracati (BR) - ARX
+Araçatuba (BR) - ARU
+Arad (RO) - ARW
+Araguaína (BR) - AUX
+Aral (CN) - ACF
+Arandis (NA) - ADI
+Arar (SA) - RAE
+Araraquara (BR) - AQA
+Ararat (AU) - ARY
+Arauca (CO) - AUC
+Araxá (BR) - AAX
+Arba Minch (ET) - AMH
+Arbil (IQ) - EBL
+Arcata/Eureka (US) - ACV
+Archangelsk (RU) - ARH
+Arctic Bay (CA) - YAB
+Arctic Village (US) - ARC
+Ardabil (IR) - ADU
+Arecibo (PR) - ARE
+Arequipa (PE) - AQP
+Argos Orestiko (GR) - KSO
+Arica (CL) - ARI
+Arkhangelsk (RU) - VKV
+Armenia (CO) - AXM
+Armidale (AU) - ARM
+Armstrong (CA) - YYW
+Årø (NO) - MOL
+Arthur's Town (BS) - ATC
+Artyom (RU) - VVO
+Arua (UG) - RUA
+Arusha (TZ) - ARK, JRO
+Arvaikheer (MN) - AVK
+Arviat (CA) - YEK
+Arvidsjaur (SE) - AJR
+Arxan (CN) - YIE
+Asaba (NG) - ABB
+Asheville (US) - AVL
+Ashgabat (TM) - ASB
+Ashtabula (US) - JFN
+Asmara (ER) - ASM
+Asosa (ET) - ASO
+Aspen (US) - ASE
+Assab (ER) - ASA
+Astana (KZ) - NQZ
+Astoria (US) - AST
+Astrakhan (RU) - ASF
+Astypalaia Island (GR) - JTY
+Asunción (PY) - ASU
+Aswan (EG) - ASW
+Asyut (EG) - ATZ
+Atalaya (PE) - AYX
+Atambua (ID) - ABU
+Ataq (YE) - AXK
+Atar (MR) - ATR
+Athens (US) - AHN
+Atikokan (CA) - YIB
+Atiu Island (CK) - AIU
+Atka (US) - AKB
+Atlanta (US) - ATL, FTY, PDK
+Atlantic City (US) - ACY
+Atmautluak (US) - ATT
+Atqasuk (US) - ATK
+Attawapiskat (CA) - YAT
+Attock (PK) - ISB
+Atyrau (KZ) - GUW
+Auckland (NZ) - AKL
+Augsburg (DE) - AGB
+Augusta (US) - AGS, AUG, DNL
+Auki (SB) - AKS
+Aupaluk (CA) - YPJ
+Aur Atoll (MH) - AUL
+Aurangabad (IN) - IXU
+Aurillac (FR) - AUR
+Aurora (US) - BFK
+Aurukun (AU) - AUU
+Austin (US) - AUS
+Auxerre (FR) - AUF
+Avarua (CK) - RAR
+Aviano (IT) - AVB
+Avignon (FR) - AVN
+Awanui (NZ) - KAT
+Axum (ET) - AXU
+Ayacucho (PE) - AYP
+Ayase / Yamato (JP) - NJA
+Ayolas (PY) - AYO
+Azezo (ET) - GDQ
+Ba'a - Rote Island (ID) - RTI
+Baa Atoll (MV) - DRV
+Babelthuap Island (PW) - ROR
+Babo (ID) - BXB
+Bacău (RO) - BCM
+Bacolod City (PH) - BCD
+Badajoz (ES) - BJZ
+Badanjilin (CN) - RHT
+Badu Island (AU) - BDD
+Bafoussam (CM) - BFX
+Bagé (BR) - BGX
+Baghdad (IQ) - BGW
+Bagram (AF) - OAI
+Baguio (PH) - BAG
+Bahawalpur (PK) - BHV
+Bahía Blanca (AR) - BHI
+Bahía Solano (CO) - BSC
+Bahir Dar (ET) - BJR
+Baicheng (CN) - DBC
+Baie-Comeau (CA) - YBC
+Baikonur (KZ) - BXY
+Baimuru (PG) - VMU
+Bairnsdale (AU) - BSJ
+Baise (CN) - AEB
+Baishan (CN) - NBS
+Bakalalan (MY) - BKM
+Bakel (SN) - BXE
+Baker City (US) - BKE
+Baker Lake (CA) - YBK
+Bakersfield (US) - BFL
+Baku (AZ) - GYD
+Balakovo (RU) - BWO
+Bâle / Mulhouse (FR) - BSL
+Balemartine, Argyll and Bute (GB) - TRE
+Baler (PH) - BQA
+Balice (PL) - KRK
+Balikpapan (ID) - BPN
+Balimo (PG) - OPU
+Balivanich (GB) - BEB
+Balıkesir (TR) - BZI
+Balkanabat (TM) - BKN
+Balkhash (KZ) - BXH
+Ballalae (SB) - BAS
+Ballina (AU) - BNK
+Balmaceda (CL) - BBA
+Bălți (MD) - BZY
+Baltimore (US) - BWI, MTN
+Baltrum (DE) - BMR
+Bam (IR) - BXR
+Bamaga (AU) - ABM
+Bamako (ML) - BKO
+Bamenda (CM) - BPC
+Banda Aceh (ID) - BTJ
+Bandar Abbas (IR) - BND
+Bandar Lampung (ID) - TKG
+Bandar Lengeh (IR) - BDH
+Bandar Seri Begawan (BN) - BWN
+Bandar-e-Jask (IR) - JSK
+Bandırma (TR) - BDM
+Bandundu (CD) - FDU
+Bandung (ID) - BDO
+Bangda (CN) - BPX
+Bangkok (TH) - BKK, DMK
+Bangor (US) - BGR
+Bangui (CF) - BGF
+Banjarbaru (ID) - BDJ
+Banjul (GM) - BJL
+Banmaw (MM) - BMO
+Baoshan (CN) - BSD, TCZ
+Baotou (CN) - BAV
+Bar Harbor (US) - BHB
+Baracoa (CU) - BCA
+Barahona (DO) - BRX
+Barcaldine (AU) - BCI
+Barcelona (ES) - BCN
+Barcelona (VE) - BLA
+Barcelos (BR) - BAZ
+Bareilly (IN) - BEK
+Bari (IT) - BRI
+Barinas (VE) - BNS
+Bario (MY) - BBN
+Barisal (BD) - BZL
+Barkol (CN) - DHH
+Barnaul (RU) - BAX
+Barquisimeto (VE) - BRM
+Barra do Garças (BR) - BPG
+Barrancabermeja (CO) - EJA
+Barranquilla (CO) - BAQ
+Barre/Montpelier (US) - MPV
+Barreiras (BR) - BRA
+Barretos (BR) - BAT
+Barrie (CA) - YLK
+Barrow-in-Furness (GB) - BWF
+Barter Island (US) - BTI
+Basco (PH) - BSO
+Basra (IQ) - BSR
+Basse-Terre (GP) - BBR
+Basseterre (KN) - SKB
+Bastia (FR) - BIA
+Bata (GQ) - BSG
+Batagay (RU) - BQJ
+Batagay-Alyta (RU) - SUK
+Batam (ID) - BTH
+Bathurst (AU) - BHS
+Batman (TR) - BAL
+Batna (DZ) - BLJ
+Baton Rouge (US) - BTR
+Båtsfjord (NO) - BJF
+Battambang (KH) - BBM
+Batticaloa (LK) - BTC
+Battle Creek (US) - BTL
+Batu Licin (ID) - BTW
+Batumi (GE) - BUS
+Baucau (TL) - BCH
+Bauchi (NG) - BCU
+Baudette (US) - BDE
+Bauru (BR) - JTC
+Bayamo (CU) - BYM
+Bayanhot (CN) - AXF
+Bayankhongor (MN) - BYN
+Bayannur (CN) - RLK
+Baykit (RU) - BKA
+Bazaruto Island (MZ) - BZB, IBL
+Bazhong (CN) - BZX
+Beale Air Force Base (US) - BAB
+Bearskin Lake (CA) - XBE
+Beaumont/Port Arthur (US) - BPT
+Beauvais (FR) - BVA
+Beaver (US) - BKW, WBQ
+Beaver Creek (CA) - YXQ
+Beaver Falls (US) - BFP
+Béchar (DZ) - CBH
+Bedford (US) - BED
+Bedourie (AU) - BEU
+Beef Island (VG) - EIS
+Beersheba (IL) - VTM
+Beihai (CN) - BHY
+Beijing (CN) - PEK, PKX
+Beira (MZ) - BEW
+Beirut (LB) - BEY
+Beja (PT) - BYJ
+Béjaïa (DZ) - BJA
+Belaya Gora (RU) - BGN
+Beledweyne (SO) - BLW
+Belém (BR) - BEL
+Belfast (GB) - BFS, BHD
+Belgaum (IN) - IXG
+Belgorod (RU) - EGO
+Belgrade (RS) - BEG
+Belize City (BZ) - BZE, TZA
+Bella Bella (CA) - ZEL
+Bella Coola (CA) - QBC
+Bellary (IN) - BEP
+Belleville (US) - BLV
+Bellingham (US) - BLI
+Belo Horizonte (BR) - CNF, PLU
+Bemidji (US) - BJI
+Benalla (AU) - BLN
+Bengaluru (IN) - BLR
+Bengbu (CN) - BFU, BFY
+Bengkulu (ID) - BKS
+Benguela (AO) - BUG
+Benguera Island (MZ) - BCW
+Benin (NG) - BNI
+Benina (LY) - BEN
+Benteng (ID) - KSR
+Bequia (VC) - BQU
+Berbera (SO) - BBO
+Berbérati (CF) - BBT
+Berdyansk (UA) - ERD
+Berenice Troglodytica (EG) - EES
+Berens River (CA) - YBV
+Bergen (NO) - BGO
+Bergerac (FR) - EGC
+Beringin (ID) - KNO
+Berlevåg (NO) - BVG
+Berlin (DE) - BER
+Bermejo (BO) - BJO
+Bern (CH) - BRN
+Besalampy (MG) - BPY
+Beslan (RU) - OGZ
+Bethel (US) - BET
+Betong (TH) - BTZ
+Bettles (US) - BTT
+Beverly / Danvers (US) - BVY
+Béziers (FR) - BZR
+Bezmer (BG) - JAM
+Bhadrapur (NP) - BDP
+Bharatpur (NP) - BHR
+Bhavnagar (IN) - BHU
+Bhawanipatna (IN) - UKE
+Bhopal (IN) - BHO
+Bhubaneswar (IN) - BBI
+Bhuj (IN) - BHJ
+Bhuntar (IN) - KUU
+Biak (ID) - BIK
+Biarritz (FR) - BIQ
+Bidar (IN) - IXX
+Bielefeld (DE) - BFE
+Big Creek (BZ) - BGK
+Big Piney (US) - BPI
+Big Trout Lake (CA) - YTL
+Bijie (CN) - BFJ
+Bikaner (IN) - BKB
+Bilaspur (IN) - PAB
+Bilbao (ES) - BIO
+Bildudalur (IS) - BIU
+Billings (US) - BIL
+Billund (DK) - BLL
+Biloela (AU) - THG
+Bilogai (ID) - UGU
+Biloxi (US) - BIX
+Bima (ID) - BMU
+Bindlach (DE) - BYU
+Binghamton (US) - BGM
+Bingöl (TR) - BGG
+Bintulu (MY) - BTU
+Biratnagar (NP) - BIR
+Birch Creek (US) - KBC
+Birjand (IR) - XBJ
+Birmingham (US) - BHM
+Birmingham, West Midlands (GB) - BHX
+Bisha (SA) - BHH
+Bishkek (KG) - BSZ
+Bisho (ZA) - BIY
+Bishop (US) - BIH
+Biskra (DZ) - BSK
+Bislig (PH) - BPH
+Bismarck (US) - BIS
+Bissau (GW) - OXB
+Bitam (GA) - BMM
+Black Tickle (CA) - YBI
+Blackall (AU) - BKQ
+Blackpool (GB) - BLK
+Blagoveschensk (RU) - BQS
+Blakely Island (US) - BYW
+Blanc-Sablon (CA) - YBX
+Blantyre (MW) - BLZ
+Blenheim (NZ) - BHE
+Block Island (US) - BID
+Bloemfontein (ZA) - BFN
+Bloodvein River (CA) - YDV
+Bloomington (US) - BMG
+Bloomington/Normal (US) - BMI
+Blossom Village (KY) - LYB
+Blountville (US) - TRI
+Bluefield (US) - BLF
+Bluefields (NI) - BEF
+Blythe (US) - BLH
+Blytheville (US) - BYH
+Bo (SL) - KBS
+Boa Vista (BR) - BVB
+Bobo Dioulasso (BF) - BOY
+Boca Raton (US) - BCT
+Bodaybo (RU) - ODO
+Bodø (NO) - BOO
+Bodrum (TR) - BJV
+Boende (CD) - BNB
+Bogorodskoye (RU) - BQG
+Bogota (CO) - BOG
+Boigu Island (AU) - GIC
+Boise (US) - BOI
+Bojnord (IR) - BJB
+Bokhtar (TJ) - KQT
+Bokondini (ID) - BUI
+Bole (CN) - BPL
+Bolivar (VE) - EOR
+Bologna (IT) - BLQ
+Bolzano (IT) - BZO
+Bom Jesus da Lapa (BR) - LAZ
+Bonaventure (CA) - YVB
+Bongao (PH) - TWT
+Bonito (BR) - BYO
+Bonnyville (CA) - YBY
+Bontang-Borneo Island (ID) - BXT
+Boos (FR) - URO
+Bor (RU) - TGP
+Borba (BR) - RBB
+Bordeaux (FR) - BOD
+Bordj Badji Mokhtar (DZ) - BMW
+Borkum (DE) - BMK
+Borlange (SE) - BLE
+Boryspil (UA) - KBP
+Bosaso (SO) - BSA
+Boscobel (JM) - OCJ
+Bosset (PG) - BOT
+Bossier City (US) - BAD
+Boston (US) - BOS
+Bouaké (CI) - BYK
+Bouarfa (MA) - UAR
+Boulder City (US) - BLD
+Bourges (FR) - BOU
+Bournemouth (GB) - BOH
+Bovanenkovo (RU) - BVJ
+Bowling Green (US) - BWG
+Bozeman (US) - BZN
+Bradford (US) - BFD
+Brady (US) - BBD
+Bragança (PT) - BGC
+Brainerd (US) - BRD
+Brak (LY) - BCQ
+Brandon (CA) - YBR
+Brandon, Suffolk (GB) - LKZ
+Branson (US) - BKG
+Brasília (BR) - BSB
+Brașov (RO) - GHV
+Bratislava (SK) - BTS
+Bratsk (RU) - BTK
+Braunschweig (DE) - BWE
+Brazzaville (CG) - BZV
+Bremen (DE) - BRE
+Bremerton (US) - PWT
+Breslau (CA) - YKF
+Brest (BY) - BQT
+Brest (FR) - BES
+Breves (BR) - BVS
+Brevig Mission (US) - KTS
+Bréville-sur-Mer, Manche (FR) - GFR
+Bridgeport (US) - BDR, CKB
+Bridgetown (BB) - BGI
+Brighton, East Sussex (GB) - ESH
+Brindisi (IT) - BDS
+Brisbane (AU) - BNE
+Bristol (GB) - BRS
+Brive (FR) - BVE
+Brno (CZ) - BRQ
+Broadwood (AU) - KGI
+Brochet (CA) - YBT
+Broken Hill (AU) - BHQ
+Bromont (CA) - ZBM
+Brønnøy (NO) - BNN
+Broome (AU) - BME
+Broughton (GB) - CEG
+Brownsville (US) - BRO
+Brunswick (US) - BQK, NHZ
+Bryansk (RU) - BZK
+Bryce Canyon (US) - BCE
+Buariki (KI) - AAK
+Bucaramanga (CO) - BGA
+Bucharest (RO) - BBU
+Buckland (US) - BKC
+Budapest (HU) - BUD
+Buenaventura (CO) - BUN
+Buenos Aires (AR) - AEP, EZE
+Buffalo (US) - BUF
+Bugulma (RU) - UUA
+Bujumbura (BI) - BJM
+Buka Island (PG) - BUA
+Bukhara (UZ) - BHK
+Bukoba (TZ) - BKZ
+Bulawayo (ZW) - BUQ
+Bulgan (MN) - UGA
+Bullhead City (US) - IFP
+Bullocks Harbour (BS) - GHC
+Bundaberg (AU) - BDB
+Bunia (CD) - BUX
+Buol (ID) - UOL
+Buon Ma Thuot (VN) - BMV
+Burang Town (CN) - APJ
+Burbach (DE) - SGE
+Burbank (US) - BUR
+Büren (DE) - PAD
+Bureta (FJ) - LEV
+Burgas (BG) - BOJ
+Burgos (ES) - RGS
+Buriram (TH) - BFV
+Burley (US) - BYI
+Burlington (US) - BRL, BTV
+Burnie (AU) - BWT
+Burns (US) - BNO
+Burns Lake (CA) - YPZ
+Burnt Pine (NF) - NLK
+Burqin (CN) - KJI
+Burwash Landing (CA) - YDB
+Bury Saint Edmunds, Suffolk (GB) - BEQ, MHZ
+Busan (KR) - PUS
+Bushehr (IR) - BUZ
+Busselton (AU) - BQB
+Buta (CD) - BZU
+Butaritari (KI) - BBG
+Butte (US) - BTM
+Butterworth (MY) - BWH
+Butuan (PH) - BXU
+Bydgoszcz (PL) - BZG
+Ca Mau City (VN) - CAH
+Cabatuan (PH) - ILO
+Cabinda (AO) - CAB
+Cabo Frio (BR) - BZC, CFB
+Cabo Rojo (DO) - CBJ
+Cabo San Lucas (MX) - CSW
+Cache Creek (CA) - YZA
+Cacoal (BR) - OAL
+Caen (FR) - CFR
+Cagliari (IT) - CAG
+Cahors (FR) - ZAO
+Cairns (AU) - CNS
+Cairo (EG) - CAI
+Cajamarca (PE) - CJA
+Cajazeiras (BR) - CJZ
+Calabar (NG) - CBQ
+Calais (FR) - CQF
+Calama (CL) - CJC
+Calbayog City (PH) - CYP
+Caldas Novas (BR) - CLV
+Calden (DE) - KSF
+Calgary (CA) - YYC
+Cali (CO) - CLO
+Calicut (IN) - CCJ
+Calvi (FR) - CLY
+Camaguey (CU) - CMW
+Camberley, Surrey (GB) - BBS
+Cambridge Bay (CA) - YCB
+Cambridge, Cambridgeshire (GB) - CBG
+Camp Douglas (US) - VOK
+Camp Springs (US) - ADW
+Campbell River (CA) - YBL
+Campbeltown (GB) - CAL
+Campeche (MX) - CPE
+Campina Grande (BR) - CPV
+Campinas (BR) - VCP
+Campo Grande (BR) - CGR
+Campo nell'Elba (IT) - EBA
+Campos dos Goytacazes (BR) - CAW
+Can Tho (VN) - VCA
+Canaima (VE) - CAJ
+Çanakkale (TR) - CKZ
+Canberra (AU) - CBR
+Cancún (MX) - CUN
+Canefield (DM) - DCF
+Canela (BR) - CEL
+Cannes (FR) - CEQ
+Canouan (VC) - CIW
+Cap Haitien (HT) - CAP
+Cap Skirring (SN) - CSK
+Cape Girardeau (US) - CGI
+Cape Lisburne (US) - LUR
+Cape Newenham (US) - EHM
+Cape Romanzof (US) - CZF
+Cape Town (ZA) - CPT
+Caransebeş (RO) - CSB
+Carauari (BR) - CAF
+Caravelas (BR) - CRQ
+Carcassonne (FR) - CCF
+Cardiff (GB) - CWL
+Carepa (CO) - APO
+Caribou (US) - CAR
+Carlisle, Cumbria (GB) - CAX
+Carlsbad (US) - CLD, CNM
+Carnarvon (AU) - CVQ
+Carolina (BR) - CLN
+Carrefour Sanon (HT) - JEE
+Carriacou Island (GD) - CRU
+Carson City (US) - CSN
+Cartagena (CO) - CTG
+Cartago (CO) - CRC
+Carterton, Oxfordshire (GB) - BZZ
+Cartwright (CA) - YRF
+Caruaru (BR) - CAU
+Carúpano (VE) - CUP
+Casablanca (MA) - CMN
+Cascais (PT) - CAT
+Cascavel (BR) - CAC
+Caselle (IT) - VRN
+Caselle Torinese (IT) - TRN
+Casper (US) - CPR
+Castellón de la Plana (ES) - CDT
+Castlegar (CA) - YCG
+Castletown (IM) - IOM
+Castres (FR) - DCM
+Castries (LC) - SLU
+Cat Hill (SH) - ASI
+Cat Island (BS) - TBI
+Cat Lake (CA) - YAC
+Catamarca (AR) - CTC
+Catania (IT) - CTA
+Catarman (PH) - CRM
+Caticlan (PH) - MPH
+Catumbela (AO) - CBT
+Cauayan City (PH) - CYZ
+Caucasia (CO) - CAQ
+Cavite (PH) - SGL
+Caxias Do Sul (BR) - CXJ
+Caye Caulker (BZ) - CUK
+Caye Chapel (BZ) - CYC
+Cayo Coco (CU) - CCC
+Cayo Largo del Sur (CU) - CYO
+Cebu City/Lapu-Lapu City (PH) - CEB
+Cedar City (US) - CDC
+Cedar Rapids (US) - CID
+Ceiba (PR) - NRR
+Celaya (MX) - CYW
+Center Island (US) - CWS
+Central (US) - CEM
+České Budějovice (CZ) - JCL
+Chabeuil, Drôme (FR) - VAF
+Chachagüí (CO) - PSO
+Chachapoyas (PE) - CHH
+Chadron (US) - CDR
+Chaitén (CL) - WCH
+Chake Chake (TZ) - PMA
+Chalkyitsik (US) - CIK
+Chaloem Phra Kiat (TH) - NAK
+Chalons en Champagne (FR) - XCR
+Chambéry (FR) - CMF
+Chañaral (CL) - CNR
+Chandigarh (IN) - IXC
+Changchun (CN) - CGQ
+Changde (CN) - CGD
+Changsha (CN) - CSX
+Changuinola (PA) - CHX
+Changzhi (CN) - CIH
+Changzhou (CN) - CZX
+Chanute (US) - CNU
+Chapecó (BR) - XAP
+Chapelco/San Martin de los Andes (AR) - CPC
+Chapleau (CA) - YLD
+Charleroi (BE) - CRL
+Charles City (US) - CCY
+Charleston (US) - CHS, CRW
+Charlestown (IE) - NOC
+Charlestown (KN) - NEV
+Charleville (AU) - CTL
+Charlevoix (CA) - YML
+Charlo (CA) - YCL
+Charlotte (US) - CLT
+Charlotte Amalie (VI) - STT
+Charlottesville (US) - CHO
+Charlottetown (CA) - YHG, YYG
+Charmeil, Allier (FR) - VHY
+Chaspuzac, Haute-Loire (FR) - LPY
+Chassieu, Lyon (FR) - LYN
+Châteauroux (FR) - CHR
+Chattanooga (US) - CHA
+Chattogram (BD) - CGP
+Cheboksary (RU) - CSY
+Chefornak (US) - CYF
+Chelyabinsk (RU) - CEK
+Chenega (US) - NCN
+Chengde (CN) - CDE
+Chengdu (CN) - CTU, HZU, TFU
+Chennai (IN) - MAA
+Chenzhou (CN) - HCZ
+Cheongju (KR) - CJJ
+Cherbourg (FR) - CER
+Cherdakly (RU) - ULY
+Cherepovets (RU) - CEE
+Cherkasy (UA) - CKC
+Chernivtsi (UA) - CWC
+Cherskiy (RU) - CYX
+Chesterfield Inlet (CA) - YCS
+Chetumal (MX) - CTM
+Chetwynd (CA) - YCQ
+Chevak (US) - VAK
+Chevery (CA) - YHR
+Cheyenne (US) - CYS
+Chiang Mai (TH) - CNX
+Chiang Rai (TH) - CEI
+Chibougamau (CA) - YMT
+Chicago (US) - MDW, ORD
+Chicago/Prospect Heights/Wheeling (US) - PWK
+Chicago/Rockford (US) - RFD
+Chicago/West Chicago (US) - DPA
+Chicken (US) - CKX
+Chiclayo (PE) - CIX
+Chicopee (US) - CEF
+Chifeng (CN) - CIF
+Chignik (US) - KCG
+Chignik Lake (US) - KCQ
+Chihuahua (MX) - CUU
+Childress (US) - CDS
+Chile Chico (CL) - CCH
+Chillan (CL) - YAI
+Chimbote (PE) - CHM
+Chimoio (MZ) - VPY
+Chimore (BO) - CCA
+Chinchilla (AU) - CCL
+Chingola (ZM) - CGJ
+Chios Island (GR) - JKH
+Chipi (IN) - SDW
+Chiredzi (ZW) - BFO
+Chisasibi (CA) - YKU
+Chişinău (MD) - RMO
+Chita (RU) - HTA
+Chitato (AO) - DUE
+Chitral (PK) - CJL
+Chitré (PA) - CTD
+Chizhou (CN) - JUH
+Chlef (DZ) - CFK
+Choiseul Bay (SB) - CHY
+Chokurdah (RU) - CKH
+Chongqing (CN) - CKG
+Christchurch (NZ) - CHC
+Christiansted (VI) - STX
+Christmas Creek Mine (AU) - CKW
+Chuathbaluk (US) - CHU
+Chub Cay (BS) - CCZ
+Chukotka (RU) - PVS
+Chumphon (TH) - CJM
+Churchill (CA) - YYQ
+Churchill Falls (CA) - ZUM
+Chuxiong (CN) - YUA
+Cicia (FJ) - ICI
+Cienfuegos (CU) - CFG
+Çiğli (TR) - IGL
+Cijulang (ID) - CJN
+Cilacap (ID) - CXP
+Cincinnati (US) - LUK
+Cincinnati / Covington (US) - CVG
+Circle (US) - IRC
+Ciro Redondo (CU) - AVI
+Ciudad Acuña (MX) - ACN
+Ciudad Bolivar (VE) - CBL
+Ciudad de la Costa (UY) - MVD
+Ciudad del Carmen (MX) - CME
+Ciudad del Este (PY) - AGT
+Ciudad Juárez (MX) - CJS
+Ciudad Madero (MX) - TAM
+Ciudad Obregón (MX) - CEN
+Ciudad Real (ES) - CQM
+Ciudad Victoria (MX) - CVM
+Claris (NZ) - GBZ
+Clarks Point (US) - CLP
+Clermont-Ferrand (FR) - CFE
+Cleveland (US) - BKL, CGF, CLE
+Cloncurry (AU) - CNJ
+Clovis (US) - CVN, CVS
+Cluj-Napoca (RO) - CLJ
+Clyde River (CA) - YCY
+Coban (GT) - CBV
+Cobbitty (AU) - CDU
+Cobija (BO) - CIJ
+Coca (EC) - OCC
+Cochabamba (BO) - CBB
+Cochrane (CA) - YCN
+Cochrane (CL) - LGR
+Cockburn Town (TC) - GDT
+Cocoa Beach (US) - COF
+Codrington (AG) - BBQ
+Cody (US) - COD
+Coen (AU) - CUQ
+Coeur d'Alene (US) - COE
+Coffs Harbour (AU) - CFS
+Cognac/Châteaubernard (FR) - CNG
+Coimbatore (IN) - CJB
+Cold Bay (US) - CDB
+Cold Lake (CA) - YOD
+Colima (MX) - CLQ
+Coll Island (GB) - COL
+College Station (US) - CLL
+Colmar (FR) - CMR
+Colombier-Saugnieu, Rhône (FR) - LYS
+Colombo (LK) - CMB, RML
+Colón (PA) - ONX
+Colonel Hill (BS) - CRI
+Colonsay (GB) - CSA
+Colorado Springs (US) - COS
+Columbia (US) - CAE, COU, CUB
+Columbus (US) - CBM, CLU, CMH, CSG, LCK, OLU, OSU
+Columbus/W Point/Starkville (US) - GTR
+Colville Lake (CA) - YCK
+Comiso (IT) - CIY
+Comodoro Rivadavia (AR) - CRD
+Comondú (MX) - CUA
+Comox (CA) - YQQ
+Con Dao (VN) - VCS
+Conakry (GN) - CKY
+Conceição do Araguaia (BR) - CDJ
+Concepcion (CL) - CCP
+Concepción (PY) - CIO
+Concord (US) - CCR, CON, USA
+Concordia (AR) - COC
+Constanța (RO) - CND
+Constantine (DZ) - CZL
+Contadora Island (PA) - OTD
+Coober Pedy (AU) - CPD
+Cooma (AU) - OOM
+Copenhagen (DK) - CPH
+Copiapo (CL) - CPO
+Coral Harbour (CA) - YZS
+Cordoba (AR) - COR
+Córdoba (ES) - ODB
+Cordova (US) - CDV
+Corisco Island (GQ) - OCS
+Cork (IE) - ORK
+Çorlu (TR) - TEQ
+Cormeilles-en-Vexin, Val-d'Oise (FR) - POX
+Corn Island (NI) - RNI
+Cornwall (CA) - YCC
+Coro (VE) - CZE
+Coron (PH) - USU
+Corozal (BZ) - CZH
+Corozal (CO) - CZU
+Corpus Christi (US) - CRP, NGP
+Corredores (CR) - OTR
+Correia Pinto (BR) - EEA
+Corrientes (AR) - CNQ
+Cortez (US) - CEZ
+Corumbá (BR) - CMG
+Corvallis (US) - CVO
+Corvera (ES) - RMU
+Corvo (PT) - CVU
+Cosmo Newbery (AU) - GYZ
+Cosoleacaque (MX) - MTT
+Cotonou (BJ) - COO
+Coveñas (CO) - CVE
+Cox's Bazar (BD) - CXB
+Coxen Hole (HN) - RTB
+Coyhaique (CL) - GXQ
+Cozumel (MX) - CZM
+Craig Cove (VU) - CCV
+Craiova (RO) - CRA
+Cranbrook (CA) - YXC
+Creil (FR) - CSF
+Crescent City (US) - CEC
+Crestview (US) - CEW, EGI
+Crete Island (GR) - JSH
+Criciúma (BR) - CCM
+Crooked Creek (US) - CKD
+Cross Lake (CA) - YCR
+Crossville (US) - CSV
+Cruz (BR) - JJD
+Cruzeiro Do Sul (BR) - CZS
+Cúcuta (CO) - CUC
+Cuenca (EC) - CUE
+Cuiabá (BR) - CGB
+Culebra (PR) - CPX
+Culiacán (MX) - CUL
+Culleredo (ES) - LCG
+Cumaná (VE) - CUM
+Curitiba (BR) - BFH, CWB
+Curuzu Cuatia (AR) - UZU
+Cusco (PE) - CUZ
+Cut Bank (US) - CTB
+Cutral-Co (AR) - CUT
+Cuyo (PH) - CYU
+Da Lat (VN) - DLI
+Da Nang (VN) - DAD
+Daegu (KR) - TAE
+Daet (PH) - DTE
+Daggett (US) - DAG
+Dakar (SN) - DKR, DSS
+Dakhla (EH) - VIL
+Dalaman (TR) - DLM
+Dalanzadgad (MN) - DLZ
+Dalbandin (PK) - DBA
+Dalcahue (CL) - MHC
+Dalhart (US) - DHT
+Dali (CN) - DLU
+Dalian (CN) - CNI, DLC
+Dallas (US) - DAL
+Dallas-Fort Worth (US) - DFW
+Dallesport / The Dalles (US) - DLS
+Dalnerechensk (RU) - DLR
+Daman (IN) - NMB
+Damascus (SY) - DAM
+Danbury (US) - DXR
+Dandong (CN) - DDG
+Dangriga (BZ) - DGA
+Danville (US) - DAN
+Daqing (CN) - DQA
+Dar es Salaam (TZ) - DAR
+Darbhanga (IN) - DBR
+Darlington, Durham (GB) - MME
+Darnley Island (AU) - NLF
+Daru (PG) - DAU
+Darwin (AU) - DRW
+Daşoguz (TM) - TAZ
+Datadawai-Borneo Island (ID) - DTD
+Datong (CN) - DAT
+Datu Odin Sinsuat (PH) - CBO
+Dauphin (CA) - YDN
+Davao (PH) - DVO
+David (PA) - DAV
+Dawadmi (SA) - DWD
+Dawei (MM) - TVY
+Dawson City (CA) - YDA
+Dawson Creek (CA) - YDQ
+Dayton (US) - DAY, FFO
+Daytona Beach (US) - DAB
+Dazhou (CN) - DAX, DZH
+Deadhorse (US) - SCC
+Deadman's Cay (BS) - LGI
+Dease Lake (CA) - YDL
+Deauville (FR) - DOL
+Debre Zeyit (ET) - QHR
+Debrecen (HU) - DEB
+Decatur (US) - DEC, DTR
+Decimomannu (IT) - DCI
+Deer Lake (CA) - YDF, YVZ
+Deering (US) - DRG
+Dehong (CN) - LUM
+Dehradun (IN) - DED
+Deir ez-Zor (SY) - DEZ
+Dekai (ID) - DEX
+Del Carmen (PH) - IAO
+Del Rio (US) - DLF, DRT
+Déline (CA) - YWJ
+Delingha (CN) - HXD
+Delma Island (AE) - ZDY
+Delta (CA) - YDT
+Delta Junction Ft Greely (US) - BIG
+Dembidollo (ET) - DEM
+Deming (US) - DMN
+Den Helder (NL) - DHR
+Denham (AU) - MJK
+Deniliquin (AU) - DNQ
+Denison (US) - PNX
+Denizli (TR) - DNZ
+Denver (US) - APA, BJC, DEN
+Deoghar (IN) - DGH
+Deputatskiy (RU) - DPT
+Dera Ghazi Khan (PK) - DEA
+Dera Ismael Khan (PK) - DSK
+Derby (AU) - DCN, DRB
+DeRidder (US) - DRI
+Derry, Derry and Strabane (GB) - LDY
+Des Moines (US) - DSM
+Dessie (ET) - DSE
+Destin (US) - DSI
+Detroit (US) - DET, DTW, YIP
+Devils Lake (US) - DVL
+Devonport (AU) - DPO
+Deyang (CN) - GHN
+Dezful (IR) - DEF
+Dhahran (SA) - DHA
+Dhaka (BD) - DAC
+Dibrugarh (IN) - DIB
+Dickinson (US) - DIK
+Diego Garcia (IO) - NKW
+Dien Bien Phu (VN) - DIN
+Digby (CA) - YDG
+Dijon (FR) - DIJ
+Dikson (RU) - DKS
+Dili (TL) - DIL
+Dillingham (US) - DLG
+Dimapur (IN) - DMU
+Dinard (FR) - DNR
+Dipolog (PH) - DPL
+Diqing (CN) - DIG
+Dire Dawa (ET) - DIR
+Diu (IN) - DIU
+Diyarbakır (TR) - DIY
+Djanet (DZ) - DJG
+Djibouti City (DJ) - JIB
+Dnipro (UA) - DNK
+Dodge City (US) - DDC
+Dodoma (TZ) - DOD
+Doha (QA) - DIA, DOH
+Dolbeau-Saint-Felicien (CA) - YDO
+Dole (FR) - DLE
+Dolisie (CG) - DIS
+Dolný Hričov (SK) - ILZ
+Dolpa (NP) - DOP
+Donegal (IE) - CFN
+Dong Hoi (VN) - VDH
+Dongola (SD) - DOG
+Dongying (CN) - DOY
+Dortmund (DE) - DTM
+Dothan (US) - DHN
+Douala (CM) - DLA
+Douglas Bisbee (US) - DUG
+Dover (US) - DOV
+Dresden (DE) - DRS
+Drietabbetje (SR) - DRJ
+Dryden (CA) - YHD
+Dubai (AE) - DWC, DXB, NHD
+Dubbo (AU) - DBO
+Dublin (IE) - DUB
+Dubois (US) - DUJ
+Dubrave Gornje (BA) - TZL
+Dubrovnik (HR) - DBV
+Dubuque (US) - DBQ
+Dulles (US) - IAD
+Duluth (US) - DLH
+Dumaguete City (PH) - DGT
+Dumai (ID) - DUM
+Duncan Town (BS) - DCT
+Dundee (GB) - DND
+Dunedin (NZ) - DUD
+Dunhuang (CN) - DNH
+Duqm (OM) - DQM
+Durango (MX) - DGO
+Durango (US) - DRO
+Durant (US) - DUA
+Durazno (UY) - DZO
+Durban (ZA) - DUR, VIR
+Durgapur (IN) - RDP
+Dushanbe (TJ) - DYU
+Düsseldorf (DE) - DUS
+Dwangwa (MW) - DWA
+Dzaoudzi (YT) - DZA
+Eagle (US) - EAA, EGE
+Earlton (CA) - YXR
+East Albury (AU) - ABX
+East Farmingdale (US) - FRG
+East London (ZA) - ELS
+Eastmain River (CA) - ZEM
+Eastover (US) - MMT
+Eastsound (US) - ESD, WDN
+Eau Claire (US) - EAU
+Eday (GB) - EOI
+Edinburgh (GB) - EDI
+Edmonton (CA) - YEG
+Edremit (TR) - EDO
+Edson (CA) - YET
+Edwards (US) - EDW
+Eek (US) - EEK
+Egegik (US) - EGX
+Egilsstaðir (IS) - EGS
+Eilat (IL) - ETM
+Eindhoven (NL) - EIN
+Ekati (CA) - YOA
+Ekibastuz (KZ) - EKB
+El Aaiún (EH) - EUN
+El Alamein (EG) - DBB
+El Arish (EG) - AAC
+El Atteuf (DZ) - GHA
+El Bagre (CO) - EBG
+El Banco (CO) - ELB
+El Bolsón (AR) - EHL
+El Borma (TN) - EBM
+El Calafate (AR) - FTE
+El Centro (US) - NJK
+El Dorado (US) - ELD
+El Fasher (SD) - ELF
+El Hassana (EG) - RDL
+El Hierro Island (ES) - VDE
+El Jora (EG) - EGH
+El Matorral (ES) - FUE
+El Menia (DZ) - ELG
+El Nido (PH) - ENI
+El Palomar (AR) - EPA
+El Paso (US) - ELP
+El Salvador (CL) - ESR
+El Tigre (VE) - SOM
+El Vigía (VE) - VIG
+El-Obeid (SD) - EBD
+Elazığ (TR) - EZS
+Elcho Island (AU) - ELC
+Eldoret (KE) - EDL
+Elim (US) - ELI
+Elista (RU) - ESL
+Elizabeth City (US) - ECG
+Elkins (US) - EKN
+Elko (US) - EKO
+Elliot Lake (CA) - YEL
+Elmira/Corning (US) - ELM
+Ely (US) - ELY, LYU
+Emden (DE) - EME
+Emerald (AU) - EMD
+Emiliano Zapata (MX) - JAL
+Emmen (CH) - EML
+Emmonak (US) - EMK
+Encarnación (PY) - ENO
+Ende (ID) - ENE
+Enegu (NG) - ENU
+Enejit Island (MH) - EJT
+Enfidha (TN) - NBE
+Enid (US) - END
+Eniwetok Atoll (MH) - ENT
+Enniskillen, Fermanagh and Omagh (GB) - ENK
+Enontekio (FI) - ENF
+Enschede (NL) - ENS
+Ensenada (MX) - ESE
+Enshi (CN) - ENH
+Entebbe (UG) - EBB
+Eoligarry (GB) - BRR
+Epi Island (VU) - VLS
+Épinal (FR) - EPL
+Erenhot (CN) - ERL
+Erfurt (DE) - ERF
+Erie (US) - ERI
+Errachidia (MA) - ERH
+Erzincan (TR) - ERC
+Erzurum (TR) - ERZ
+Es-Sénia (DZ) - ORN
+Esbjerg (DK) - EBJ
+Escanaba (US) - ESC
+Eskilstuna (SE) - EKT
+Eskişehir (TR) - AOE, ESK
+Espargos (CV) - SID
+Esperance (AU) - EPR
+Esquel (AR) - EQS
+Essaouira (MA) - ESU
+Essendon Fields (AU) - MEB
+Estevan (CA) - YEN
+Eua Island (TO) - EUA
+Eugene (US) - EUG
+Eureka (US) - EKA
+Evanston (US) - EVW
+Evansville (US) - EVV
+Evenes (NO) - EVE
+Evensk (RU) - SWV
+Everett (US) - PAE
+Ewing Township (US) - TTN
+Exeter, Devon (GB) - EXT
+Exmouth (AU) - LEA
+Ezhou (CN) - EHU
+Fair Isle (GB) - FIE
+Fairbanks (US) - EIL, FAI, FBK
+Fairfield (US) - SUU
+Fairford, Gloucestershire (GB) - FFD
+Faisalabad (PK) - LYP
+Faizabad (IN) - AYJ
+Fakahina (PF) - FHZ
+Fakfak (ID) - FKQ
+Falconara Marittima (IT) - AOI
+Fallon (US) - NFL
+False Pass (US) - KFP
+Fangatau (PF) - FGU
+Fare (PF) - HUH
+Faresmaathodaa (MV) - FMT
+Fargo (US) - FAR
+Farmington (US) - FMN
+Farnborough, Hampshire (GB) - FAB
+Faro (CA) - ZFA
+Faro (PT) - FAO
+Farranfore (IE) - KIR
+Fasa (IR) - FAZ
+Fauville, Eure (FR) - EVX
+Faya-Largeau (TD) - FYT
+Fayetteville (US) - FAY, FYV
+Fayetteville/Springdale/Rogers (US) - XNA
+Fayzabad (AF) - FBD
+Feira de Santana (BR) - FEC
+Feldkirchen bei Graz (AT) - GRZ
+Fera Island (SB) - FRE
+Fergana (UZ) - FEG
+Fernando de Noronha (BR) - FEN
+Ferno (IT) - MXP
+Fianarantsoa (MG) - WFI
+Ficksburg (ZA) - FCB
+Figari (FR) - FSC
+Findlay (US) - FDY
+Firenze (IT) - FLR
+Fitiuta Village (AS) - FTI
+Flagstaff (US) - FLG
+Flin Flon (CA) - YFO
+Flint (US) - FNT
+Florence (US) - FLO
+Florencia (CO) - FLA
+Florianópolis (BR) - FLN
+Florø (NO) - FRO
+Flying Fish Cove (CX) - XCH
+Foggia (IT) - FOG
+Fomboni (KM) - NWA
+Fond-du-Lac (CA) - ZFD
+Forbes (AU) - FRB
+Førde (NO) - FDE
+Forest Hill (AU) - WGA
+Forestville (CA) - YFE
+Forlì (IT) - FRL
+Formosa (AR) - FMA
+Fort Albany (CA) - YFA
+Fort Belvoir (US) - DAA
+Fort Benning (US) - LSF
+Fort Bliss/El Paso (US) - BIF
+Fort Bragg (US) - FBG, POB
+Fort Campbell (US) - HOP
+Fort Carson (US) - FCS
+Fort Cavazos (US) - GRK
+Fort Chipewyan (CA) - YPY
+Fort Dodge (US) - FOD
+Fort Frances (CA) - YAG
+Fort Good Hope (CA) - YGH
+Fort Hope (CA) - YFH
+Fort Huachuca / Sierra Vista (US) - FHU
+Fort Indiantown Gap (US) - MUI
+Fort Irwin/Barstow (US) - BYS
+Fort Knox (US) - FTK
+Fort Lauderdale (US) - FLL, FXE
+Fort Leonard Wood (US) - TBN
+Fort Lewis/Tacoma (US) - GRF
+Fort Liard (CA) - YJF
+Fort McMurray (CA) - YMM
+Fort Mcpherson (CA) - ZFM
+Fort Meade (US) - FME
+Fort Myers (US) - FMY, RSW
+Fort Nelson (CA) - YYE
+Fort Pierce (US) - FPR
+Fort Polk (US) - POE
+Fort Resolution (CA) - YFR
+Fort Riley (US) - FRI
+Fort Rucker/Ozark (US) - OZR
+Fort Saint John (CA) - YXJ
+Fort Sandeman (PK) - PZH
+Fort Severn (CA) - YER
+Fort Sill (US) - FSI
+Fort Simpson (CA) - YFS
+Fort Smith (CA) - YSM
+Fort Smith (US) - FSM
+Fort Stockton (US) - FST
+Fort Wayne (US) - FWA
+Fort Worth (US) - AFW, FTW, FWH
+Fort Yukon (US) - FYU
+Fort-de-France (MQ) - FDF
+Fortaleza (BR) - FOR
+Foshan (CN) - FUO
+Foula (GB) - FOA
+Foumban (CM) - FOM
+Foz do Iguaçu (BR) - IGU
+Franceville (GA) - MVB
+Francisco Beltrão (BR) - FBE
+Francistown (BW) - FRW
+Frankfurt am Main (DE) - FRA, HHN
+Franklin (US) - FKL
+Fredericton (CA) - YFC
+Freeland (US) - MBS
+Freeport (BS) - FPO
+Freetown (SL) - FNA
+Fresno (US) - FAT
+Friday Harbor (US) - FRD, SSW
+Friedrichshafen (DE) - FDH
+Fritzlar (DE) - FRZ
+Fujairah (AE) - FJR
+Fukui (JP) - FKJ
+Fukuoka (JP) - FUK
+Funadhoo (MV) - FND
+Funafuti (TV) - FUN
+Funchal (PT) - FNC
+Fussa (JP) - OKO
+Futuna Island (VU) - FTA
+Futuna Island (WF) - FUT
+Fuyuan (CN) - FYJ
+Fuyun (CN) - FYN
+Fuzhou (CN) - FOC
+Gabala (AZ) - GBB
+Gabès (TN) - GAE
+Gaborone (BW) - GBE
+Gachsaran (IR) - GCH
+Gafsa (TN) - GAF
+Gainesville (US) - GNV
+Galatina (IT) - LCC
+Galcaio (SO) - GLK
+Galena (US) - GAL
+Galle (LK) - KCT
+Gällivare (SE) - GEV
+Gallup (US) - GUP
+Galveston (US) - GLS
+Gamba (GA) - GAX
+Gambela (ET) - GMB
+Gambell (US) - GAM
+Gamètì (CA) - YRA
+Gan (MV) - GAN
+Gander (CA) - YQX
+Gangneung (KR) - KAG
+Ganja (AZ) - GNJ
+Gannan (CN) - GXH
+Ganzhou (CN) - KOW
+Gao (ML) - GAQ
+Garden City (US) - GCK
+Garoua (CM) - GOU
+Garowe (SO) - GGR
+Gary (US) - GYY
+Garzê (CN) - DCY, GZG, KGT
+Gasan (PH) - MRQ
+Gasmata Island (PG) - GMI
+Gaspé (CA) - YGP
+Gathiuru (KE) - NYK
+Gatineau (CA) - YND
+Gatokae (SB) - GTA
+Gaua Island (VU) - ZGU
+Gautam Buddha Nagar (IN) - DXN
+Gaya (IN) - GAY
+Gaziantep (TR) - GZT
+Gaziemir (TR) - ADB
+Gazipaşa (TR) - GZP
+Gbadolite (CD) - BDT
+Gdańsk (PL) - GDN
+Geelong/Melbourne (AU) - AVV
+Geilenkirchen (DE) - GKE
+Gelendzhik (RU) - GDZ
+Gelephu (BT) - GLU
+Gemena (CD) - GMA
+General Pico (AR) - GPO
+General Santos (PH) - GES
+Geneva (CH) - GVA
+Genova (IT) - GOA
+George (ZA) - GRJ
+George Town (KY) - GCM
+Georgetown (GY) - GEO
+Gerald's Park (MS) - MNI
+Geraldton (CA) - YGQ
+Ghadames (LY) - LTD
+Ghat (LY) - GHT
+Ghaziabad (IN) - HDO
+Ghriss (DZ) - MUW
+Gibraltar (GI) - GIB
+Gifu (JP) - QGU
+Gilgit (PK) - GIL
+Gillam (CA) - YGX
+Gillette (US) - GCC
+Gimli (CA) - YGM
+Gimseang-ro (KR) - JWO
+Girardot (CO) - GIR
+Girona (ES) - GRO
+Gisborne (NZ) - GIS
+Gisenyi (RW) - GYI
+Gitega (BI) - GID
+Gizo (SB) - GZO
+Gjoa Haven (CA) - YHK
+Gladstone (AU) - GLT
+Glasgow (GB) - GLA
+Glasgow (US) - GGW
+Glen Innes (AU) - GLI
+Glendale (US) - LUF
+Glendive (US) - GDV
+Glens Falls (US) - GFL
+Glentanner Station (NZ) - GTN
+Gobernador Gregores (AR) - GGS
+Gode (ET) - GDE
+Gods Lake Narrows (CA) - YGO
+Gods River (CA) - ZGI
+Goiânia (BR) - GYN
+Goin (FR) - ETZ
+Gold Coast (AU) - OOL
+Goldsboro (US) - GSB
+Golfito (CR) - GLF
+Golmud (CN) - GOQ
+Golog (CN) - GMQ
+Golovin (US) - GLV
+Goma (CD) - GOM
+Gombe (NG) - GMO
+Gomel (BY) - GME
+Gondia (IN) - GDB
+Gonghang-ro (KR) - YNY
+Goodland (US) - GLD
+Goodnews (US) - GNU
+Goose Bay (CA) - YYR
+Gorakhpur (IN) - GOP
+Gore Bay (CA) - YZE
+Gorgan (IR) - GBT
+Gorna Oryahovitsa (BG) - GOZ
+Gornji Humac (HR) - BWK
+Gorno-Altaysk (RU) - RGK
+Goronka (PG) - GKA
+Gorontalo (ID) - GTO
+Gotalalamo-Morotai Island (ID) - OTI
+Göteborg (SE) - GOT, GSE
+Goto (JP) - FUJ
+Governador Valadares (BR) - GVR
+Governor's Harbour (BS) - GHB
+Goya (AR) - OYA
+Gqeberha (ZA) - PLZ
+Grâce-Hollogne (BE) - LGG
+Grafton (AU) - GFN
+Gran Canaria Island (ES) - LPA
+Gran Roque Island (VE) - LRV
+Granada (ES) - GRX
+Grand Canyon - Tusayan (US) - GCN
+Grand Case (MF) - SFG
+Grand Forks (CA) - ZGF
+Grand Forks (US) - GFK, RDR
+Grand Island (US) - GRI
+Grand Junction (US) - GJT
+Grand Rapids (US) - GRR
+Grand-Bourg (GP) - GBJ
+Grande Anse (GP) - DSD
+Grande Prairie (CA) - YQU
+Gravenhurst (CA) - YQA
+Grayling (US) - KGX
+Great Falls (US) - GTF
+Green Bay (US) - GRB
+Greensboro (US) - GSO
+Greenville (LR) - SNI
+Greenville (US) - GLH, GMU, PGV
+Greenville/Greer/Spartanburg (US) - GSP
+Greenwood (CA) - YZX
+Greenwood (US) - GWO
+Grenoble (FR) - GNB
+Greven (DE) - FMO
+Griffith (AU) - GFF
+Grimsby, Lincolnshire (GB) - HUY
+Grímsey/Sandvík (IS) - GRY
+Grise Fiord (CA) - YGZ
+Groningen (NL) - GRQ
+Groote Eylandt (AU) - GTE
+Grootfontein (NA) - GFY
+Grosseto (IT) - GRS
+Groton (US) - GON
+Grottaglie (IT) - TAR
+Grozny (RU) - GRV
+Guadalajara (MX) - GDL
+Guaíra (BR) - GGJ
+Guajará-Mirim (BR) - GJM
+Gualeguaychu (AR) - GHU
+Guanaja (HN) - GJA
+Guanare (VE) - GUQ
+Guangyuan (CN) - GYS
+Guangzhou (CN) - CAN
+Guantánamo (CU) - GAO
+Guantanamo Bay Naval Station (CU) - NBW
+Guapi (CO) - GPI
+Guarapari (BR) - GUZ
+Guaratinguetá (BR) - GUJ
+Guarico (VE) - CLZ
+Guarujá (BR) - SSZ
+Guasdualito (VE) - GDO
+Guatemala City (GT) - GUA
+Guayaquil (EC) - GYE
+Guayaramerín (BO) - GYA
+Guaymas (MX) - GYM
+Guemar (DZ) - ELU
+Guilin (CN) - KWL
+Guiyang (CN) - KWE
+Gulfport (US) - GPT
+Gulkana (US) - GKN
+Gulu (UG) - ULU
+Gunnison (US) - GUC
+Gunsan (KR) - KUV
+Gunungsitoli (ID) - GNS
+Gurandani (PK) - GWD
+Gurayat (SA) - URY
+Gurney (PG) - GUR
+Gustavia (BL) - SBH
+Gustavus (US) - GST
+Guwahati (IN) - GAU
+Guyana City (VE) - PZO
+Guymon (US) - GUY
+Guyuan (CN) - GYU
+Guzara (AF) - HEA
+Gwalior (IN) - GWL
+Gwangju (KR) - KWJ
+Gwayi River Farms (ZW) - HWN
+Gweru (ZW) - GWE
+Gwinn (US) - MQT
+Gyumri (AM) - LWN
+Haa Dhaalu Atoll (MV) - HAQ
+Hachijojima (JP) - HAC
+Hachinohe (JP) - HHE
+Hadsel (NO) - SKN
+Hagåtña (GU) - GUM
+Hagerstown (US) - HGR
+Haibei (CN) - HBQ
+Haidong (CN) - XNN
+Haifa (IL) - HFA
+Haikou (CN) - HAK
+Hail (SA) - HAS
+Hailar (CN) - HLD
+Hailey (US) - SUN
+Hainan (CN) - HNG
+Haines (US) - HNS
+Haines Junction (CA) - YHT
+Haiphong (VN) - HPH
+Hakkari (TR) - YKO
+Hakodate (JP) - HKD
+Halali (NA) - HAL
+Halifax (CA) - YHZ
+Halmstad (SE) - HAD
+Halwara (IN) - HWR
+Hamadan (IR) - HDM
+Hamburg (DE) - HAM, XFW
+Hami (CN) - HMI
+Hamilton (BM) - BDA
+Hamilton (CA) - YHM
+Hamilton (NZ) - HLZ
+Hamilton Island (AU) - HTI
+Hammerfest (NO) - HFT
+Hampton (US) - LFI
+Hana (US) - HNM
+Hanak (SA) - RSI
+Hanamaki (JP) - HNA
+Hancock (US) - CMX
+Handan (CN) - HDG
+Hangzhou (CN) - HGH, JDE
+Hannover (DE) - HAJ
+Hanoi (VN) - HAN
+Hanzhong (CN) - HZG
+Harare (ZW) - HRE
+Harbin (CN) - HRB
+Hargeisa (SO) - HGA
+Harlingen (US) - HRL
+Harrisburg (US) - MDT
+Harrismith (ZA) - HRS
+Harrison (US) - HRO
+Hartford (US) - BDL, HFD
+Hassi Messaoud (DZ) - HME
+Hassi R'Mel (DZ) - HRM
+Hasvik (NO) - HAA
+Hat Yai (TH) - HDY
+Hattiesburg (US) - HBG
+Havana (CU) - HAV, UPB
+Haverfordwest (GB) - HAW
+Havre (US) - HVR
+Havre-Saint-Pierre (CA) - YGV
+Hawassa (ET) - AWA
+Hawthorne (US) - HHR
+Hay River (CA) - YHY
+Hayden (US) - HDN
+Hays (US) - HYS
+Hayward (US) - HYR
+Hearst (CA) - YHF
+Hechi (CN) - HCJ
+Hefei (CN) - HFE
+Heho (MM) - HEH
+Heihe (CN) - DTU, HEK
+Hejing (CN) - HJB
+Helena (US) - HLN
+Helgoland (DE) - HGL
+Helsinki (FI) - HEL
+Hemavan (SE) - HMV
+Hengchun (TW) - HCN
+Hengyang (CN) - HNY
+Heraklion (GR) - HER
+Hermosillo (MX) - HMO
+Hervey Bay (AU) - HVB
+Heze (CN) - HZA
+Hibbing (US) - HIB
+Hickory (US) - HKY
+Higashikagura (JP) - AKJ
+Higashine (JP) - GAJ
+High Level (CA) - YOJ
+Hikueru (PF) - HHZ
+Hilo (US) - ITO
+Hilton Head Island (US) - HHH
+Hiroshima (JP) - HIJ
+Hisar (IN) - HSS
+Hīt (IQ) - IQA
+Hiva Oa Island (PF) - AUQ
+Ho Chi Minh City (VN) - LTH, SGN
+Hobart (AU) - HBA
+Hobart (US) - HBR
+Hobbs (US) - HOB
+Hoedspruit (ZA) - HDS
+Hoemun-ri (KP) - RGO
+Hof (DE) - HOQ
+Höfn (IS) - HFN
+Hofuf (SA) - HOF
+Hohhot (CN) - HET
+Holguin (CU) - HOG
+Holingol (CN) - HUO
+Hollongi (IN) - HGI
+Hollywood (US) - HWO
+Holy Cross (US) - HCR
+Homer (US) - HOM
+Homestead (US) - HST
+Hondarribia (ES) - EAS
+Hong Kong (HK) - HKG
+Honiara (SB) - HIR
+Honningsvåg (NO) - HVG
+Honolulu, Oahu (US) - HNL
+Hoogerheide (NL) - WOE
+Hook, Hampshire (GB) - ODH
+Hoonah (US) - HNH
+Hooper Bay (US) - HPB
+Hopedale (CA) - YHO
+Hoquiam (US) - HQM
+Horn (AU) - HID
+Hornepayne (CA) - YHN
+Hörselberg-Hainich (DE) - EIB
+Horta (PT) - HOR
+Hot Springs (US) - HOT
+Hotan (CN) - HTN, YTW
+Houlton (US) - HUL
+Houston (US) - CXO, EFD, HOU, IAH, SGR
+Hrodna (BY) - GNA
+Hsinchu City (TW) - HSZ
+Hua Hin (TH) - HHQ
+Huai'an (CN) - HIA
+Huaihua (CN) - HJJ
+Hualien City (TW) - HUN
+Huambo (AO) - NOV
+Huangshan (CN) - TXN
+Huánuco (PE) - HUU
+Huatulco (MX) - HUX
+Hubballi (IN) - HBX
+Huế (VN) - HUI
+Huehuetenango (GT) - HUG
+Hughenden (AU) - HGD
+Hughes (US) - HUS
+Huizhou (CN) - HUZ
+Huludao (CN) - XEN
+Huntington (US) - HTS
+Huntsville (US) - HSV, HTV
+Hurghada (EG) - HRG
+Huron (US) - HON
+Huron Park (CA) - YCE
+Húsavík (IS) - HZK
+Huslia (US) - HSL
+Hutchinson (US) - HUT
+Huvadhu Atoll (MV) - GKK, KDM
+Huxi (TW) - MZG
+Hyannis (US) - HYA
+Hyderabad (IN) - BPM, HYD
+Hyderabad (PK) - HDD
+Hyères, Var (FR) - TLN
+I Fadang, Saipan (MP) - SPN
+IAF Camp (IN) - CBD
+Iaşi (RO) - IAS
+Ibadan (NG) - IBA
+Ibagué (CO) - IBE
+Iberia (PE) - IBP
+Ibiza (ES) - IBZ
+Idaho Falls (US) - IDA
+Ie (JP) - IEJ
+Igarka (RU) - IAA
+Iğdır (TR) - IGD
+Igiugig (US) - IGG
+Igloolik (CA) - YGT
+Ignace (CA) - ZUC
+Ikaria Island (GR) - JIK
+Iki (JP) - IKI
+Ilam (IR) - IIL
+Île des Pins (NC) - ILP
+Ilebo (CD) - PFR
+Ilford (CA) - ILF
+Ilhéus (BR) - IOS
+Ili (CN) - YIN
+Iliamna (US) - ILI
+Ilinden (MK) - SKP
+Illizi (DZ) - VVZ
+Ilo (PE) - ILQ
+Ilorin/Ogbomosho (NG) - ILR
+Ilulissat (GL) - JAV
+Imperatriz (BR) - IMP
+Imperial (US) - IPL
+Imphal (IN) - IMF
+In Aménas (DZ) - IAM
+In Salah (DZ) - INZ
+Independence (BZ) - INB
+Indianapolis (US) - IND
+Indore (IN) - IDR
+Inhambane (MZ) - INH
+Inis Meáin (IE) - IIA
+Inis Mór (IE) - IOR
+Inis Oírr (IE) - INQ
+Innsbruck (AT) - INN
+Inongo (CD) - INO
+Inta (RU) - INA
+International Falls (US) - INL
+Inukjuak (CA) - YPH
+Inuvik (CA) - YEV
+Invercargill (NZ) - IVC
+Inverell (AU) - IVR
+Inverin (IE) - NNR
+Inverness (GB) - INV
+Ioannina (GR) - IOA
+Ipatinga (BR) - IPN
+Ipiales (CO) - IPI
+Ipoh (MY) - IPH
+Iqaluit (CA) - YFB
+Iquique (CL) - IQQ
+Iquitos (PE) - IQT
+Iranshahr (IR) - IHR
+Irkutsk (RU) - IKT
+Ironwood (US) - IWD
+Ísafjörður (IS) - IFJ
+Isfahan (IR) - IFN
+Ishigaki (JP) - ISG
+Ishurdi (BD) - IRD
+Isiro (CD) - IRP
+Isla Baltra (EC) - GPS
+Isla Colón (PA) - BOC
+Isla de Coche (VE) - ICC
+Isla de la Juventud (CU) - SZJ
+Isla De Pascua (CL) - IPC
+Isla Margarita (VE) - PMV
+Island Lake (CA) - YIV
+Isle of Islay, Argyll and Bute (GB) - ILY
+Islip (US) - ISP
+Isola di Capo Rizzuto (IT) - CRV
+Isparta (TR) - ISE
+Istanbul (TR) - ISL, IST
+Itacoatiara (BR) - ITA
+Itaituba (BR) - ITB
+Ithaca (US) - ITH
+Ivalo (FI) - IVL
+Ivano-Frankivsk (UA) - IFO
+Ivanovo (RU) - IWA
+Ivujivik (CA) - YIK
+Iwakuni (JP) - IWK
+Ixtapa (MX) - ZIH
+Ixtepec (MX) - IZT
+Izhevsk (RU) - IJK
+Izu Oshima (JP) - OIM
+Izumo (JP) - IZO
+Jabalpur (IN) - JLR
+Jabor Jaluit Atoll (MH) - UIT
+Jacareacanga (BR) - JCR
+Jackson (US) - JAC, JAN, JXN, MKL
+Jacksonville (US) - CRG, JAX, LRF, NIP, NRB, VQQ
+Jacmel (HT) - JAK
+Jacobabad (PK) - JAG
+Jaén (PE) - JAE
+Jaffna (LK) - JAF
+Jagdalpur (IN) - JGB
+Jagel (DE) - WBG
+Jaguaruna (BR) - JJG
+Jaipur (IN) - JAI
+Jakar (BT) - BUT
+Jakarta (ID) - CGK, HLP
+Jalalabad (AF) - JAA
+Jalgaon (IN) - JLG
+Jam (IR) - KNR
+Jambi (ID) - DJB
+Jamestown (SH) - HLE
+Jamestown (US) - JHW, JMS
+Jammu (IN) - IXJ
+Jamnagar (IN) - JGA
+Jämsä (FI) - KEV
+Jamshedpur (IN) - IXW
+Janakpur (NP) - JKR
+Jashore (BD) - JSR
+Jasionka (PL) - RZE
+Jauja (PE) - JAU
+Jeddah (SA) - JED
+Jeju City (KR) - CJU
+Jeju Island (KR) - JDG
+Jember (ID) - JBB
+Jenpeg (CA) - ZJG
+Jerez de la Frontera (ES) - XRY
+Ji-Paraná (BR) - JPR
+Ji'an (CN) - JGS
+Jiagedaqi (CN) - JGD
+Jiamusi (CN) - JMU
+Jiansanjiang (CN) - JSJ
+Jiayuguan (CN) - JGN
+Jieyang (CN) - SWA
+Jijiga (ET) - JIJ
+Jimma (ET) - JIM
+Jinan (CN) - TNA
+Jinchang (CN) - JIC
+Jingdezhen (CN) - JDZ
+Jinghong (CN) - JHG
+Jingzhou (CN) - SHS
+Jining (CN) - JNG
+Jinka (ET) - BCO
+Jinzhou (CN) - JNZ
+Jiroft (IR) - JYR
+Jiujiang (CN) - JIU
+Jixi (CN) - JXA
+Jizan (SA) - GIZ
+João Pessoa (BR) - JPA
+Jodhpur (IN) - JDH
+Joensuu (FI) - JOE
+Johannesburg (ZA) - HLA, JNB, QRA
+Johnstown (US) - JST
+Johor Bahru (MY) - JHB
+Joinville (BR) - JOI
+Jolo (PH) - JOL
+Jomsom (NP) - JMO
+Jonesboro (US) - JBR
+Jönköping (SE) - JKG
+Joplin (US) - JLN
+Jorhat (IN) - JRH
+Jos (NG) - JOS
+Juanjuí (PE) - JJI
+Juazeiro do Norte (BR) - JDO
+Juba (SS) - JUB
+Juist (DE) - JUI
+Juiz de Fora (BR) - IZA, JDF
+Juliaca (PE) - JUL
+Jumla (NP) - JUM
+Junction (US) - JCT
+Juneau (US) - JNU
+Jwaneng (BW) - JWA
+Jyväskylän Maalaiskunta (FI) - JYV
+Kabola (ID) - ARD
+Kabul (AF) - KBL
+Kadapa (IN) - CDP
+Kadhdhoo (MV) - KDO
+Kaduna (NG) - KAD
+Kagau Island (SB) - KGE
+Kagoshima (JP) - KOJ
+Kahramanmaraş (TR) - KCM
+Kahului (US) - OGG
+Kaieteur Falls (GY) - KAI
+Kailashahar (IN) - IXH
+Kaili (CN) - KJH
+Kailua-Kona (US) - KOA
+Kaimana (ID) - KNG
+Kajaani (FI) - KAJ
+Kakadi (IN) - SAG
+Kalaburagi (IN) - GBI
+Kalamata (GR) - KLX
+Kalamazoo (US) - AZO
+Kalaupapa (US) - LUP
+Kalbarri (AU) - KAX
+Kalemie (CD) - FMI
+Kalibo (PH) - KLO
+Kaliningrad (RU) - KGD
+Kalispell (US) - FCA
+Kalmar (SE) - KLR
+Kalskag (US) - KLG
+Kaltag (US) - KAL
+Kaluga (RU) - KLF
+Kalumbila (ZM) - UMB
+Kalymnos Island (GR) - JKL
+Kamakombe (CD) - BKY
+Kamembe (RW) - KME
+Kamina (CD) - KMN
+Kamloops (CA) - YKA
+Kamra (PK) - ATG
+Kananga (CD) - KGA
+Kanazawa (JP) - KMQ
+Kandahar (AF) - KDH
+Kandla (IN) - IXY
+Kaneohe (US) - NGF
+Kangerlussuaq (GL) - SFJ
+Kangiqsualujjuaq (CA) - XGR
+Kangiqsujuaq (CA) - YWB
+Kangirsuk (CA) - YKG
+Kangra (IN) - DHM
+Kankakee (US) - IKK
+Kannur (IN) - CNN
+Kano (NG) - KAN
+Kanpur (IN) - KNU
+Kansas City (US) - MCI, MKC
+Kanti (MM) - KHM
+Kaohsiung (TW) - KHH
+Kaolack (SN) - KLC
+Kapolei (US) - JRF
+Kapuskasing (CA) - YYU
+Karachi (PK) - KHI
+Karaganda (KZ) - KGF
+Karaj (IR) - PYK
+Karakol (KG) - IKG
+Karamay (CN) - KRY
+Karara (AU) - KQR
+Kärdla (EE) - KDL
+Kariba (ZW) - KAB
+Karimunjawa (ID) - KWB
+Karlovy Vary (CZ) - KLV
+Karlskoga (SE) - KSK
+Karlstad (SE) - KSD
+Karluk (US) - KYK
+Karmøy (NO) - HAU
+Karonga (MW) - KGJ
+Karpathos Island (GR) - AOK
+Karratha (AU) - KTA
+Kars (TR) - KSY
+Karshi (UZ) - KSQ
+Kartepe (TR) - KCO
+Karup (DK) - KRP
+Kasabonika (CA) - XKS
+Kasama (ZM) - KAA
+Kasane (BW) - BBK
+Kashan (IR) - KKS
+Kashechewan (CA) - ZKE
+Kashgar (CN) - KHG
+Kasigluk (US) - KUK
+Kasos Island (GR) - KSJ
+Kassala (SD) - KSL
+Kastamonu (TR) - KFS
+Kastelorizo Island (GR) - KZS
+Kathmandu (NP) - KTM
+Katowice (PL) - KTW
+Katsina (NG) - DKA
+Kauehi (PF) - KHZ
+Kauhajoki (FI) - KHJ
+Kauhava (FI) - KAU
+Kaunakakai (US) - MKK
+Kaunas (LT) - KUN
+Kavala (GR) - KVA
+Kavieng (PG) - KVG
+Kawthoung (MM) - KAW
+Kayes (ML) - KYS
+Kayseri (TR) - ASR
+Kazan (RU) - KZN
+Kearney (US) - EAR
+Kebri Dahar (ET) - ABK
+Kediri (ID) - DHX
+Kédougou (SN) - KGG
+Keene (US) - EEN
+Keetmanshoop (NA) - KMP
+Keewaywin (CA) - KEW
+Kefallinia Island (GR) - EFL
+Kekaha (US) - BKH
+Kelowna (CA) - YLW
+Kelsey (CA) - KES
+Kelso (US) - KLS
+Kemerovo (RU) - KEJ
+Kemi / Tornio (FI) - KEM
+Ken Jones (JM) - POT
+Kenai (US) - ENA
+Kendari (ID) - KDI
+Kenema (SL) - KEN
+Kengtung (MM) - KET
+Kenitra (MA) - NNA
+Kenora (CA) - YQK
+Kenosha (US) - ENW
+Keperveem (RU) - KPW
+Kerema (PG) - KMA
+Kerikeri (NZ) - KKE
+Kerkyra (GR) - CFU
+Kerman (IR) - KER
+Kermanshah (IR) - KSH
+Kertajati (ID) - KJT
+Kerteh (MY) - KTE
+Keshod (IN) - IXK
+Ketapang (ID) - KTG
+Ketchikan (US) - KTN
+Key Lake (CA) - YKJ
+Key Largo (US) - OCA
+Key West (US) - EYW, NQX
+Khabarovsk (RU) - KHV
+Khajuraho (IN) - HJR
+Khamis Mushait (SA) - KMX
+Khanty-Mansiysk (RU) - HMA
+Khark (IR) - KHK
+Kharkiv (UA) - HRK
+Khartoum (SD) - KRT
+Khasab (OM) - KHS
+Khatanga (RU) - HTG
+Kherson (UA) - KHE
+Khiyaroo (IR) - PGU
+Khmelnytskyi (UA) - HMJ
+Khon Kaen (TH) - KKC
+Khonuu (RU) - MQJ
+Khost (AF) - KHT
+Khovd (MN) - HVD
+Khujand (TJ) - LBD
+Khuzdar (PK) - KDD
+Kiana (US) - IAN
+Kidlington, Oxfordshire (GB) - OXF
+Kiel (DE) - KEL
+Kieta (PG) - KIE
+Kigali (RW) - KGL
+Kigoma (TZ) - TKQ
+Kihihi (UG) - KHX
+Kikai (JP) - KKX
+Kikori (PG) - KRI
+Kikwit (CD) - KKW
+Kili Island (MH) - KIO
+Kilindoni (TZ) - MFA
+Kimbe (PG) - HKN
+Kimberley (ZA) - KIM
+Kimmirut (CA) - YLC
+Kincardine (CA) - YKD
+Kincheloe (US) - CIU
+Kindersley (CA) - YKY
+Kindu (CD) - KND
+King Cove (US) - KVC
+King Khaled Military City (SA) - KMC
+King Salmon (US) - AKN
+King's Lynn, Norfolk (GB) - KNF
+Kingfisher Lake (CA) - KIF
+Kingman (US) - IGM
+Kingsford (US) - IMT
+Kingston (CA) - YGK
+Kingston (JM) - KIN
+Kingstown (VC) - SVD
+Kingsville (US) - NQI
+Kinngait (CA) - YTE
+Kinshasa (CD) - FIH
+Kinston (US) - ISO
+Kipnuk (US) - KPN
+Kirakira (SB) - IRA
+Kiritimati (KI) - CXI
+Kirkenes (NO) - KKN
+Kirkland Lake (CA) - YKX
+Kirksville (US) - IRK
+Kirkuk (IQ) - KIK
+Kirkwall, Orkney Islands (GB) - KOI
+Kirov (RU) - KVX
+Kiruna (SE) - KRN
+Kirundo (BI) - KRE
+Kisangani (CD) - FKI
+Kish Island (IR) - KIH
+Kismayo (SO) - KMU
+Kisoro (UG) - KXO
+Kisumu (KE) - KIS
+Kitaakita (JP) - ONJ
+Kitadaitōjima (JP) - KTD
+Kitakyushu (JP) - KKJ
+Kitale (KE) - KTL
+Kitee (FI) - KTQ
+Kithira Island (GR) - KIT
+Kittilä (FI) - KTT
+Kitwe (ZM) - KIW
+Kiunga (PG) - UNG
+Kivalina (US) - KVL
+Kiwayu (KE) - KWY
+Klagenfurt am Wörthersee (AT) - KLU
+Klamath Falls (US) - LMT
+Klawock (US) - KLW
+Kleinsee (ZA) - KLZ
+Klerksdorp (ZA) - KXE
+Knob Noster (US) - SZL
+Knoxville/Maryville (US) - TYS
+Kobe (JP) - UKB
+Kobuk (US) - OBU
+Kochi (IN) - COK
+Kodiak (US) - ADQ
+Kogalym (RU) - KGP
+Kokhanok (US) - KNK
+Kokkola / Kruunupyy (FI) - KOK
+Kokopo (PG) - RAB
+Kokshetau (KZ) - KOV
+Kolaka (ID) - KXB
+Kolhapur (IN) - KLH
+Koliganek (US) - KGK
+Kolkata (IN) - CCU
+Köln (DE) - CGN
+Kolwezi (CD) - KWZ
+Komsomolsk-on-Amur (RU) - KXK
+Konarak (IR) - ZBR
+Koné (NC) - KNQ
+Kongiganak (US) - KKH
+Konya (TR) - KYA
+Kopitnari (GE) - KUT
+Korhogo (CI) - HGO
+Korla (CN) - KRL
+Koro Island (FJ) - KXF
+Koromiko (NZ) - PCN
+Kos Island (GR) - KGS
+Košice (SK) - KSC
+Kostanay (KZ) - KSN
+Kostroma (RU) - KMW
+Kota (IN) - KTU
+Kota Baharu (MY) - KBR
+Kota Kinabalu (MY) - BKI
+Kotlas (RU) - KSZ
+Kotlik (US) - KOT
+Kotzebue (US) - OTZ
+Koulamoutou (GA) - KOU
+Koumac (NC) - KOC
+Kowanyama (AU) - KWM
+Koyuk (US) - KKA
+Koyukuk (US) - KYU
+Kozani (GR) - KZI
+Krabi (TH) - KBV
+Kralendijk (BQ) - BON
+Kraljevo (RS) - KVO
+Krasnodar (RU) - KRR
+Krasnoyarsk (RU) - KCY, KJA
+Krasnyi Kurgan (RU) - AAQ
+Kristiansand (NO) - KRS
+Kristianstad (SE) - KID
+Krymsk (RU) - NOI
+Kryvyi Rih (UA) - KWG
+Kuala Pesisir (ID) - MEQ
+Kuala Terengganu (MY) - TGG
+Kuantan (MY) - KUA
+Kubin Island (AU) - KUG
+Kuching (MY) - KCH
+Kudat (MY) - KUD
+Kufra (LY) - AKF
+Kugaaruk (CA) - YBB
+Kugluktuk (CA) - YCO
+Kuito (AO) - SVP
+Kukës (AL) - KFZ
+Kulhudhuffushi (MV) - HDK
+Kulob (TJ) - TJU
+Kulusuk (GL) - KUS
+Kumamoto (JP) - KMJ
+Kumasi (GH) - KMS
+Kumejima (JP) - UEO
+Kundiawa (PG) - CMU
+Kunduz (AF) - UND
+Kunming (CN) - KMG
+Kununurra (AU) - KNX
+Kuopio / Siilinjärvi (FI) - KUO
+Kupang (ID) - KOE
+Kuqa (CN) - KCA
+Kuressaare (EE) - URE
+Kurgan (RU) - KRO
+Kurilsk (RU) - ITU
+Kursk (RU) - URS
+Kuruman (ZA) - KMH
+Kushinagar (IN) - KBK
+Kushiro (JP) - KUH
+Kuta, Badung (ID) - DPS
+Kutacane (ID) - LSR
+Kuujjuaq (CA) - YVP
+Kuujjuarapik (CA) - YGW
+Kuusamo (FI) - KAO
+Kuwait City (KW) - KWI
+Kvernberget (NO) - KSU
+Kwajalein (MH) - KWA
+Kwatta (SR) - EAX
+Kwethluk (US) - KWT
+Kwigillingok (US) - KWK
+Kyaukpyu (MM) - KYP
+Kyzyl (RU) - KYZ
+Kyzylorda (KZ) - KZO
+L'Hôpital-le-Mercier, Saône-et-Loire (FR) - SYT
+La Baule-Escoublac (FR) - LBY
+La Ceiba (HN) - LCE
+La Chorrera (CO) - LCR
+La Crosse (US) - LSE
+La Dorada (CO) - PAL
+La Fortuna (CR) - FON
+La Grande Rivière (CA) - YGL
+La Grande-4 (CA) - YAH
+La Isabela (DO) - JBQ
+La Macarena (CO) - LMC
+La Macaza (CA) - YTM
+La Mina-Maicao (CO) - MCJ
+La Paz (MX) - LAP
+La Paz / El Alto (BO) - LPB
+La Pedrera (CO) - LPD
+La Plata (AR) - LPG
+La Rioja (AR) - IRJ
+La Roche-sur-Yon (FR) - EDM
+La Rochelle (FR) - LRH
+La Romana (DO) - LRM
+La Ronge (CA) - YVC
+La Serena-Coquimbo (CL) - LSC
+La Seu d'Urgell Pyrenees and Andorra (ES) - LEU
+La Tabatière (CA) - ZLT
+La Toma (EC) - LOH
+La Virgen del Camino (ES) - LEN
+Laage (DE) - RLG
+Labasa (FJ) - LBS
+Lábrea (BR) - LBR
+Labuan (MY) - LBU
+Labuan Bajo, Manggarai Barat (ID) - LBJ
+Lac Brochet (CA) - XLB
+Laceby (AU) - WGT
+Lachin (AZ) - LHL
+Ladysmith (ZA) - LAY
+Lae (PG) - LAE
+Laem Ngop (TH) - TDX
+Læsø (DK) - BYR
+Lafayette (US) - LFT
+Lages (BR) - LAJ
+Laghouat (DZ) - LOO
+Lagos (NG) - LOS
+Laguindingan (PH) - CGY
+Lahad Datu (MY) - LDU
+Lahaina (US) - JHM
+Lahore (PK) - LHE
+Lahr/Schwarzwald (DE) - LHA
+Lajamanu (AU) - HOK
+Lake Charles (US) - LCH
+Lake Havasu City (US) - HII
+Lake Manyara National Park (TZ) - LKY
+Lake Murray (PG) - LMY
+Lakeba Island (FJ) - LKB
+Lakehurst (US) - NEL
+Lakeland (US) - LAL
+Lakselv (NO) - LKL
+Lal-lo (PH) - LLC
+Lamap (VU) - LPM
+Lamar (US) - LAA
+Lambarene (GA) - LBQ
+Lamen Bay (VU) - LNB
+Lamerd (IR) - LFM
+Lamezia Terme (IT) - SUF
+Lampedusa (IT) - LMP
+Lamu (KE) - LAU
+Lanai City (US) - LNY
+Lanas, Ardèche (FR) - OBS
+Lancaster (US) - LNS, WJF
+Land's End, Cornwall (GB) - LEQ
+Lander (US) - LND
+Landivisiau (FR) - LDV
+Langebaanweg (ZA) - SDB
+Langgur (ID) - LUV
+Langkawi (MY) - LGK
+Langley (CA) - YLY
+Lankaran (AZ) - LLK
+Lannion (FR) - LAI
+Lansdowne House (CA) - YLH
+Lansing (US) - LAN
+Lanzhou (CN) - LHW
+Laoag City (PH) - LAO
+Lappeenranta (FI) - LPP
+Lar (IR) - LRR
+Laramie (US) - LAR
+Laredo (US) - LRD
+Larnaca (CY) - LCA
+Larsen Bay (US) - KLN
+Las Cruces (US) - LRU
+Las Heras (AR) - LHS
+Las Tunas (CU) - VTU
+Las Vegas (US) - LAS, LSV, LVS, VGT
+Lashio (MM) - LSH
+Latacunga (EC) - LTX
+Latakia (SY) - LTK
+Latrobe (US) - LBE
+Latur (IN) - LTU
+Launceston (AU) - LST
+Laval, Mayenne (FR) - LVA
+Lavan Airport (IR) - LVP
+Laverton (AU) - LVO
+Lawas (MY) - LWY
+Lawrence (US) - LWM
+Lawton (US) - LAW
+Lázaro Cárdenas (MX) - LZC
+Le Castellet, Var (FR) - CTT
+Le Golfe-du-Saint-Laurent (CA) - ZGS
+Le Havre (FR) - LEH
+Le Mans, Sarthe (FR) - LME
+Le Touquet-Paris-Plage (FR) - LTQ
+Leaf Rapids (CA) - YLR
+Lebanon (US) - LEB
+Leeds, West Yorkshire (GB) - LBA
+Leesburg (US) - LEE
+Leeuwarden (NL) - LWR
+Lefkoniko (CY) - GEC
+Legazpi (PH) - DRP
+Leh (IN) - IXL
+Leirvik (NO) - SRP
+Leknes (NO) - LKN
+Lelystad (NL) - LEY
+Lemoore (US) - NLC
+Lençóis (BR) - LEC
+Lensk (RU) - ULK
+Leonora (AU) - LNO
+Lépaud, Creuse (FR) - MCU
+Leros Island (GR) - LRS
+Lerwick, Shetland (GB) - LSI
+Lerwick, Shetland Islands (GB) - LWK
+Les Cayes (HT) - CYA
+Les Îles-de-la-Madeleine (CA) - YGR
+Leshan (CN) - LSG
+Leshukonskoye (RU) - LDG
+Lesquin (FR) - LIL
+Lethbridge (CA) - YQL
+Lethem (GY) - LTM
+Leticia (CO) - LET
+Leuchars, Fife (GB) - ADX
+Levaldigi (IT) - CUF
+Lewisburg (US) - LWB
+Lewiston (US) - LWS
+Lewistown (US) - LWT
+Lexington (US) - LEX
+Lhok Seumawe-Sumatra Island (ID) - LSW
+Lhok Sukon-Sumatra Island (ID) - LSX
+Liangshan (CN) - XIC
+Lianyungang (CN) - LYG
+Liberal (US) - LBL
+Liberia (CR) - LIR
+Libreville (GA) - LBV
+Lichinga (MZ) - VXC
+Liepāja (LV) - LPX
+Lifou (NC) - LIF
+Lifuka (TO) - HPA
+Lihue, Kauai (US) - LIH
+Lijiang (CN) - LJG
+Likiep Island (MH) - LIK
+Lilabari (IN) - IXI
+Lima (PE) - LIM
+Limbang (MY) - LMN
+Lime Acres (ZA) - LMR
+Limnos Island (GR) - LXS
+Limoges/Bellegarde (FR) - LIG
+Limón (CR) - LIO
+Lincang (CN) - CWJ, LNJ
+Lincoln (US) - LNK
+Lincoln, Lincolnshire (GB) - QCY, WTN
+Linfen (CN) - LFQ
+Linhares (BR) - LHN
+Linköping (SE) - LPI
+Lins (BR) - LIP
+Linyi (CN) - LYI
+Linz (AT) - LNZ
+Lipetsk (RU) - LPK
+Liping (CN) - HZH
+Lisala (CD) - LIQ
+Lisbon (PT) - LIS
+Lismore (AU) - LSY
+Little Rock (US) - LIT
+Liupanshui (CN) - LPF
+Liuzhou (CN) - LZH
+Liverpool (GB) - LPL
+Livingston (US) - LVM
+Livingstone (ZM) - LVI
+Lleida (ES) - ILD
+Lloydminster (CA) - YLL
+Lockhart River (AU) - IRG
+Lodwar (KE) - LOK
+Łódź (PL) - LCJ
+Logan (US) - LGU
+Logroño (ES) - RJL
+Loikaw (MM) - LIW
+Lokichogio (KE) - LKG
+Lolak (ID) - LKM
+Lomé (TG) - LFW
+Lompoc (US) - VBG
+Londolovit (PG) - LNV
+London (CA) - YXU
+London (GB) - BQH, LCY, LGW, LHR
+London (US) - LOZ
+London, Essex (GB) - STN
+Londrina (BR) - LDB
+Long Apung-Borneo Island (ID) - LPU
+Long Banga (MY) - LBP
+Long Bawan (ID) - LBW
+Long Beach (US) - LGB
+Long Datih (MY) - LGL
+Long Seridan (MY) - ODN
+Longana (VU) - LOD
+Longnan (CN) - LNL
+Longreach (AU) - LRE
+Longview (US) - GGG
+Longyan (CN) - LCX
+Longyearbyen (NO) - LYR
+Lonorore (VU) - LNE
+Lop Buri (TH) - KKM
+Lopez (US) - LPS
+Lord Howe Island (AU) - LDH
+Loreto (MX) - LTO
+Lorient/Lann/Bihoué (FR) - LRT
+Los Angeles (US) - LAX
+Los Chiles (CR) - LSL
+Los Mochis (MX) - LMM
+Lossiemouth, Moray (GB) - LMO
+Losuia (PG) - LSA
+Louisville (US) - LOU, SDF
+Loveland (US) - FNL
+Lovell (VC) - MQS
+Lovelock (US) - LOL
+Luanda (AO) - LAD, NBJ
+Luang Namtha (LA) - LXG
+Luang Phabang (LA) - LPQ
+Lubang (ID) - LKI
+Lubang (PH) - LBX
+Lubango (AO) - SDD
+Lubbock (US) - LBB
+Lübeck (DE) - LBC
+Lublin (PL) - LUZ
+Lubumbashi (CD) - FBM
+Lucknow (IN) - LKO
+Luderitz (NA) - LUD
+Luena (AO) - LUO
+Lufkin (US) - LFK
+Luganville (VU) - SON
+Lukla (NP) - LUA
+Luleå (SE) - LLA
+Lüliang (CN) - LLV
+Lumbadzi (MW) - LLW
+Lumberton (US) - LBT
+Luoyang (CN) - LYA
+Lusaka (ZM) - LUN
+Luton, Luton (GB) - LTN
+Lutselk'e (CA) - YSG
+Luwok (ID) - LUW
+Luxembourg (LU) - LUX
+Luxor (EG) - LXR
+Luzhou (CN) - LZO
+Lviv (UA) - LWO
+Lycksele (SE) - LYC
+Lynchburg (US) - LYH
+Lynn Lake (CA) - YYL
+Maamigili (MV) - VAM
+Maastricht (NL) - MST
+Maavaarulu (MV) - RUL
+Mabalacat (PH) - CRK
+Mabuiag Island (AU) - UBB
+Macaé (BR) - MEA
+Macapá (BR) - MCP
+Macará (EC) - MRR
+Macas (EC) - XMS
+Maceió (BR) - MCZ
+Mackay (AU) - MKY
+Macon (US) - MCN
+Madang (PG) - MAG
+Madhurapudi (IN) - RJA
+Madison (US) - MSN
+Madrid (ES) - MAD, TOJ
+Madurai (IN) - IXM
+Mae Hong Son (TH) - HGN
+Mafeking (ZA) - MBD
+Magadan (RU) - GDX
+Magan (RU) - GYG
+Magangué (CO) - MGN
+Magnitogorsk (RU) - MQF
+Magway (MM) - MWQ
+Mahajanga (MG) - MJN
+Mahón (ES) - MAH
+Mahovljani (BA) - BNX
+Mahshahr (IR) - MRX
+Maiduguri (NG) - MIU
+Maiquetía (VE) - CCS
+Majkin (MH) - MJE
+Majuro Atoll (MH) - MAJ
+Makassar (ID) - UPG
+Makemo (PF) - MKP
+Makhachkala (RU) - MCX
+Makinohara / Shimada (JP) - FSZ
+Makkovik (CA) - YMN
+Makokou (GA) - MKU
+Makurdi (NG) - MDI
+Malabo (GQ) - SSG
+Malacca (MY) - MKZ
+Málaga (ES) - AGP
+Malakal (SS) - MAK
+Malamala (ZA) - AAM
+Malang (ID) - MLG
+Malanje (AO) - MEG
+Malargue (AR) - LGS
+Malatya (TR) - MLX
+Malé (MV) - MLE
+Malinau (ID) - LNU
+Malindi (KE) - MYD
+Malmö (SE) - MMX
+Malolo Lailai Island (FJ) - PTF
+Målselv (NO) - BDU
+Malung-Sälen (SE) - SCR
+Mambajao (PH) - CGM
+Mamburao (PH) - MBO
+Mammoth Lakes (US) - MMH
+Mana Island (FJ) - MNF
+Manado (ID) - MDC
+Managua (NI) - MGA
+Manakara (MG) - WVK
+Manama (BH) - BAH
+Mananara Nord (MG) - WMR
+Mananjary (MG) - MNJ
+Manaoba (SB) - MHM
+Manassas (US) - MNZ
+Manaus (BR) - MAO, PLL
+Manchester (US) - MHT
+Manchester, Greater Manchester (GB) - MAN
+Manching (DE) - IGS
+Mandalay (MM) - MDL
+Mandalgobi (MN) - MXW
+Mangaluru (IN) - IXE
+Mangla (PK) - XJM
+Mangrove Cay (BS) - MAY
+Manhattan (US) - MHK
+Manicoré (BR) - MNX
+Manihiki Island (CK) - MHX
+Maniitsoq (GL) - JSU
+Manila (PH) - MNL
+Maningrida (AU) - MNG
+Manistee (US) - MBL
+Manitouwadge (CA) - YMG
+Manizales (CO) - MZL
+Manley Hot Springs (US) - MLY
+Mannheim (DE) - MHG
+Manokotak (US) - KMO
+Manokwari (ID) - MKW
+Mansfield (US) - MFD
+Manta (EC) - MEC
+Manurewa (NZ) - AMZ
+Manus Island (PG) - MAS
+Manzanillo (CU) - MZO
+Manzanillo (MX) - ZLO
+Manzhouli (CN) - NZH
+Manzini (SZ) - MTS
+Maputo (MZ) - MPM
+Mar del Plata (AR) - MDQ
+Marabá (BR) - MAB
+Maracaibo (VE) - MAR
+Maracay (VE) - MYC
+Maradi (NE) - MFQ
+Marathon (CA) - YSP
+Marathon (US) - MTH
+Marau (SB) - RUS
+Mardin (TR) - MQM
+Maré (NC) - MEE
+Mareeba (AU) - MRG
+Margate (ZA) - MGH
+Maribor (SI) - MBX
+Mariehamn (FI) - MHQ
+Marietta (US) - MGE
+Marignane, Bouches-du-Rhône (FR) - MRS
+Marigot (DM) - DOM
+Marília (BR) - MII
+Maringá (BR) - MGF
+Marion (US) - MWA
+Maripasoula (GF) - MPY
+Mariquita (CO) - MQU
+Mariscal Estigarribia (PY) - ESG
+Mariupol (UA) - MPW
+Markovo (RU) - KVM
+Maroantsetra (MG) - WMN
+Maroochydore (AU) - MCY
+Maroua (CM) - MVR
+Marrakesh (MA) - RAK
+Marsa al Brega (LY) - LMQ
+Marsa Alam (EG) - RMF
+Marsa Matruh (EG) - MUH
+Marsh Harbour (BS) - MHH
+Marshall (US) - MLL
+Martha's Vineyard (US) - MVY
+Martinsburg (US) - MRB
+Marudi (MY) - MUR
+Mary (TM) - MYP
+Mary's Harbour (CA) - YMH
+Marysville (US) - MYV
+Marzy, Nièvre (FR) - NVS
+Masada (IL) - MTZ
+Masbate (PH) - MBT
+Maseru (LS) - MSU
+Mashhad (IR) - MHD
+Masirah (OM) - MSH
+Masjed Soleyman (IR) - QMJ
+Mason City (US) - MCW
+Massawa (ER) - MSW
+Massena (US) - MSS
+Masset (CA) - ZMT
+Masterton (NZ) - MRO
+Masuda (JP) - IWJ
+Masvingo (ZW) - MVZ
+Matagami (CA) - YNM
+Matamoros (MX) - MAM
+Matane (CA) - YME
+Matanzas (CU) - VRA
+Mataram (ID) - LOP
+Matei (FJ) - TVU
+Mati (PH) - MXI
+Matoury (GF) - CAY
+Matsu (TW) - LZN, MFK
+Matsumoto (JP) - MMJ
+Matsuyama (JP) - MYJ
+Mattala (LK) - HRI
+Matthew Town (BS) - IGA
+Maturín (VE) - MUN
+Mauke Island (CK) - MUK
+Maun (BW) - MUB
+Mawlamyine (MM) - MNU
+May Creek (US) - MYK
+Mayaguez (PR) - MAZ
+Maymana (AF) - MMZ
+Mayo (CA) - YMA
+Mazar-i-Sharif (AF) - MZR
+Mazatlàn (MX) - MZT
+Mbandaka (CD) - MDK
+Mbanza Congo (AO) - SSY
+Mbeya (TZ) - MBI
+Mbombela (ZA) - MQP
+Mbuji Mayi (CD) - MJM
+Mc Alester (US) - MLC
+McAllen (US) - MFE
+McArthur River Mine (AU) - MCV
+McCall (US) - MYL
+McComb (US) - MCB
+McCook (US) - MCK
+McGrath (US) - MCG
+Meadow Lake (CA) - YLJ
+Mecheria (DZ) - MZW
+Medan (ID) - MES
+Medellín (CO) - EOH, MDE
+Medford (US) - MFR
+Medicine Hat (CA) - YXH
+Medina (SA) - MED
+Mehamn (NO) - MEH
+Meizhou (CN) - MXZ
+Mekele (ET) - MQX
+Meknes (MA) - MEK
+Mekoryuk (US) - MYU
+Melbourne (AU) - MBW, MEL
+Melbourne (US) - MLB
+Melilla (ES) - MLN
+Mellita (TN) - DJE
+Memmingen (DE) - FMM
+Memphis (US) - MEM
+Mende/Brénoux (FR) - MEN
+Mendi (PG) - MDU
+Mendoza (AR) - MDZ
+Mengnai (CN) - HTT
+Mengomeyén (GQ) - GEM
+Menongue (AO) - SPP
+Merauke (ID) - MKQ
+Merced (US) - MCE, MER
+Mercury (US) - DRA
+Mérida (MX) - MID
+Mérida (VE) - MRD
+Meridian (US) - MEI
+Merimbula (AU) - MIM
+Merowe (SD) - MWE
+Mertarvik (US) - WWT
+Meru-Kinna (KE) - JJM
+Merville, Nord (FR) - HZB
+Mesa (US) - AZA
+Mesquite (US) - MFH
+Metlakatla (US) - ANN
+Mexicali (MX) - MXL
+Mexico City (MX) - MEX, NLU
+Mfuwe (ZM) - MFU
+Miami (US) - MIA, OPF, TMB
+Miandrivazo (MG) - ZVA
+Mianwali (PK) - MWD
+Mianyang (CN) - MIG
+Michigan City (US) - MGC
+Midland (US) - MAF
+Midrand (ZA) - GCJ
+Mihail Kogălniceanu (RO) - TCE
+Mikkeli (FI) - MIK
+Mildura (AU) - MQL
+Miles City (US) - MLS
+Mili Island (MH) - MIJ
+Milikapiti (AU) - SNB
+Milingimbi Island (AU) - MGT
+Millington (US) - NQA
+Millville (US) - MIV
+Milos Island (GR) - MLO
+Milton (US) - NSE
+Milwaukee (US) - MKE
+Minaçu (BR) - MQH
+Minamidaito (JP) - MMD
+Minchumina (US) - LMA
+Mineral Wells (US) - MWL
+Mineralnyye Vody (RU) - MRV
+Minna (NG) - MXJ
+Minneapolis (US) - MSP
+Minot (US) - MIB, MOT
+Minsk (BY) - MSQ
+Minto (US) - MNT
+Miquelon (PM) - MQC
+Miramichi (CA) - YCH
+Miri (MY) - MYY
+Mirny (RU) - MJZ
+Misawa (JP) - MSJ
+Misima Island (PG) - MIS
+Misrata (LY) - MRA
+Missoula (US) - MSO
+Mitiaro Island (CK) - MOI
+Mitú (CO) - MVP
+Miyakejima (JP) - MYE
+Miyakojima (JP) - MMY, SHI
+Miyazaki (JP) - KMI
+Mizan Teferi (ET) - MTF
+Mkeik (MM) - MGZ
+Mkuze (ZA) - MZQ
+Mo i Rana (NO) - MQN
+Moa (CU) - MOA
+Moab (US) - CNY
+Moala (FJ) - MFJ
+Mobile (US) - BFM, MOB
+Mobridge (US) - MBG
+Moçâmedes (AO) - MSZ
+Mocímboa da Praia (MZ) - MZB
+Modesto (US) - MOD
+Moengo (SR) - MOJ
+Moenjodaro (PK) - MJD
+Mogadishu (SO) - MGQ
+Mogilev (BY) - MVQ
+Mohe (CN) - OHE
+Mojave (US) - MHV
+Moline (US) - MLI
+Mombasa (KE) - MBA
+Monastir (TN) - MIR
+Monbetsu (JP) - MBE
+Mönchengladbach (DE) - MGL
+Monclova (MX) - LOV
+Moncton (CA) - YQM
+Mong Hsat (MM) - MOG
+Mongu (ZM) - MNR
+Monroe (US) - MLU
+Monrovia (LR) - MLW, ROB
+Mont-Joli (CA) - YYY
+Montauk (US) - MTP
+Monte Caseros (AR) - MCS
+Montego Bay (JM) - MBJ
+Monterey (US) - MRY
+Montería (CO) - MTR
+Monterrey (MX) - MTY, NTR
+Montes Claros (BR) - MOC
+Montgomery (US) - MGM, MXF
+Montichiari (IT) - VBS
+Montpellier/Méditerranée (FR) - MPL
+Montréal (CA) - YHU, YMX, YUL
+Montrose (US) - MTJ
+Moonyoonooka (AU) - GET
+Moorea-Maiao (PF) - MOZ
+Moose Jaw (CA) - YMJ
+Moosonee (CA) - YMO
+Mopa (IN) - GOX
+Mora (SE) - MXX
+Moradabad (IN) - MZS
+Moranbah (AU) - MOV
+Moree (AU) - MRZ
+Morelia (MX) - MLM
+Morgantown (US) - MGW
+Mori (YE) - SCT
+Morlaix/Ploujean (FR) - MXN
+Moro (PG) - MXH
+Morombe (MG) - MXM
+Morón (ES) - OZP
+Mörön (MN) - MXV
+Morondava (MG) - MOQ
+Moroni (KM) - HAH
+Morowali (ID) - MOH
+Morristown (US) - MMU
+Moruya (AU) - MYA
+Morwell (AU) - TGN
+Moscow (RU) - CKL, DME, SVO, VKO, ZIA
+Moselle (US) - PIB
+Moses Lake (US) - MWH
+Mosinee (US) - CWA
+Mosjøen (NO) - MJF
+Mošnov (CZ) - OSR
+Moss Town (BS) - GGT
+Mossoró (BR) - MVF
+Mostar (BA) - OMO
+Mosul (IQ) - OSM
+Motu Mute (PF) - BOB
+Motygino (RU) - MJY
+Mouila (GA) - MJL
+Moundou (TD) - MQQ
+Mount Clemens (US) - MTC
+Mount Eba (AU) - PXH
+Mount Gambier (AU) - MGB
+Mount Hagen (PG) - HGU
+Mount Hotham (AU) - MHU
+Mount Isa (AU) - ISA
+Mount Pleasant (FK) - MPN
+Mountain Home (US) - MUO, WMH
+Mountain View (US) - NUQ
+Mountain Village (US) - MOU
+Mpacha (NA) - MPA
+Mpaka (SZ) - SHO
+Mthatha (ZA) - UTT
+Mtwara (TZ) - MYW
+Muan (KR) - MWX
+Muara Bungo (ID) - BUU
+Muara Teweh (ID) - HMS
+Mudanjiang (CN) - MDG
+Mudgee (AU) - DGE
+Mueda (MZ) - MUD
+Mukah (MY) - MKM
+Mukalla (YE) - RIY
+Muko Muko (ID) - MPC
+Mulegé (MX) - SRL
+Multan (PK) - MUX
+Mulu (MY) - MZV
+Mumbai (IN) - BOM
+Muncie (US) - MIE
+Munda (SB) - MUA
+Munich (DE) - MUC
+Murmansk (RU) - MMK
+Murphysboro (US) - MDH
+Murray Island (AU) - MYI
+Muş (TR) - MSR
+Muscat/Seeb (OM) - MCT
+Muscle Shoals (US) - MSL
+Muskegon (US) - MKG
+Muskrat Dam (CA) - MSA
+Musoma (TZ) - MUZ
+Muzaffarabad (PK) - MFG
+Muzaffarpur (IN) - MZU
+Mwanza (TZ) - MWZ
+Myitkyina (MM) - MYT
+Mykonos (GR) - JMK
+Myrtle Beach (US) - MYR
+Mysore (IN) - MYQ
+Mytilene (GR) - MJT
+Myvatn (IS) - MVA
+Mzuzu (MW) - ZZU
+N'Djamena (TD) - NDJ
+N'dolo (CD) - NLO
+N'Gaoundéré (CM) - NGE
+Na Thon (TH) - USM
+Nabire (ID) - NBX
+Nacala (MZ) - MNC
+Nadi (FJ) - NAN
+Nadym (RU) - NYM
+Naga (PH) - WNP
+Nagasaki (JP) - NGS
+Nagoya (JP) - NKM
+Nagpur (IN) - NAG
+Naha (JP) - OKA
+Nain (CA) - YDP
+Nairobi (KE) - NBO, WIL
+Naiu Atoll (PF) - NIU
+Najaf (IQ) - NJF
+Najran (SA) - EAM
+Nakashibetsu (JP) - SHB
+Nakhchivan (AZ) - NAJ
+Nakhon Pathom (TH) - KDT
+Nakhon Phanom (TH) - KOP
+Nakhon Si Thammarat (TH) - NST
+Nakina (CA) - YQN
+Nakuru (KE) - NUU
+Nalchik (RU) - NAL
+Namangan (UZ) - NMA
+Namniwel (ID) - NAM
+Nampula (MZ) - APL
+Namsang (MM) - NMS
+Namsos (NO) - OSY
+Nanaimo (CA) - YCD
+Nanchang (CN) - KHN
+Nanchong (CN) - LZG, NAO
+Nanded (IN) - NDC
+Nanga Pinoh-Borneo Island (ID) - NPO
+Nanjing (CN) - NKG
+Nankoku (JP) - KCZ
+Nanning (CN) - NNG
+Nantes (FR) - NTE
+Nantong (CN) - NTG
+Nantucket (US) - ACK
+Nanwalek (US) - KEB
+Nanyang (CN) - NNY
+Napakiak (US) - WNA
+Napaskiak (US) - PKA
+Napier (NZ) - NPE
+Naples (US) - APF
+Napoli (IT) - NAP
+Napuka Island (PF) - NAU
+Narita (JP) - NRT
+Narrabri (AU) - NAA
+Narrandera (AU) - NRA
+Naryan Mar (RU) - NNM
+Nashik (IN) - ISK
+Nashville (US) - BNA
+Nasiriyah (IQ) - XNH
+Nassau (BS) - NAS
+Natal (BR) - NAT
+Natashquan (CA) - YNA
+Natori (JP) - SDJ
+Natuashish (CA) - YNP
+Nausori (FJ) - SUV
+Navegantes (BR) - NVT
+Navi Mumbai (IN) - NMI
+Navoi (UZ) - NVI
+Nawabashah (PK) - WNS
+Naxos (GR) - JNX
+Naypyitaw (MM) - NYT
+Nazca (PE) - NZC
+Ndola (ZM) - NLA
+Nduli (TZ) - IRI
+Nea Anchialos (GR) - VOL
+Necochea (AR) - NEC
+Needles (US) - EED
+Neerlerit Inaat (GL) - CNP
+Nefteyugansk (RU) - NFG
+Negage (AO) - GXG
+Neiva (CO) - NVA
+Nelson (NZ) - NSN
+Nelson Lagoon (US) - NLG
+Nemiscau (CA) - YNS
+Nenana (US) - ENN
+Nepalgunj (NP) - KEP
+Neryungri (RU) - NER
+Neuquén (AR) - NQN
+Nevşehir (TR) - NAV
+New Bedford (US) - EWB
+New Bern (US) - EWN
+New Cairo (EG) - CCE
+New Delhi (IN) - DEL
+New Haven (US) - HVN
+New Iberia (US) - ARA
+New Orleans (US) - MSY, NBG, NEW
+New Plymouth (NZ) - NPL
+New Richmond (US) - RNH
+New Stuyahok (US) - KNW
+New York (US) - JFK, LGA
+Newark (US) - EWR
+Newburgh (US) - SWF
+Newcastle (ZA) - NCS
+Newcastle upon Tyne, Tyne and Wear (GB) - NCL
+Newman (AU) - ZNE
+Newport (US) - NPT, ONP
+Newport News (US) - FAF, PHF
+Newquay (GB) - NQY
+Ngau (FJ) - NGI
+Ngawa (CN) - AHJ, JZH
+Ngiva (AO) - VPE
+Nha Trang/nha Trang aiurportCam Ranh (VN) - CXR
+Nhulunbuy (AU) - GOV
+Niagara Falls (US) - IAG
+Niagara-on-the-Lake (CA) - YCM
+Niamey (NE) - NIM
+Niamtougou (TG) - LRL
+Nice, Alpes-Maritimes (FR) - NCE
+Nicoya (CR) - NOB
+Nightmute (US) - NME
+Niigata (JP) - KIJ
+Nikolai (US) - NIB
+Nikolayevsk-na-Amure Airport (RU) - NLI
+Nikolski (US) - IKO
+Nîmes/Garons (FR) - FNI
+Ningbo (CN) - NGB
+Ninglang (CN) - NLH
+Niort/Souché (FR) - NIT
+Niš (RS) - INI
+Niuatoputapu (TO) - NTT
+Nizhneangarsk (RU) - NZG
+Nizhnekamsk (RU) - NBC
+Nizhnevartovsk (RU) - NJC
+Nizhny Novgorod (RU) - GOJ
+Noatak (US) - WTK
+Nobitz (DE) - AOC
+Nogales (MX) - NOG
+Nogales (US) - OLS
+Nogliki (RU) - NGK
+Nome (US) - OME
+Noonu Atoll (MV) - NMF
+Noorvik (US) - ORV
+Norddeich (DE) - NOD
+Norderney (DE) - NRD
+Norfolk (US) - NGU, OFK, ORF
+Norilsk (RU) - NSK
+Norman Wells (CA) - YVQ
+Normans Cay (BS) - NMC
+Normanton (AU) - NTN
+Norrköping (SE) - NRK
+Norsup (VU) - NUS
+North Battleford (CA) - YQW
+North Bay (CA) - YYB
+North Bend (US) - OTH
+North Caicos (TC) - NCA
+North Connel (GB) - OBN
+North Eleuthera (BS) - ELH
+North Kingstown (US) - NCO
+North Myrtle Beach (US) - CRE
+North Platte (US) - LBF
+North Ronaldsay (GB) - NRL
+North Spirit Lake (CA) - YNO
+Northolt, Greater London (GB) - NHT
+Northway (US) - ORT
+Norway House (CA) - YNE
+Norwich, Norfolk (GB) - NWI
+Norwood (US) - OWD
+Nossa Senhora do Carmo (MO) - MFM
+Nosy Be (MG) - NOS
+Notodden (NO) - NTB
+Nottingham, Leicestershire (GB) - EMA
+Nottingham, Nottinghamshire (GB) - NQT
+Nouadhibou (MR) - NDB
+Nouakchott (MR) - NKC
+Nouméa (NC) - GEA, NOU
+Novokuznetsk (RU) - NOZ
+Novosibirsk (RU) - OVB
+Novy Urengoy (RU) - NUX
+Nowe Kramsko (PL) - IEG
+Nowra Hill (AU) - NOA
+Nowshahr (IR) - NSH
+Nowy Dwór Mazowiecki (PL) - WMI
+Noyabrsk (RU) - NOJ
+Nueva Gerona (CU) - GER
+Nuevo Laredo (MX) - NLD
+Nuiqsut (US) - NUI
+Nuku Hiva (PF) - NHV
+Nuku'alofa (TO) - TBU
+Nukus (UZ) - NCU
+Nulato (US) - NUL
+Nunam Iqua (US) - SXP
+Nunapitchuk (US) - NUP
+Nuquí (CO) - NQU
+Nuremberg (DE) - NUE
+Nuuk (GL) - GOH
+Nyagan (RU) - NYA
+Nyala (SD) - UYL
+Nyaung U (MM) - NYU
+Nyingchi (CN) - LZY
+Nyköping (SE) - NYO
+Nyland (SE) - KRF
+Oak Harbor (US) - NUW
+Oakland (US) - OAK
+Oaxaca (MX) - OAX
+Obihiro (JP) - OBO
+Obo (PG) - OBX
+Ocaña (CO) - OCV
+Ocean City (US) - OCE
+Oceanside (US) - OCN
+Odense (DK) - ODE
+Odesa (UA) - ODS
+Oecussi-Ambeno (TL) - OEC
+Oesterdeichstrich (DE) - HEI
+Ofu (AS) - OFU
+Ogasawara (JP) - IWO
+Ogden (US) - HIF, OGD
+Ogdensburg (US) - OGS
+Ogle (GY) - OGL
+Ogoki Post (CA) - YOG
+Ohrid (MK) - OHD
+Oiapoque (BR) - OYK
+Oita (JP) - OIT
+Okat (FM) - KSA
+Okayama (JP) - OKJ
+Okhotsk (RU) - OHO
+Okinawa (JP) - DNA
+Okinoshima (JP) - OKI
+Oklahoma City (US) - OKC, TIK
+Okondja (GA) - OKN
+Okpe (NG) - QRW
+Oksibil (ID) - OKL
+Okushiri Island (JP) - OIR
+Ol Tukai (KE) - ASV
+Olbia (IT) - OLB
+Old Crow (CA) - YOC
+Old Harbor (US) - OLH
+Ölgii (MN) - ULG
+Olongapo (PH) - SFS
+Olpoi (VU) - OLJ
+Olympia (US) - OLM
+Olympic Dam (AU) - OLP
+Olyokminsk (RU) - OLZ
+Omaha (US) - OFF, OMA
+Omboue (GA) - OMB
+Omidiyeh (IR) - AKW
+Omitama (JP) - IBR
+Omsk (RU) - OMS
+Ondangwa (NA) - OND
+Ontario (US) - ONT
+Oostende (BE) - OST
+Oradea (RO) - OMR
+Orán (AR) - ORA
+Orange (AU) - OAG
+Orange Walk (BZ) - ORZ
+Orangeburg (US) - OGB
+Oranjemund (NA) - OMD
+Oranjestad (AW) - AUA
+Oranjestad (BQ) - EUX
+Orchid Island (TW) - KYD
+Ordos (CN) - DSN
+Ordu (TR) - OGU
+Örebro (SE) - ORB
+Oregon (US) - ONO
+Orenburg (RU) - REN
+Orio al Serio (IT) - BGY
+Oriximiná (BR) - TMT
+Ørland (NO) - OLA
+Orlando (US) - ISM, MCO, ORL, SFB
+Ormoc City (PH) - OMC
+Örnsköldsvik (SE) - OER
+Orsha (BY) - TXC
+Orsk (RU) - OSW
+Ørsta (NO) - HOV
+Oruro (BO) - ORU
+Orvakal (IN) - KJB
+Osaka (JP) - ITM, KIX
+Osbourn (AG) - ANU
+Osh (KG) - OSS
+Oshawa (CA) - YOO
+Oshkosh (US) - OSH
+Osijek (HR) - OSI
+Oslo (NO) - OSL
+Osorno (CL) - ZOS
+Östersund (SE) - OSD
+Otepa (PF) - HOI
+Otopeni (RO) - OTP
+Ottawa (CA) - YOW, YRO
+Ottumwa (US) - OTM
+Ouagadougou (BF) - OUA
+Ouani (KM) - AJN
+Ouargla (DZ) - OGX
+Ouarzazate (MA) - OZZ
+Oudomsay (LA) - ODY
+Oudtshoorn (ZA) - OUH
+Oulad Yaich (MA) - BEM
+Ouled Sidi Brahim (DZ) - BUJ
+Oulu / Oulunsalo (FI) - OUL
+Ouro Sogui (SN) - MAX
+Ouvéa (NC) - UVE
+Ouzinkie (US) - KOZ
+Owando (CG) - FTX
+Owen Sound (CA) - YOS
+Owensboro (US) - OWB
+Owerri (NG) - QOW
+Oxford (US) - UOX
+Oxford House (CA) - YOH
+Oxnard (US) - OXR
+Oyem (GA) - OYE
+Oyo (CG) - OLL
+Ozamiz (PH) - OZC
+Ōzora (JP) - MMB
+Paama Island (VU) - PBJ
+Paamiut (GL) - JFR
+Padang (ID) - PDG
+Padang Sidempuan (ID) - AEG
+Paducah (US) - PAH
+Pagadian (PH) - PAG
+Page (US) - PGA
+Pago Pago (AS) - PPG
+Pajala (SE) - PJA
+Pakse (LA) - PKZ
+Palanga (LT) - PLQ
+Palangkaraya (ID) - PKY
+Palembang (ID) - PLM
+Palermo (IT) - PMO
+Palm Springs (US) - PSP, TRM
+Palma de Mallorca (ES) - PMI
+Palmar Sur (CR) - PMZ
+Palmarito (VE) - PTM
+Palmas (BR) - PMW
+Palmdale (US) - PMD
+Palmer (US) - PAQ
+Palmerola (HN) - XPL
+Palmerston North (NZ) - PMR
+Palo Alto (US) - PAO
+Palopo (ID) - LLO
+Palu (ID) - PLW
+Pamplona (ES) - PNA
+Panama City (US) - PAM
+Panamá City (PA) - BLB
+Panama City Beach (US) - ECP
+Panevėžys (LT) - PNV
+Pangkal Pinang (ID) - PGK
+Pangkalanbun (ID) - PKN
+Pangkor Island (MY) - PKG
+Panglao (PH) - TAG
+Pangnirtung (CA) - YXP
+Panjgur (PK) - PJG
+Pantelleria (IT) - PNL
+Pantnagar (IN) - PGH
+Panzhihua (CN) - PZI
+Papa Westray, Orkney Islands (GB) - PPW
+Papeete (PF) - PPT
+Paphos (CY) - PFO
+Paraburdoo (AU) - PBO
+Paracatu (BR) - PYT
+Paragominas (BR) - JPE
+Paraguaná (VE) - LSP
+Paramaribo (SR) - ORG, PBM
+Parana (AR) - PRA
+Parauapebas (BR) - CKS
+Pardubice (CZ) - PED
+Paris (FR) - CDG, LBG, ORY
+Paris (US) - PRX
+Parkersburg (US) - PKB
+Parkes (AU) - PKE
+Parma (IT) - PMF
+Parnaíba (BR) - PHB
+Pärnu (EE) - EPU
+Paro (BT) - PBH
+Paros (GR) - PAS
+Parsabad (IR) - PFQ
+Pasco (US) - PSC
+Pasni (PK) - PSI
+Paso de los Libres (AR) - AOL
+Paso Robles (US) - PRB
+Passo Fundo (BR) - PFB
+Pathankot (IN) - IXP
+Pathein (MM) - BSX
+Patna (IN) - PAT
+Pato Branco (BR) - PTO
+Patras (GR) - GPA
+Patuxent River (US) - NHK
+Pau/Pyrénées (FR) - PUF
+Paulatuk (CA) - YPC
+Paulo Afonso (BR) - PAV
+Pavlodar (KZ) - PWQ
+Paya Lebar (SG) - QPG
+Payerne (CH) - VIP
+Paysandú (UY) - PDU
+Paz de Ariporo (CO) - PZA
+Peace River (CA) - YPE
+Peawanuck (CA) - YPO
+Pechora (RU) - PEX
+Pécs (HU) - PEV
+Pedasí (PA) - PDM
+Pedro Bay (US) - PDB
+Pedro Juan Caballero (PY) - PJC
+Pehuajó (AR) - PEH
+Pekanbaru (ID) - PKU
+Pellston (US) - PLN
+Pelotas (BR) - PET
+Pemba (MZ) - POL
+Pembroke (CA) - YTA
+Penang (MY) - PEN
+Pendik, Istanbul (TR) - SAW
+Pendleton (US) - PDT
+Pensacola (US) - NPA, PNS
+Pentecost Island (VU) - SSR
+Penticton (CA) - YYF
+Penza (RU) - PEZ
+Peoria (US) - PIA
+Pereira (CO) - PEI
+Périgueux/Bassillac (FR) - PGX
+Perito Moreno (AR) - PMQ
+Perm (RU) - PEE
+Perpignan/Rivesaltes (FR) - PGF
+Perryville (US) - KPV
+Perth (AU) - JAD, PER
+Peru (US) - GUS
+Perugia (IT) - PEG
+Pescara (IT) - PSR
+Peshawar (PK) - PEW
+Peterborough (CA) - YPQ
+Petersburg (US) - PSG
+Petrolina (BR) - PNZ
+Petropavl (KZ) - PPK
+Petropavlovsk-Kamchatsky (RU) - PKC
+Petrozavodsk (RU) - PES
+Phalaborwa (ZA) - PHW
+Philadelphia (US) - PHL, PNE
+Phitsanulok (TH) - PHS
+Phnom Penh (KH) - KTI, PNH
+Phoenix (US) - PHX
+Phu Quoc Island (VN) - PQC
+Phuket (TH) - HKT
+Pickle Lake (CA) - YPL
+Pico Island (PT) - PIX
+Piedras Negras (MX) - PDS
+Pierre (US) - PIR
+Piešťany (SK) - PZY
+Pietermaritzburg (ZA) - PZB
+Pikangikum (CA) - YPM
+Pikwitonei (CA) - PIW
+Pilanesberg (ZA) - NTY
+Pilar (PY) - PIL
+Pilot Point (US) - PIP
+Pilot Station (US) - PQS
+Pincher Creek (CA) - WPC
+Pine Bluff (US) - PBF
+Pinedale (US) - PWY
+Pinellas Park (US) - PIE
+Pirlangimpi (AU) - GPN
+Pisa (IT) - PSA
+Pisco (PE) - PIO
+Pitalito (CO) - PTX
+Pittsburgh (US) - AGC, PIT
+Pituffik (GL) - THU
+Piura (PE) - PIU
+Placencia (BZ) - PLJ
+Plaine Magnien (MU) - MRU
+Plastun (RU) - TLY
+Platinum (US) - PTU
+Plattsburgh (US) - PBG
+Pleiku (VN) - PXU
+Plettenberg Bay (ZA) - PBZ
+Plovdiv (BG) - PDV
+Pocatello (US) - PIH
+Pococi (CR) - BCL, GPL
+Poços De Caldas (BR) - POO
+Podgorica (ME) - TGD
+Pohang (KR) - KPO
+Pohnpei Island (FM) - PNI
+Point Hope (US) - PHO
+Point Lay (US) - PIZ
+Point Mugu (US) - NTD
+Pointe Noire (CG) - PNR
+Pointe-à-Pitre (GP) - PTP
+Points North Landing (CA) - YNL
+Poitiers/Biard (FR) - PIS
+Pokhara (NP) - PHH, PKR
+Polokwane (ZA) - PTG
+Polonnaruwa Town (LK) - HIM
+Ponca City (US) - PNC
+Ponce (PR) - PSE
+Pond Inlet (CA) - YIO
+Ponta Delgada (PT) - PDL
+Ponta Grossa (BR) - PGZ
+Ponta Porã (BR) - PMG
+Pontiac (US) - PTK
+Pontianak (ID) - PNK
+Popayán (CO) - PPN
+Poplar Hill (CA) - YHP
+Popondetta (PG) - PNP
+Poprad (SK) - TAT
+Porbandar (IN) - PBD
+Pori (FI) - POR
+Pormpuraaw (AU) - EDR
+Port Alsworth (US) - PTA
+Port Amboim (AO) - PBN
+Port Angeles (US) - CLM
+Port Blair (IN) - IXZ
+Port Clarence (US) - KPC
+Port Gentil (GA) - POG
+Port Graham (US) - PGM
+Port Harcourt (NG) - PHC, PHG
+Port Hardy (CA) - YZT
+Port Hawkesbury (CA) - YPS
+Port Hedland (AU) - PHE
+Port Heiden (US) - PTH
+Port Hope Simpson (CA) - YHA
+Port Lincoln (AU) - PLO
+Port Lions (US) - ORI
+Port Macquarie (AU) - PQQ
+Port Mathurin (MU) - RRG
+Port McNeill (CA) - YMP
+Port Moresby (PG) - POM
+Port of Spain (TT) - POS
+Port Said (EG) - PSD
+Port St Johns (ZA) - JOH
+Port Sudan (SD) - PZU
+Port Vila (VU) - VLI
+Port-au-Prince (HT) - PAP
+Port-de-Paix (HT) - PAX
+Port-Menier (CA) - YPN
+Portage la Prairie (CA) - YPG
+Portimão (PT) - PRM
+Portland (US) - HIO, PDX, PWM, TTD
+Porto (PT) - OPO
+Porto Alegre (BR) - POA, QNS
+Porto Nacional (BR) - PNB
+Porto Seguro (BR) - BPS
+Porto Velho (BR) - PVH
+Portoviejo (EC) - PVO
+Portsmouth (US) - PSM
+Porvenir (CL) - WPR
+Posadas (AR) - PSS
+Poso-Celebes Island (ID) - PSJ
+Postville (CA) - YSO
+Potchefstroom (ZA) - PCF
+Potosí (BO) - POI
+Poughkeepsie (US) - POU
+Powell River (CA) - YPW
+Poza Rica (MX) - PAZ
+Poznań (PL) - POZ
+Prague (CZ) - PRG
+Praia (CV) - RAI
+Praia da Vitória (PT) - TER
+Praslin Island (SC) - PRI
+Preah Sihanouk (KH) - KOS
+Preguiça (CV) - SNE
+Přerov (CZ) - PRV
+Prescott (US) - PRC
+Presidente Prudente (BR) - PPB
+Presque Isle (US) - PQI
+Prestwick, South Ayrshire (GB) - PIK
+Pretoria (ZA) - PRY, WKF
+Preveza (GR) - PVK
+Prince Albert (CA) - YPA
+Prince George (CA) - YXS
+Prince Rupert (CA) - YPR
+Prishtina (XK) - PRN
+Proserpine (AU) - PPP
+Providence/Warwick (US) - PVD
+Providencia (CO) - PVA
+Providenciales (TC) - PLS
+Provo (US) - PVU
+Pskov (RU) - PKV
+Pu'er (CN) - JMJ, SYM
+Pucallpa (PE) - PCL
+Pucon (CL) - ZPC
+Puducherry (IN) - PNY
+Puebla (MX) - PBC
+Pueblo (US) - PUB
+Puerto Asís (CO) - PUU
+Puerto Ayacucho (VE) - PYH
+Puerto Baquerizo Moreno (EC) - SCY
+Puerto Barrios (GT) - PBR
+Puerto Cabello (VE) - PBL
+Puerto Cabezas (NI) - PUZ
+Puerto Carreño (CO) - PCR
+Puerto Deseado (AR) - PUD
+Puerto Escondido (MX) - PXM
+Puerto Iguazu (AR) - IGR
+Puerto Inírida (CO) - PDA
+Puerto Jimenez (CR) - PJM
+Puerto Leguízamo (CO) - LQM
+Puerto Lempira (HN) - PEU
+Puerto Madryn (AR) - PMY
+Puerto Maldonado (PE) - PEM
+Puerto Montt (CL) - PMC
+Puerto Natales (CL) - PNT
+Puerto Peñasco (MX) - PPE
+Puerto Piña (PA) - BFQ
+Puerto Plata (DO) - POP
+Puerto Princesa (PH) - PPS
+Puerto Rico/Manuripi (BO) - PUR
+Puerto San José (GT) - GSJ
+Puerto Santa Cruz (AR) - RZA
+Puerto Suárez (BO) - PSZ
+Puerto Vallarta (MX) - PVR
+Puerto Vallemi (PY) - VMI
+Puerto Villamil (EC) - IBB
+Puerto Williams (CL) - WPU
+Pukatawagan (CA) - XPK
+Pula (HR) - PUY
+Pullman (US) - PUW
+Pune (IN) - PNQ
+Punta Arenas (CL) - PUQ
+Punta Arenas (CR) - BAI
+Punta Cana (DO) - PUJ
+Punta del Este (UY) - PDP
+Punta Gorda (BZ) - PND
+Punta Gorda (US) - PGD
+Putao (MM) - PBU
+Puttaparthi (IN) - PUT
+Putussibau-Borneo Island (ID) - PSU
+Puvirnituq (CA) - YPX
+Pyeongtaek (KR) - OSN
+Pyongyang (KP) - FNJ
+Qaanaaq (GL) - NAQ
+Qaisumah (SA) - AQI
+Qamishli (SY) - KAC
+Qaqortoq (GL) - JJU
+Qassim (SA) - ELQ
+Qayyarah (IQ) - RQW
+Qazvin (IR) - GZW
+Qeshm (IR) - GSM
+Qian Gorlos Mongol Autonomous County (CN) - YSQ
+Qianjiang (CN) - JIQ
+Qiannan (CN) - LLB
+Qiemo (CN) - IQM
+Qikiqtarjuaq (CA) - YVM
+Qingdao (CN) - TAO
+Qingyang (CN) - IQN
+Qinhuangdao (CN) - BPE
+Qionghai (CN) - BAR
+Qiqihar (CN) - NDG
+Qitai (CN) - JBK
+Qualicum Beach (CA) - XQU
+Quantico (US) - NYG
+Quanzhou (CN) - JJN
+Quaqtaq (CA) - YQC
+Quebec (CA) - YQB
+Queen Maud Island (AQ) - WFR
+Queenstown (NZ) - ZQN
+Queenstown (ZA) - UTW
+Quelimane (MZ) - UEL
+Quepos (CR) - XQP
+Querétaro (MX) - QRO
+Quesnel (CA) - YQZ
+Quetta (PK) - UET
+Quezaltenango (GT) - AAZ
+Quibdó (CO) - UIB
+Quijarro (BO) - UYU
+Quimper/Pluguffan (FR) - UIP
+Quincy (US) - UIN
+Quinhagak (US) - KWN
+Quito (EC) - UIO
+Quy Nohn (VN) - UIH
+Quzhou (CN) - JUZ
+Rabat (MA) - RBA
+Rabil (CV) - BVC
+Rach Gia (VN) - VKG
+Råda (SE) - HFS
+Radamata (ID) - TMC
+Radom (PL) - RDO
+Rafha (SA) - RAH
+Rafsanjan (IR) - RJN
+Rahim Yar Khan (PK) - RYK
+Rainbow Lake (CA) - YOP
+Raipur (IN) - RPR
+Raitahiti (PF) - KKR
+Rajkot (IN) - HSR, RAJ
+Rajshahi (BD) - RJH
+Raleigh/Durham (US) - RDU
+Ramata (SB) - RBV
+Rampart (US) - RMP
+Ramsar (IR) - RZR
+Ramstein-Miesenbach (DE) - RMS
+Ranai-Natuna Besar Island (ID) - NTX
+Ranchi (IN) - IXR
+Rankin Inlet (CA) - YRT
+Ranón (ES) - OVD
+Ranong (TH) - UNN
+Rapid City (US) - RAP, RCA
+Raroia (PF) - RRR
+Ras Al Khaimah (AE) - RKT
+Rasht (IR) - RAS
+Ratanakiri (KH) - RBE
+Rawalakot (PK) - RAZ
+Rawlins (US) - RWL
+Rawson (AR) - REL
+Rayong (TH) - UTP
+Reading (US) - RDG
+Reao (PF) - REA
+Recea (RO) - TGM
+Recife (BR) - REC
+Reconquista (AR) - RCQ
+Red Bluff (US) - RBL
+Red Devil (US) - RDV
+Red Lake (CA) - YRL
+Red Sucker Lake (CA) - YRS
+Redding (US) - RDD
+Redmond (US) - RDM
+Redstone Arsnl Huntsville (US) - HUA
+Redwood Falls (US) - RWF
+Reggio Calabria (IT) - REG
+Regina (CA) - YQR
+Rengat-Sumatra Island (ID) - RGT
+Rennell Island (SB) - RNL
+Reno (US) - RNO
+Repulse Bay (CA) - YUT
+Resistencia (AR) - RES
+Resolute Bay (CA) - YRB
+Retalhuleu (GT) - RER
+Reus (ES) - REU
+Revelstoke (CA) - YRV
+Rewa (IN) - REW
+Reykjavík (IS) - KEF, RKV
+Reynosa (MX) - REX
+Rheinmünster (DE) - FKB
+Rhinelander (US) - RHI
+Rhodes (GR) - RHO
+Ribeirão Preto (BR) - RAO
+Riberalta (BO) - RIB
+Richards Bay (ZA) - RCB
+Richlands (US) - OAJ
+Richmond (AU) - XRH
+Richmond (US) - RIC
+Rifle (US) - RIL
+Riga (LV) - RIX
+Rigolet (CA) - YRG
+Rijeka (HR) - RJK
+Rijen (NL) - GLZ
+Rimatara Island (PF) - RMT
+Rimini (IT) - RMI
+Rimouski (CA) - YXK
+Rinas (AL) - TIA
+Rincon de los Sauces (AR) - RDS
+Rio Branco (BR) - RBR
+Rio Cuarto (AR) - RCU
+Rio De Janeiro (BR) - GIG, RRJ, SDU, SNZ
+Rio Gallegos (AR) - RGL
+Rio Grande (AR) - RGA
+Río Hato (PA) - RIH
+Rio Turbio (AR) - RYO
+Riohacha (CO) - RCH
+Rioja (PE) - RIJ
+Rishiri (JP) - RIS
+Rivera/Santana do Livramento (UY) - RVY
+Riverside (US) - RAL, RIV
+Riverton (US) - RIW
+Rivière-du-Loup (CA) - YRI
+Rivne (UA) - RWN
+Riyadh (SA) - RUH
+Rize (TR) - RZV
+Rizhao (CN) - RIZ
+Roanoke (US) - ROA
+Robertson (ZA) - ROD
+Roberval (CA) - YRJ
+Roche Harbor (US) - RCE
+Rochefort/Saint-Agnant (FR) - RCO
+Rochester (US) - ROC, RST
+Rock Sound (BS) - RSD
+Rock Springs (US) - RKS
+Rockhampton (AU) - ROK
+Rockland (US) - RKD
+Rocky Mount (US) - RWI
+Rødby (DK) - MRW
+Rodez/Marcillac (FR) - RDZ
+Rogojampi, Banyuwangi (ID) - BWX
+Roi Et (TH) - ROI
+Roma (AU) - RMA
+Rome (IT) - CIA, FCO
+Rome (US) - RME, RMG
+Romney Marsh, Kent (GB) - LYX
+Ronchi dei Legionari/Trieste (IT) - TRS
+Rondonópolis (BR) - ROO
+Rongelap Island (MH) - RNP
+Rønne (DK) - RNN
+Ronneby (SE) - RNB
+Roper River (AU) - RPM
+Røros (NO) - RRS
+Rørvik (NO) - RVK
+Rosario (AR) - ROS
+Rosh Pina (IL) - RPN
+Roskilde (DK) - RKE
+Ross River (CA) - XRR
+Røst (NO) - RET
+Rostov-on-Don (RU) - ROV
+Roswell (US) - ROW
+Rota (ES) - ROZ
+Rota Island (MP) - ROP
+Rotorua (NZ) - ROT
+Rotterdam (NL) - RTM
+Rotuma (FJ) - RTA
+Round Lake (CA) - ZRJ
+Rourkela (IN) - RRK
+Rouyn-Noranda (CA) - YUY
+Rovaniemi (FI) - RVN
+Roxas City (PH) - RXS
+Royan/Médis (FR) - RYN
+Rubelsanto (GT) - RUV
+Ruby (US) - RBY
+Rugao (CN) - RUG
+Rundu (NA) - NDU
+Ruoqiang Town (CN) - RQA
+Rurrenabaque (BO) - RBQ
+Russell (US) - RSL
+Russian Mission (US) - RSH
+Rutland (US) - RUT
+Rybinsk (RU) - RYB
+Saarbrücken (DE) - SCN
+Sabetta (RU) - SBT
+Sabha (LY) - SEB
+Sabzevar (IR) - AFZ
+Sacheon (KR) - HIN
+Sachigo Lake (CA) - ZPB
+Sachs Harbour (CA) - YSY
+Sacramento (US) - MCC, MHR, SAC, SMF
+Sado (JP) - SDS
+Saga (JP) - HSG
+Saguenay (CA) - YBG
+Saibai Island (AU) - SBR
+Saidpur (BD) - SPD
+Saidu Sharif (PK) - SDT
+Saint Anne (GG) - ACI
+Saint Catherine (EG) - SKV
+Saint Cloud (US) - STC
+Saint George's (GD) - GND
+Saint John (CA) - YSJ
+Saint Louis (SN) - XLS
+Saint Paul (US) - STP
+Saint Peter Port (GG) - GCI
+Saint-Christophe (IT) - AOT
+Saint-Georges-de-l'Oyapock (GF) - OYP
+Saint-Jacques-de-la-Lande, Ille-et-Vilaine (FR) - RNS
+Saint-Laurent-du-Maroni (GF) - LDX
+Saint-Léger-sur-Roanne (FR) - RNE
+Saint-Léonard (CA) - YSL
+Saint-Nazaire/Montoir (FR) - SNR
+Saint-Pierre (PM) - FSP
+Saint-Pierre (RE) - ZSE
+Saint-Tropez (FR) - LTT
+Sainte-Marie (RE) - RUN
+Saïss (MA) - FEZ
+Salalah (OM) - SLL
+Salamanca (ES) - SLM
+Sale (AU) - SXE
+Salekhard (RU) - SLY
+Salem (IN) - SXV
+Salem (US) - SLE
+Salerno (IT) - QSR
+Salina (US) - SLN
+Salinas (US) - SNS
+Salinas/La Libertad (EC) - SNC
+Salinópolis (BR) - OPP
+Salisbury (US) - SBY
+Salluit (CA) - YZG
+Salmon (US) - SMN
+Salmon Arm (CA) - YSN
+Salt Cay (TC) - SLX
+Salt Lake City (US) - SLC
+Salta (AR) - SLA
+Saltillo (MX) - SLW
+Salto (UY) - STY
+Salvador (BR) - SSA
+Salzburg (AT) - SZG
+Samana (DO) - AZS
+Samara (RU) - KUF
+Samarinda (ID) - AAP
+Samarkand (UZ) - SKD
+Sambava (MG) - SVB
+Samedan (CH) - SMV
+Samos Island (GR) - SMI
+Sampit (ID) - SMQ
+Samsun (TR) - SZF
+San Andrés (CO) - ADZ
+San Angelo (US) - SJT
+San Antonio (US) - SAT, SKF, SSF
+San Antonio de Palé (GQ) - NBN
+San Antonio del Tachira (VE) - SVZ
+San Antonio Oeste (AR) - OES
+San Bartolomé (ES) - ACE
+San Benito (GT) - FRS
+San Bernardino (US) - SBD
+San Carlos (US) - SQL
+San Carlos de Bariloche (AR) - BRC
+San Carlos del Zulia (VE) - STB
+San Cristóbal (VE) - SCI
+San Diego (US) - NKX, NZY, SAN, SDM
+San Felipe (VE) - SNF
+San Fernando (PH) - SFE
+San Fernando de Apure (VE) - SFD
+San Francisco (US) - SFO
+San Jose (CR) - SYQ
+San Jose (PH) - EUQ, SJI
+San Jose (US) - SJC
+San José (CR) - SJO
+San José del Cabo (MX) - SJD
+San José Del Guaviare (CO) - SJE
+San Juan (AR) - UAQ
+San Juan (PR) - SIG, SJU
+San Julian (AR) - ULA
+San Luis (AR) - LUQ
+San Luis Obispo (US) - SBP
+San Luis Potosí (MX) - SLP
+San Miguel de Tucumán (AR) - TUC
+San Pedro (BZ) - SPR
+San Pedro Sula (HN) - SAP
+San Quintín (MX) - GUB
+San Rafael (AR) - AFA
+San Salvador (BS) - ZSA
+San Salvador (SV) - ILS, SAL
+San Salvador de Jujuy (AR) - JUJ
+San Vicente (PH) - SWL
+San Vicente Del Caguán (CO) - SVI
+Sanaa (YE) - SAH
+Sand Island (UM) - MDY
+Sand Point (US) - SDP
+Sandakan (MY) - SDK
+Sandane (NO) - SDN
+Sanday (GB) - NDY
+Sandefjord (NO) - TRF
+Sandino (CU) - SNJ
+Sandspit (CA) - YZP
+Sandy Lake (CA) - ZSJ
+Sanikiluaq (CA) - YSK
+Sanirajak (CA) - YUX
+Şanlıurfa (TR) - GNY
+Sanming (CN) - SQJ
+Santa Ana (US) - SNA
+Santa Ana del Yacuma (BO) - SBL
+Santa Ana Island (SB) - NNB
+Santa Barbara (US) - SBA
+Santa Clara (CU) - SNU
+Santa Cruz (BO) - SRZ, VVI
+Santa Cruz da Graciosa (PT) - GRW
+Santa Cruz das Flores (PT) - FLW
+Santa Cruz/Graciosa Bay/Luova (SB) - SCZ
+Santa Elena de Uairén (VE) - SNV
+Santa Fe (AR) - SFN
+Santa Fe (US) - SAF
+Santa Isabel do Rio Negro (BR) - IRZ
+Santa Maria (BR) - RIA
+Santa Maria (US) - SMX
+Santa Marta (CO) - SMR
+Santa Marta (CU) - VRO
+Santa Monica (US) - SMO
+Santa Rosa (AR) - RSA
+Santa Rosa (BR) - SRA
+Santa Rosa (EC) - ETR
+Santa Rosa (US) - STS
+Santa Teresita (AR) - SST
+Santander (ES) - SDR
+Santarém (BR) - STM
+Santiago (CL) - SCL
+Santiago (CU) - SCU
+Santiago (DO) - STI
+Santiago (PA) - SYP
+Santiago de Compostela (ES) - SCQ
+Santiago de Tolú (CO) - TLU
+Santiago del Estero (AR) - SDE
+Santo Ângelo (BR) - GEL
+Santo Domingo (DO) - SDQ
+Santo Domingo (VE) - STD
+Santorini Island (GR) - JTR
+Sanya (CN) - SYX
+São Filipe (CV) - SFL
+São Gabriel da Cachoeira (BR) - SJL
+São José do Rio Preto (BR) - SJP
+São José Dos Campos (BR) - SJK
+São Luís (BR) - SLZ
+São Paulo (BR) - CGH, GRU, RTE
+São Pedro (CV) - VXE
+São Roque (BR) - JHF
+São Tomé (ST) - TMS
+São Tomé & Príncipe (ST) - PCP
+Sapporo (JP) - CTS, OKD
+Sarajevo (BA) - SJJ
+Sarakhs (IR) - CKT
+Saranac Lake (US) - SLK
+Saransk (RU) - SKX
+Sarasota/Bradenton (US) - SRQ
+Saratov (RU) - GSV
+Saravena (CO) - RVE
+Sargodha (PK) - SGI
+Sari (IR) - SRY
+Sarıçam (TR) - UAB
+Sármellék (HU) - SOB
+Sarnia (CA) - YZR
+Sartaneja (BZ) - SJX
+Sasereme (PG) - TDS
+Saskatoon (CA) - YXE
+Saskylakh (RU) - SYS
+Satar Tacik, Manggarai (ID) - RTG
+Satu Mare (RO) - SUJ
+Sault Ste Marie (CA) - YAM
+Saumlaki-Yamdena Island (ID) - SXK
+Saurimo (AO) - VHC
+Savannah (US) - SAV, SVN
+Savonlinna (FI) - SVL
+Savoonga (US) - SVA
+Savoy (US) - CMI
+Savusavu (FJ) - SVU
+Scammon Bay (US) - SCM
+Scarborough (TT) - TAB
+Schefferville (CA) - YKL
+Schenectady (US) - SCH
+Schkeuditz (DE) - LEJ
+Scottsbluff (US) - BFF
+Seattle (US) - BFI, SEA
+Sečovlje (SI) - POW
+Secunda (ZA) - ZEC
+Segrate (IT) - LIN
+Sehwan Sharif (PK) - SYW
+Seinäjoki / Ilmajoki (FI) - SJY
+Seiyun (YE) - GXF
+Sekondi-Takoradi (GH) - TKD
+Selawik (US) - WLK
+Seldovia (US) - SOV
+Selebi Phikwe (BW) - PKW
+Seletar (SG) - XSP
+Semarang (ID) - SRG
+Semera (ET) - SZE
+Semey (KZ) - PLX
+Semnan (IR) - SNX
+Sentani (ID) - DJJ
+Seongnam (KR) - SSN
+Seoul (KR) - GMP, ICN
+Sepang (MY) - KUL
+Sept-Îles (CA) - YZV
+Serena (KE) - MRE
+Seronera (TZ) - SEU
+Serra Talhada (BR) - SET
+Serui (ID) - ZRI
+Seruyan (ID) - KLP
+Sétif (DZ) - QSF
+Sévaré (ML) - MZI
+Sevastopol (UA) - UKS
+Severo-Yeniseysk (RU) - VEO
+Seville (ES) - SVQ
+Seward (US) - SWD
+Sfax (TN) - SFA
+Shache (CN) - QSZ
+Shahrekord (IR) - CQD
+Shakawe (BW) - SWX
+Shakhtyorsk (RU) - EKS
+Shaktoolik (US) - SKK
+Shamattawa (CA) - ZTM
+Shang-I (TW) - KNH
+Shanghai (CN) - PVG, SHA
+Shangrao (CN) - SQD
+Shannan (CN) - LGZ, LXA
+Shannon (IE) - SNN
+Shanshan (CN) - SXJ
+Shaoguan (CN) - HSC
+Shaoyang (CN) - WGN
+Sharjah (AE) - SHJ
+Sharm El Sheikh (EG) - SSH
+Sharma (SA) - NUM
+Sharurah (SA) - SHW
+Sheguiandah (CA) - YEM
+Shemya (US) - SYA
+Shennongjia (CN) - HPG
+Shenyang (CN) - SHE
+Shenzhen (CN) - SZX
+Sherbrooke (CA) - YSC
+Sheridan (US) - SHR
+Shihezi (CN) - SHF
+Shijiazhuang (CN) - SJW
+Shilavo (ET) - HIL
+Shillong (IN) - SHL
+Shimoga (IN) - RQY
+Shinyanga (TZ) - SHY
+Shiquanhe (CN) - NGQ
+Shirahama (JP) - SHM
+Shiraz (IR) - SYZ
+Shire Inda Selassie (ET) - SHC
+Shishmaref (US) - SHH
+Shiyan (CN) - WDS
+Shonai (JP) - SYO
+Show Low (US) - SOW
+Showt (IR) - IMQ
+Shravasti (IN) - VSV
+Shreveport (US) - SHV
+Shuangta, Chaoyang (CN) - CHG
+Shuishang (TW) - CYI
+Shungnak (US) - SHG
+Shuozhou (CN) - SZH
+Shymkent (KZ) - CIT
+Sialkot (PK) - SKT
+Šiauliai (LT) - SQQ
+Sibiu (RO) - SBZ
+Sibolga (ID) - FLZ
+Siborong-Borong (ID) - DTB
+Sibu (MY) - SBW
+Siddharthanagar (NP) - BWA
+Sidney (US) - SDY, SNY
+Siem Reap (KH) - SAI
+Siglufjörður (IS) - SIJ
+Siirt (TR) - SXZ
+Silao (MX) - BJX
+Silchar (IN) - IXS
+Silgadi Doti (NP) - SIH
+Siliguri (IN) - IXB
+Silver City (US) - SVC
+Simara (NP) - SIF
+Simferopol (UA) - SIP
+Simikot (NP) - IMK
+Sindal (DK) - CNL
+Singapore (SG) - SIN
+Singkil (ID) - FSH
+Sinop (BR) - OPS
+Sinop (TR) - NOP
+Sint Maarten (SX) - SXM
+Sintang (ID) - SQG
+Sion (CH) - SIR
+Sioux City (US) - SUX
+Sioux Falls (US) - FSD
+Sioux Lookout (CA) - YXL
+Sipura Island (ID) - RKI
+Sir Bani Yas (AE) - XSB
+Siri (IR) - SXI
+Sirjan (IR) - SYJ
+Sirt (LY) - SRX
+Sishen (ZA) - SIS
+Sisimiut (GL) - JHS
+Sitka (US) - SIT
+Sittwe (MM) - AKY
+Sivas (TR) - VAS
+Şırnak (TR) - NKT
+Skagway (US) - SGY
+Skardu (PK) - KDU
+Skellefteå (SE) - SFT
+Skiathos (GR) - JSI
+Skiros Island (GR) - SKU
+Skive (DK) - SQW
+Skjern (DK) - STA
+Skövde (SE) - KVB
+Skukuza (ZA) - SZK
+Slave Lake (CA) - YZH
+Sleetmute (US) - SLQ
+Slemon Park (CA) - YSU
+Sliač (SK) - SLD
+Sligo (IE) - SXL
+Smara (EH) - SMW
+Smithers (CA) - YYD
+Smiths Falls (CA) - YSH
+Smolensk (RU) - LNX
+Smyrna (US) - MQY
+Soalala (MG) - DWB
+Sobral (BR) - JSO
+Sochi (RU) - AER
+Sodankyla (FI) - SOT
+Söderhamn (SE) - SOO
+Sofia (BG) - SOF
+Sogndal (NO) - SOG
+Sokoto (NG) - SKO
+Sola (VU) - SLH
+Solapur (IN) - SSE
+Soldotna (US) - SXQ
+Solenzara (FR) - SOZ
+Solovetsky Islands (RU) - CSH
+Solwesi (ZM) - SLI
+Somerset (US) - SME
+Sønderborg (DK) - SGD
+Sŏndŏng-ni (KP) - DSO
+Sørkjosen (NO) - SOJ
+Sorocaba (BR) - SOD
+Sorong (ID) - SOQ
+Soroti (UG) - SRT
+Sorriso (BR) - SMT
+Souda (GR) - CHQ
+South Bend (US) - SBN
+South Bimini (BS) - BIM
+South Caicos (TC) - XSC
+South Indian Lake (CA) - XSI
+South Lake Tahoe (US) - TVL
+South Naknek (US) - WSN
+South Tarawa (KI) - TRW
+South Tetagouche (CA) - ZBF
+Southampton (GB) - SOU
+Southend-on-Sea, Essex (GB) - SEN
+Sovetskaya Gavan (RU) - GVN
+Sovetskiy (RU) - OVS
+Sowa (BW) - SXN
+Soyo (AO) - SZA
+Spanish Town (VG) - VIJ
+Sparrevohn (US) - SVW
+Spata-Artemida (GR) - ATH
+Split (HR) - SPU
+Spokane (US) - GEG, SFF, SKA
+Spring Point (BS) - AXP
+Springbok (ZA) - SBU
+Springbrook (CA) - YQF
+Springfield (US) - SGF, SGH, SPI
+Srednekolymsk (RU) - SEK
+Srinagar (IN) - SXR
+St Augustine (US) - UST
+St George (US) - SGU, STG
+St Jean (CA) - YJN
+St Joseph (US) - STJ
+St Louis (US) - STL, SUS
+St Mary's (US) - KSM
+St Michael (US) - SMK
+St Paul Island (US) - SNP
+St Simons Island (US) - SSI
+St Thomas (CA) - YQS
+St-Augustin (CA) - YIF
+St-François (GP) - SFC
+St. Anthony (CA) - YAY
+St. Gallen (CH) - ACH
+St. John's (CA) - YYT
+St. Lewis (CA) - YFX
+St. Mary's, Isles of Scilly (GB) - ISC
+St. Peter (JE) - JER
+St. Petersburg (RU) - LED
+St. Theresa Point (CA) - YST
+Sta Cruz de la Palma, La Palma Island (ES) - SPC
+Stagen (ID) - KBU
+Staniel Cay (BS) - TYM
+Stanley (FK) - PSY
+Stapari (RS) - UZC
+State College (US) - SCE
+Stavanger (NO) - SVG
+Staverton, Gloucestershire (GB) - GLO
+Stavropol (RU) - STW
+Stebbins (US) - WBB
+Stella Maris (BS) - SML
+Stephenville (CA) - YJT
+Stevens Village (US) - SVS
+Stewart (CA) - ZST
+Stillwater (US) - SWO
+Stirling Island (SB) - MNY
+Stockholm (SE) - ARN, BMA
+Stockholm / Västerås (SE) - VST
+Stockton (US) - SCK
+Stony Rapids (CA) - YSF
+Stony River (US) - SRV
+Stornoway, Western Isles (GB) - SYY
+Storuman (SE) - SQO
+Strasbourg (FR) - SXB
+Strezhevoy (RU) - SWT
+Stronsay (GB) - SOY
+Stuttgart (DE) - STR
+Suai (TL) - UAI
+Suavanao (SB) - VAO
+Subang (MY) - SZB
+Suceava (RO) - SCV
+Sucre (BO) - SRE
+Sudbury (CA) - YSB
+Sue Islet (AU) - SYU
+Suhaj (EG) - HMB
+Suhar (OM) - OHS
+Sui (PK) - SUL
+Sukagawa (JP) - FKS
+Sukhumi (GE) - SUI
+Sukkur (PK) - SKZ
+Sulaymaniyah (IQ) - ISU
+Sumbawa Besar (ID) - SWQ
+Sumbe (AO) - NDD
+Summer Beaver (CA) - SUR
+Sumter (US) - SSC
+Sundsvall/ Härnösand (SE) - SDL
+Sungai Penuh (ID) - KRC
+Suntar (RU) - SUY
+Sunyani (GH) - NYI
+Sunzha (RU) - IGT
+Surabaya (ID) - SUB
+Surakarta (ID) - SOC
+Surallah (PH) - AAV
+Surat (IN) - STV
+Surat Thani (TH) - URT
+Surgut (RU) - SGC
+Surigao City (PH) - SUG
+Surin (TH) - PXR
+Surkhet (NP) - SKH
+Suwon (KR) - SWU
+Suzhou (CN) - SZV
+Sveg (SE) - EVG
+Svetlogorsk (RU) - SES
+Svolvær (NO) - SVJ
+Swan River (CA) - ZJN
+Swansea (GB) - SWS
+Swift Current (CA) - YYN
+Sydney (AU) - BWU, SYD, WSI
+Sydney (CA) - YQY
+Syktyvkar (RU) - SCW
+Sylhet (BD) - ZYL
+Sylt (DE) - GWT
+Syracuse (US) - SYR
+Syros Island (GR) - JSY
+Szczecin (PL) - SZZ
+Szymany (PL) - SZY
+Ta Noun (KH) - DSY
+Taba (EG) - TCP
+Tabarka (TN) - TBJ
+Tabas (IR) - TCX
+Tabatinga (BR) - TBT
+Tablas Island (PH) - TBH
+Tabora (TZ) - TBO
+Tabriz (IR) - TBZ
+Tabubil (PG) - TBG
+Tabuk (SA) - TUU
+Tabukan Utara, Sangihe Islands (ID) - NAH
+Tacheng (CN) - TCG
+Tachileik (MM) - THL
+Tachina (EC) - ESM
+Tacloban City (PH) - TAC
+Tacna (PE) - TCQ
+Tacoma (US) - TCM, TIW
+Tadmur (SY) - PMS
+Tadoule Lake (CA) - XTL
+Tafraoui (DZ) - TAF
+Taganrog (RU) - TGK
+Tahir (DZ) - GJL
+Tahoua (NE) - THZ
+Taichung (TW) - RMQ
+Taif (SA) - TIF
+Tainan (TW) - TNN
+Taipei (TW) - TSA
+Taitung City (TW) - TTT
+Taiyuan (CN) - TYN
+Taiz (YE) - TAI
+Taizhou (CN) - HYN
+Takamatsu (JP) - TAK
+Takengon (ID) - TXE
+Takhli (TH) - TKH
+Takotna (US) - TCT, TLJ
+Taksimo (RU) - TKM
+Talang Gudang-Sumatra Island (ID) - PDO
+Talara (PE) - TYL
+Talca (CL) - TLX
+Taldykorgan (KZ) - TDK
+Talkeetna (US) - TKA
+Tallahassee (US) - TLH
+Tallinn (EE) - TLL
+Taloyoak (CA) - YYH
+Taltal (CL) - TTC
+Tam Nghĩa (VN) - VCL
+Tamale (GH) - TML
+Tamanrasset (DZ) - TMR
+Tambacounda (SN) - TUD
+Tambohorano (MG) - WTA
+Tambov (RU) - TBW
+Tamchy (KG) - IKU
+Tame (CO) - TME
+Tampa (US) - MCF, TPA
+Tampere / Pirkkala (FI) - TMP
+Tamworth (AU) - TMW
+Tan Tan (MA) - TTA
+Tanah Merah (ID) - TMH
+Tanana (US) - TAL
+Tandag (PH) - TDG
+Tandil (AR) - TDL
+Tanegashima (JP) - TNE
+Tanga (TZ) - TGT
+Tangará da Serra (BR) - TGQ
+Tangbu (CN) - WUZ
+Tangier (MA) - TNG
+Tangshan (CN) - TVS
+Tanjung Pandan (ID) - TJQ
+Tanjung Pinang-Bintan Island (ID) - TNJ
+Tanjung Redeb - Borneo Island (ID) - BEJ
+Tanjung Selor-Borneo Island (ID) - TJS
+Tanna Island (VU) - TAH
+Tanta-Tabalong (ID) - TJG
+Taos (US) - TSM
+Taoyuan (TW) - TPE
+Tapachula (MX) - TAP
+Tapini (PG) - TPI
+Taplejung (NP) - TPJ
+Tarakan (ID) - TRK
+Tarama (JP) - TRA
+Tarapacá (CO) - TCD
+Tarapoa (EC) - TPC
+Tarapoto (PE) - TPP
+Tarauacá (BR) - TRQ
+Taraz (KZ) - DMB
+Tarbes/Lourdes/Pyrénées (FR) - LDE
+Taree (AU) - TRO
+Tari (PG) - TIZ
+Tarija (BO) - TJA
+Tarsus (TR) - COV
+Tartagal (AR) - TTG
+Tartu (EE) - TAY
+Tashikuergan (CN) - HQL
+Tashkent (UZ) - TAS, TVT
+Tasiujaq (CA) - YTQ
+Tatakoto (PF) - TKV
+Tatitlek (US) - TEK
+Taupo (NZ) - TUO
+Tauranga (NZ) - TRG
+Tăuții-Măgherăuș (RO) - BAY
+Tawau (MY) - TWU
+Tbilisi (GE) - TBS
+Te One (NZ) - CHT
+Tébessi (DZ) - TEE
+Tefé (BR) - TFF
+Tegucigalpa (HN) - TGU
+Tehran (IR) - IKA, THR
+Tel Aviv (IL) - TLV
+Tela (HN) - TEA
+Telêmaco Borba (BR) - TEC
+Teller (US) - TLA
+Telluride (US) - TEX
+Temixco (MX) - CVJ
+Temora (AU) - TEM
+Temple (US) - TPL
+Temuco (CL) - PZS, ZCO
+Tenerife (ES) - TFN, TFS
+Tennant Creek (AU) - TCA
+Tepic (MX) - TPQ
+Teresina (BR) - THE
+Termas de Río Hondo (AR) - RHD
+Termez (UZ) - TMJ
+Ternate (ID) - TTE
+Terrace (CA) - YXT
+Terre Haute (US) - HUF
+Teruel (ES) - TEV
+Teslin (CA) - YZW
+Tete (MZ) - TET
+Tête-à-la-Baleine (CA) - ZTB
+Teterboro (US) - TEB
+Tétouan (MA) - TTU
+Texarkana (US) - TXK
+Thandwe (MM) - SNW
+Thanh Hóa (VN) - THD
+Thargomindah (AU) - XTG
+The Pas (CA) - YQD
+The Valley (AI) - AXA
+Thessaloniki (GR) - SKG
+Thicket Portage (CA) - YTD
+Thief River Falls (US) - TVF
+Thimarafushi (MV) - TMF
+Thiruvananthapuram (IN) - TRV
+Thisted (DK) - TED
+Thompson (CA) - YTH
+Thumrait (OM) - TTH
+Thunder Bay (CA) - YQT
+Tiakur (ID) - JIO
+Tianjin (CN) - TSN
+Tianshui (CN) - THQ
+Tiaret (DZ) - TID
+Tiga (NC) - TGJ
+Tijuana (MX) - TIJ
+Tiko (CM) - TKC
+Tiksi (RU) - IKS
+Timbuktu (ML) - TOM
+Timika (ID) - TIM
+Timimoun (DZ) - TMX
+Timişoara (RO) - TSR
+Timmins (CA) - YTS
+Tin City (US) - TNC
+Tindouf (DZ) - TIN
+Tinian Island (MP) - TIQ
+Tinson Pen (JM) - KTP
+Tioman Island (MY) - TOD
+Tippi (ET) - TIE
+Tiruchirappalli (IN) - TRZ
+Tirupati (IN) - TIR
+Titusville (US) - TIX
+Tivat (ME) - TIV
+Tiwatobi (ID) - LKA
+Toamasina (MG) - TMM
+Tobolsk (RU) - RMZ
+Tocopilla (CL) - TOQ
+Tocumen (PA) - PTY
+Tofino (CA) - YAZ
+Togiak Village (US) - TOG
+Tojo Una-Una (ID) - OJU
+Tok (US) - TKJ
+Tokat (TR) - TJK
+Tokoname (JP) - NGO
+Toksook Bay (US) - OOK
+Tokushima (JP) - TKS
+Tokyo (JP) - HND
+Tôlanaro (MG) - FTU
+Toledo (BR) - TOW
+Toledo (US) - TOL
+Toli Toli-Celebes Island (ID) - TLI
+Toliara (MG) - TLE
+Toluca (MX) - TLC
+Tomanggong (MY) - TMG
+Tomblaine, Meurthe-et-Moselle (FR) - ENC
+Tomsk (RU) - TOF
+Ton Phueng (LA) - BOR
+Tonghua (CN) - TNH
+Tongliao (CN) - TGO
+Tongoa Island (VU) - TGH
+Tongren (CN) - DEJ, TEN
+Tonopah (US) - TPH
+Toowoomba (AU) - WTB
+Topeka (US) - FOE, TOP
+Toraja (ID) - TRT
+Toronto (CA) - YTZ, YYZ
+Torreón (MX) - TRC
+Torsby (SE) - TYF
+Tottori (JP) - TTJ
+Touggourt (DZ) - TGR
+Touho (NC) - TOU
+Toulouse/Blagnac (FR) - TLS
+Tours, Indre-et-Loire (FR) - TUF
+Toussus-le-Noble, Yvelines (FR) - TNF
+Townsville (AU) - TSV
+Toyama (JP) - TOY
+Toyooka (JP) - TJH
+Tozeur (TN) - TOE
+Trabzon (TR) - TZX
+Trail (CA) - YZZ
+Trang (TH) - TST
+Trapani (IT) - TPS
+Traverse City (US) - TVC
+Treasure Cay (BS) - TCB
+Trémuson, Côtes-d'Armor (FR) - SBK
+Trenton (CA) - YTR
+Tres Arroyos (AR) - OYO
+Tres Esquinas (CO) - TQS
+Três Lagoas (BR) - TJL
+Treviso (IT) - TSF
+Trier (DE) - SPM
+Trincomalee (LK) - TRR
+Trinidad (BO) - TDD
+Trinidad (CU) - TND
+Tripoli (LB) - KYE
+Tripoli (LY) - MJI
+Trois-Rivières (CA) - YRQ
+Trollenhagen (DE) - FNB
+Trollhättan (SE) - THN
+Tromsø (NO) - TOS
+Trondheim (NO) - TRD
+Troy (US) - TOI
+Truckee (US) - TKF
+Trujillo (HN) - TJI
+Trujillo (PE) - TRU
+Truth or Consequences (US) - TCS
+Tsaratanana (MG) - TTS
+Tsumeb (NA) - TSB
+Tsushima (JP) - TSJ
+Tucson (US) - DMA, TUS
+Tucumcari (US) - TCC
+Tucupita (VE) - TUV
+Tucuruí (BR) - TUR
+Tufi (PG) - TFI
+Tuguegarao City (PH) - TUG
+Tuherahera (PF) - TIH
+Tulcán (EC) - TUA
+Tulita (CA) - ZFN
+Tulsa (US) - RVS, TUL
+Tuluá (CO) - ULQ
+Tuluksak (US) - TLT
+Tulum (MX) - TQO
+Tumaco (CO) - TCO
+Tumbang Samba-Borneo Island (ID) - TBM
+Tumbes (PE) - TBP
+Tumling Tar (NP) - TMI
+Tumut (AU) - TUM
+Tumxuk (CN) - TWC
+Tunis (TN) - TUN
+Tunoshna (RU) - IAR
+Tuntutuliak (US) - WTL
+Tununak (US) - TNK
+Tupelo (US) - TUP
+Tura (RU) - GOY
+Turaif (SA) - TUI
+Turbat (PK) - TUK
+Turkıstan (KZ) - HSA
+Türkmenabat (TM) - CRZ
+Turkmenbaşy (TM) - KRW
+Turku (FI) - TKU
+Turpan (CN) - TLQ
+Turukhansk (RU) - THX
+Tuscaloosa (US) - TCL
+Tuxtla Gutiérrez (MX) - TGZ
+Tuy Hoa (VN) - TBB
+Tver (RU) - KLD
+Twin Falls (US) - TWF
+Twin Hills (US) - TWA
+Twitzel (NZ) - TWZ
+Tyler (US) - TYR
+Tymbou (CY) - ECN
+Tyumen (RU) - TJM
+Tzaneen (ZA) - LTA
+Ua Huka (PF) - UAH
+Ua Pou (PF) - UAP
+Ube (JP) - UBJ
+Uberaba (BR) - UBA
+Uberlândia (BR) - UDI
+Ubon Ratchathani (TH) - UBP
+Udaipur (IN) - UDR
+Uden (NL) - UDE
+Udon Thani (TH) - UTH
+Ufa (RU) - UFA
+Uherské Hradiště (CZ) - UHE
+Uige (AO) - UGO
+Ujae Atoll (MH) - UJE
+Ukhta (RU) - UCT
+Ukiah (US) - UKI
+Ulaanbaatar (MN) - UBN, ULN
+Ulaangom (MN) - ULO
+Ulan Ude (RU) - UUD
+Ulanhot (CN) - HLH
+Ulanqab (CN) - UCB
+Uliastai (MN) - ULZ
+Ulsan (KR) - USN
+Ulukhaktok (CA) - YHI
+Ulundi (ZA) - ULD
+Ulyanovsk (RU) - ULV
+Umeå (SE) - UME
+Umiujaq (CA) - YUD
+Umuarama (BR) - UMU
+Una (BR) - UNA
+Unalakleet (US) - UNK
+Unalaska (US) - DUT
+União da Vitória (BR) - UVI
+Union Island (VC) - UNI
+Universal City (US) - RND
+Upala (CR) - UPL
+Upernavik (GL) - JUV
+Upington (ZA) - UTN
+Uralsk (KZ) - URA
+Uranium City (CA) - YBE
+Uray (RU) - URJ
+Urgench (UZ) - UGC
+Urmia (IR) - OMH
+Uruapan (MX) - UPN
+Uruguaiana (BR) - URG
+Ürümqi (CN) - URC
+Urzhar (KZ) - UZR
+Uşak (TR) - USQ
+Ushant (FR) - OUI
+Usharal (KZ) - USJ
+Ushuaia (AR) - USH
+Usinsk (RU) - USK
+Ust-Kamenogorsk (KZ) - UKK
+Ust-Kut (RU) - UKX
+Ust-Kuyga (RU) - UKG
+Ust-Maya (RU) - UMS
+Ust-Nera (RU) - USR
+Ust-Tsylma (RU) - UTS
+Utila Island (HN) - UII
+Utirik Island (MH) - UTK
+Utopia Creek (US) - UTO
+Utqiaġvik (US) - BRW
+Utti / Valkeala (FI) - UTI
+Uturoa (PF) - RFP
+Uummannaq (GL) - JQA
+Uyo (NG) - QUO
+Uzhhorod (UA) - UDJ
+Vaasa (FI) - VAA
+Vadodara (IN) - BDQ
+Vadsø (NO) - VDS
+Vagaikulam (IN) - TCR
+Vágar (FO) - FAE
+Val-d'Or (CA) - YVO
+Valdez (US) - VDZ
+Valdivia (CL) - ZAL
+Valdosta (US) - VAD, VLD
+Valença (BR) - VAL
+Valencia (ES) - VLC
+Valencia (VE) - VLN
+Valentine (US) - VTN
+Valera (VE) - VLV
+Valladolid (ES) - VLL
+Valledupar (CO) - VUP
+Vallenar (CL) - VLR
+Valletta (MT) - MLA
+Valparaiso (US) - VPS, VPZ
+Van (TR) - VAN
+Van Don (VN) - VDO
+Van Nuys (US) - VNY
+Vanavara (RU) - VAQ
+Vancouver (CA) - YVR
+Vanimo (PG) - VAI
+Vannes/Meucon (FR) - VNE
+Vanua Balavu (FJ) - VBV
+Varanasi (IN) - VNS
+Vardø (NO) - VAW
+Varginha (BR) - VAG
+Varkaus / Joroinen (FI) - VRK
+Varna (BG) - VAR
+Vasco da Gama (IN) - GOI
+Vava'u Island (TO) - VAV
+Växjö (SE) - VXO
+Velas (PT) - SJZ
+Velika Gorica (HR) - ZAG
+Velikiy Ustyug (RU) - VUS
+Velikiye Luki (RU) - VLU
+Vélizy-Villacoublay, Yvelines (FR) - VIY
+Venetie (US) - VEE
+Venezia (IT) - VCE
+Veracruz (MX) - VER
+Verkhnevilyuisk (RU) - VHV
+Vernal (US) - VEL
+Vernon (CA) - YVE
+Vero Beach (US) - VRB
+Vestmannaeyjar (IS) - VEY
+Victoria (CA) - YYJ
+Victoria (CL) - ZIC
+Victoria (SC) - SEZ
+Victoria (US) - VCT
+Victoria Falls (ZW) - VFA
+Viedma / Carmen de Patagones (AR) - VDM
+Vienna (AT) - VIE
+Vientiane (LA) - VTE
+Vieques (PR) - VQS
+Vieux Fort (LC) - UVF
+Vigo (ES) - VGO
+Vijayawada (IN) - VGA
+Vila Baleira (PT) - PXO
+Vila do Maio (CV) - MMO
+Vila do Porto (PT) - SMA
+Vila Real (PT) - VRL
+Vilanculo (MZ) - VNX
+Vilhelmina (SE) - VHM
+Vilhena (BR) - BVH
+Villa Dolores (AR) - VDR
+Villa Gesell (AR) - VLG
+Villa Mercedes (AR) - VME
+Villahermosa (MX) - VSA
+Villamontes (BO) - VLM
+Villavicencio (CO) - VVC
+Vilnius (LT) - VNO
+Vilyuisk (RU) - VYI
+Viña del Mar (CL) - KNA
+Vinh (VN) - VII
+Vinnitsa (UA) - VIN
+Virac (PH) - VRC
+Virginia Beach (US) - NTU
+Visakhapatnam (IN) - VTZ
+Visalia (US) - VIS
+Visby (SE) - VBY
+Viseu (PT) - VSE
+Vitebsk (BY) - VTB
+Vitória (BR) - VIX
+Vitória da Conquista (BR) - VDC
+Vodochody (CZ) - VOD
+Vohemar (MG) - VOH
+Vohilava (MG) - SMS
+Vojens (DK) - SKS
+Volgograd (RU) - VOG
+Vologda (RU) - VGD
+Vopnafjörður (IS) - VPN
+Vorkuta (RU) - VKT
+Voronezh (RU) - VOZ
+Vredendal (ZA) - VRE
+Vryburg (ZA) - VRU
+Vunisea (FJ) - KDV
+Waala (NC) - BMY
+Wabush (CA) - YWK
+Waco (US) - ACT
+Wadeye (AU) - PKT
+Wadi Al Dawasir (SA) - WAE
+Wadomari (JP) - OKE
+Wageningen (SR) - AGI
+Waimea (US) - MUE
+Waingapu-Sumba Island (ID) - WGP
+Wainwright (US) - AIN
+Waioti (ID) - MOF
+Wairoa (NZ) - WIR
+Waisai (ID) - RJM
+Wajima (JP) - NTQ
+Wajir (KE) - WJR
+Wake Island (UM) - AWK
+Wakkanai (JP) - WKJ
+Walaha (VU) - WLH
+Wales (US) - WAA
+Walla Walla (US) - ALW
+Wallingford, Oxfordshire (GB) - BEX
+Wallis Island (WF) - WLS
+Walvis Bay (NA) - WVB
+Wamena (ID) - WMX
+Wanaka (NZ) - WKA
+Wanganui (NZ) - WAG
+Wangerooge (DE) - AGE
+Wangi-wangi Island (ID) - WNI
+Wanzhou (CN) - WXN
+Wapenamanda (PG) - WBM
+Warner Robins (US) - WRB
+Warsaw (PL) - WAW
+Warton (GB) - WRT
+Washington (US) - DCA
+Wasilla (US) - WWA
+Waskaganish (CA) - YKQ
+Waterford (IE) - WAT
+Waterloo (US) - ALO
+Watertown (US) - ART, ATY
+Watson Lake (CA) - YQH
+Wau (SS) - WUU
+Wausau (US) - AUW
+Wawa (CA) - YXZ
+Webequie (CA) - YWP
+Weeze (DE) - NRN
+Weifang (CN) - WEF
+Weihai (CN) - WEH
+Weipa (AU) - WEI
+Wekweètì (CA) - YFJ
+Wellington (NZ) - WLG
+Wemindji (CA) - YNC
+Wenatchee (US) - EAT
+Wendover (US) - ENV
+Weno Island (FM) - TKK
+Wenshan (CN) - WNH
+Wenzhou (CN) - WNZ
+Weßling (DE) - OBF
+West End (KY) - CYB
+West Island (CC) - CCK
+West Lafayette (US) - LAF
+West Palm Beach (US) - PBI
+West Wyalong (AU) - WWY
+West Yellowstone (US) - WYS
+Westerly (US) - WST
+Western Water Catchment (SG) - TGA
+Westfield (US) - BAF
+Westport (NZ) - WSZ
+Westray, Orkney Islands (GB) - WRY
+Wevelgem (BE) - KJK
+Wewak (PG) - WWK
+Weyers Cave (US) - SHD
+Whakatāne (NZ) - WHK
+Whale Cove (CA) - YXN
+Whangarei (NZ) - WRE
+Whatì (CA) - YLE
+Wheeling (US) - HLG
+White Mountain (US) - WMO
+White Plains (US) - HPN
+Whitecourt (CA) - YZU
+Whitehorse (CA) - YXY
+Whitemark (AU) - FLS
+Whyalla (AU) - WYA
+Wiarton (CA) - YVV
+Wichita (US) - IAB, ICT
+Wichita Falls (US) - SPS
+Wick (GB) - WIC
+Wiesbaden (DE) - WIE
+Wildwood (US) - WWD
+Wilkes-Barre/Scranton (US) - AVP
+Willemstad (CW) - CUR
+Williams Harbour (CA) - YWM
+Williams Lake (CA) - YWL
+Williamsport (US) - IPT
+Williamtown (AU) - NTL
+Williston (US) - XWA
+Wilmington (US) - ILG, ILM, ILN
+Windhoek (NA) - ERS, WDH
+Windorah (AU) - WNR
+Windsor (CA) - YQG
+Wink (US) - INK
+Winnemucca (US) - WMC
+Winnipeg (CA) - YWG
+Winslow (US) - INW
+Winston Salem (US) - INT
+Wolf Point (US) - OLF
+Wollaston Lake (CA) - ZWL
+Wonju (KR) - WJU
+Wonsan (KP) - WOS
+Woodward (US) - WWR
+Worcester (US) - ORH
+Worland (US) - WRL
+Wotho Island (MH) - WTO
+Wotje (MH) - WTE
+Wrangell (US) - WRG
+Wrightstown (US) - WRI
+Wrigley (CA) - YWY
+Wrocław (PL) - WRO
+Wuhai (CN) - WUA
+Wuhan (CN) - WHN, WUH
+Wuhu (CN) - WHA
+Wulong (CN) - CQW
+Wunnumin Lake (CA) - WNN
+Wurrumiyanga (AU) - BRT
+Wurster Nordseeküste (DE) - FCN
+Wushan (CN) - WSK
+Wuxi (CN) - WUX
+Wuyishan (CN) - WUS
+Xai-Xai (MZ) - VJB
+Xangongo (AO) - XGN
+Xi'an (CN) - SIA, XIY
+Xiamen (CN) - XMN
+Xiangxi (CN) - DXJ
+Xiangyang (CN) - LHK, XFN
+Xieng Khouang (LA) - XKH
+Xigazê (CN) - DDR, RKZ
+Xilinhot (CN) - XIL
+Xingyi (CN) - ACX
+Xinyang (CN) - XAI
+Xinyuan (CN) - NLT
+Xinzhou (CN) - WUT
+Xiuzhou, Hangzhou (CN) - JNH
+Xuzhou (CN) - XUZ
+Yacuíba (BO) - BYC
+Yakataga (US) - CYT
+Yakima (US) - YKM
+Yakushima (JP) - KUM
+Yakutat (US) - YAK
+Yakutia (RU) - PYJ
+Yakutsk (RU) - YKS
+Yam Island (AU) - XMY
+Yamoussoukro (CI) - ASK
+Yan'an (CN) - ENY
+Yanbu (SA) - YNB
+Yancheng (CN) - YNZ
+Yandina (SB) - XYA
+Yangon (MM) - RGN
+Yangzhou (CN) - YTY
+Yanji (CN) - YNJ
+Yankton (US) - YKN
+Yantai (CN) - YNT
+Yaoundé (CM) - NSI, YAO
+Yap Island (FM) - YAP
+Yaren (NR) - INU
+Yarmouth (CA) - YQI
+Yasawa Island (FJ) - YAS
+Yasuj (IR) - YES
+Yazd (IR) - AZD
+Yecheon-ri (KR) - YEC
+Yekaterinburg (RU) - SVX
+Yellowknife (CA) - YZF
+Yengema (SL) - WYE
+Yenişehir (TR) - YEI
+Yeniseysk (RU) - EIE
+Yeosu (KR) - RSU
+Yeovil, Somerset (GB) - YEO
+Yerevan (AM) - EVN
+Yeysk (RU) - EIK
+Yibin (CN) - YBP
+Yichang (CN) - YIH
+Yichun (CN) - LDS, YIC
+Yigo (GU) - UAM
+Yinchuan (CN) - INC
+Yingkou (CN) - YKH
+Yingzhou, Fuyang (CN) - FUG
+Yiwu/Jinhua (CN) - YIW
+Ylivieska (FI) - YLI
+Yogyakarta (ID) - JOG, YIA
+Yola (NG) - YOL
+Yonago (JP) - YGJ
+Yonaguni (JP) - OGN
+Yongphulla (BT) - YON
+Yongzhou (CN) - LLF
+Yopal (CO) - EYP
+Yorke Island (AU) - OKR
+Yorkton (CA) - YQV
+Yoron (JP) - RNJ
+Yoshkar-Ola (RU) - JOK
+Youngstown/Warren (US) - YNG
+Yueyang (CN) - YYA
+Yulara (AU) - AYQ
+Yulin (CN) - UYN, YLX
+Yuma (US) - YUM
+Yuncheng (CN) - YCU
+Yurimaguas (PE) - YMS
+Yushu (CN) - YUS
+Yuzhno-Kurilsk (RU) - DEE
+Yuzhno-Sakhalinsk (RU) - UUS
+Zabol (IR) - ACZ
+Zabrat (AZ) - ZXT
+Zacatecas (MX) - ZCL
+Zadar (HR) - ZAD
+Zagora (MA) - OZG
+Zahedan (IR) - ZAH
+Zakynthos (GR) - ZTH
+Zamboanga (PH) - ZAM
+Zanesville (US) - ZZV
+Zanjan (IR) - JWN
+Zanzibar (TZ) - ZNZ
+Zapala (AR) - APZ
+Zaporizhia (UA) - OZH
+Zaqatala (AZ) - ZTU
+Zaragoza (ES) - ZAZ
+Zaria (NG) - ZAR
+Zaventem (BE) - BRU
+Zaysan (KZ) - SZI
+Zemun (RS) - BJY
+Zenata (DZ) - TLM
+Zgornji Brnik (SI) - LJU
+Zhalantun (CN) - NZL
+Zhangjiajie (CN) - DYG
+Zhangjiakou (CN) - ZQZ
+Zhangye (CN) - YZY
+Zhanjiang (CN) - ZHA
+Zhaosu (CN) - ZFL
+Zhaotong (CN) - ZAT
+Zhengzhou (CN) - CGO
+Zhezkazgan (KZ) - DZN
+Zhigansk (RU) - ZIX
+Zhongwei (CN) - ZHY
+Zhoushan (CN) - HSN
+Zhuhai (CN) - ZUH
+Ziguinchor (SN) - ZIG
+Zinder (NE) - ZND
+Zion's Hill (BQ) - SAB
+Zirchow (DE) - HDF
+Ziro (IN) - ZER
+Zomin (UZ) - OMN
+Zonguldak (TR) - ONQ
+Zouérate (MR) - OUZ
+Zunyi (CN) - WMT, ZYI
+Zurich (CH) - ZRH
+Zyryanka (RU) - ZKP
+Þórshöfn (IS) - THO

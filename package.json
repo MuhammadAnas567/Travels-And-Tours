@@ -21,6 +21,7 @@
     "db:studio": "prisma studio",
     "seed": "npx tsx scripts/seed.ts",
     "seed:atlas": "node scripts/seed-atlas.mjs",
+    "airports:build": "node ./scripts/build-commercial-airports.mjs",
     "postinstall": "node ./scripts/prisma-generate.mjs"
   },
   "prisma": {

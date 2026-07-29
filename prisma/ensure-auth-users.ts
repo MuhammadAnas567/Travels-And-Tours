@@ -21,6 +21,7 @@ async function upsertAuthUser(
         name: data.name,
         hashedPassword,
         role: data.role,
+        emailVerified: new Date(),
       },
     });
     console.log(`Created auth user ${email}`);
@@ -32,6 +33,7 @@ async function upsertAuthUser(
       name: data.name,
       hashedPassword,
       role: data.role,
+      emailVerified: existing.emailVerified ?? new Date(),
     },
   });
   console.log(`Refreshed auth user ${email}`);

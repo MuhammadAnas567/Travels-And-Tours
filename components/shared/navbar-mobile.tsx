@@ -5,18 +5,14 @@ import Link from "next/link";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import type { Session } from "next-auth";
-
-import type { Currency } from "@prisma/client";
 import { CurrencySwitcher } from "@/components/shared/currency-switcher";
 
 export function NavbarMobile({
   session,
   navLinks,
-  currency,
 }: {
   session: Session | null;
   navLinks: { href: string; label: string }[];
-  currency?: Currency;
 }) {
   const [open, setOpen] = useState(false);
 
@@ -49,11 +45,9 @@ export function NavbarMobile({
           id="auth-mobile-nav"
           className="absolute left-0 right-0 top-14 min-[480px]:top-[4.5rem] z-50 border-b border-line bg-paper p-4 shadow-md max-h-[calc(100dvh-3.5rem)] min-[480px]:max-h-[calc(100dvh-4.5rem)] overflow-y-auto overscroll-contain pb-[max(1rem,env(safe-area-inset-bottom))]"
         >
-          {currency && (
-            <div className="mb-3">
-              <CurrencySwitcher value={currency} />
+          <div className="mb-3">
+              <CurrencySwitcher />
             </div>
-          )}
           <nav className="flex flex-col gap-1" aria-label="Mobile navigation">
             {navLinks.map((link) => (
               <Link

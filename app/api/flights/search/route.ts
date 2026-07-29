@@ -1,26 +1,40 @@
 import { NextResponse } from "next/server";
-import { searchFlights } from "@/lib/providers/flights";
+import { z } from "zod";
+import { searchSerpApiFlights } from "@/lib/flights/serpapi";
 
 export const dynamic = "force-dynamic";
 
 export async function GET(req: Request) {
-  const { searchParams } = new URL(req.url);
-  const from = searchParams.get("from") ?? "";
-  const to = searchParams.get("to") ?? "";
-  const date = searchParams.get("date") ?? undefined;
-  const adults = Number(searchParams.get("adults") ?? "1");
-  const cabin = searchParams.get("cabin") ?? undefined;
+  try {
+    const { searchParams } = new URL(req.url);
+    const payload = await searchSerpApiFlights({
+      origin: searchParams.get("origin") ?? "",
+      destination: searchParams.get("destination") ?? "",
+      outboundDate: searchParams.get("outboundDate") ?? "",
+      returnDate: searchParams.get("returnDate"),
+      tripType: searchParams.get("tripType") ?? "roundtrip",
+      adults: searchParams.get("adults") ?? "1",
+      children: searchParams.get("children") ?? "0",
+      cabinClass: searchParams.get("cabinClass") ?? "1",
+      currency: searchParams.get("currency") ?? "PKR",
+    });
 
-  const flights = await searchFlights({ from, to, date, adults, cabin });
-  const live = flights.some((f) => f.source === "duffel" || f.source === "amadeus");
-  const provider = flights.some((f) => f.source === "duffel")
-    ? "duffel"
-    : flights.some((f) => f.source === "amadeus")
-      ? "amadeus"
-      : "catalog";
-  return NextResponse.json({
-    count: flights.length,
-    source: live ? `${provider}+catalog` : "catalog",
-    flights,
-  });
+    return NextResponse.json(payload);
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      return NextResponse.json(
+        {
+          error: error.issues[0]?.message ?? "Invalid flight search parameters",
+        },
+        { status: 400 }
+      );
+    }
+
+    return NextResponse.json(
+      {
+        error: error instanceof Error ? error.message : "Flight search failed",
+      },
+      { status: 500 }
+    );
+  }
 }

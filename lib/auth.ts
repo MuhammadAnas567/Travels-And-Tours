@@ -43,6 +43,7 @@ const providers: Provider[] = [
             image: true,
             role: true,
             hashedPassword: true,
+            emailVerified: true,
           },
         });
 
@@ -50,6 +51,7 @@ const providers: Provider[] = [
 
         const isValid = await bcrypt.compare(password, user.hashedPassword);
         if (!isValid) return null;
+        if (!user.emailVerified) return null;
 
         return {
           id: user.id,

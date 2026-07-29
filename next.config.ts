@@ -16,6 +16,8 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "images.pexels.com" },
       { protocol: "https", hostname: "res.cloudinary.com" },
       { protocol: "https", hostname: "utfs.io" },
+      // SerpApi / Google Flights airline logos
+      { protocol: "https", hostname: "www.gstatic.com", pathname: "/flights/airline_logos/**" },
     ],
   },
 };

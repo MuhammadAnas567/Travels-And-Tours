@@ -1,6 +1,5 @@
 ﻿import Link from "next/link";
 import { getSession, signOut } from "@/lib/auth";
-import { getPreferredCurrency } from "@/lib/locale";
 import { Button } from "@/components/ui/button";
 import { CurrencySwitcher } from "@/components/shared/currency-switcher";
 import { Logo } from "@/components/shared/logo";
@@ -13,11 +12,7 @@ const desktopLinks = [
 ];
 
 export async function Navbar() {
-  const [session, currency] = await Promise.all([
-    getSession(),
-    getPreferredCurrency(),
-  ]);
-
+  const session = await getSession();
   const mobileLinks = ALL_NAV.map(({ href, label }) => ({ href, label }));
 
   return (
@@ -27,7 +22,10 @@ export async function Navbar() {
           <Logo variant="compact" />
         </div>
 
-        <nav className="hidden lg:flex items-center gap-0.5 min-w-0 overflow-x-auto scrollbar-hide" aria-label="Main">
+        <nav
+          className="hidden lg:flex items-center gap-0.5 min-w-0 overflow-x-auto scrollbar-hide"
+          aria-label="Main"
+        >
           {desktopLinks.map((link) => (
             <Link
               key={link.href}
@@ -40,7 +38,7 @@ export async function Navbar() {
         </nav>
 
         <div className="hidden lg:flex items-center gap-2 shrink-0">
-          <CurrencySwitcher value={currency} />
+          <CurrencySwitcher />
           {session?.user ? (
             <>
               {(session.user.role === "ADMIN" || session.user.role === "AGENT") && (
@@ -74,7 +72,7 @@ export async function Navbar() {
           )}
         </div>
 
-        <NavbarMobile session={session} navLinks={mobileLinks} currency={currency} />
+        <NavbarMobile session={session} navLinks={mobileLinks} />
       </div>
     </header>
   );

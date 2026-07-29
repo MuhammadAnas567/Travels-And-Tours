@@ -16,9 +16,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { DateField, daysFromTodayISO, todayISO } from "@/components/ui/date-field";
 import { SearchRouteLine } from "@/components/search/search-route-line";
-import { resolveAirport } from "@/lib/airports";
+import { resolveAirport, isIataCode } from "@/lib/airports";
+import { AirportField } from "@/components/search/airport-field";
 import { cn } from "@/lib/utils";
 import { usePreferences } from "@/components/providers/preferences-provider";
+import { isSupportedCurrency } from "@/lib/currency";
 
 type Tab = "flights" | "hotels" | "packages" | "cars";
 type TripType = "roundtrip" | "oneway";
@@ -31,6 +33,12 @@ const tabDefs: { id: Tab; labelKey: string; icon: typeof Plane }[] = [
 ];
 
 const RECENT = ["KHI → DXB", "LHE → IST", "ISB → LHR"];
+const CABIN_OPTIONS = [
+  { value: 1, label: "Economy" },
+  { value: 2, label: "Premium Economy" },
+  { value: 3, label: "Business" },
+  { value: 4, label: "First" },
+];
 
 function tabFromPath(pathname: string): Tab {
   if (pathname.startsWith("/hotels")) return "hotels";
@@ -61,9 +69,10 @@ function SearchWidgetInner({ className }: { className?: string }) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const { t } = usePreferences();
+  const { t, currency } = usePreferences();
   const fromRef = useRef<HTMLInputElement>(null);
   const toRef = useRef<HTMLInputElement>(null);
+  const submitLockRef = useRef(0);
 
   const [tab, setTab] = useState<Tab>(() => tabFromPath(pathname));
   const tabs = tabDefs.map((item) => ({ ...item, label: t(item.labelKey) }));
@@ -76,13 +85,13 @@ function SearchWidgetInner({ className }: { className?: string }) {
           ? t("search.searchPackages")
           : t("search.searchCars");
   const [tripType, setTripType] = useState<TripType>("roundtrip");
-  const [from, setFrom] = useState("");
-  const [to, setTo] = useState("");
+  const [from, setFrom] = useState("KHI");
+  const [to, setTo] = useState("DXB");
   const [checkIn, setCheckIn] = useState(() => daysFromTodayISO(7));
   const [checkOut, setCheckOut] = useState(() => daysFromTodayISO(14));
   const [adults, setAdults] = useState(1);
   const [children, setChildren] = useState(0);
-  const [cabin, setCabin] = useState("Economy");
+  const [cabinClass, setCabinClass] = useState(1);
   const [travellersOpen, setTravellersOpen] = useState(false);
   const [swapSpin, setSwapSpin] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -100,38 +109,50 @@ function SearchWidgetInner({ className }: { className?: string }) {
 
   useEffect(() => {
     setTab(tabFromPath(pathname));
-    const fromQ = searchParams.get("from") ?? "";
+    const fromQ =
+      searchParams.get("origin") ?? searchParams.get("from") ?? "";
     const toQ =
+      searchParams.get("destination") ??
       searchParams.get("to") ??
       searchParams.get("city") ??
-      searchParams.get("destination") ??
       searchParams.get("location") ??
       "";
     const dateQ =
+      searchParams.get("outboundDate") ??
       searchParams.get("date") ??
       searchParams.get("checkIn") ??
       searchParams.get("pickup") ??
       "";
-    const returnQ = searchParams.get("return") ?? searchParams.get("checkOut") ?? "";
+    const returnQ =
+      searchParams.get("returnDate") ??
+      searchParams.get("return") ??
+      searchParams.get("checkOut") ??
+      "";
+    const tripQ = searchParams.get("tripType") ?? searchParams.get("trip");
     const adultsQ = Number(searchParams.get("adults") ?? searchParams.get("guests") ?? "");
-    const cabinQ = searchParams.get("cabin");
+    const cabinQ = Number(searchParams.get("cabinClass") ?? "");
 
     if (fromQ) setFrom(fromQ);
+    else if (tabFromPath(pathname) === "flights") setFrom("KHI");
     if (toQ) setTo(toQ);
+    else if (tabFromPath(pathname) === "flights") setTo("DXB");
     if (dateQ) setCheckIn(dateQ);
-    else if (!searchParams.toString()) {
-      /* keep defaults when landing without query */
-    }
     if (returnQ) {
       setCheckOut(returnQ);
       setTripType("roundtrip");
-    } else if (searchParams.has("date") && !searchParams.has("return")) {
+    } else if (tripQ === "oneway") {
+      setTripType("oneway");
+    } else if (
+      (searchParams.has("outboundDate") || searchParams.has("date")) &&
+      !searchParams.has("returnDate") &&
+      !searchParams.has("return")
+    ) {
       setTripType("oneway");
     }
     if (Number.isFinite(adultsQ) && adultsQ > 0) setAdults(Math.min(9, adultsQ));
     const childrenQ = Number(searchParams.get("children") ?? "");
     if (Number.isFinite(childrenQ) && childrenQ >= 0) setChildren(Math.min(8, childrenQ));
-    if (cabinQ) setCabin(cabinQ);
+    if (Number.isFinite(cabinQ) && cabinQ >= 1 && cabinQ <= 4) setCabinClass(cabinQ);
   }, [pathname, searchParams]);
 
   const minDepart = todayISO();
@@ -140,9 +161,30 @@ function SearchWidgetInner({ className }: { className?: string }) {
   const travellersSummary = useMemo(() => {
     const parts = [`${adults} adult${adults === 1 ? "" : "s"}`];
     if (children > 0) parts.push(`${children} child${children === 1 ? "" : "ren"}`);
-    if (tab === "flights") parts.push(cabin);
+    if (tab === "flights") {
+      parts.push(CABIN_OPTIONS.find((option) => option.value === cabinClass)?.label ?? "Economy");
+    }
     return parts.join(" · ");
-  }, [adults, children, cabin, tab]);
+  }, [adults, children, cabinClass, tab]);
+
+  const normalizedFrom = resolveAirport(from);
+  const normalizedTo = resolveAirport(to);
+  const flightFormValid =
+    isIataCode(normalizedFrom) &&
+    isIataCode(normalizedTo) &&
+    normalizedFrom !== normalizedTo &&
+    Boolean(checkIn) &&
+    checkIn >= minDepart &&
+    (tripType === "oneway" || (Boolean(checkOut) && checkOut >= checkIn));
+  const isSubmitDisabled =
+    loading ||
+    (tab === "flights"
+      ? !flightFormValid
+      : tab === "hotels"
+        ? !to.trim()
+        : tab === "packages"
+          ? !to.trim()
+          : !from.trim() || !to.trim());
 
   function validate() {
     const next: typeof errors = {};
@@ -157,6 +199,19 @@ function SearchWidgetInner({ className }: { className?: string }) {
     }
 
     if (tab === "flights") {
+      if (from.trim() && !isIataCode(normalizedFrom)) {
+        next.from = "Pick an airport from the suggestions (or a 3-letter IATA code)";
+      }
+      if (to.trim() && !isIataCode(normalizedTo)) {
+        next.to = "Pick an airport from the suggestions (or a 3-letter IATA code)";
+      }
+      if (
+        isIataCode(normalizedFrom) &&
+        isIataCode(normalizedTo) &&
+        normalizedFrom === normalizedTo
+      ) {
+        next.form = "Origin and destination can't match.";
+      }
       if (!checkIn) next.checkIn = "Select a departure date";
       else if (checkIn < minDepart) next.checkIn = "Departure can’t be in the past";
       if (tripType === "roundtrip") {
@@ -179,21 +234,26 @@ function SearchWidgetInner({ className }: { className?: string }) {
 
   function handleSearch(e: React.FormEvent) {
     e.preventDefault();
+    if (Date.now() - submitLockRef.current < 700) return;
     if (!validate()) return;
+    submitLockRef.current = Date.now();
     setLoading(true);
     const params = new URLSearchParams();
 
     if (tab === "flights") {
-      const origin = resolveAirport(from);
-      const dest = resolveAirport(to);
+      const origin = normalizedFrom;
+      const dest = normalizedTo;
       if (origin) params.set("from", origin);
       if (dest) params.set("to", dest);
-      params.set("date", checkIn || daysFromTodayISO(7));
-      if (tripType === "roundtrip" && checkOut) params.set("return", checkOut);
-      params.set("trip", tripType);
+      params.set("origin", origin);
+      params.set("destination", dest);
+      params.set("outboundDate", checkIn || daysFromTodayISO(7));
+      if (tripType === "roundtrip" && checkOut) params.set("returnDate", checkOut);
+      params.set("tripType", tripType);
       params.set("adults", String(adults));
       params.set("children", String(children));
-      params.set("cabin", cabin);
+      params.set("cabinClass", String(cabinClass));
+      params.set("currency", isSupportedCurrency(currency) ? currency : "USD");
       router.push(`/flights?${params.toString()}`);
     } else if (tab === "hotels") {
       if (to) params.set("city", to);
@@ -314,20 +374,37 @@ function SearchWidgetInner({ className }: { className?: string }) {
         <div className="grid gap-4 md:grid-cols-12 md:items-end">
           {(tab === "flights" || tab === "cars") && (
             <div className="md:col-span-3 relative">
-              <Input
-                ref={fromRef}
-                id="search-from"
-                label={tab === "cars" ? "Pick-up location" : t("search.from")}
-                placeholder={tab === "flights" ? "City or airport (e.g. KHI)" : "Airport or city"}
-                value={from}
-                onChange={(e) => {
-                  setFrom(e.target.value);
-                  setErrors((prev) => ({ ...prev, from: undefined, form: undefined }));
-                }}
-                error={errors.from}
-                prefixIcon={<MapPin strokeWidth={1.5} />}
-                className="h-12"
-              />
+              {tab === "flights" ? (
+                <AirportField
+                  inputRef={fromRef}
+                  id="search-from"
+                  label={t("search.from")}
+                  placeholder="City or airport (e.g. Karachi, KHI)"
+                  value={from}
+                  onChange={(v) => {
+                    setFrom(v);
+                    setErrors((prev) => ({ ...prev, from: undefined, form: undefined }));
+                  }}
+                  error={errors.from}
+                  prefixIcon={<MapPin strokeWidth={1.5} />}
+                  inputClassName="h-12"
+                />
+              ) : (
+                <Input
+                  ref={fromRef}
+                  id="search-from"
+                  label="Pick-up location"
+                  placeholder="Airport or city"
+                  value={from}
+                  onChange={(e) => {
+                    setFrom(e.target.value);
+                    setErrors((prev) => ({ ...prev, from: undefined, form: undefined }));
+                  }}
+                  error={errors.from}
+                  prefixIcon={<MapPin strokeWidth={1.5} />}
+                  className="h-12"
+                />
+              )}
             </div>
           )}
 
@@ -348,20 +425,37 @@ function SearchWidgetInner({ className }: { className?: string }) {
           )}
 
           <div className={cn("md:col-span-3", tab === "hotels" && "md:col-span-4", tab === "packages" && "md:col-span-5")}>
-            <Input
-              ref={toRef}
-              id="search-to"
-              label={toLabel}
-              placeholder={tab === "hotels" ? "City, hotel, or landmark" : "City or airport (e.g. DXB)"}
-              value={to}
-              onChange={(e) => {
-                setTo(e.target.value);
-                setErrors((prev) => ({ ...prev, to: undefined, form: undefined }));
-              }}
-              error={errors.to}
-              prefixIcon={<MapPin strokeWidth={1.5} />}
-              className="h-12"
-            />
+            {tab === "flights" ? (
+              <AirportField
+                inputRef={toRef}
+                id="search-to"
+                label={toLabel}
+                placeholder="City or airport (e.g. Dubai, DXB)"
+                value={to}
+                onChange={(v) => {
+                  setTo(v);
+                  setErrors((prev) => ({ ...prev, to: undefined, form: undefined }));
+                }}
+                error={errors.to}
+                prefixIcon={<MapPin strokeWidth={1.5} />}
+                inputClassName="h-12"
+              />
+            ) : (
+              <Input
+                ref={toRef}
+                id="search-to"
+                label={toLabel}
+                placeholder={tab === "hotels" ? "City, hotel, or landmark" : "City or airport (e.g. DXB)"}
+                value={to}
+                onChange={(e) => {
+                  setTo(e.target.value);
+                  setErrors((prev) => ({ ...prev, to: undefined, form: undefined }));
+                }}
+                error={errors.to}
+                prefixIcon={<MapPin strokeWidth={1.5} />}
+                className="h-12"
+              />
+            )}
           </div>
 
           <div className="md:col-span-2">
@@ -385,7 +479,7 @@ function SearchWidgetInner({ className }: { className?: string }) {
           {(tab === "hotels" ||
             tab === "packages" ||
             tab === "cars" ||
-            (tab === "flights" && tripType === "roundtrip")) && (
+            tab === "flights") && (
             <div className="md:col-span-2">
               <DateField
                 id="search-checkout"
@@ -395,6 +489,7 @@ function SearchWidgetInner({ className }: { className?: string }) {
                 value={checkOut}
                 min={minReturn}
                 error={errors.checkOut}
+                disabled={tab === "flights" && tripType === "oneway"}
                 required={tab === "flights" && tripType === "roundtrip"}
                 onChange={(v) => {
                   setCheckOut(v);
@@ -423,17 +518,19 @@ function SearchWidgetInner({ className }: { className?: string }) {
                     <div className="mt-3">
                       <p className="text-[0.6875rem] font-semibold uppercase tracking-[0.15em] text-ink-500">Cabin</p>
                       <div className="mt-2 flex flex-wrap gap-2">
-                        {["Economy", "Business", "First"].map((c) => (
+                        {CABIN_OPTIONS.map((option) => (
                           <button
-                            key={c}
+                            key={option.value}
                             type="button"
-                            onClick={() => setCabin(c)}
+                            onClick={() => setCabinClass(option.value)}
                             className={cn(
                               "min-h-11 rounded-sm px-3 text-sm font-medium border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pine-500",
-                              cabin === c ? "border-pine-500 bg-pine-50 text-pine-700" : "border-line text-ink-700"
+                              cabinClass === option.value
+                                ? "border-pine-500 bg-pine-50 text-pine-700"
+                                : "border-line text-ink-700"
                             )}
                           >
-                            {c}
+                            {option.label}
                           </button>
                         ))}
                       </div>
@@ -448,7 +545,13 @@ function SearchWidgetInner({ className }: { className?: string }) {
           )}
 
           <div className="md:col-span-2">
-            <Button type="submit" loading={loading} size="lg" className="w-full h-12 md:h-14">
+            <Button
+              type="submit"
+              loading={loading}
+              disabled={isSubmitDisabled}
+              size="lg"
+              className="w-full h-12 md:h-14"
+            >
               <Search className="h-5 w-5" strokeWidth={1.5} aria-hidden />
               {loading ? "…" : searchLabel}
             </Button>
@@ -476,6 +579,7 @@ function SearchWidgetInner({ className }: { className?: string }) {
             ))}
           </div>
         ) : null}
+
       </form>
     </div>
   );

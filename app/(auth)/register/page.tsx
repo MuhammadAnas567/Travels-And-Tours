@@ -4,7 +4,11 @@ import { Suspense, useState } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { signIn } from "next-auth/react";
-import { registerUser } from "@/actions/auth";
+import {
+  registerUser,
+  resendSignupOtp,
+  verifySignupOtp,
+} from "@/actions/auth";
 import { registerSchema } from "@/lib/validations";
 import { AuthShell } from "@/components/auth/auth-shell";
 import { Button } from "@/components/ui/button";
@@ -21,6 +25,9 @@ function RegisterForm() {
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const [formError, setFormError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [pendingEmail, setPendingEmail] = useState<string | null>(null);
+  const [otp, setOtp] = useState("");
+  const [otpMessage, setOtpMessage] = useState<string | null>(null);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -68,7 +75,13 @@ function RegisterForm() {
         return;
       }
 
-      // Account created — send to sign-in (no auto login)
+      if (result?.needsVerification && result.email) {
+        setPendingEmail(result.email);
+        setOtpMessage(`We sent a 6-digit code to ${result.email}.`);
+        setLoading(false);
+        return;
+      }
+
       const loginQs = new URLSearchParams({
         registered: "1",
         callbackUrl,
@@ -78,6 +91,115 @@ function RegisterForm() {
       setFormError("Could not create account. Try again in a moment.");
       setLoading(false);
     }
+  }
+
+  async function handleVerifyOtp(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    if (!pendingEmail) return;
+    setLoading(true);
+    setFormError(null);
+
+    const payload = new FormData();
+    payload.set("email", pendingEmail);
+    payload.set("otp", otp);
+
+    const result = await verifySignupOtp(payload);
+    if (result?.error) {
+      setFormError(result.error);
+      setLoading(false);
+      return;
+    }
+
+    const loginQs = new URLSearchParams({
+      registered: "1",
+      verified: "1",
+      callbackUrl,
+    });
+    router.replace(`/login?${loginQs.toString()}`);
+  }
+
+  async function handleResend() {
+    if (!pendingEmail) return;
+    setLoading(true);
+    setFormError(null);
+    const payload = new FormData();
+    payload.set("email", pendingEmail);
+    const result = await resendSignupOtp(payload);
+    setLoading(false);
+    if (result?.error) {
+      setFormError(result.error);
+      return;
+    }
+    if (result?.alreadyVerified) {
+      router.replace(
+        `/login?${new URLSearchParams({ registered: "1", verified: "1", callbackUrl }).toString()}`
+      );
+      return;
+    }
+    setOtpMessage(`A new code was sent to ${pendingEmail}.`);
+  }
+
+  if (pendingEmail) {
+    return (
+      <AuthShell
+        title="Check your email"
+        subtitle={`Enter the 6-digit code we sent to ${pendingEmail}.`}
+      >
+        <form onSubmit={handleVerifyOtp} className="space-y-4" noValidate>
+          {otpMessage ? (
+            <p className="text-sm text-ink-600" role="status">
+              {otpMessage}
+            </p>
+          ) : null}
+          <div>
+            <Label htmlFor="otp">Verification code</Label>
+            <Input
+              id="otp"
+              name="otp"
+              inputMode="numeric"
+              autoComplete="one-time-code"
+              placeholder="6-digit code"
+              className="mt-1.5 h-12 bg-paper tracking-[0.35em] tabular-nums"
+              value={otp}
+              onChange={(e) => setOtp(e.target.value.replace(/\D/g, "").slice(0, 6))}
+              aria-invalid={Boolean(formError)}
+            />
+          </div>
+          {formError ? (
+            <p className="text-sm text-ink-600" role="status">
+              {formError}
+            </p>
+          ) : null}
+          <Button type="submit" className="w-full h-12 text-base" aria-busy={loading}>
+            {loading ? "Verifying…" : "Verify email"}
+          </Button>
+          <Button
+            type="button"
+            variant="outline"
+            className="w-full h-12 bg-paper"
+            disabled={loading}
+            onClick={handleResend}
+          >
+            Resend code
+          </Button>
+        </form>
+        <p className="mt-6 text-center text-sm text-ink-500">
+          Wrong email?{" "}
+          <button
+            type="button"
+            className="font-semibold text-pine-600 hover:underline"
+            onClick={() => {
+              setPendingEmail(null);
+              setOtp("");
+              setOtpMessage(null);
+              setFormError(null);
+            }}
+          >
+            Start over
+          </button>
+        </p>
+      </AuthShell>
+    );
   }
 
   return (
@@ -151,7 +273,7 @@ function RegisterForm() {
           </p>
         ) : null}
         <Button type="submit" className="w-full h-12 text-base" aria-busy={loading}>
-          {loading ? "Creating account…" : "Create account"}
+          {loading ? "Sending code…" : "Create account"}
         </Button>
       </form>
 

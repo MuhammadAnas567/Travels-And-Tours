@@ -47,6 +47,9 @@ export function resolveAirport(raw: string | null | undefined): string {
   if (!raw) return "";
   const trimmed = raw.trim();
   if (!trimmed) return "";
+  // Autocomplete label: "Karachi (KHI)" / "Paris (CDG)"
+  const fromLabel = trimmed.match(/\(([A-Za-z]{3})\)\s*$/);
+  if (fromLabel) return fromLabel[1].toUpperCase();
   const upper = trimmed.toUpperCase();
   if (/^[A-Z]{3}$/.test(upper)) return upper;
   const key = trimmed.toLowerCase().replace(/\s+/g, " ");

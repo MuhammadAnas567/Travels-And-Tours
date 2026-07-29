@@ -1,9 +1,14 @@
 import { Resend } from "resend";
+import { SIGNUP_OTP_TTL_MINUTES } from "@/lib/auth/otp";
 
 function getResend() {
-  const key = process.env.RESEND_API_KEY;
+  const key = process.env.RESEND_API_KEY?.trim();
   if (!key) return null;
   return new Resend(key);
+}
+
+function fromAddress() {
+  return process.env.RESEND_FROM_EMAIL?.trim() || "onboarding@resend.dev";
 }
 
 export async function sendEmail({
@@ -17,12 +22,46 @@ export async function sendEmail({
 }) {
   const resend = getResend();
   if (!resend) {
-    console.warn("RESEND_API_KEY not set, skipping email");
-    return;
+    throw new Error("RESEND_API_KEY is missing. Add it to .env.local to send email.");
   }
 
-  const from = process.env.RESEND_FROM_EMAIL ?? "onboarding@resend.dev";
-  await resend.emails.send({ from, to, subject, html });
+  const { error } = await resend.emails.send({
+    from: fromAddress(),
+    to,
+    subject,
+    html,
+  });
+
+  if (error) {
+    throw new Error(error.message || "Failed to send email");
+  }
+}
+
+/** Real signup OTP email via Resend. Never log the OTP. */
+export async function sendSignupOtpEmail({
+  to,
+  name,
+  otp,
+}: {
+  to: string;
+  name?: string | null;
+  otp: string;
+}) {
+  const greeting = name?.trim() ? `Hi ${name.trim()},` : "Hi,";
+  await sendEmail({
+    to,
+    subject: `${otp} is your Arreat Travels verification code`,
+    html: `
+      <div style="font-family:Georgia,serif;max-width:520px;margin:0 auto;color:#1A1611">
+        <p style="font-size:12px;letter-spacing:0.15em;text-transform:uppercase;color:#B48A50">Arreat Travels &amp; Tours</p>
+        <h1 style="font-size:28px;font-weight:600;margin:12px 0 16px">Verify your email</h1>
+        <p style="font-size:16px;line-height:1.6">${greeting}</p>
+        <p style="font-size:16px;line-height:1.6">Use this one-time code to finish creating your account. It expires in ${SIGNUP_OTP_TTL_MINUTES} minutes.</p>
+        <p style="font-size:36px;letter-spacing:0.35em;font-weight:700;margin:28px 0;font-variant-numeric:tabular-nums">${otp}</p>
+        <p style="font-size:14px;line-height:1.6;color:#5C564C">If you did not sign up, you can ignore this email.</p>
+      </div>
+    `,
+  });
 }
 
 export async function sendBookingConfirmationEmail({
@@ -44,18 +83,10 @@ export async function sendBookingConfirmationEmail({
   totalPrice: string;
   travelerName: string;
 }) {
-  const resend = getResend();
-  if (!resend) {
-    console.warn("RESEND_API_KEY not set, skipping email");
-    return;
-  }
-
-  const from = process.env.RESEND_FROM_EMAIL ?? "onboarding@resend.dev";
   const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";
   const ref = bookingReference ?? bookingId;
 
-  await resend.emails.send({
-    from,
+  await sendEmail({
     to,
     subject: `Booking Confirmed — ${tourTitle}`,
     html: `
@@ -85,28 +116,31 @@ export async function sendContactEmail({
   subject: string;
   message: string;
 }): Promise<boolean> {
-  const resend = getResend();
-  if (!resend) {
-    console.warn("RESEND_API_KEY not set, skipping contact email");
+  try {
+    const { getContactInbox } = await import("@/lib/site-config");
+    const to = getContactInbox();
+    const resend = getResend();
+    if (!resend) {
+      console.warn("RESEND_API_KEY not set, skipping contact email");
+      return false;
+    }
+
+    const { error } = await resend.emails.send({
+      from: fromAddress(),
+      to,
+      replyTo: email,
+      subject: `Contact: ${subject}`,
+      html: `
+        <p><strong>From:</strong> ${name} (${email})</p>
+        <p><strong>Subject:</strong> ${subject}</p>
+        <p>${message.replace(/\n/g, "<br>")}</p>
+      `,
+    });
+    return !error;
+  } catch (error) {
+    console.error("[contact] email send failed:", error);
     return false;
   }
-
-  const { getContactInbox } = await import("@/lib/site-config");
-  const to = getContactInbox();
-  const from = process.env.RESEND_FROM_EMAIL ?? "onboarding@resend.dev";
-
-  await resend.emails.send({
-    from,
-    to,
-    replyTo: email,
-    subject: `Contact: ${subject}`,
-    html: `
-      <p><strong>From:</strong> ${name} (${email})</p>
-      <p><strong>Subject:</strong> ${subject}</p>
-      <p>${message.replace(/\n/g, "<br>")}</p>
-    `,
-  });
-  return true;
 }
 
 export async function sendBookingPendingEmail({

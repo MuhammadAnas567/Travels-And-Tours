@@ -162,6 +162,18 @@ export default function StyleguidePage() {
             <p className="text-2xl font-semibold tabular-nums text-ink" data-price>
               $1,248.00
             </p>
+            <div className="mt-4 space-y-1" data-flight-price>
+              <p className="text-sm text-ink-500">Flight fare (strikethrough + buy)</p>
+              <div className="flex flex-wrap items-center gap-2">
+                <p className="text-lg font-medium tabular-nums text-ink-500 line-through decoration-ink-400">
+                  PKR 98,400
+                </p>
+                <span className="rounded-sm border border-brass-200 bg-brass-50 px-2 py-0.5 text-xs font-semibold tabular-nums text-brass-700">
+                  4% off
+                </span>
+              </div>
+              <p className="text-2xl font-semibold tabular-nums text-ink">PKR 94,200</p>
+            </div>
           </div>
         </section>
 

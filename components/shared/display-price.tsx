@@ -12,7 +12,8 @@ const CURRENCY_EVENT = "arreat-currency-change";
 function readCookieCurrency(): Currency {
   if (typeof document === "undefined") return "USD";
   const match = document.cookie.match(new RegExp(`(?:^|; )${CURRENCY_COOKIE}=([^;]*)`));
-  const value = match?.[1] as Currency | undefined;
+  const value = (match?.[1] ? decodeURIComponent(match[1]) : "") as Currency;
+  if (value === "EUR" || value === "GBP") return "USD";
   if (value && SUPPORTED_CURRENCIES.includes(value)) return value;
   return "USD";
 }
