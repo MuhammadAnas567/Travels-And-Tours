@@ -1,37 +1,14 @@
-import type { Metadata } from "next";
-import { Container } from "@/components/ui/section";
-import { CatalogHero } from "@/components/layout/catalog-hero";
-import { ToursCatalogueLazy } from "@/components/tours/tours-catalogue-lazy";
-import { getCachedDefaultTours, getCachedTourCountries } from "@/lib/tours-cache";
+import { SectionContactPage } from "@/components/shared/section-contact-page";
 
-/** Force CDN cache — client filters must not mark this route dynamic */
-export const dynamic = "force-static";
-export const revalidate = 120;
-
-export const metadata: Metadata = {
-  title: "International Tour Packages",
-  description:
-    "Browse curated international tour packages — luxury, adventure, safari, beach and cultural experiences worldwide.",
-};
-
-export default async function ToursPage() {
-  const [{ tours, total }, countries] = await Promise.all([
-    getCachedDefaultTours(),
-    getCachedTourCountries(),
-  ]);
-
+/** Original tours catalogue preserved in `page.legacy.tsx`. */
+export default function ToursPage() {
   return (
-    <>
-      <CatalogHero
-        variant="tours"
-        eyebrow="Worldwide Collection"
-        title="International Tour Packages"
-        description={`${total} curated experiences across the globe`}
-      />
-
-      <Container className="py-10 sm:py-12 md:py-16">
-        <ToursCatalogueLazy tours={tours} countries={countries} />
-      </Container>
-    </>
+    <SectionContactPage
+      eyebrow="Tours"
+      title="Ask about a tour"
+      description="Tell us where you want to go and when — we will suggest guided tours that match."
+      defaultSubject="Tour inquiry"
+      heroVariant="tours"
+    />
   );
 }

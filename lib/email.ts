@@ -91,7 +91,8 @@ export async function sendContactEmail({
     return false;
   }
 
-  const to = process.env.CONTACT_EMAIL ?? process.env.RESEND_FROM_EMAIL ?? "onboarding@resend.dev";
+  const { getContactInbox } = await import("@/lib/site-config");
+  const to = getContactInbox();
   const from = process.env.RESEND_FROM_EMAIL ?? "onboarding@resend.dev";
 
   await resend.emails.send({
