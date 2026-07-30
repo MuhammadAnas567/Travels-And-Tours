@@ -51,6 +51,20 @@ export const flightBookRequestSchema = z.object({
   arriveLabel: z.string().min(1),
   fareLabel: z.string().min(1),
   travellers: z.number().int().min(1).max(9),
+  price: z.number().positive(),
+  currency: z.string().min(3).max(3).optional(),
+  compareAtPrice: z.number().positive().optional(),
+  stops: z.number().int().min(0).optional(),
+  durationMinutes: z.number().int().min(0).optional(),
+  origin: z.string().optional(),
+  destination: z.string().optional(),
+  outboundDate: z
+    .string()
+    .regex(/^\d{4}-\d{2}-\d{2}$/, "Outbound date required"),
+  returnDate: z
+    .string()
+    .regex(/^\d{4}-\d{2}-\d{2}$/)
+    .optional(),
 });
 
 function isValidDateOnly(value: string) {

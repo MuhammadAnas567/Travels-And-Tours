@@ -124,6 +124,7 @@ export async function sendFlightBookingConfirmationEmail({
   arriveLabel,
   fareLabel,
   travellers,
+  travelDateLabel,
 }: {
   to: string;
   travelerName: string;
@@ -135,6 +136,7 @@ export async function sendFlightBookingConfirmationEmail({
   arriveLabel: string;
   fareLabel: string;
   travellers: number;
+  travelDateLabel?: string | null;
 }) {
   const name = escapeHtml(travelerName.trim() || "Traveller");
   const route = escapeHtml(routeLabel);
@@ -144,6 +146,7 @@ export async function sendFlightBookingConfirmationEmail({
   const depart = escapeHtml(departLabel);
   const arrive = escapeHtml(arriveLabel);
   const fare = escapeHtml(fareLabel);
+  const travelDate = travelDateLabel ? escapeHtml(travelDateLabel) : null;
   const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";
 
   await sendEmail({
@@ -159,6 +162,7 @@ export async function sendFlightBookingConfirmationEmail({
         </p>
         <table style="width:100%;border-collapse:collapse;margin:24px 0;font-size:15px;line-height:1.6">
           <tr><td style="padding:6px 0;color:#5C564C">Reference</td><td style="padding:6px 0;text-align:right;font-variant-numeric:tabular-nums"><strong>${ref}</strong></td></tr>
+          ${travelDate ? `<tr><td style="padding:6px 0;color:#5C564C">Travel date</td><td style="padding:6px 0;text-align:right;font-variant-numeric:tabular-nums">${travelDate}</td></tr>` : ""}
           <tr><td style="padding:6px 0;color:#5C564C">Airline</td><td style="padding:6px 0;text-align:right">${airlineSafe}</td></tr>
           <tr><td style="padding:6px 0;color:#5C564C">Flight</td><td style="padding:6px 0;text-align:right">${flights}</td></tr>
           <tr><td style="padding:6px 0;color:#5C564C">Depart</td><td style="padding:6px 0;text-align:right">${depart}</td></tr>

@@ -84,6 +84,26 @@ function localTimePart(value: string) {
   return time;
 }
 
+/** Calendar date from SerpAPI "YYYY-MM-DD HH:mm", with search-date fallback. */
+function formatLegDate(value: string, fallbackIso?: string | null) {
+  const fromLeg = value.split(" ")[0];
+  const iso =
+    fromLeg && /^\d{4}-\d{2}-\d{2}$/.test(fromLeg)
+      ? fromLeg
+      : fallbackIso && /^\d{4}-\d{2}-\d{2}$/.test(fallbackIso)
+        ? fallbackIso
+        : null;
+  if (!iso) return null;
+  const date = new Date(`${iso}T12:00:00`);
+  if (Number.isNaN(date.getTime())) return null;
+  return date.toLocaleDateString("en-GB", {
+    weekday: "short",
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+  });
+}
+
 function overnightBadgeDays(start: string, end: string) {
   const startDate = new Date(`${start.split(" ")[0]}T00:00:00`);
   const endDate = new Date(`${end.split(" ")[0]}T00:00:00`);
@@ -164,6 +184,14 @@ function ResultCard({
   );
   const travellers = search.adults + search.children;
   const routeLabel = `${firstLeg.departureAirport.id} → ${lastLeg.arrivalAirport.id}`;
+  const departDateLabel = formatLegDate(
+    firstLeg.departureAirport.time,
+    search.outboundDate
+  );
+  const arriveDateLabel = formatLegDate(
+    lastLeg.arrivalAirport.time,
+    search.outboundDate
+  );
   const buy = displayFlightAmount(flight.price, sourceCurrency, preferredCurrency);
   const compareAt = displayFlightAmount(
     flight.compareAtPrice,
@@ -213,6 +241,9 @@ function ResultCard({
                     {localTimePart(firstLeg.departureAirport.time)}
                   </p>
                   <p className="text-sm text-ink-500">{firstLeg.departureAirport.id}</p>
+                  {departDateLabel ? (
+                    <p className="mt-0.5 text-xs tabular-nums text-ink-500">{departDateLabel}</p>
+                  ) : null}
                 </div>
 
                 <div className="flex min-w-[7rem] flex-col items-center">
@@ -244,6 +275,9 @@ function ResultCard({
                     ) : null}
                   </div>
                   <p className="text-sm text-ink-500">{lastLeg.arrivalAirport.id}</p>
+                  {arriveDateLabel ? (
+                    <p className="mt-0.5 text-xs tabular-nums text-ink-500">{arriveDateLabel}</p>
+                  ) : null}
                 </div>
               </div>
 
@@ -324,6 +358,8 @@ function ResultCard({
         currency={preferredCurrency}
         travellers={travellers}
         routeLabel={routeLabel}
+        outboundDate={search.outboundDate}
+        returnDate={search.returnDate}
       />
     </>
   );

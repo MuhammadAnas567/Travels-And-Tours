@@ -17,6 +17,8 @@ type FlightBookModalProps = {
   currency: string;
   travellers: number;
   routeLabel: string;
+  outboundDate: string;
+  returnDate?: string | null;
 };
 
 function formatMoney(amount: number, currency: string) {
@@ -27,6 +29,18 @@ function formatMoney(amount: number, currency: string) {
   }).format(amount);
 }
 
+function formatTravelDate(iso?: string | null) {
+  if (!iso || !/^\d{4}-\d{2}-\d{2}$/.test(iso)) return null;
+  const date = new Date(`${iso}T12:00:00`);
+  if (Number.isNaN(date.getTime())) return null;
+  return date.toLocaleDateString("en-GB", {
+    weekday: "short",
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+  });
+}
+
 export function FlightBookModal({
   open,
   onClose,
@@ -34,6 +48,8 @@ export function FlightBookModal({
   currency,
   travellers,
   routeLabel,
+  outboundDate,
+  returnDate,
 }: FlightBookModalProps) {
   const titleId = useId();
   const [submitting, setSubmitting] = useState(false);
@@ -43,6 +59,8 @@ export function FlightBookModal({
   const firstLeg = flight.legs[0];
   const lastLeg = flight.legs[flight.legs.length - 1];
   const percentOff = discountPercentOff(flight.compareAtPrice, flight.price);
+  const departDateLabel = formatTravelDate(outboundDate);
+  const returnDateLabel = formatTravelDate(returnDate);
 
   useEffect(() => {
     if (!open) return;
@@ -111,11 +129,21 @@ export function FlightBookModal({
           arriveLabel: `${lastLeg.arrivalAirport.time} (${lastLeg.arrivalAirport.id})`,
           fareLabel: formatMoney(flight.price, currency),
           travellers,
+          price: flight.price,
+          currency,
+          compareAtPrice: flight.compareAtPrice,
+          stops: flight.stops,
+          durationMinutes: flight.totalDurationMinutes,
+          origin: firstLeg.departureAirport.id,
+          destination: lastLeg.arrivalAirport.id,
+          outboundDate,
+          returnDate: returnDate || undefined,
         }),
       });
       const payload = (await res.json().catch(() => ({}))) as {
         error?: string;
         reference?: string;
+        bookingId?: string;
       };
       if (!res.ok) {
         setFormError(
@@ -175,6 +203,18 @@ export function FlightBookModal({
             <span>
               {routeLabel} · {travellers} traveller{travellers === 1 ? "" : "s"}
             </span>
+            {departDateLabel ? (
+              <>
+                <span className="text-ink-400">·</span>
+                <span className="tabular-nums">Depart {departDateLabel}</span>
+              </>
+            ) : null}
+            {returnDateLabel ? (
+              <>
+                <span className="text-ink-400">·</span>
+                <span className="tabular-nums">Return {returnDateLabel}</span>
+              </>
+            ) : null}
             <span className="text-ink-400">·</span>
             {flight.compareAtPrice > flight.price ? (
               <>

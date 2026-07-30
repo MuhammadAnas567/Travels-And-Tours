@@ -4,6 +4,21 @@ import { Badge } from "@/components/ui/badge";
 import { BookingActions } from "@/components/shared/booking-actions";
 import { bookingTitle, type ProductSnapshot } from "@/lib/commerce";
 
+function parseBookingDate(value: Date | string | null | undefined): Date | null {
+  if (!value) return null;
+  if (value instanceof Date) {
+    return Number.isNaN(value.getTime()) ? null : value;
+  }
+  const raw = value.trim();
+  if (!raw) return null;
+  if (/^\d{4}-\d{2}-\d{2}$/.test(raw)) {
+    const date = new Date(`${raw}T12:00:00`);
+    return Number.isNaN(date.getTime()) ? null : date;
+  }
+  const date = new Date(raw);
+  return Number.isNaN(date.getTime()) ? null : date;
+}
+
 export default async function AdminBookingsPage() {
   const bookings = await prisma.booking.findMany({
     orderBy: { createdAt: "desc" },
@@ -37,11 +52,9 @@ export default async function AdminBookingsPage() {
               const snapshot = b.productSnapshot as ProductSnapshot | null;
               const title =
                 b.tour?.title ?? bookingTitle(b.type, snapshot ?? undefined);
-              const start = b.tourDate?.startDate
-                ? b.tourDate.startDate
-                : snapshot?.startDate
-                  ? new Date(snapshot.startDate)
-                  : null;
+              const start =
+                parseBookingDate(b.tourDate?.startDate) ??
+                parseBookingDate(snapshot?.startDate);
               return (
                 <tr key={b.id} className="border-b border-line">
                   <td className="p-4 text-ink-900">{title}</td>
