@@ -38,6 +38,21 @@ export const contactSchema = z.object({
   message: z.string().min(10, "Message must be at least 10 characters"),
 });
 
+export const flightBookRequestSchema = z.object({
+  name: z.string().min(2, "Name is required"),
+  email: z.string().email("Invalid email"),
+  phone: z.string().min(7, "Phone is required"),
+  passport: z.string().optional(),
+  notes: z.string().optional(),
+  routeLabel: z.string().min(3),
+  airline: z.string().min(1),
+  flightNumbers: z.string().min(1),
+  departLabel: z.string().min(1),
+  arriveLabel: z.string().min(1),
+  fareLabel: z.string().min(1),
+  travellers: z.number().int().min(1).max(9),
+});
+
 function isValidDateOnly(value: string) {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return false;
   const date = new Date(`${value}T12:00:00`);
@@ -176,6 +191,7 @@ export const newsletterSchema = z.object({
 export type LoginInput = z.infer<typeof loginSchema>;
 export type RegisterInput = z.infer<typeof registerSchema>;
 export type ContactInput = z.infer<typeof contactSchema>;
+export type FlightBookRequestInput = z.infer<typeof flightBookRequestSchema>;
 export type FlightSearchInput = z.infer<typeof flightSearchSchema>;
 export type BookingStep1Input = z.infer<typeof bookingStep1Schema>;
 export type BookingStep2Input = z.infer<typeof bookingStep2Schema>;

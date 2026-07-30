@@ -39,6 +39,7 @@ export function FlightBookModal({
   const [submitting, setSubmitting] = useState(false);
   const [formError, setFormError] = useState<string | null>(null);
   const [booked, setBooked] = useState(false);
+  const [bookingReference, setBookingReference] = useState<string | null>(null);
   const firstLeg = flight.legs[0];
   const lastLeg = flight.legs[flight.legs.length - 1];
   const percentOff = discountPercentOff(flight.compareAtPrice, flight.price);
@@ -62,6 +63,7 @@ export function FlightBookModal({
       setFormError(null);
       setSubmitting(false);
       setBooked(false);
+      setBookingReference(null);
     }
   }, [open]);
 
@@ -92,29 +94,29 @@ export function FlightBookModal({
     }
 
     setSubmitting(true);
-    const subject = `Flight booking: ${firstLeg.flightNumber} ${routeLabel}`;
-    const message = [
-      `Ticket request for ${routeLabel}.`,
-      `Airline: ${firstLeg.airline}`,
-      `Flight: ${flight.legs.map((leg) => leg.flightNumber).join(" · ")}`,
-      `Depart: ${firstLeg.departureAirport.time} (${firstLeg.departureAirport.id})`,
-      `Arrive: ${lastLeg.arrivalAirport.time} (${lastLeg.arrivalAirport.id})`,
-      `Fare: ${formatMoney(flight.price, currency)}`,
-      `Travellers: ${travellers}`,
-      passport ? `Passport / CNIC: ${passport}` : null,
-      notes ? `Notes: ${notes}` : null,
-      `Phone: ${phone}`,
-    ]
-      .filter(Boolean)
-      .join("\n");
-
     try {
-      const res = await fetch("/api/contact", {
+      const res = await fetch("/api/flights/book-request", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, subject, message }),
+        body: JSON.stringify({
+          name,
+          email,
+          phone,
+          passport: passport || undefined,
+          notes: notes || undefined,
+          routeLabel,
+          airline: firstLeg.airline,
+          flightNumbers: flight.legs.map((leg) => leg.flightNumber).join(" · "),
+          departLabel: `${firstLeg.departureAirport.time} (${firstLeg.departureAirport.id})`,
+          arriveLabel: `${lastLeg.arrivalAirport.time} (${lastLeg.arrivalAirport.id})`,
+          fareLabel: formatMoney(flight.price, currency),
+          travellers,
+        }),
       });
-      const payload = (await res.json().catch(() => ({}))) as { error?: string };
+      const payload = (await res.json().catch(() => ({}))) as {
+        error?: string;
+        reference?: string;
+      };
       if (!res.ok) {
         setFormError(
           typeof payload.error === "string"
@@ -124,6 +126,9 @@ export function FlightBookModal({
         setSubmitting(false);
         return;
       }
+      setBookingReference(
+        typeof payload.reference === "string" ? payload.reference : null
+      );
       setBooked(true);
     } catch {
       setFormError("Something went wrong. Try again in a moment.");
@@ -197,8 +202,13 @@ export function FlightBookModal({
             <p className="mt-4 font-display text-xl font-semibold text-ink-900">
               Ticket booked
             </p>
+            {bookingReference ? (
+              <p className="mt-2 text-sm tabular-nums text-ink-700">
+                Reference {bookingReference}
+              </p>
+            ) : null}
             <p className="mt-2 text-sm text-ink-500">
-              Your request is with our Lahore desk. We will confirm seats and send ticket details to your email shortly.
+              A confirmation email is on its way. Our Lahore desk will confirm seats and send ticket details next.
             </p>
             <Button type="button" className="mt-6 min-h-12 w-full" onClick={onClose}>
               Done

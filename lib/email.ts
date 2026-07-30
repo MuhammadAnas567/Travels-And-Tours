@@ -64,6 +64,14 @@ export async function sendSignupOtpEmail({
   });
 }
 
+function escapeHtml(value: string) {
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
 export async function sendBookingConfirmationEmail({
   to,
   bookingId,
@@ -100,6 +108,69 @@ export async function sendBookingConfirmationEmail({
       </ul>
       <p><a href="${appUrl}/dashboard/bookings/${bookingId}/ticket">View your e-ticket</a></p>
       <p>Have a wonderful trip!</p>
+    `,
+  });
+}
+
+/** Confirmation to the passenger after a flight booking request (Lahore desk fulfillment). */
+export async function sendFlightBookingConfirmationEmail({
+  to,
+  travelerName,
+  reference,
+  routeLabel,
+  airline,
+  flightNumbers,
+  departLabel,
+  arriveLabel,
+  fareLabel,
+  travellers,
+}: {
+  to: string;
+  travelerName: string;
+  reference: string;
+  routeLabel: string;
+  airline: string;
+  flightNumbers: string;
+  departLabel: string;
+  arriveLabel: string;
+  fareLabel: string;
+  travellers: number;
+}) {
+  const name = escapeHtml(travelerName.trim() || "Traveller");
+  const route = escapeHtml(routeLabel);
+  const ref = escapeHtml(reference);
+  const airlineSafe = escapeHtml(airline);
+  const flights = escapeHtml(flightNumbers);
+  const depart = escapeHtml(departLabel);
+  const arrive = escapeHtml(arriveLabel);
+  const fare = escapeHtml(fareLabel);
+  const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";
+
+  await sendEmail({
+    to,
+    subject: `Flight booking received — ${routeLabel} (${reference})`,
+    html: `
+      <div style="font-family:Georgia,serif;max-width:520px;margin:0 auto;color:#1A1611">
+        <p style="font-size:12px;letter-spacing:0.15em;text-transform:uppercase;color:#B48A50">Arreat Travels &amp; Tours</p>
+        <h1 style="font-size:28px;font-weight:600;margin:12px 0 16px">Booking request received</h1>
+        <p style="font-size:16px;line-height:1.6">Hi ${name},</p>
+        <p style="font-size:16px;line-height:1.6">
+          We have your flight request for <strong>${route}</strong>. Our Lahore desk will confirm seats and send ticket details shortly.
+        </p>
+        <table style="width:100%;border-collapse:collapse;margin:24px 0;font-size:15px;line-height:1.6">
+          <tr><td style="padding:6px 0;color:#5C564C">Reference</td><td style="padding:6px 0;text-align:right;font-variant-numeric:tabular-nums"><strong>${ref}</strong></td></tr>
+          <tr><td style="padding:6px 0;color:#5C564C">Airline</td><td style="padding:6px 0;text-align:right">${airlineSafe}</td></tr>
+          <tr><td style="padding:6px 0;color:#5C564C">Flight</td><td style="padding:6px 0;text-align:right">${flights}</td></tr>
+          <tr><td style="padding:6px 0;color:#5C564C">Depart</td><td style="padding:6px 0;text-align:right">${depart}</td></tr>
+          <tr><td style="padding:6px 0;color:#5C564C">Arrive</td><td style="padding:6px 0;text-align:right">${arrive}</td></tr>
+          <tr><td style="padding:6px 0;color:#5C564C">Travellers</td><td style="padding:6px 0;text-align:right;font-variant-numeric:tabular-nums">${travellers}</td></tr>
+          <tr><td style="padding:6px 0;color:#5C564C">Fare</td><td style="padding:6px 0;text-align:right;font-variant-numeric:tabular-nums"><strong>${fare}</strong></td></tr>
+        </table>
+        <p style="font-size:14px;line-height:1.6;color:#5C564C">
+          Questions? Reply to this email or visit
+          <a href="${appUrl}/contact" style="color:#2F4438">arreat.travel/contact</a>.
+        </p>
+      </div>
     `,
   });
 }
