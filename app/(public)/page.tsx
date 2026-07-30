@@ -14,6 +14,7 @@ import { IMAGE_BLUR_DATA_URL, unsplashSrc } from "@/lib/images";
 import { ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { DisplayPrice } from "@/components/shared/display-price";
+import { siteConfig } from "@/lib/site-config";
 
 export const dynamic = "force-static";
 export const revalidate = 120;
@@ -67,7 +68,7 @@ export default async function HomePage() {
       addressCountry: "PK",
     },
     telephone: "+92-42-37260405",
-    email: "hello@arreattravel.com",
+    email: siteConfig.office.email,
   };
 
   return (

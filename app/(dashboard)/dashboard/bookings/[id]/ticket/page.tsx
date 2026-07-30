@@ -121,7 +121,7 @@ export default async function TicketPage({
         </div>
 
         <p className="mt-8 text-center text-xs text-ink-300">
-          Present this e-ticket at check-in. For support, contact hello@arreattravel.com
+          Present this e-ticket at check-in. For support, contact info@arreat.travel
         </p>
       </div>
     </div>

@@ -45,7 +45,7 @@ export const siteConfig = {
     address:
       process.env.NEXT_PUBLIC_OFFICE_ADDRESS ??
       "MB 54, 4th Floor, Sector B, Phase 6, DHA Lahore, Pakistan",
-    email: process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? "hello@arreattravel.com",
+    email: process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? "info@arreat.travel",
     phone: process.env.NEXT_PUBLIC_OFFICE_PHONE ?? "+92 42 37260405",
     hours: "Mon–Sat, 10am–7pm PKT",
     city: "Lahore",
@@ -57,7 +57,7 @@ export function getContactInbox() {
   return (
     process.env.CONTACT_EMAIL ??
     process.env.NEXT_PUBLIC_CONTACT_EMAIL ??
-    "hello@arreattravel.com"
+    "info@arreat.travel"
   );
 }
 
