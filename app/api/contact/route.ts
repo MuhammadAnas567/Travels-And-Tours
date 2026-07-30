@@ -19,18 +19,37 @@ function checkRateLimit(ip: string) {
   return true;
 }
 
+function inferKind(subject: string, explicit?: string) {
+  if (explicit?.trim()) return explicit.trim().toUpperCase().slice(0, 40);
+  const s = subject.toLowerCase();
+  if (s.includes("hotel")) return "HOTEL";
+  if (s.includes("car")) return "CAR";
+  if (s.includes("visa")) return "VISA";
+  if (s.includes("flight")) return "FLIGHT";
+  if (s.includes("tour") || s.includes("package")) return "PACKAGE";
+  if (s.includes("plan") || s.includes("trip")) return "TRIP";
+  if (s.includes("deal")) return "DEAL";
+  if (s.includes("blog")) return "BLOG";
+  return "CONTACT";
+}
+
 async function persistInquiry(data: {
   name: string;
   email: string;
   subject: string;
   message: string;
-}) {
+  kind?: string;
+  phone?: string;
+}): Promise<{ id: string } | null> {
+  const kind = inferKind(data.subject, data.kind);
   try {
     const row = await withDbTimeout(
       prisma.quoteRequest.create({
         data: {
+          kind,
           name: data.name,
-          email: data.email,
+          email: data.email.trim().toLowerCase(),
+          phone: data.phone?.trim() || null,
           destinations: [data.subject.slice(0, 120)],
           preferences: data.message,
           status: "NEW",
@@ -39,7 +58,7 @@ async function persistInquiry(data: {
       null,
       2500
     );
-    if (row) return true;
+    if (row) return { id: row.id };
   } catch (error) {
     console.error("[contact] quoteRequest failed:", error);
   }
@@ -59,7 +78,12 @@ async function persistInquiry(data: {
         : [];
     const items = [
       {
-        ...data,
+        name: data.name,
+        email: data.email,
+        subject: data.subject,
+        message: data.message,
+        kind,
+        phone: data.phone ?? null,
         at: new Date().toISOString(),
       },
       ...prev,
@@ -74,10 +98,10 @@ async function persistInquiry(data: {
       null,
       2000
     );
-    return !!saved;
+    return saved ? { id: "fallback-settings" } : null;
   } catch (error) {
     console.error("[contact] siteSettings failed:", error);
-    return false;
+    return null;
   }
 }
 
@@ -98,6 +122,8 @@ export async function POST(req: Request) {
   }
 
   try {
+    const stored = await persistInquiry(parsed.data);
+
     let emailed = false;
     try {
       emailed = await sendContactEmail(parsed.data);
@@ -105,9 +131,7 @@ export async function POST(req: Request) {
       console.error("[contact] email send failed:", error);
     }
 
-    const stored = emailed ? true : await persistInquiry(parsed.data);
-
-    if (!emailed && !stored) {
+    if (!stored && !emailed) {
       const inbox = getContactInbox();
       return NextResponse.json(
         {
@@ -120,7 +144,10 @@ export async function POST(req: Request) {
 
     return NextResponse.json({
       success: true,
-      delivered: emailed ? "email" : "stored",
+      saved: Boolean(stored),
+      quoteId: stored && stored.id !== "fallback-settings" ? stored.id : null,
+      emailed,
+      delivered: stored ? "stored" : "email",
     });
   } catch (error) {
     console.error("Contact form error:", error);

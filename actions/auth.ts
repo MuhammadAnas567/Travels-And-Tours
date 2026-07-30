@@ -234,7 +234,7 @@ export async function loginUser(formData: FormData) {
       return {
         error: {
           _form: [
-            "Invalid email or password. On live: open /api/health — if DATABASE_URL or demoUserExists is false, set Atlas URI + AUTH_SECRET on Vercel and Redeploy. Demo: user@example.com / user123",
+            "Invalid email or password. Check your credentials and try again.",
           ],
         },
       };

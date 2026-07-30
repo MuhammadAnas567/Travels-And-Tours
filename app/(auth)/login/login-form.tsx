@@ -276,11 +276,6 @@ export default function LoginForm() {
         </Button>
       </form>
 
-      <p className="mt-4 rounded-md border border-line bg-paper px-3 py-2 text-xs text-ink-500">
-        Demo: <span className="font-medium text-ink-700">user@example.com</span> /{" "}
-        <span className="font-medium text-ink-700">user123</span>
-      </p>
-
       {googleEnabled ? (
         <>
           <div className="relative my-6">

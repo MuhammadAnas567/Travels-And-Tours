@@ -8,6 +8,7 @@ export default function PlanTripPage() {
       title="Plan your trip with us"
       description="Share your destination, dates, and budget — we will help shape the itinerary."
       defaultSubject="Plan a trip inquiry"
+      kind="TRIP"
       heroVariant="plan"
     />
   );

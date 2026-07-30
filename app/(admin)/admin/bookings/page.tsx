@@ -34,6 +34,14 @@ export default async function AdminBookingsPage() {
       <h1 className="font-heading text-2xl font-semibold tracking-tight text-ink-900">
         Bookings
       </h1>
+      <p className="mt-1 text-sm text-ink-500">
+        All flight, tour, hotel, and package bookings from the site.
+      </p>
+      {bookings.length === 0 ? (
+        <p className="mt-8 rounded-md border border-line bg-paper p-6 text-sm text-ink-500">
+          No bookings yet. New flight and tour bookings will appear here.
+        </p>
+      ) : (
       <div className="-mx-4 mt-6 overflow-x-auto overscroll-x-contain border-y border-line bg-paper sm:mx-0 sm:rounded-md sm:border [-webkit-overflow-scrolling:touch]">
         <table className="min-w-[800px] w-full text-sm">
           <thead>
@@ -57,7 +65,14 @@ export default async function AdminBookingsPage() {
                 parseBookingDate(snapshot?.startDate);
               return (
                 <tr key={b.id} className="border-b border-line">
-                  <td className="p-4 text-ink-900">{title}</td>
+                  <td className="p-4 text-ink-900">
+                    <p className="font-medium">{title}</p>
+                    {b.bookingReference ? (
+                      <p className="mt-0.5 text-xs tabular-nums text-ink-500">
+                        {b.bookingReference}
+                      </p>
+                    ) : null}
+                  </td>
                   <td className="p-4 text-xs font-semibold uppercase tracking-wider text-ink-500">
                     {b.type}
                   </td>
@@ -80,6 +95,7 @@ export default async function AdminBookingsPage() {
           </tbody>
         </table>
       </div>
+      )}
     </div>
   );
 }

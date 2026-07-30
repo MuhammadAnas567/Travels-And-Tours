@@ -8,6 +8,7 @@ export default function ToursPage() {
       title="Ask about a tour"
       description="Tell us where you want to go and when — we will suggest guided tours that match."
       defaultSubject="Tour inquiry"
+      kind="TOUR"
       heroVariant="tours"
     />
   );

@@ -8,6 +8,7 @@ export default function GuidesPage() {
       title="Ask a travel question"
       description="Looking for advice on a route or city? Write us and we will point you in the right direction."
       defaultSubject="Guides inquiry"
+      kind="BLOG"
       heroVariant="blog"
     />
   );

@@ -8,6 +8,7 @@ export default function PackagesPage() {
       title="Ask about a package"
       description="Share your destination and travel window — we will outline a package that fits."
       defaultSubject="Package inquiry"
+      kind="PACKAGE"
       heroVariant="packages"
     />
   );

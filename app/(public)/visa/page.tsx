@@ -8,6 +8,7 @@ export default function VisaPage() {
       title="Ask about a visa"
       description="Tell us your nationality and destination — we will guide you on visa requirements."
       defaultSubject="Visa inquiry"
+      kind="VISA"
       heroVariant="visa"
     />
   );

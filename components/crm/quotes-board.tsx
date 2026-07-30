@@ -10,6 +10,7 @@ import { cn } from "@/lib/utils";
 
 export type QuoteBoardItem = {
   id: string;
+  kind: string;
   name: string;
   email: string;
   destinations: string[];
@@ -80,7 +81,12 @@ function QuoteCard({
           <h3 className="truncate text-sm font-semibold text-ink-900">{quote.name}</h3>
           <p className="truncate text-xs text-ink-500">{quote.email}</p>
         </div>
-        <Badge className="shrink-0 text-[0.65rem]">{quote.status}</Badge>
+        <div className="flex shrink-0 flex-col items-end gap-1">
+          <Badge className="text-[0.65rem]">{quote.status}</Badge>
+          <span className="text-[0.65rem] font-semibold uppercase tracking-wide text-ink-500">
+            {quote.kind}
+          </span>
+        </div>
       </div>
       <p className="mt-2 line-clamp-2 text-xs text-ink-700">
         {quote.destinations.join(", ") || "No destinations"}

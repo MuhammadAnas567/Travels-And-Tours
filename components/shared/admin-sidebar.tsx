@@ -18,13 +18,13 @@ import {
 
 const links = [
   { href: "/admin", label: "Overview", icon: LayoutDashboard },
+  { href: "/admin/bookings", label: "Bookings", icon: CalendarCheck },
+  { href: "/admin/quotes", label: "Form inquiries", icon: MessageSquare },
+  { href: "/admin/visa-inquiries", label: "Visa", icon: FileText },
   { href: "/admin/crm", label: "CRM", icon: Kanban },
-  { href: "/admin/quotes", label: "Quotes", icon: MessageSquare },
   { href: "/admin/agents", label: "Agents", icon: UserCog },
   { href: "/admin/tours", label: "Tours", icon: Map },
-  { href: "/admin/bookings", label: "Bookings", icon: CalendarCheck },
   { href: "/admin/coupons", label: "Coupons", icon: Tag },
-  { href: "/admin/visa-inquiries", label: "Visa", icon: FileText },
   { href: "/admin/customers", label: "Customers", icon: Users },
   { href: "/admin/reviews", label: "Reviews", icon: Star },
 ];

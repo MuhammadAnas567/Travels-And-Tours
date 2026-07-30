@@ -8,6 +8,7 @@ export default function DestinationsPage() {
       title="Ask about a destination"
       description="Tell us where you are considering — we will reply with ideas, timing, and next steps."
       defaultSubject="Destination inquiry"
+      kind="DESTINATION"
       heroVariant="default"
     />
   );

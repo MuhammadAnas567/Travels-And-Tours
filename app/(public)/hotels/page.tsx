@@ -8,6 +8,7 @@ export default function HotelsPage() {
       title="Ask about a hotel stay"
       description="Tell us your city, dates, and room needs — we will reply with options that fit."
       defaultSubject="Hotel inquiry"
+      kind="HOTEL"
       heroVariant="hotels"
     />
   );

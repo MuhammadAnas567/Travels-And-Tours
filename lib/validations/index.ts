@@ -36,6 +36,9 @@ export const contactSchema = z.object({
   email: z.string().email("Invalid email"),
   subject: z.string().min(3, "Subject is required"),
   message: z.string().min(10, "Message must be at least 10 characters"),
+  /** Optional lead source: CONTACT | HOTEL | CAR | TRIP | VISA | TOUR | PACKAGE | … */
+  kind: z.string().min(2).max(40).optional(),
+  phone: z.string().min(7).max(40).optional(),
 });
 
 export const flightBookRequestSchema = z.object({

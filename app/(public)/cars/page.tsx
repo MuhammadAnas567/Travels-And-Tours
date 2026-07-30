@@ -8,6 +8,7 @@ export default function CarsPage() {
       title="Ask about car hire"
       description="Share pickup city, dates, and travellers — we will reply with car options."
       defaultSubject="Car hire inquiry"
+      kind="CAR"
       heroVariant="cars"
     />
   );

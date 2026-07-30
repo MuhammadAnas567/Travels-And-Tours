@@ -21,6 +21,7 @@ export default async function AdminQuotesPage() {
 
   const boardQuotes = quotes.map((q) => ({
     id: q.id,
+    kind: q.kind,
     name: q.name,
     email: q.email,
     destinations: q.destinations,
@@ -39,10 +40,10 @@ export default async function AdminQuotesPage() {
       <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
         <div>
           <h1 className="font-heading text-2xl font-semibold tracking-tight text-ink-900">
-            Quotes CRM
+            Form inquiries
           </h1>
           <p className="mt-1 text-sm text-ink-500">
-            Move requests across the pipeline, assign agents, and leave internal notes.
+            Every website form submission — contact, hotels, cars, trips, deals, and more.
           </p>
         </div>
       </div>

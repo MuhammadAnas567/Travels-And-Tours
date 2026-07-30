@@ -15,6 +15,8 @@ type SectionContactPageProps = {
   description: string;
   /** Prefills subject so inbox can tell which section the lead came from */
   defaultSubject: string;
+  /** Stored on QuoteRequest.kind in MongoDB */
+  kind?: string;
   heroVariant?:
     | "default"
     | "flights"
@@ -37,6 +39,7 @@ export function SectionContactPage({
   title,
   description,
   defaultSubject,
+  kind,
   heroVariant = "default",
 }: SectionContactPageProps) {
   const [loading, setLoading] = useState(false);
@@ -54,11 +57,12 @@ export function SectionContactPage({
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        body: JSON.stringify({ ...data, kind }),
       });
       const payload = (await res.json().catch(() => ({}))) as {
         error?: string;
         delivered?: string;
+        saved?: boolean;
         mailto?: string;
       };
       if (!res.ok) {
@@ -75,7 +79,7 @@ export function SectionContactPage({
         }
       } else {
         toast.success(
-          payload.delivered === "stored"
+          payload.saved
             ? "Inquiry saved — our team will follow up shortly."
             : "Message sent — we will reply within one business day."
         );
