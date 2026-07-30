@@ -6,6 +6,7 @@ import {
   searchSerpApiFlights,
   type FlightSearchResponse,
 } from "@/lib/flights/serpapi";
+import { getPreferredCurrency } from "@/lib/locale";
 
 export const dynamic = "force-dynamic";
 
@@ -63,6 +64,7 @@ const DEFAULT_DESTINATION = "DXB";
 
 export default async function FlightsPage({ searchParams }: Props) {
   const sp = await searchParams;
+  const preferredCurrency = await getPreferredCurrency();
   const origin = (sp.origin ?? sp.from ?? DEFAULT_ORIGIN).toUpperCase();
   const destination = (sp.destination ?? sp.to ?? DEFAULT_DESTINATION).toUpperCase();
   const outboundDate = sp.outboundDate ?? sp.date ?? daysFromTodayISO(7);
@@ -81,8 +83,8 @@ export default async function FlightsPage({ searchParams }: Props) {
         ? 3
         : 1;
   const currency = (() => {
-    const raw = (sp.currency ?? "USD").toUpperCase();
-    return raw === "PKR" || raw === "USD" ? raw : "USD";
+    const raw = (sp.currency ?? preferredCurrency).toUpperCase();
+    return raw === "PKR" || raw === "USD" ? raw : preferredCurrency;
   })();
 
   // Always search on /flights — default KHI→DXB when the URL has no route yet.
@@ -161,7 +163,7 @@ export default async function FlightsPage({ searchParams }: Props) {
             <span className="text-ink-400"> · </span>
             {cabin}
             <span className="text-ink-400"> · </span>
-            {currency}
+            {preferredCurrency}
           </div>
         </div>
       ) : null}

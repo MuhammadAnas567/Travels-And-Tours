@@ -80,7 +80,7 @@ function formatDuration(minutes: number) {
 }
 
 function localTimePart(value: string) {
-  const [, time = "â€”"] = value.split(" ");
+  const [, time = "—"] = value.split(" ");
   return time;
 }
 
@@ -341,21 +341,42 @@ export function FlightResults({
   const [selectedAirline, setSelectedAirline] = useState("all");
   const [filtersOpen, setFiltersOpen] = useState(false);
   const results = payload?.results ?? [];
+  /** Actual fare currency from the API response (URL can drift from cookie). */
+  const fareCurrency = asCurrency(payload?.currency || search.currency);
+
   const airlines = useMemo(
     () =>
       Array.from(
-        new Set(results.map((flight) => flight.legs[0]?.airline).filter(Boolean) as string[])
-      ).sort(),
+        new Set(
+          results
+            .flatMap((flight) => flight.legs.map((leg) => leg.airline))
+            .filter(Boolean) as string[]
+        )
+      ).sort((a, b) => a.localeCompare(b)),
     [results]
   );
 
+  function matchesAirline(flight: NormalizedFlightResult, airline: string) {
+    if (airline === "all") return true;
+    return flight.legs.some((leg) => leg.airline === airline);
+  }
+
+  const stopCounts = useMemo(() => {
+    const pool = results.filter((flight) => matchesAirline(flight, selectedAirline));
+    return {
+      any: pool.length,
+      0: pool.filter((flight) => flight.stops === 0).length,
+      1: pool.filter((flight) => flight.stops <= 1).length,
+      2: pool.filter((flight) => flight.stops <= 2).length,
+    };
+  }, [results, selectedAirline]);
+
   const filtered = useMemo(() => {
-    let list = [...results];
-    if (maxStops != null) list = list.filter((flight) => flight.stops <= maxStops);
-    if (selectedAirline !== "all") {
-      list = list.filter((flight) => flight.legs[0]?.airline === selectedAirline);
+    let list = results.filter((flight) => matchesAirline(flight, selectedAirline));
+    if (maxStops != null) {
+      list = list.filter((flight) => flight.stops <= maxStops);
     }
-    list.sort((left, right) => {
+    list = [...list].sort((left, right) => {
       if (sort === "duration") return left.totalDurationMinutes - right.totalDurationMinutes;
       if (sort === "departure") {
         return departureSortValue(left).localeCompare(departureSortValue(right));
@@ -365,61 +386,80 @@ export function FlightResults({
     return list;
   }, [maxStops, results, selectedAirline, sort]);
 
-  const filterPanel = (
-    <div className="space-y-5">
-      <div>
-        <p className="text-[0.6875rem] font-semibold uppercase tracking-[0.15em] text-ink-500">
-          Max stops
-        </p>
-        <div className="mt-3 space-y-2">
-          {[
-            { label: "Any", value: null as number | null },
-            { label: "Non-stop", value: 0 },
-            { label: "Up to 1 stop", value: 1 },
-            { label: "Up to 2 stops", value: 2 },
-          ].map((option) => (
-            <label
-              key={String(option.value)}
-              className="flex min-h-11 items-center justify-between rounded-sm px-2 hover:bg-sand"
-            >
-              <span className="flex items-center gap-2 text-sm text-ink-700">
-                <input
-                  type="radio"
-                  name="max-stops"
-                  checked={maxStops === option.value}
-                  onChange={() => setMaxStops(option.value)}
-                  className="accent-[var(--color-pine-500)]"
-                />
-                {option.label}
-              </span>
-            </label>
-          ))}
+  function renderFilterPanel(idPrefix: string) {
+    return (
+      <div className="space-y-5">
+        <div>
+          <p className="text-[0.6875rem] font-semibold uppercase tracking-[0.15em] text-ink-500">
+            Max stops
+          </p>
+          <div className="mt-3 space-y-2" role="radiogroup" aria-label="Maximum stops">
+            {(
+              [
+                { label: "Any", value: null as number | null, count: stopCounts.any },
+                { label: "Non-stop", value: 0, count: stopCounts[0] },
+                { label: "Up to 1 stop", value: 1, count: stopCounts[1] },
+                { label: "Up to 2 stops", value: 2, count: stopCounts[2] },
+              ] as const
+            ).map((option) => {
+              const inputId = `${idPrefix}-stops-${option.value ?? "any"}`;
+              const selected = maxStops === option.value;
+              return (
+                <label
+                  key={inputId}
+                  htmlFor={inputId}
+                  className={cn(
+                    "flex min-h-11 cursor-pointer items-center justify-between rounded-sm px-2 hover:bg-sand",
+                    selected && "bg-pine-50"
+                  )}
+                >
+                  <span className="flex items-center gap-2 text-sm text-ink-700">
+                    <input
+                      id={inputId}
+                      type="radio"
+                      name={`${idPrefix}-max-stops`}
+                      checked={selected}
+                      onChange={() => setMaxStops(option.value)}
+                      className="accent-[var(--color-pine-500)]"
+                    />
+                    {option.label}
+                  </span>
+                  <span className="text-xs tabular-nums text-ink-500">{option.count}</span>
+                </label>
+              );
+            })}
+          </div>
+        </div>
+
+        <div>
+          <label
+            htmlFor={`${idPrefix}-airline`}
+            className="text-[0.6875rem] font-semibold uppercase tracking-[0.15em] text-ink-500"
+          >
+            Airline
+          </label>
+          <select
+            id={`${idPrefix}-airline`}
+            value={selectedAirline}
+            onChange={(event) => setSelectedAirline(event.target.value)}
+            className="mt-3 flex h-11 w-full rounded-sm border border-line bg-paper px-3 text-sm text-ink-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pine-500"
+          >
+            <option value="all">All airlines</option>
+            {airlines.map((airline) => (
+              <option key={airline} value={airline}>
+                {airline}
+              </option>
+            ))}
+          </select>
         </div>
       </div>
+    );
+  }
 
-      <div>
-        <label
-          htmlFor="airline-filter"
-          className="text-[0.6875rem] font-semibold uppercase tracking-[0.15em] text-ink-500"
-        >
-          Airline
-        </label>
-        <select
-          id="airline-filter"
-          value={selectedAirline}
-          onChange={(event) => setSelectedAirline(event.target.value)}
-          className="mt-3 flex h-11 w-full rounded-sm border border-line bg-paper px-3 text-sm text-ink-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pine-500"
-        >
-          <option value="all">All airlines</option>
-          {airlines.map((airline) => (
-            <option key={airline} value={airline}>
-              {airline}
-            </option>
-          ))}
-        </select>
-      </div>
-    </div>
-  );
+  function clearFilters() {
+    setMaxStops(null);
+    setSelectedAirline("all");
+  }
 
   return (
     <div className="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8 pb-24 lg:pb-12">
@@ -471,16 +511,13 @@ export function FlightResults({
               <h2 className="font-display text-lg font-semibold text-ink-900">Filters</h2>
               <button
                 type="button"
-                onClick={() => {
-                  setMaxStops(null);
-                  setSelectedAirline("all");
-                }}
+                onClick={clearFilters}
                 className="text-sm font-semibold text-pine-600 hover:underline"
               >
                 Clear
               </button>
             </div>
-            <div className="mt-5">{filterPanel}</div>
+            <div className="mt-5">{renderFilterPanel("desktop")}</div>
           </aside>
 
           {filtersOpen ? (
@@ -503,10 +540,15 @@ export function FlightResults({
                     <X className="h-5 w-5" strokeWidth={1.5} />
                   </button>
                 </div>
-                <div className="mt-5">{filterPanel}</div>
-                <Button type="button" className="mt-6 w-full" onClick={() => setFiltersOpen(false)}>
-                  Show {filtered.length} results
-                </Button>
+                <div className="mt-5">{renderFilterPanel("mobile")}</div>
+                <div className="mt-4 flex gap-2">
+                  <Button type="button" variant="secondary" className="flex-1" onClick={clearFilters}>
+                    Clear
+                  </Button>
+                  <Button type="button" className="flex-1" onClick={() => setFiltersOpen(false)}>
+                    Show {filtered.length} results
+                  </Button>
+                </div>
               </div>
             </div>
           ) : null}
@@ -529,7 +571,7 @@ export function FlightResults({
                       {formatCurrency(
                         displayFlightAmount(
                           payload.priceInsights.typicalPriceRange[0],
-                          search.currency,
+                          fareCurrency,
                           preferredCurrency
                         ),
                         preferredCurrency
@@ -538,7 +580,7 @@ export function FlightResults({
                       {formatCurrency(
                         displayFlightAmount(
                           payload.priceInsights.typicalPriceRange[1],
-                          search.currency,
+                          fareCurrency,
                           preferredCurrency
                         ),
                         preferredCurrency
@@ -547,7 +589,7 @@ export function FlightResults({
                       {formatCurrency(
                         displayFlightAmount(
                           payload.priceInsights.lowestPrice,
-                          search.currency,
+                          fareCurrency,
                           preferredCurrency
                         ),
                         preferredCurrency
@@ -565,8 +607,10 @@ export function FlightResults({
             <div className="mt-4 flex flex-col gap-4 rounded-md border border-line bg-paper p-4 shadow-sm md:flex-row md:items-center md:justify-between">
               <div>
                 <p className="text-sm text-ink-500">
-                  {filtered.length} result{filtered.length === 1 ? "" : "s"}
-                  {payload?.cached ? " Â· cached" : ""}
+                  {filtered.length} of {results.length} result
+                  {results.length === 1 ? "" : "s"}
+                  {maxStops != null || selectedAirline !== "all" ? " · filtered" : ""}
+                  {payload?.cached ? " · cached" : ""}
                 </p>
               </div>
               <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
@@ -595,14 +639,27 @@ export function FlightResults({
             </div>
 
             <div className="mt-4 space-y-4">
-              {filtered.map((flight) => (
-                <ResultCard
-                  key={flight.id}
-                  flight={flight}
-                  sourceCurrency={search.currency}
-                  search={search}
-                />
-              ))}
+              {filtered.length === 0 ? (
+                <div className="rounded-md border border-line bg-paper p-8 shadow-sm">
+                  <EmptyState
+                    icon="plane"
+                    title="No flights match these filters"
+                    description="Try Any stops, another airline, or Clear filters to see all results again."
+                  />
+                  <Button type="button" className="mt-6" onClick={clearFilters}>
+                    Clear filters
+                  </Button>
+                </div>
+              ) : (
+                filtered.map((flight) => (
+                  <ResultCard
+                    key={flight.id}
+                    flight={flight}
+                    sourceCurrency={fareCurrency}
+                    search={search}
+                  />
+                ))
+              )}
             </div>
           </div>
         </div>
